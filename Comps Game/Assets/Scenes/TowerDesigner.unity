@@ -921,6 +921,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4017219246538077464, guid: 17f66820856a040cb9b6bfd66fd03a58, type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 3321539310918970059, guid: 862625f060f3b4cf5b33ad3a8fffbf0a, type: 3}
     - target: {fileID: 5776567480984243591, guid: 17f66820856a040cb9b6bfd66fd03a58, type: 3}
       propertyPath: m_Name
       value: Tower

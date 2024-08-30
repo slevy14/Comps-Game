@@ -25,8 +25,6 @@ public class Turret : MonoBehaviour {
     private Transform target;
     private float timeUntilFire;
 
-    private int level = 1;
-
 
     private void Start() {
         bpsBase = bps;
@@ -63,9 +61,9 @@ public class Turret : MonoBehaviour {
 
     private void Shoot() {
         Debug.Log("shoot");
-        // GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, Quaternion.identity);
-        // Bullet bulletScript = bulletObj.GetComponent<Bullet>();
-        // bulletScript.SetTarget(target);
+        GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, this.transform.rotation);
+        Bullet bulletScript = bulletObj.GetComponent<Bullet>();
+        bulletScript.SetTarget(target);
 
     }
 
