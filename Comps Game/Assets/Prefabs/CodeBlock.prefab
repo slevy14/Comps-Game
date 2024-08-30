@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9002237579248771133}
   - component: {fileID: 4390246739259379296}
+  - component: {fileID: 7353725131427008643}
   - component: {fileID: 1712510722031063008}
   m_Layer: 5
   m_Name: CodeBlock
@@ -45,6 +46,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3183704397426555999}
   m_CullTransparentMesh: 1
+--- !u!114 &7353725131427008643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3183704397426555999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6879f18fdaa24f06b64d02e1564d163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 1712510722031063008}
+  parentAfterDrag: {fileID: 0}
 --- !u!114 &1712510722031063008
 MonoBehaviour:
   m_ObjectHideFlags: 0

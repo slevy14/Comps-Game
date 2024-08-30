@@ -5,10 +5,10 @@ using UnityEditor;
 using UnityEngine.UI;
 using TMPro;
 
-public class Turret : MonoBehaviour {
+public class TowerBehavior : MonoBehaviour {
 
     [Header("References")]
-    [SerializeField] private Transform turretRotationPoint; 
+    [SerializeField] private Transform towerRotationPoint; 
     [SerializeField] private LayerMask enemyMask;
     [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Transform firingPoint;
@@ -75,7 +75,7 @@ public class Turret : MonoBehaviour {
         float angle = Mathf.Atan2(target.position.y - this.transform.position.y, target.position.x - this.transform.position.x) * Mathf.Rad2Deg - 90f;
 
         Quaternion targetRotation = Quaternion.Euler(new Vector3(0f, 0f, angle));
-        turretRotationPoint.rotation = Quaternion.RotateTowards(turretRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+        towerRotationPoint.rotation = Quaternion.RotateTowards(towerRotationPoint.rotation, targetRotation, rotationSpeed * Time.deltaTime);
     }
 
 

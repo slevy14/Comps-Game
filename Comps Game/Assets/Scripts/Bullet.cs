@@ -9,7 +9,7 @@ public class Bullet : MonoBehaviour {
 
     [Header("Attribuites")]
     [SerializeField] private float bulletSpeed = 5f;
-    [SerializeField] private int bulletDamage = 1;
+    // [SerializeField] private int bulletDamage = 1;
 
     private Transform target;
 
