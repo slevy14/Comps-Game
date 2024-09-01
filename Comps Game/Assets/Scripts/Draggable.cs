@@ -13,18 +13,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData) {
         Debug.Log("begindrag called");
-        // if (parentAfterDrag.tag != "whiteboard" ) {
         parentAfterDrag = transform.parent;
         onWhiteboard = false;
-        // } else {
-        //     parentAfterDrag = initialParent;
-        // }
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData) {
+        // if (transform.parent != transform.root) {
+        //     transform.SetParent(transform.root);
+        // }
         transform.position = Input.mousePosition;
     }
 
@@ -37,11 +36,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
-    public void ToggleRaycastTarget(bool targetValue) {
-        image.raycastTarget = targetValue;
-
-    }
-
     void Awake() {
         image = this.gameObject.GetComponent<Image>();
         initialParent = transform.parent;
@@ -50,15 +44,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         // when this script is instantiated,
         // duplicate behavior of begin drag
-        // if (parentAfterDrag.tag != "whiteboard" ) {
-        //     parentAfterDrag = transform.parent;
-        // } else {
-        //     parentAfterDrag = initialParent;
-        // }
+
         // transform.SetParent(transform.root);
         // Debug.Log("root");
         transform.SetAsLastSibling();
         image.raycastTarget = false;
-
     }
 }

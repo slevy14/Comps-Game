@@ -10,11 +10,12 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
     [HideInInspector] public Transform parentAfterDrag;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        GameObject clone = Instantiate(this.gameObject,eventData.position, this.transform.rotation, transform.parent);
+        GameObject clone = Instantiate(this.gameObject, eventData.position, this.transform.rotation, transform.parent);
         Debug.Log("scroll parent");
         clone.AddComponent<Draggable>();
         Destroy(clone.gameObject.GetComponent<BlockListItem>());
         eventData.pointerDrag = clone;
+        // clone.gameObject.GetComponent<Draggable>().OnBeginDrag(eventData);
 
         // if (parentAfterDrag.tag != "whiteboard" ) {
         //     parentAfterDrag = transform.parent;
