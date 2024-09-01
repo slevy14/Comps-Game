@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
@@ -8,15 +7,18 @@ using UnityEngine.EventSystems;
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
     public Image image;
-    [HideInInspector] public Transform parentAfterDrag;
-    private Transform initialParent;
+    public bool onWhiteboard;
+    public Transform parentAfterDrag;
+    [SerializeField] private Transform initialParent;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if (parentAfterDrag.tag != "whiteboard" ) {
-            parentAfterDrag = transform.parent;
-        } else {
-            parentAfterDrag = initialParent;
-        }
+        Debug.Log("begindrag called");
+        // if (parentAfterDrag.tag != "whiteboard" ) {
+        parentAfterDrag = transform.parent;
+        onWhiteboard = false;
+        // } else {
+        //     parentAfterDrag = initialParent;
+        // }
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         image.raycastTarget = false;
@@ -27,15 +29,36 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        Debug.Log("enddrag called");
         transform.SetParent(parentAfterDrag);
-        // if (parentAfterDrag.tag != "whiteboard") {
-        //     Destroy(this.gameObject);
-        // }
         image.raycastTarget = true;
+        if (!onWhiteboard) {
+            Destroy(this.gameObject);
+        }
     }
 
-    void Start() {
+    public void ToggleRaycastTarget(bool targetValue) {
+        image.raycastTarget = targetValue;
+
+    }
+
+    void Awake() {
+        image = this.gameObject.GetComponent<Image>();
         initialParent = transform.parent;
         parentAfterDrag = initialParent;
+        Debug.Log("awakened");
+
+        // when this script is instantiated,
+        // duplicate behavior of begin drag
+        // if (parentAfterDrag.tag != "whiteboard" ) {
+        //     parentAfterDrag = transform.parent;
+        // } else {
+        //     parentAfterDrag = initialParent;
+        // }
+        // transform.SetParent(transform.root);
+        // Debug.Log("root");
+        transform.SetAsLastSibling();
+        image.raycastTarget = false;
+
     }
 }

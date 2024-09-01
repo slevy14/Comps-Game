@@ -60,7 +60,7 @@ public class TowerBehavior : MonoBehaviour {
     }
 
     private void Shoot() {
-        Debug.Log("shoot");
+        // Debug.Log("shoot");
         GameObject bulletObj = Instantiate(bulletPrefab, firingPoint.position, this.transform.rotation);
         Bullet bulletScript = bulletObj.GetComponent<Bullet>();
         bulletScript.SetTarget(target);

@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class Whiteboard : MonoBehaviour, IDropHandler {
 
     public void OnDrop(PointerEventData eventData) {
-        GameObject dropped = eventData.pointerDrag;
-        Draggable draggable = dropped.GetComponent<Draggable>();
+        Debug.Log("ondrop called");
+        GameObject droppedObject = eventData.pointerDrag;
+        Draggable draggable = droppedObject.GetComponent<Draggable>();
         draggable.parentAfterDrag = transform;
+        draggable.onWhiteboard = true;
     }
-    
+
 }
