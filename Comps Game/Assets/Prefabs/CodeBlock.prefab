@@ -194,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 0}
+  clonePrefab: {fileID: 3183704397426555999}
   parentAfterDrag: {fileID: 0}
 --- !u!114 &1712510722031063008
 MonoBehaviour:

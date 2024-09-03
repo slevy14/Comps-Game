@@ -9,10 +9,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Image image;
     public bool onWhiteboard;
     public Transform parentAfterDrag;
-    [SerializeField] private Transform initialParent;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        Debug.Log("begindrag called");
+        // Debug.Log("begindrag called");
         parentAfterDrag = transform.parent;
         onWhiteboard = false;
         transform.SetParent(transform.root);
@@ -28,7 +27,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        Debug.Log("enddrag called");
+        // Debug.Log("enddrag called");
         transform.SetParent(parentAfterDrag);
         image.raycastTarget = true;
         if (!onWhiteboard) {
@@ -38,16 +37,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     void Awake() {
         image = this.gameObject.GetComponent<Image>();
-        initialParent = transform.parent;
-        parentAfterDrag = initialParent;
-        Debug.Log("awakened");
+        // Debug.Log("awakened");
 
         // when this script is instantiated,
         // duplicate behavior of begin drag
 
         // transform.SetParent(transform.root);
         // Debug.Log("root");
+        parentAfterDrag = transform.parent;
+        onWhiteboard = false;
         transform.SetAsLastSibling();
         image.raycastTarget = false;
+        // transform.SetAsLastSibling();
+        // image.raycastTarget = false;
     }
 }
