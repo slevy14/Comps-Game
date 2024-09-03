@@ -23,19 +23,19 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void OnDrag(PointerEventData eventData) {
-        // if (transform.parent != transform.root) {
-        //     transform.SetParent(transform.root);
-        // }
         transform.position = Input.mousePosition;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         // Debug.Log("enddrag called");
-        transform.SetParent(parentAfterDrag);
-        SetMaskable(true);
         if (!onWhiteboard) {
             Destroy(this.gameObject);
         }
+
+        transform.SetParent(parentAfterDrag);
+        SetMaskable(true);
+        
+        SnapToBlock(eventData);
     }
 
     void Awake() {
@@ -60,5 +60,15 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         image.maskable = value;
         image.raycastTarget = value;
         text.maskable = value;
+    }
+
+    private void SnapToBlock(PointerEventData eventData) {
+        // List<RaycastResult> result = new List<RaycastResult>();
+        // EventSystem.current.RaycastAll(eventData.pointer)
+        if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
+            Debug.Log("snap to space");
+        } else {
+            Debug.Log(eventData.pointerCurrentRaycast.gameObject.tag);
+        }
     }
 }
