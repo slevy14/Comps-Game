@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
-    public Image image;
+    private Image image;
+    private TMP_Text text;
+
     public bool onWhiteboard;
     public Transform parentAfterDrag;
 
@@ -16,7 +19,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         onWhiteboard = false;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
-        image.raycastTarget = false;
+        SetMaskable(false);
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -29,7 +32,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData) {
         // Debug.Log("enddrag called");
         transform.SetParent(parentAfterDrag);
-        image.raycastTarget = true;
+        SetMaskable(true);
         if (!onWhiteboard) {
             Destroy(this.gameObject);
         }
@@ -37,6 +40,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     void Awake() {
         image = this.gameObject.GetComponent<Image>();
+        text = this.transform.GetChild(0).GetComponent<TMP_Text>();
         // Debug.Log("awakened");
 
         // when this script is instantiated,
@@ -47,8 +51,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         parentAfterDrag = transform.parent;
         onWhiteboard = false;
         transform.SetAsLastSibling();
-        image.raycastTarget = false;
+        SetMaskable(false);
         // transform.SetAsLastSibling();
         // image.raycastTarget = false;
+    }
+
+    private void SetMaskable(bool value) {
+        image.maskable = value;
+        image.raycastTarget = value;
+        text.maskable = value;
     }
 }
