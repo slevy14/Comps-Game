@@ -1570,14 +1570,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1471602810}
     m_Modifications:
-    - target: {fileID: 2915886242293715888, guid: f594ec075048446bbb9e97c95ed81f07, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 2915886242293715888, guid: f594ec075048446bbb9e97c95ed81f07, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -20
-      objectReference: {fileID: 0}
     - target: {fileID: 3183704397426555999, guid: f594ec075048446bbb9e97c95ed81f07, type: 3}
       propertyPath: m_Name
       value: CodeBlock
