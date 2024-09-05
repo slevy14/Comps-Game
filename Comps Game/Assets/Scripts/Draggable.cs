@@ -20,42 +20,51 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public bool onWhiteboard;
     public Transform parentAfterDrag;
     public Vector3 blockOffset;
+    public bool isHeader;
 
 
     public void OnBeginDrag(PointerEventData eventData) {
-        // Debug.Log("begindrag called");
-        parentAfterDrag = transform.parent;
-        onWhiteboard = false;
-        transform.SetParent(transform.root);
-        transform.SetAsLastSibling();
-        SetMaskable(false);
+        if (!isHeader) {
+            // Debug.Log("begindrag called");
+            parentAfterDrag = transform.parent;
+            onWhiteboard = false;
+            transform.SetParent(transform.root);
+            transform.SetAsLastSibling();
+            SetMaskable(false);
+        }
     }
 
     public void OnDrag(PointerEventData eventData) {
-        // move all other blocks in function
-        UpdateBlockPositions(this.gameObject, Input.mousePosition);
+        if (!isHeader) {
+            // move all other blocks in function
+            UpdateBlockPositions(this.gameObject, Input.mousePosition);
+        }
     }
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
-        block.transform.position = newPosition;
-        if (nextBlock != null) {
-            nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
+        if (!isHeader) {
+            block.transform.position = newPosition;
+            if (nextBlock != null) {
+                nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
+            }
         }
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        // Debug.Log("enddrag called");
-        if (!SnapToBlock(eventData) && (prevBlock != null)) { // attempt to snap, but if not:
-            prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
-            prevBlock = null;
-        }
+        if (!isHeader) {
+            // Debug.Log("enddrag called");
+            if (!SnapToBlock(eventData) && (prevBlock != null)) { // attempt to snap, but if not:
+                prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
+                prevBlock = null;
+            }
 
-        if (!onWhiteboard) {
-            Destroy(this.gameObject);
-        }
+            if (!onWhiteboard) {
+                Destroy(this.gameObject);
+            }
 
-        transform.SetParent(parentAfterDrag);
-        SetMaskable(true);
+            transform.SetParent(parentAfterDrag);
+            SetMaskable(true);
+        }
     }
 
     void Awake() {
@@ -70,10 +79,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         // transform.SetParent(transform.root);
         // Debug.Log("root");
-        parentAfterDrag = transform.parent;
-        onWhiteboard = false;
-        transform.SetAsLastSibling();
-        SetMaskable(false);
+        if (!isHeader) {
+            parentAfterDrag = transform.parent;
+            onWhiteboard = false;
+            transform.SetAsLastSibling();
+            SetMaskable(false);
+        }
         // transform.SetAsLastSibling();
         // image.raycastTarget = false;
     }
