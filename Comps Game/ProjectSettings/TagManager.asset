@@ -6,6 +6,7 @@ TagManager:
   tags:
   - whiteboard
   - overlapSpace
+  - workingTower
   layers:
   - Default
   - TransparentFX
