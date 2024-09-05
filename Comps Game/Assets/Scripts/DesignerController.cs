@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class DesignerController : MonoBehaviour {
 
+    [Header("DEBUG")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
+
+    [Header("References")]
+    [SerializeField] private GameObject propertiesHeaderObject;
+    [SerializeField] private GameObject behaviorHeaderObject;
 
     private int counter = 0;
 
@@ -31,8 +36,29 @@ public class DesignerController : MonoBehaviour {
                 Debug.Log("Prefab failed to save" + prefabSuccess);
             }
             counter++;
+            Destroy(tempObject);
         }
+
+        SaveIntoJSON();
     }
 
 
+    [SerializeField] private TowerProperties _TowerProperties = new TowerProperties();
+    public void SaveIntoJSON() {
+        string tower = JsonUtility.ToJson(_TowerProperties);
+        string filePath = Application.persistentDataPath + $"/{_TowerProperties.towerName}.json";
+        System.IO.File.WriteAllText(filePath, tower);
+        print("saving json at " + filePath);
+    }
+
+
+}
+
+[System.Serializable]
+public class TowerProperties {
+    public string towerName;
+    public Color towerColor;
+    public float targetingRange;
+    public float rotationSpeed;
+    public float bps; //bullets per second
 }
