@@ -57,7 +57,6 @@ public class DesignerController : MonoBehaviour {
 [System.Serializable]
 public class TowerProperties {
     public string towerName;
-    public Color towerColor;
     public float targetingRange;
     public float rotationSpeed;
     public float bps; //bullets per second

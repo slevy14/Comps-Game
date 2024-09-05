@@ -7,9 +7,11 @@ public class Whiteboard : MonoBehaviour, IDropHandler {
 
     public void OnDrop(PointerEventData eventData) {
         GameObject droppedObject = eventData.pointerDrag;
-        Draggable draggable = droppedObject.GetComponent<Draggable>();
-        draggable.parentAfterDrag = transform;
-        draggable.onWhiteboard = true;
+        if (droppedObject.GetComponent<Draggable>() != null) {
+            Draggable draggable = droppedObject.GetComponent<Draggable>();
+            draggable.parentAfterDrag = transform;
+            draggable.onWhiteboard = true;
+        }
     }
 
 }
