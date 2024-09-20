@@ -99,5 +99,11 @@ public class BlockData_Editor : Editor {
         } else {
             return;
         }
+
+        SerializedObject so = new SerializedObject(target);
+        SerializedProperty stringsProperty = so.FindProperty("arguments");
+
+        EditorGUILayout.PropertyField(stringsProperty, true);
+        so.ApplyModifiedProperties();
     }
 }
