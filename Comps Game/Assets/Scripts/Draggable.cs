@@ -75,7 +75,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void SetValue() {
-        this.gameObject.GetComponent<PropertyElement>().value = inputField.GetComponent<TMP_InputField>().text;
+        BlockData blockData = this.gameObject.GetComponent<BlockData>();
+        if (blockData.arguments.Count == 0) {
+            blockData.arguments.Add(inputField.GetComponent<TMP_InputField>().text);
+        } else {
+            blockData.arguments[0] = inputField.GetComponent<TMP_InputField>().text;
+        }
     }
 
     void Awake() {
