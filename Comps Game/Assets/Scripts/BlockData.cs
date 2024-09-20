@@ -3,8 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Properties;
 using UnityEngine;
+using UnityEditor;
 
-public class BlockData {
+
+public class BlockData : MonoBehaviour {
     
     public enum BlockType {
         PROPERTY,
@@ -16,6 +18,7 @@ public class BlockData {
     // make sure this is the same as behavior element
     // or does this make behavior element unnecessary?
     public enum Behavior {
+        NONE,
         FACE,
         STEP,
         RUN,
@@ -26,13 +29,13 @@ public class BlockData {
         ENTER_RANGE,
         SET_TARGET_ENEMY,
         LOOP,
-        CONDITIONAL,
-        NONE
+        CONDITIONAL
     }
 
     // make sure this is the same as property element
     // or does this make property element unnecessary?
     public enum Property {
+        NONE,
         NAME,
         HEALTH,
         DEFENSE,
@@ -46,22 +49,22 @@ public class BlockData {
         SPECIAL_POWER,
         SPECIAL_SPEED,
         HEAL_POWER,
-        HEAL_SPEED,
-        NONE
+        HEAL_SPEED
     }
 
-    public BlockType blockType;
-    public Behavior behavior;
-    public Property property;
-    public List<string> arguments;
+    // tagging as hidden for use in custom editor
+    [HideInInspector] public BlockType blockType;
+    [HideInInspector] public Behavior behavior;
+    [HideInInspector] public Property property;
+    [HideInInspector] public List<string> arguments;
 
-    // full constructor
-    public BlockData(BlockType blockType, Behavior behavior, Property property, List<string> arguments) {
-        this.blockType = blockType;
-        this.behavior = behavior;
-        this.property = property;
-        this.arguments = arguments;
-    }
+    // // full constructor
+    // public BlockData(BlockType blockType, Behavior behavior, Property property, List<string> arguments) {
+    //     this.blockType = blockType;
+    //     this.behavior = behavior;
+    //     this.property = property;
+    //     this.arguments = arguments;
+    // }
 
     // constructor for property
     public BlockData(BlockType blockType, Property property, List<string> arguments) {
@@ -79,4 +82,22 @@ public class BlockData {
         this.arguments = arguments;
     }
 
+}
+
+
+[CustomEditor(typeof(BlockData))]
+public class BlockData_Editor : Editor {
+    public override void OnInspectorGUI() {
+        var script = (BlockData)target;
+
+        script.blockType = (BlockData.BlockType)EditorGUILayout.EnumPopup("Block Type", script.blockType);
+
+        if (script.blockType == BlockData.BlockType.PROPERTY) {
+            script.property = (BlockData.Property)EditorGUILayout.EnumPopup("Property", script.property);
+        } else if (script.blockType == BlockData.BlockType.BEHAVIOR){
+            script.behavior = (BlockData.Behavior)EditorGUILayout.EnumPopup("Behavior", script.behavior);
+        } else {
+            return;
+        }
+    }
 }
