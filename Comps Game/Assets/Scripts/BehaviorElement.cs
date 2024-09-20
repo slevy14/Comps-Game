@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 [System.Serializable]
 public class BehaviorElement : MonoBehaviour {
 
-    public enum Property {
+    public enum Behavior {
         FACE,
         STEP,
         RUN,
@@ -20,6 +20,6 @@ public class BehaviorElement : MonoBehaviour {
         CONDITIONAL
     }
 
-    public Property property;
+    public Behavior behavior;
     public string value;
 }
