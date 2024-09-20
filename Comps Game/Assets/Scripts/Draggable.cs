@@ -13,6 +13,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private TMP_Text text;
     private Image overlapBox;
     private GameObject inputField;
+    private GameObject whiteboard;
 
     // debug
     [SerializeField] private GameObject prevBlock;
@@ -33,6 +34,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
             SetMaskable(false);
+            // SetBlockRaycasts(false);
+
         }
     }
 
@@ -55,17 +58,19 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData) {
         if (!isHeader) {
             // Debug.Log("enddrag called");
-            if (!SnapToBlock(eventData) && prevBlock != null) { // attempt to snap, but if not:
-                prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
-                prevBlock = null;
-            }
 
             if (!onWhiteboard) {
                 Destroy(this.gameObject);
             }
 
+            if (!SnapToBlock(eventData) && prevBlock != null) { // attempt to snap, but if not:
+                prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
+                prevBlock = null;
+            }
+
             transform.SetParent(parentAfterDrag);
             SetMaskable(true);
+            // SetBlockRaycasts(true);
         }
     }
 
@@ -84,6 +89,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         blockOffset = new Vector3(0, 50, 0);
+        whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
 
         // when this script is instantiated,
@@ -96,6 +102,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             onWhiteboard = false;
             transform.SetAsLastSibling();
             SetMaskable(false);
+            // SetBlockRaycasts(false);
         }
         // transform.SetAsLastSibling();
         // image.raycastTarget = false;
@@ -106,7 +113,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
     }
 
-    private void SetMaskable(bool value) {
+    public GameObject GetNextBlock() {
+        return this.nextBlock;
+    }
+
+    public void SetMaskable(bool value) {
         image.maskable = value;
         image.raycastTarget = value;
         text.maskable = value;
@@ -127,23 +138,32 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
+    private void SetBlockRaycasts(bool value) {
+        CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
+        canvasGroup.blocksRaycasts = value;
+        canvasGroup.ignoreParentGroups = value;
+    }
+
     // boolean, returns false if didn't snap
     private bool SnapToBlock(PointerEventData eventData) {
         // List<RaycastResult> result = new List<RaycastResult>();
         // EventSystem.current.RaycastAll(eventData.pointer)
         if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
-            Debug.Log("snapping!");
-            onWhiteboard = true; // make sure still set to true to snap
+            GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
+            if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
+                Debug.Log("snapping!");
+                onWhiteboard = true; // make sure still set to true to snap
 
-            if (this.prevBlock != null) {
-                this.prevBlock.GetComponent<Draggable>().SetNextBlock(null);
+                if (this.prevBlock != null) {
+                    this.prevBlock.GetComponent<Draggable>().SetNextBlock(null);
+                }
+
+                this.prevBlock = blockToSnapTo;
+                prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
+                UpdateBlockPositions(this.gameObject, prevBlock.transform.position - blockOffset);
+                Debug.Log(this.prevBlock.name);
+                return true; // snapped 
             }
-
-            this.prevBlock = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
-            prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
-            UpdateBlockPositions(this.gameObject, prevBlock.transform.position - blockOffset);
-            Debug.Log(this.prevBlock.name);
-            return true; // snapped
         }
         return false; // didn't snap
     }
