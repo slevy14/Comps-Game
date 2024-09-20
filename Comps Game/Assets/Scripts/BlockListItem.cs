@@ -16,16 +16,6 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
         clone.AddComponent<Draggable>();
         Destroy(clone.gameObject.GetComponent<BlockListItem>());
         eventData.pointerDrag = clone;
-        // clone.gameObject.GetComponent<Draggable>().OnBeginDrag(eventData);
-
-        // if (parentAfterDrag.tag != "whiteboard" ) {
-        //     parentAfterDrag = transform.parent;
-        // } else {
-        //     parentAfterDrag = initialParent;
-        // }
-        // transform.SetParent(transform.root);
-        // transform.SetAsLastSibling();
-        // image.raycastTarget = false;
     }
 
     public void OnDrag(PointerEventData eventData) {

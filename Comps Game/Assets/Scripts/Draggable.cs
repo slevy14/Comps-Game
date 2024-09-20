@@ -29,7 +29,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public enum BlockType {
         PROPERTY,
         BEHAVIOR,
-        FUNCTION
+        FUNCTION,
+        HEADER
     }
 
 
@@ -117,7 +118,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetNextBlock(GameObject nextBlock) {
         this.nextBlock = nextBlock;
-        Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
+        if (nextBlock != null) {
+            Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
+        } else {
+            Debug.Log("next block set to null");
+        }
     }
 
     public GameObject GetNextBlock() {
@@ -162,6 +167,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 onWhiteboard = true; // make sure still set to true to snap
 
                 if (this.prevBlock != null) {
+                    Debug.Log("setting " + this.prevBlock.name + " next to null");
                     this.prevBlock.GetComponent<Draggable>().SetNextBlock(null);
                 }
 

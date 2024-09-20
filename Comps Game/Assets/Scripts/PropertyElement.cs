@@ -7,11 +7,20 @@ using UnityEngine.EventSystems;
 public class PropertyElement : MonoBehaviour {
 
     public enum Property {
-        towerName,
-        targetingRange,
-        rotationSpeed,
-        bps
-    };
+        NAME,
+        HEALTH,
+        DEFENSE,
+        MOVE_SPEED,
+        ATTACK_RANGE,
+        MELEE_ATTACK_POWER,
+        MELEE_ATTACK_SPEED,
+        RANGED_ATTACK_POWER,
+        RANGED_ATTACK_SPEED,
+        SPECIAL_POWER,
+        SPECIAL_SPEED,
+        HEAL_POWER,
+        HEAL_SPEED
+    }
 
     public Property property;
     public string value;
