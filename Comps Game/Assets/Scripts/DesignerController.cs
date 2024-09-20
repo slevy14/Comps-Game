@@ -11,6 +11,8 @@ public class DesignerController : MonoBehaviour {
     [Header("References")]
     [SerializeField] private GameObject propertiesHeaderObject;
     [SerializeField] private GameObject behaviorHeaderObject;
+    [SerializeField] private GameObject blockDrawer;
+    [SerializeField] private GameObject warriorDrawer;
 
     private int counter = 0;
 
@@ -21,6 +23,28 @@ public class DesignerController : MonoBehaviour {
     void Update() {
 
     }
+
+
+    // for buttons
+    public void ShowBlockDrawer() {
+        if (!blockDrawer.activeSelf) {
+            blockDrawer.SetActive(true);
+        }
+        if (warriorDrawer.activeSelf) {
+            warriorDrawer.SetActive(false);
+        }
+    }
+
+    public void ShowWarriorDrawer() {
+        if (!warriorDrawer.activeSelf) {
+            warriorDrawer.SetActive(true);
+        }
+        if (blockDrawer.activeSelf) {
+            blockDrawer.SetActive(false);
+        }
+    }
+
+
 
     public void SaveTower() {
         // debug code -- for testing!!
