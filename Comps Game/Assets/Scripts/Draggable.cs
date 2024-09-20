@@ -25,6 +25,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Vector3 blockOffset;
     public bool isHeader;
 
+    // ENUMS
+    public enum BlockType {
+        PROPERTY,
+        BEHAVIOR,
+        FUNCTION
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (!isHeader) {
