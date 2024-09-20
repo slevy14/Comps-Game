@@ -8,6 +8,7 @@ TagManager:
   - overlapSpace
   - workingTower
   - disableCast
+  - STATE_MACHINE
   layers:
   - Default
   - TransparentFX
