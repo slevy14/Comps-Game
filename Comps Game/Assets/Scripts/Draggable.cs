@@ -24,6 +24,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public Transform parentAfterDrag;
     public Vector3 blockOffset;
     public bool isHeader;
+    
+    // visuals
+    [SerializeField] private TMP_Text namePreview;
 
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -81,6 +84,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         } else {
             blockData.arguments[0] = inputField.GetComponent<TMP_InputField>().text;
         }
+
+        if (blockData.property == BlockData.Property.NAME) {
+            GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = inputField.GetComponent<TMP_InputField>().text + ":";
+        }
     }
 
     void Awake() {
@@ -111,6 +118,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         // transform.SetAsLastSibling();
         // image.raycastTarget = false;
+
+        // come back to this -- not good practice to find by name!
+        // TMP_Text namePreview = GameObject.Find("NamePreview").GetComponent<TMP_Text>();
     }
 
     public void SetNextBlock(GameObject nextBlock) {
