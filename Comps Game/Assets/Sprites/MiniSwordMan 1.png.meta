@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e238f36a1083741d3bc90b5a9f38865e
+guid: 849e8cb3d37d643f18b06ca2e7710e92
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: MiniSwordMan_0
+      name: MiniSwordMan 1_0
       rect:
         serializedVersion: 2
-        x: 10
+        x: 9
         y: 161
-        width: 11
-        height: 14
+        width: 13
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b79668b17d69549e5afd01390a5a36a6
-      internalID: -405721815
+      spriteID: 8abd8dcd22c4e405bb712798130939ea
+      internalID: -284446732
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_1
+      name: MiniSwordMan 1_1
       rect:
         serializedVersion: 2
-        x: 42
+        x: 41
         y: 161
-        width: 11
-        height: 14
+        width: 13
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,61 +145,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: efcf35312ca184facbfe34ba07f61341
-      internalID: -316465864
+      spriteID: dc8680166ffe84faa93d37415921dadc
+      internalID: 1872999392
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_2
+      name: MiniSwordMan 1_2
       rect:
         serializedVersion: 2
-        x: 74
+        x: 73
         y: 161
-        width: 11
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 13e3c35fcd7224733bec1528662914e0
-      internalID: 1658313312
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_3
-      rect:
-        serializedVersion: 2
-        x: 106
-        y: 161
-        width: 11
-        height: 13
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d56a3ad0252d4491f8a280e8985ceeb7
-      internalID: -949115287
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_4
-      rect:
-        serializedVersion: 2
-        x: 11
-        y: 130
-        width: 10
+        width: 13
         height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -208,60 +166,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c2312891f48204ea9ab52167e319519b
-      internalID: -406568232
+      spriteID: 8a2d1a55d7d4d49b888ca5be16342afe
+      internalID: -1173471548
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_5
-      rect:
-        serializedVersion: 2
-        x: 43
-        y: 129
-        width: 9
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c67b602a20e134b59b88a87e5785f562
-      internalID: 1723301030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_6
-      rect:
-        serializedVersion: 2
-        x: 74
-        y: 129
-        width: 11
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3209c17e1735b4280b2df604e46c926d
-      internalID: -500050440
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_7
+      name: MiniSwordMan 1_3
       rect:
         serializedVersion: 2
         x: 105
-        y: 130
+        y: 161
         width: 13
         height: 14
       alignment: 0
@@ -271,81 +187,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 575c2070571db409aa58fe8b2215daf4
-      internalID: 363575332
+      spriteID: 3ed3a24acd95743548f022ea285126a9
+      internalID: -1404870563
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_8
-      rect:
-        serializedVersion: 2
-        x: 137
-        y: 129
-        width: 13
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d888e82c3c4fb46779a80ca9c8161490
-      internalID: 1237197437
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_9
-      rect:
-        serializedVersion: 2
-        x: 170
-        y: 129
-        width: 11
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 04e8abe89700d4f2a9e933f5d475fbe9
-      internalID: -1010932418
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_10
+      name: MiniSwordMan 1_4
       rect:
         serializedVersion: 2
         x: 10
-        y: 98
-        width: 12
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4bc7ad556e6154700a63a27c49d787af
-      internalID: 202871206
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_11
-      rect:
-        serializedVersion: 2
-        x: 42
-        y: 98
+        y: 129
         width: 12
         height: 16
       alignment: 0
@@ -355,19 +208,250 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0568aab950bd74e1cab1fc2c4b9dc9a8
-      internalID: -1053305555
+      spriteID: 5625c242bf79d43d288e42f850c3d655
+      internalID: -498277163
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_12
+      name: MiniSwordMan 1_5
       rect:
         serializedVersion: 2
-        x: 74
-        y: 97
+        x: 42
+        y: 129
         width: 11
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9494cc6ff4e4b44898103d196ba1ce2c
+      internalID: 1392693065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_6
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 129
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b340087f1ec9942069c5f1a65132707b
+      internalID: -42570683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_7
+      rect:
+        serializedVersion: 2
+        x: 104
+        y: 129
+        width: 15
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e56bd628e90b64cd3ad414c7b49fe4e1
+      internalID: -811669292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_8
+      rect:
+        serializedVersion: 2
+        x: 136
+        y: 129
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61276798b18434549b5f7a993be6ac19
+      internalID: -815464789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_9
+      rect:
+        serializedVersion: 2
+        x: 169
+        y: 129
+        width: 13
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 776c8b9e26db74c96b94d72a39e4e099
+      internalID: 1745519508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_10
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 97
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d821d51e78c9042a19a6d608bac9a6fa
+      internalID: 910498096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_11
+      rect:
+        serializedVersion: 2
+        x: 41
+        y: 97
+        width: 14
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bad30a97ede3b45caba21c1b2a38fa8c
+      internalID: 1434311289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_12
+      rect:
+        serializedVersion: 2
+        x: 73
+        y: 97
+        width: 13
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd8a1456a977742cdba95303978e5db7
+      internalID: -885060719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_13
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 65
+        width: 15
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2727789098e3c4239aaa281a4290fc8e
+      internalID: -594428718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_14
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 65
+        width: 21
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e3d7af96b144a80a4443a8ad21c8a8
+      internalID: 2142144372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_15
+      rect:
+        serializedVersion: 2
+        x: 76
+        y: 65
+        width: 17
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10cb28bb6eed4daaa74112757ca7347
+      internalID: 466784818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_16
+      rect:
+        serializedVersion: 2
+        x: 108
+        y: 65
+        width: 16
         height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -376,61 +460,61 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 726447a19c82742c9a0dc610c9d8f004
-      internalID: -1764798629
+      spriteID: 52c87ee3c9d7b48c48c54e7bd31f0444
+      internalID: -1149549692
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_13
+      name: MiniSwordMan 1_17
       rect:
         serializedVersion: 2
-        x: 8
-        y: 65
-        width: 13
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b2567963470fa46a3b1645bf4816a8c6
-      internalID: -1198910792
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_14
-      rect:
-        serializedVersion: 2
-        x: 34
-        y: 65
-        width: 19
-        height: 15
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 63d59dba5bdf54436af9d23e5844a209
-      internalID: 1518692240
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_15
-      rect:
-        serializedVersion: 2
-        x: 77
+        x: 140
         y: 65
         width: 16
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41b7d8bad02a427c842e053f309d058
+      internalID: 1576847333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_18
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 65
+        width: 14
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 431a5e8622a2d4cd58edc4ed736af868
+      internalID: -497242504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MiniSwordMan 1_19
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 33
+        width: 13
         height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -439,20 +523,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 67af7f21c113f4110984d51503d1ff37
-      internalID: 161285330
+      spriteID: fbc2b9cb7eda94b62bd04a2d0eec56dd
+      internalID: -1905252322
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_16
+      name: MiniSwordMan 1_20
       rect:
         serializedVersion: 2
-        x: 109
-        y: 65
+        x: 39
+        y: 33
         width: 15
-        height: 12
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -460,20 +544,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ac3a417f63d3480dba3a21f669cc4bf
-      internalID: -651270909
+      spriteID: 87def55fb49a14b55924f67343f47df7
+      internalID: -314270834
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_17
+      name: MiniSwordMan 1_21
       rect:
         serializedVersion: 2
-        x: 141
-        y: 65
+        x: 72
+        y: 33
         width: 14
-        height: 12
+        height: 15
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -481,62 +565,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4f8432b4fcbdd468ebefdea5601eecc2
-      internalID: 2017890779
+      spriteID: e70e13e683c2e464bb693f640919dc3a
+      internalID: 94997065
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_18
+      name: MiniSwordMan 1_22
       rect:
         serializedVersion: 2
-        x: 172
-        y: 65
-        width: 12
-        height: 12
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9746bc4be8d0743d5b1fd0f653928c71
-      internalID: -1201235865
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_19
-      rect:
-        serializedVersion: 2
-        x: 10
-        y: 33
-        width: 11
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2977105706a8a475ba8ccdbf3338ae9a
-      internalID: 2045074086
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_20
-      rect:
-        serializedVersion: 2
-        x: 40
-        y: 33
+        x: 9
+        y: 1
         width: 13
-        height: 14
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -544,41 +586,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88a0f09e160b7413695bce90db8d65bc
-      internalID: 739033530
+      spriteID: 80d4c5fa93ca5450c9a9ead716b7cd05
+      internalID: -522927380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_21
+      name: MiniSwordMan 1_23
       rect:
         serializedVersion: 2
-        x: 73
-        y: 33
-        width: 12
-        height: 14
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7bb0aac02c70c410185f538f27381ab9
-      internalID: 1516206486
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: MiniSwordMan_22
-      rect:
-        serializedVersion: 2
-        x: 10
+        x: 41
         y: 1
-        width: 11
-        height: 11
+        width: 16
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -586,20 +607,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 92fe49c91b07b4bc88d13275ba1013c3
-      internalID: 1429019399
+      spriteID: 9eaa16481b8e14adf9fb6796bb603fb9
+      internalID: 2125232820
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_23
+      name: MiniSwordMan 1_24
       rect:
         serializedVersion: 2
-        x: 42
+        x: 72
         y: 1
-        width: 14
-        height: 9
+        width: 17
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -607,20 +628,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7e7c48792b814a7491c0cc9f8640704
-      internalID: -760480293
+      spriteID: 02affb788802049fea0cd0efe904988d
+      internalID: -675028240
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: MiniSwordMan_24
+      name: MiniSwordMan 1_25
       rect:
         serializedVersion: 2
-        x: 73
+        x: 103
         y: 1
-        width: 47
-        height: 5
+        width: 18
+        height: 4
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -628,8 +649,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58df21f0954134cf9a2b1d8cb8583dc3
-      internalID: -1381985450
+      spriteID: ba32d24b0b19a4ad7accc090aadbc46d
+      internalID: 387231246
       vertices: []
       indices: 
       edges: []
@@ -645,31 +666,32 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      MiniSwordMan_0: -405721815
-      MiniSwordMan_1: -316465864
-      MiniSwordMan_10: 202871206
-      MiniSwordMan_11: -1053305555
-      MiniSwordMan_12: -1764798629
-      MiniSwordMan_13: -1198910792
-      MiniSwordMan_14: 1518692240
-      MiniSwordMan_15: 161285330
-      MiniSwordMan_16: -651270909
-      MiniSwordMan_17: 2017890779
-      MiniSwordMan_18: -1201235865
-      MiniSwordMan_19: 2045074086
-      MiniSwordMan_2: 1658313312
-      MiniSwordMan_20: 739033530
-      MiniSwordMan_21: 1516206486
-      MiniSwordMan_22: 1429019399
-      MiniSwordMan_23: -760480293
-      MiniSwordMan_24: -1381985450
-      MiniSwordMan_3: -949115287
-      MiniSwordMan_4: -406568232
-      MiniSwordMan_5: 1723301030
-      MiniSwordMan_6: -500050440
-      MiniSwordMan_7: 363575332
-      MiniSwordMan_8: 1237197437
-      MiniSwordMan_9: -1010932418
+      MiniSwordMan 1_0: -284446732
+      MiniSwordMan 1_1: 1872999392
+      MiniSwordMan 1_10: 910498096
+      MiniSwordMan 1_11: 1434311289
+      MiniSwordMan 1_12: -885060719
+      MiniSwordMan 1_13: -594428718
+      MiniSwordMan 1_14: 2142144372
+      MiniSwordMan 1_15: 466784818
+      MiniSwordMan 1_16: -1149549692
+      MiniSwordMan 1_17: 1576847333
+      MiniSwordMan 1_18: -497242504
+      MiniSwordMan 1_19: -1905252322
+      MiniSwordMan 1_2: -1173471548
+      MiniSwordMan 1_20: -314270834
+      MiniSwordMan 1_21: 94997065
+      MiniSwordMan 1_22: -522927380
+      MiniSwordMan 1_23: 2125232820
+      MiniSwordMan 1_24: -675028240
+      MiniSwordMan 1_25: 387231246
+      MiniSwordMan 1_3: -1404870563
+      MiniSwordMan 1_4: -498277163
+      MiniSwordMan 1_5: 1392693065
+      MiniSwordMan 1_6: -42570683
+      MiniSwordMan 1_7: -811669292
+      MiniSwordMan 1_8: -815464789
+      MiniSwordMan 1_9: 1745519508
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

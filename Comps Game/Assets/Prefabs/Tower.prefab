@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 7943467810876172427}
   - component: {fileID: 6682901533315238488}
   m_Layer: 0
-  m_Name: Blue Ship
+  m_Name: Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
