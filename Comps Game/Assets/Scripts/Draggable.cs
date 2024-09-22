@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System;
+using Unity.VisualScripting;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
@@ -15,9 +16,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private GameObject inputField;
     private GameObject whiteboard;
 
-    // debug
+    // serialized for debug
     [SerializeField] private GameObject prevBlock;
     [SerializeField] private GameObject nextBlock;
+    [SerializeField] private Vector3 initialPos;
 
     // parenting
     public bool onWhiteboard;
@@ -30,7 +32,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
     public void OnBeginDrag(PointerEventData eventData) {
-        if (!isHeader) {
+        // if (!isHeader) {
             // Debug.Log("begindrag called");
             parentAfterDrag = transform.parent;
             onWhiteboard = false;
@@ -38,24 +40,33 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetAsLastSibling();
             SetMaskable(false);
             // SetBlockRaycasts(false);
-
-        }
+        // } else {
+            initialPos = transform.position;
+        // }
     }
 
     public void OnDrag(PointerEventData eventData) {
-        if (!isHeader) {
+        // if (!isHeader) {
             // move all other blocks in function
             UpdateBlockPositions(this.gameObject, Input.mousePosition);
-        }
+        // }
     }
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
-        if (!isHeader) {
+        // if (!isHeader) {
             block.transform.position = newPosition;
             if (nextBlock != null) {
                 nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
             }
+        // }
+    }
+
+    public void DestroyStack(GameObject block) {
+        if (this.nextBlock != null) {
+            this.nextBlock.GetComponent<Draggable>().DestroyStack(nextBlock);
         }
+        Debug.Log("destroying " + this.gameObject.name);
+        Destroy(block);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
@@ -63,7 +74,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // Debug.Log("enddrag called");
 
             if (!onWhiteboard) {
-                Destroy(this.gameObject);
+                DestroyStack(this.gameObject);
             }
 
             if (!SnapToBlock(eventData) && prevBlock != null) { // attempt to snap, but if not:
@@ -74,6 +85,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(parentAfterDrag);
             SetMaskable(true);
             // SetBlockRaycasts(true);
+        } else { // is header
+            transform.SetParent(parentAfterDrag);
+            SetMaskable(true);
+            if (!onWhiteboard) {
+                Debug.Log("header no longer on whiteboard");
+                UpdateBlockPositions(this.gameObject, initialPos);
+            }
         }
     }
 
