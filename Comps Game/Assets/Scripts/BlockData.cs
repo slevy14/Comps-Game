@@ -56,7 +56,7 @@ public class BlockData : MonoBehaviour {
     [HideInInspector] public BlockType blockType;
     [HideInInspector] public Behavior behavior;
     [HideInInspector] public Property property;
-    [HideInInspector] public List<string> arguments;
+    [HideInInspector] public List<string> values;
 
     // // full constructor
     // public BlockData(BlockType blockType, Behavior behavior, Property property, List<string> arguments) {
@@ -67,19 +67,19 @@ public class BlockData : MonoBehaviour {
     // }
 
     // constructor for property
-    public BlockData(BlockType blockType, Property property, List<string> arguments) {
+    public BlockData(BlockType blockType, Property property, List<string> values) {
         this.blockType = blockType;
         this.behavior = Behavior.NONE;
         this.property = property;
-        this.arguments = arguments;
+        this.values = values;
     }
 
     // constructor for behavior
-    public BlockData(BlockType blockType, Behavior behavior, List<string> arguments) {
+    public BlockData(BlockType blockType, Behavior behavior, List<string> values) {
         this.blockType = blockType;
         this.behavior = behavior;
         this.property = Property.NONE;
-        this.arguments = arguments;
+        this.values = values;
     }
 
 }

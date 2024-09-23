@@ -97,10 +97,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetValue() {
         BlockData blockData = this.gameObject.GetComponent<BlockData>();
-        if (blockData.arguments.Count == 0) {
-            blockData.arguments.Add(inputField.GetComponent<TMP_InputField>().text);
+        if (blockData.values.Count == 0) {
+            blockData.values.Add(inputField.GetComponent<TMP_InputField>().text);
         } else {
-            blockData.arguments[0] = inputField.GetComponent<TMP_InputField>().text;
+            blockData.values[0] = inputField.GetComponent<TMP_InputField>().text;
         }
 
         if (blockData.property == BlockData.Property.NAME) {
