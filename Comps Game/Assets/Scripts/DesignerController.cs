@@ -83,7 +83,7 @@ public class DesignerController : MonoBehaviour {
         WarriorProperties warriorProperties = new WarriorProperties();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
-            if (blockData.blockType == BlockData.BlockType.PROPERTY) {
+            if (blockData.blockType == BlockData.BlockType.PROPERTY && blockData.values.Count != 0) {
                 switch (blockData.property) {
                     // FIXME: add some kind of output if parsing doesn't work
                     case BlockData.Property.NAME:

@@ -77,6 +77,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 DestroyStack(this.gameObject);
             }
 
+            blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+
             if (!SnapToBlock(eventData) && prevBlock != null) { // attempt to snap, but if not:
                 prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
                 prevBlock = null;
@@ -118,7 +120,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
         }
 
-        blockOffset = new Vector3(0, 50, 0);
+        Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
+        blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
         whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
 

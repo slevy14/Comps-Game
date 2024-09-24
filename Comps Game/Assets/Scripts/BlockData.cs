@@ -101,7 +101,7 @@ public class BlockData_Editor : Editor {
         }
 
         SerializedObject so = new SerializedObject(target);
-        SerializedProperty stringsProperty = so.FindProperty("arguments");
+        SerializedProperty stringsProperty = so.FindProperty("values");
 
         EditorGUILayout.PropertyField(stringsProperty, true);
         so.ApplyModifiedProperties();
