@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Properties;
 using UnityEngine;
+
+#if UNITY_EDITOR
 using UnityEditor;
+#endif
 
 
 public class BlockData : MonoBehaviour {
@@ -84,7 +87,7 @@ public class BlockData : MonoBehaviour {
 
 }
 
-
+#if UNITY_EDITOR
 [CustomEditor(typeof(BlockData))]
 public class BlockData_Editor : Editor {
     public override void OnInspectorGUI() {
@@ -107,3 +110,4 @@ public class BlockData_Editor : Editor {
         so.ApplyModifiedProperties();
     }
 }
+#endif
