@@ -105,9 +105,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             blockData.values[0] = inputField.GetComponent<TMP_InputField>().text;
         }
 
-        if (blockData.property == BlockData.Property.NAME) {
-            GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = inputField.GetComponent<TMP_InputField>().text + ":";
-        }
+        // if (blockData.property == BlockData.Property.NAME) {
+        //     GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = inputField.GetComponent<TMP_InputField>().text + ":";
+        // }
     }
 
     void Awake() {

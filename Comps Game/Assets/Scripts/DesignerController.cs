@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DesignerController : MonoBehaviour {
 
@@ -15,6 +17,10 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject useSpecialHeaderObject;
     [SerializeField] private GameObject blockDrawer;
     [SerializeField] private GameObject warriorDrawer;
+    [Space]
+    [SerializeField] private GameObject warriorThumbnailPrefab;
+    [SerializeField] public List<SpriteData> spriteDataList;
+    [SerializeField] public int spriteDataIndex;
 
     void Start() {
 
@@ -66,6 +72,7 @@ public class DesignerController : MonoBehaviour {
     public WarriorPropertiesAndBehavior ParseProperties() {
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
         WarriorPropertiesAndBehavior warriorPropertiesAndBehavior = new WarriorPropertiesAndBehavior();
+        warriorPropertiesAndBehavior.spriteIndex = spriteDataIndex;
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.PROPERTY && blockData.values.Count != 0) {
@@ -73,6 +80,7 @@ public class DesignerController : MonoBehaviour {
                     // FIXME: add some kind of output if parsing doesn't work
                     case BlockData.Property.NAME:
                         warriorPropertiesAndBehavior.warriorName = blockData.values[0];
+                        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = warriorPropertiesAndBehavior.warriorName;
                         break;
                     case BlockData.Property.HEALTH:
                         float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.health);
@@ -166,6 +174,11 @@ public class DesignerController : MonoBehaviour {
     }
 
 
+
+    // LOADING
+
+
+
 }
 
 // for saving!
@@ -185,6 +198,8 @@ public class WarriorPropertiesAndBehavior {
     public float specialSpeed;
     public float healPower;
     public float healSpeed;
+
+    public int spriteIndex;
 
     public List<BlockDataStruct> moveFunctions;
     public List<BlockDataStruct> useWeaponFunctions;
@@ -206,6 +221,8 @@ public class WarriorPropertiesAndBehavior {
         specialSpeed = 0;
         healPower = 0;
         healSpeed = 0;
+
+        spriteIndex = 0;
 
         moveFunctions = new List<BlockDataStruct>();
         useWeaponFunctions = new List<BlockDataStruct>();
