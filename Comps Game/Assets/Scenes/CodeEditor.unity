@@ -1021,6 +1021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57d7adb7c74964f12b2297ab77d20c37, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  designerController: {fileID: 213865990}
 --- !u!1 &158451981
 GameObject:
   m_ObjectHideFlags: 0
@@ -1194,6 +1195,18 @@ MonoBehaviour:
   blockDrawer: {fileID: 2025558271}
   warriorDrawer: {fileID: 760881708}
   warriorThumbnailPrefab: {fileID: 2532878633810055107, guid: d63b6d67b83564317846ab357b659b83, type: 3}
+  spriteDataList:
+  - sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: 892689537, guid: 33eb14522c3d8488c80ad906faa202ae, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
+    animator: {fileID: 0}
+  spriteDataIndex: 0
 --- !u!224 &231774488 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6203173914870123526, guid: cff379b95f16a4a57b345231d9e2d5bb, type: 3}
