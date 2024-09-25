@@ -61,32 +61,56 @@ public class BlockData : MonoBehaviour {
     [HideInInspector] public Property property;
     [HideInInspector] public List<string> values;
 
-    // // full constructor
-    // public BlockData(BlockType blockType, Behavior behavior, Property property, List<string> arguments) {
-    //     this.blockType = blockType;
-    //     this.behavior = behavior;
-    //     this.property = property;
-    //     this.arguments = arguments;
-    // }
-
-    // constructor for property
-    public BlockData(BlockType blockType, Property property, List<string> values) {
-        this.blockType = blockType;
-        this.behavior = Behavior.NONE;
-        this.property = property;
-        this.values = values;
-    }
-
-    // constructor for behavior
-    public BlockData(BlockType blockType, Behavior behavior, List<string> values) {
-        this.blockType = blockType;
-        this.behavior = behavior;
-        this.property = Property.NONE;
-        this.values = values;
+    public BlockDataStruct ConvertToStruct() {
+        if (blockType == BlockType.PROPERTY) {
+            return new BlockDataStruct(blockType, property, values);
+        } else if (blockType == BlockType.BEHAVIOR) {
+            return new BlockDataStruct(blockType, behavior, values);
+        } else {
+            return new BlockDataStruct(blockType, values);
+        }
     }
 
 }
 
+// struct for pass by value
+[System.Serializable]
+public struct BlockDataStruct {
+    public BlockData.BlockType blockType;
+    public BlockData.Behavior behavior;
+    public BlockData.Property property;
+    public List<string> values;
+
+     // constructor for property
+    public BlockDataStruct(BlockData.BlockType blockType, BlockData.Property property, List<string> values) {
+        this.blockType = blockType;
+        this.behavior = BlockData.Behavior.NONE;
+        this.property = property;
+        this.values = values;
+        Debug.Log("created property struct");
+    }
+
+    // constructor for behavior
+    public BlockDataStruct(BlockData.BlockType blockType, BlockData.Behavior behavior, List<string> values) {
+        this.blockType = blockType;
+        this.behavior = behavior;
+        this.property = BlockData.Property.NONE;
+        this.values = values;
+        Debug.Log("created behavior struct");
+    }
+
+    // constructor for function or header
+    public BlockDataStruct(BlockData.BlockType blockType, List<string> values) {
+        this.blockType = blockType;
+        this.behavior = BlockData.Behavior.NONE;
+        this.property = BlockData.Property.NONE;
+        this.values = values;
+    }
+}
+
+
+
+// EDITOR
 #if UNITY_EDITOR
 [CustomEditor(typeof(BlockData))]
 public class BlockData_Editor : Editor {

@@ -65,7 +65,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (this.nextBlock != null) {
             this.nextBlock.GetComponent<Draggable>().DestroyStack(nextBlock);
         }
-        Debug.Log("destroying " + this.gameObject.name);
+        // Debug.Log("destroying " + this.gameObject.name);
         Destroy(block);
     }
 
@@ -91,7 +91,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(parentAfterDrag);
             SetMaskable(true);
             if (!onWhiteboard) {
-                Debug.Log("header no longer on whiteboard");
+                // Debug.Log("header no longer on whiteboard");
                 UpdateBlockPositions(this.gameObject, initialPos);
             }
         }
@@ -120,7 +120,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
         }
 
-        Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
+        // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
         blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
         whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
@@ -146,11 +146,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetNextBlock(GameObject nextBlock) {
         this.nextBlock = nextBlock;
-        if (nextBlock != null) {
-            Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
-        } else {
-            Debug.Log("next block set to null");
-        }
+        // if (nextBlock != null) {
+        //     Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
+        // } else {
+        //     Debug.Log("next block set to null");
+        // }
     }
 
     public GameObject GetNextBlock() {
@@ -191,11 +191,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
             GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
             if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
-                Debug.Log("snapping!");
+                // Debug.Log("snapping!");
                 onWhiteboard = true; // make sure still set to true to snap
 
                 if (this.prevBlock != null) {
-                    Debug.Log("setting " + this.prevBlock.name + " next to null");
+                    // Debug.Log("setting " + this.prevBlock.name + " next to null");
                     this.prevBlock.GetComponent<Draggable>().SetNextBlock(null);
                 }
 
