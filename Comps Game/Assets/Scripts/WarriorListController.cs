@@ -9,6 +9,7 @@ public class WarriorListController : MonoBehaviour {
     public void Awake() {
         CheckSingleton();
         warriorListWrapper = new WarriorListWrapper();
+        FindJSON();
     }
 
     public void CheckSingleton() {
@@ -17,6 +18,18 @@ public class WarriorListController : MonoBehaviour {
         if (found_object != this.gameObject) {
             Destroy(this.gameObject);
         }
+    }
+
+    public void FindJSON() { // meant to be used for initialization
+        string filepath = Application.persistentDataPath + $"/warriors.json";
+        if (System.IO.File.Exists(filepath)) {
+            string json = System.IO.File.ReadAllText(filepath);
+            warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
+            Debug.Log("Warriors File exists!");
+            return;
+        }
+        Debug.Log("Warriors file doesn't exist. Creating a new file.");
+        UpdateJSON();
     }
 
     public void UpdateJSON() {
