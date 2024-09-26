@@ -18,14 +18,17 @@ public class StateMachine : MonoBehaviour {
     }
 
     public void Awake() {
+        CheckSingleton();
+    }
+
+    public void CheckSingleton() {
         DontDestroyOnLoad(this.gameObject);
         GameObject[] found_objects = GameObject.FindGameObjectsWithTag("STATE_MACHINE");
         foreach (GameObject obj in found_objects) {
             if (obj != this.gameObject) {
-                Destroy(obj);
+                Destroy(this.gameObject);
             }
         }
-
     }
 
 }

@@ -10,6 +10,9 @@ public class DesignerController : MonoBehaviour {
     [Header("DEBUG")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
 
+    [Header("SAVE/LOAD")]
+    [SerializeField] private WarriorListController warriorListController; 
+
     [Header("REFERENCES")]
     [Header("Headers")]
     [SerializeField] private GameObject propertiesHeaderObject;
@@ -29,12 +32,11 @@ public class DesignerController : MonoBehaviour {
     [Header("Property Blocks")]
     [SerializeField] private List<GameObject> propertyBlocks;
 
+    // INITIALIZING
     void Start() {
-
-    }
-
-    void Update() {
-
+        if (warriorListController == null) {
+            warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
+        }
     }
 
 
@@ -67,7 +69,8 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.moveFunctions = ParseMove();
         _WarriorFunctionalityData.useWeaponFunctions = ParseUseWeapon();
         _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
-        SaveIntoJSON(_WarriorFunctionalityData);
+        // SaveIntoJSON(_WarriorFunctionalityData);
+        UpdateWarriorList(_WarriorFunctionalityData);
     }
 
 
@@ -76,6 +79,10 @@ public class DesignerController : MonoBehaviour {
         string filePath = Application.persistentDataPath + $"/{warriorFunctionalityData.warriorName}.json";
         System.IO.File.WriteAllText(filePath, warriorPropertiesJSON);
         Debug.Log("saving json at " + filePath);
+    }
+
+    public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData) {
+        warriorListController.AddWarrior(warriorFunctionalityData.warriorName, warriorFunctionalityData);
     }
 
     public string ParseName() {
@@ -164,31 +171,6 @@ public class DesignerController : MonoBehaviour {
 
 
 
-}
-
-// for saving!
-[System.Serializable]
-public class WarriorFunctionalityData {
-    public string warriorName;
-
-    public int spriteIndex;
-
-    public List<BlockDataStruct> properties;
-    public List<BlockDataStruct> moveFunctions;
-    public List<BlockDataStruct> useWeaponFunctions;
-    public List<BlockDataStruct> useSpecialFunctions;
-
-
-    public WarriorFunctionalityData() { // set default values with constructor
-        warriorName = "noname";
-
-        spriteIndex = 0;
-
-        properties = new List<BlockDataStruct>();
-        moveFunctions = new List<BlockDataStruct>();
-        useWeaponFunctions = new List<BlockDataStruct>();
-        useSpecialFunctions = new List<BlockDataStruct>();
-    }
 }
 
 
