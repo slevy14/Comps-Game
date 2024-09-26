@@ -10,17 +10,24 @@ public class DesignerController : MonoBehaviour {
     [Header("DEBUG")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
 
-    [Header("References")]
+    [Header("REFERENCES")]
+    [Header("Headers")]
     [SerializeField] private GameObject propertiesHeaderObject;
     [SerializeField] private GameObject moveHeaderObject;
     [SerializeField] private GameObject useWeaponHeaderObject;
     [SerializeField] private GameObject useSpecialHeaderObject;
+
+    [Header("Drawers")]
     [SerializeField] private GameObject blockDrawer;
     [SerializeField] private GameObject warriorDrawer;
-    [Space]
+    
+    [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
     [SerializeField] public List<SpriteData> spriteDataList;
     [SerializeField] public int spriteDataIndex;
+
+    [Header("Property Blocks")]
+    [SerializeField] private List<GameObject> propertyBlocks;
 
     void Start() {
 

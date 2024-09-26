@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &9048745786309485866
+--- !u!1001 &2522946502365973122
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,15 +10,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3183704397426555999, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_Name
-      value: NameBlock Variant
+      value: HealPowerBlock Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
-      value: 'Name:'
+      value: 'Heal Power:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: m_fontSize
+      value: 22.4
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: property
-      value: 1
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 9002237579248771133, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_Pivot.x
