@@ -59,80 +59,58 @@ public class DesignerController : MonoBehaviour {
 
 
     // Saving
-    public void SaveTower() {
-        WarriorPropertiesAndBehavior _WarriorPropertiesAndBehavior = ParseProperties();
-        _WarriorPropertiesAndBehavior.moveFunctions = ParseMove();
-        _WarriorPropertiesAndBehavior.useWeaponFunctions = ParseUseWeapon();
-        _WarriorPropertiesAndBehavior.useSpecialFunctions = ParseUseSpecial();
-        SaveIntoJSON(_WarriorPropertiesAndBehavior);
+    public void SaveWarrior() {
+        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData();
+        _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
+        _WarriorFunctionalityData.warriorName = ParseName();
+        _WarriorFunctionalityData.properties = ParseProperties();
+        _WarriorFunctionalityData.moveFunctions = ParseMove();
+        _WarriorFunctionalityData.useWeaponFunctions = ParseUseWeapon();
+        _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
+        SaveIntoJSON(_WarriorFunctionalityData);
     }
 
 
-    public void SaveIntoJSON(WarriorPropertiesAndBehavior warriorPropertiesAndBehavior) {
-        string warriorPropertiesJSON = JsonUtility.ToJson(warriorPropertiesAndBehavior);
-        string filePath = Application.persistentDataPath + $"/{warriorPropertiesAndBehavior.warriorName}.json";
+    public void SaveIntoJSON(WarriorFunctionalityData warriorFunctionalityData) {
+        string warriorPropertiesJSON = JsonUtility.ToJson(warriorFunctionalityData);
+        string filePath = Application.persistentDataPath + $"/{warriorFunctionalityData.warriorName}.json";
         System.IO.File.WriteAllText(filePath, warriorPropertiesJSON);
         Debug.Log("saving json at " + filePath);
     }
 
-
-    public WarriorPropertiesAndBehavior ParseProperties() {
+    public string ParseName() {
+        string name = "noname";
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
-        WarriorPropertiesAndBehavior warriorPropertiesAndBehavior = new WarriorPropertiesAndBehavior();
-        warriorPropertiesAndBehavior.spriteIndex = spriteDataIndex;
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
-            if (blockData.blockType == BlockData.BlockType.PROPERTY && blockData.values.Count != 0) {
-                switch (blockData.property) {
-                    // FIXME: add some kind of output if parsing doesn't work
-                    case BlockData.Property.NAME:
-                        warriorPropertiesAndBehavior.warriorName = blockData.values[0];
-                        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = warriorPropertiesAndBehavior.warriorName;
-                        break;
-                    case BlockData.Property.HEALTH:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.health);
-                        break;
-                    case BlockData.Property.DEFENSE:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.defense);
-                        break;
-                    case BlockData.Property.MOVE_SPEED:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.moveSpeed);
-                        break;
-                    case BlockData.Property.MELEE_ATTACK_RANGE:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackRange);
-                        break;
-                    case BlockData.Property.MELEE_ATTACK_POWER:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackPower);
-                        break;
-                    case BlockData.Property.MELEE_ATTACK_SPEED:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackSpeed);
-                        break;
-                    case BlockData.Property.DISTANCED_RANGE:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.distancedRange);
-                        break;
-                    case BlockData.Property.RANGED_ATTACK_POWER:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.rangedAttackPower);
-                        break;
-                    case BlockData.Property.RANGED_ATTACK_SPEED:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.rangedAttackSpeed);
-                        break;
-                    case BlockData.Property.SPECIAL_POWER:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.specialPower);
-                        break;
-                    case BlockData.Property.SPECIAL_SPEED:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.specialSpeed);
-                        break;
-                    case BlockData.Property.HEAL_POWER:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.healPower);
-                        break;
-                    case BlockData.Property.HEAL_SPEED:
-                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.healSpeed);
-                        break;
+            if (blockData.blockType == BlockData.BlockType.PROPERTY) {
+                if (blockData.property == BlockData.Property.NAME && (blockData.values.Count != 0)) {
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
+                    name = blockData.values[0];
                 }
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
-        return warriorPropertiesAndBehavior;
+        return name;
+    }
+
+
+    public List<BlockDataStruct> ParseProperties() {
+        List<BlockDataStruct> propertiesList = new List<BlockDataStruct>();
+        GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
+        while (current != null) {
+            BlockData blockData = current.GetComponent<BlockData>();
+            if (blockData.blockType == BlockData.BlockType.PROPERTY) {
+                BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
+                propertiesList.Add(blockDataStruct);
+                Debug.Log("added property");
+                if (blockData.property == BlockData.Property.NAME) {
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0] : "[noname]";
+                }
+            }
+            current = current.GetComponent<Draggable>().GetNextBlock();
+        }
+        return propertiesList;
     }
 
     public List<BlockDataStruct> ParseMove() {
@@ -190,49 +168,83 @@ public class DesignerController : MonoBehaviour {
 
 // for saving!
 [System.Serializable]
-public class WarriorPropertiesAndBehavior {
+public class WarriorFunctionalityData {
     public string warriorName;
-    public float health;
-    public float defense;
-    public float moveSpeed;
-    public float meleeAttackPower;
-    public float meleeAttackSpeed;
-    public float meleeAttackRange;
-    public float rangedAttackPower;
-    public float rangedAttackSpeed;
-    public float distancedRange;
-    public float specialPower;
-    public float specialSpeed;
-    public float healPower;
-    public float healSpeed;
 
     public int spriteIndex;
 
+    public List<BlockDataStruct> properties;
     public List<BlockDataStruct> moveFunctions;
     public List<BlockDataStruct> useWeaponFunctions;
     public List<BlockDataStruct> useSpecialFunctions;
 
 
-    public WarriorPropertiesAndBehavior() { // set default values with constructor
+    public WarriorFunctionalityData() { // set default values with constructor
         warriorName = "noname";
-        health = 0;
-        defense = 0;
-        moveSpeed = 0;
-        meleeAttackPower = 0;
-        meleeAttackSpeed = 0;
-        meleeAttackRange = 0;
-        rangedAttackPower = 0;
-        rangedAttackSpeed = 0;
-        distancedRange = 0;
-        specialPower = 0;
-        specialSpeed = 0;
-        healPower = 0;
-        healSpeed = 0;
 
         spriteIndex = 0;
 
+        properties = new List<BlockDataStruct>();
         moveFunctions = new List<BlockDataStruct>();
         useWeaponFunctions = new List<BlockDataStruct>();
         useSpecialFunctions = new List<BlockDataStruct>();
     }
 }
+
+
+
+
+/* OLD CODE -- SAVING FOR LATER
+
+
+while (current != null) {
+            BlockData blockData = current.GetComponent<BlockData>();
+            if (blockData.blockType == BlockData.BlockType.PROPERTY && blockData.values.Count != 0) {
+                switch (blockData.property) {
+                    // FIXME: add some kind of output if parsing doesn't work
+                    case BlockData.Property.NAME:
+                        warriorPropertiesAndBehavior.warriorName = blockData.values[0];
+                        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = warriorPropertiesAndBehavior.warriorName;
+                        break;
+                    case BlockData.Property.HEALTH:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.health);
+                        break;
+                    case BlockData.Property.DEFENSE:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.defense);
+                        break;
+                    case BlockData.Property.MOVE_SPEED:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.moveSpeed);
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_RANGE:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackRange);
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_POWER:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackPower);
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_SPEED:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.meleeAttackSpeed);
+                        break;
+                    case BlockData.Property.DISTANCED_RANGE:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.distancedRange);
+                        break;
+                    case BlockData.Property.RANGED_ATTACK_POWER:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.rangedAttackPower);
+                        break;
+                    case BlockData.Property.RANGED_ATTACK_SPEED:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.rangedAttackSpeed);
+                        break;
+                    case BlockData.Property.SPECIAL_POWER:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.specialPower);
+                        break;
+                    case BlockData.Property.SPECIAL_SPEED:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.specialSpeed);
+                        break;
+                    case BlockData.Property.HEAL_POWER:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.healPower);
+                        break;
+                    case BlockData.Property.HEAL_SPEED:
+                        float.TryParse(blockData.values[0], out warriorPropertiesAndBehavior.healSpeed);
+                        break;
+
+*/
+
