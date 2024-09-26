@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1082782140647709165}
   - component: {fileID: 6363365879371345214}
   - component: {fileID: 5079638684566996907}
+  - component: {fileID: 1975626904814460153}
   m_Layer: 5
   m_Name: UseWeaponHeader
   m_TagString: Untagged
@@ -26,7 +27,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3791470388768564765}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.9318579, y: 0.9318579, z: 0.9318579}
   m_ConstrainProportionsScale: 0
@@ -92,10 +93,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   prevBlock: {fileID: 0}
   nextBlock: {fileID: 0}
+  initialPos: {x: 0, y: 0, z: 0}
   onWhiteboard: 0
   parentAfterDrag: {fileID: 0}
   blockOffset: {x: 0, y: 0, z: 0}
   isHeader: 1
+  namePreview: {fileID: 0}
+--- !u!114 &1975626904814460153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3791470388768564765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10a811472eda6417c9953bde4d6da04e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockType: 3
+  behavior: 0
+  property: 0
+  values: []
 --- !u!1 &5948158123386482939
 GameObject:
   m_ObjectHideFlags: 0

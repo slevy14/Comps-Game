@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,17 +21,20 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject useWeaponHeaderObject;
     [SerializeField] private GameObject useSpecialHeaderObject;
 
-    [Header("Drawers")]
+    [Header("Objects")]
     [SerializeField] private GameObject blockDrawer;
     [SerializeField] private GameObject warriorDrawer;
+    [SerializeField] private DropdownOptions dropdown;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
     [SerializeField] public List<SpriteData> spriteDataList;
     [SerializeField] public int spriteDataIndex;
 
+    [Header("Vars")]
     [Header("Property Blocks")]
     [SerializeField] private List<GameObject> propertyBlocks;
+    [SerializeField] private int editingIndex;
 
     // INITIALIZING
     void Start() {
@@ -59,10 +63,44 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    // warrior creation
+    public void CreateNewWarrior() {
+        // get index
+        editingIndex = warriorListController.GetNextIndex();
+        // reset name display
+        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname]";
+        // reset dropdown
+        dropdown.ResetSprite();
+        // clear whiteboard
+        ClearWhiteboard();
+        // save it to list
+        SaveWarrior();
+        // update warrior drawer
+    }
+
+    public void ClearWhiteboard() {
+        GameObject whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
+        List<GameObject> allBlocks = new List<GameObject>();
+        foreach (Transform child in whiteboard.transform) {
+            if (!child.GetComponent<Draggable>().isHeader) {
+                Destroy(child.gameObject);
+            }
+        }
+        propertiesHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
+        moveHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
+        useWeaponHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
+        useSpecialHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
+    }
+
+    public void UpdateWarriorDrawer() {
+        // go through warrior list
+        // create thumbnail for each warrior, place before add button
+    }
+
 
     // Saving
     public void SaveWarrior() {
-        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData();
+        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
         _WarriorFunctionalityData.properties = ParseProperties();
@@ -82,7 +120,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData) {
-        warriorListController.AddWarrior(warriorFunctionalityData.warriorName, warriorFunctionalityData);
+        warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
     }
 
     public string ParseName() {
@@ -164,12 +202,6 @@ public class DesignerController : MonoBehaviour {
         }
         return useSpecialFunctions;
     }
-
-
-
-    // LOADING
-
-
 
 }
 

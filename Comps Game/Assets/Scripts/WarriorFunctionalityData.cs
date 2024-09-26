@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class WarriorFunctionalityData {
     public string warriorName;
+    public int warriorIndex;
 
     public int spriteIndex;
 
@@ -18,6 +19,18 @@ public class WarriorFunctionalityData {
     public WarriorFunctionalityData() { // set default values with constructor
         warriorName = "noname";
 
+        spriteIndex = 0;
+
+        properties = new List<BlockDataStruct>();
+        moveFunctions = new List<BlockDataStruct>();
+        useWeaponFunctions = new List<BlockDataStruct>();
+        useSpecialFunctions = new List<BlockDataStruct>();
+    }
+
+    public WarriorFunctionalityData(int warriorIndex) { // constructor with index
+        warriorName = "noname";
+
+        this.warriorIndex = warriorIndex;
         spriteIndex = 0;
 
         properties = new List<BlockDataStruct>();
