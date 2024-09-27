@@ -40,14 +40,6 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void AddWarrior(int index, WarriorFunctionalityData warriorData) {
-        // for (int i = 0; i < warriorListWrapper.warriorList.Count; i ++) {
-        //     if (warriorListWrapper.warriorList[i].warriorName.Equals(name)) {
-        //         warriorListWrapper.warriorList[i] = warriorData;
-        //         UpdateJSON();
-        //         return;
-        //     }
-        // }
-
         if (index >= warriorListWrapper.warriorList.Count) {
             warriorListWrapper.warriorList.Add(warriorData);
         } else { // editing an existing warrior
@@ -56,8 +48,16 @@ public class WarriorListController : MonoBehaviour {
         UpdateJSON();
     }
 
-    public int GetNextIndex() {
+    public int GetCount() {
         return warriorListWrapper.warriorList.Count;
+    }
+
+    public WarriorFunctionalityData GetWarriorAtIndex(int index) {
+        if (index < warriorListWrapper.warriorList.Count && index >= 0) {
+            return warriorListWrapper.warriorList[index];
+        } else {
+            return null;
+        }
     }
 }
 

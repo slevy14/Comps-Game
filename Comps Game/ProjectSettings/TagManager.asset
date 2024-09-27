@@ -9,6 +9,7 @@ TagManager:
   - disableCast
   - STATE_MACHINE
   - editingObject
+  - thumbnail
   layers:
   - Default
   - TransparentFX

@@ -41,6 +41,7 @@ public class DesignerController : MonoBehaviour {
         if (warriorListController == null) {
             warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
         }
+        LoadWarriorDrawer();
     }
 
 
@@ -65,17 +66,20 @@ public class DesignerController : MonoBehaviour {
 
     // warrior creation
     public void CreateNewWarrior() {
+        // save active warrior first, just in case
+        SaveWarrior();
         // get index
-        editingIndex = warriorListController.GetNextIndex();
+        editingIndex = warriorListController.GetCount();
         // reset name display
         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname]";
         // reset dropdown
         dropdown.ResetSprite();
         // clear whiteboard
         ClearWhiteboard();
-        // save it to list
+        // save new warrior to list
         SaveWarrior();
         // update warrior drawer
+        AddWarriorToDrawer(editingIndex);
     }
 
     public void ClearWhiteboard() {
@@ -92,9 +96,27 @@ public class DesignerController : MonoBehaviour {
         useSpecialHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
     }
 
-    public void UpdateWarriorDrawer() {
-        // go through warrior list
-        // create thumbnail for each warrior, place before add button
+    public void AddWarriorToDrawer(int index) {
+        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
+        Instantiate(warriorThumbnailPrefab, container);
+        UpdateWarriorDrawerThumbnail(index);
+    }
+
+    public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
+        for (int i=0; i < warriorListController.GetCount(); i++) {
+            AddWarriorToDrawer(i);
+        }
+    }
+
+    public void UpdateWarriorDrawerThumbnail(int index) {
+        // get references
+        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
+        WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
+        // update sprite
+        GameObject thumbnail = container.GetChild(index+1).gameObject;
+        thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        // update name
+        thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
 
 
@@ -109,6 +131,11 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData);
+
+        // update thumbnail if saving something that already exists
+        if (editingIndex < warriorListController.GetCount()) {
+            UpdateWarriorDrawerThumbnail(editingIndex);
+        }
     }
 
 
