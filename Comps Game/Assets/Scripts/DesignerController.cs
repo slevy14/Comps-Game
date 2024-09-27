@@ -77,9 +77,7 @@ public class DesignerController : MonoBehaviour {
         // clear whiteboard
         ClearWhiteboard();
         // save new warrior to list
-        SaveWarrior();
-        // update warrior drawer
-        AddWarriorToDrawer(editingIndex);
+        InitializeWarrior();
     }
 
     public void ClearWhiteboard() {
@@ -119,6 +117,19 @@ public class DesignerController : MonoBehaviour {
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
 
+    public void InitializeWarrior() {
+        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
+        _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
+        _WarriorFunctionalityData.warriorName = ParseName();
+        _WarriorFunctionalityData.properties = ParseProperties();
+        _WarriorFunctionalityData.moveFunctions = ParseMove();
+        _WarriorFunctionalityData.useWeaponFunctions = ParseUseWeapon();
+        _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
+        // SaveIntoJSON(_WarriorFunctionalityData);
+        UpdateWarriorList(_WarriorFunctionalityData);
+        AddWarriorToDrawer(editingIndex);
+    }
+
 
     // Saving
     public void SaveWarrior() {
@@ -131,11 +142,7 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData);
-
-        // update thumbnail if saving something that already exists
-        if (editingIndex < warriorListController.GetCount()) {
-            UpdateWarriorDrawerThumbnail(editingIndex);
-        }
+        UpdateWarriorDrawerThumbnail(editingIndex);
     }
 
 
