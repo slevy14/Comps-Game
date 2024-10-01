@@ -25,6 +25,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject blockDrawer;
     [SerializeField] private GameObject warriorDrawer;
     [SerializeField] private DropdownOptions dropdown;
+    [SerializeField] private GameObject whiteboard;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -34,6 +35,7 @@ public class DesignerController : MonoBehaviour {
     [Header("Vars")]
     [Header("Property Blocks")]
     [SerializeField] private List<GameObject> propertyBlocks;
+    [SerializeField] private List<GameObject> behaviorBlocks;
     [SerializeField] private int editingIndex;
 
     // INITIALIZING
@@ -42,6 +44,7 @@ public class DesignerController : MonoBehaviour {
             warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
         }
         LoadWarriorDrawer();
+        LoadWarriorToWhiteboard(editingIndex, true);
     }
 
 
@@ -113,6 +116,8 @@ public class DesignerController : MonoBehaviour {
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
         thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        // update list reference
+        thumbnail.GetComponent<WarriorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
@@ -157,6 +162,46 @@ public class DesignerController : MonoBehaviour {
         warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
     }
 
+    // Loading
+    public void LoadWarriorToWhiteboard(int index, bool init) { // check if initializing
+        if (!init) {
+            // save previous warrior and clear whiteboard
+            SaveWarrior();
+        }
+        ClearWhiteboard();
+        // update index and load sprite
+        editingIndex = index;
+        // get data for warrior from list and load sprite
+        WarriorFunctionalityData warriorData = warriorListController.GetWarriorAtIndex(index);
+        dropdown.UpdateSprite(warriorData.spriteIndex);
+        // instantiate blocks onto the whiteboard, positioned and parented
+        // might be best to do this by just parenting the objects and then running the update position function on each header
+        GameObject currentBlock = propertiesHeaderObject;
+        foreach (BlockDataStruct block in warriorData.properties) {
+            // instantiate block parented to whiteboard
+            GameObject newBlock = Instantiate(propertyBlocks[(int)block.property], this.transform.position, this.transform.rotation, whiteboard.transform);
+            // call initialize block draggable
+            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
+            // update block data
+            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+            try {
+                newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+            } catch (System.Exception) {
+                Debug.Log("no value for current property");
+            }
+            // set current block.next to instantiated
+            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            // update current block
+            currentBlock = newBlock;
+        }
+        propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
+
+        // FIXME: DO THE SAME FOR ALL BEHAVIORS!!
+
+        // save warrior at end to make sure values are properly updated
+        SaveWarrior();
+    }
+
     public string ParseName() {
         string name = "noname";
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
@@ -172,7 +217,6 @@ public class DesignerController : MonoBehaviour {
         }
         return name;
     }
-
 
     public List<BlockDataStruct> ParseProperties() {
         List<BlockDataStruct> propertiesList = new List<BlockDataStruct>();

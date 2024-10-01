@@ -21,4 +21,9 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
     public void OnDrag(PointerEventData eventData) {
         throw new System.NotImplementedException();
     }
+
+    public void InitializeBlockDraggable() {
+        this.gameObject.AddComponent<Draggable>();
+        Destroy(this.gameObject.GetComponent<BlockListItem>());
+    }
 }

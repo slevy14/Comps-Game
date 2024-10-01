@@ -1156,6 +1156,7 @@ MonoBehaviour:
   blockDrawer: {fileID: 2025558271}
   warriorDrawer: {fileID: 760881708}
   dropdown: {fileID: 143637404}
+  whiteboard: {fileID: 1253018458}
   warriorThumbnailPrefab: {fileID: 2618148630434642962, guid: 51436a1a918a2443ea24f10ea0ebb199, type: 3}
   spriteDataList:
   - sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
@@ -1185,6 +1186,7 @@ MonoBehaviour:
   - {fileID: 4470299066584205527, guid: b0405089d2e6348f1b1948b71726f4c4, type: 3}
   - {fileID: 1093675634848429789, guid: 85eafde7e53d04dacb8d00a303cb8b55, type: 3}
   - {fileID: 3051472885601951067, guid: dde6084c48c90426bbd621a5f02d1a07, type: 3}
+  behaviorBlocks: []
   editingIndex: 0
 --- !u!224 &231774488 stripped
 RectTransform:

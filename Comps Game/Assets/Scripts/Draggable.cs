@@ -110,6 +110,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // }
     }
 
+    public void SetInputFieldValue(String val) {
+        inputField.GetComponent<TMP_InputField>().text = val;
+    }
+
     void Awake() {
         int childCount = this.gameObject.transform.childCount;
         image = this.gameObject.GetComponent<Image>();

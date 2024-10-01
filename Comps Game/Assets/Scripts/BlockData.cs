@@ -71,6 +71,10 @@ public class BlockData : MonoBehaviour {
         }
     }
 
+    public void SetBlockDataValues(List<string> vals) {
+        this.values = vals;
+    }
+
 }
 
 // struct for pass by value

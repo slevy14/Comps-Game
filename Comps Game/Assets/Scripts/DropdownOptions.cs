@@ -23,6 +23,12 @@ public class DropdownOptions : MonoBehaviour {
         // dropdown.options[selectedIndex].image;
     }
 
+    public void UpdateSprite(int index) {
+        activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = designerController.spriteDataList[index].sprite;
+        dropdown.value = index;
+        designerController.spriteDataIndex = index;
+    } 
+
     public void ResetSprite() {
         dropdown.value = 0;
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = designerController.spriteDataList[0].sprite;
