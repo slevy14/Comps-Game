@@ -526,7 +526,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name
-      value: Behavior Variant
+      value: Behavior_Input
       objectReference: {fileID: 0}
     - target: {fileID: 5939100936248499671, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_AnchorMax.x
@@ -570,11 +570,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9002237579248771133, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 250
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 9002237579248771133, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 9002237579248771133, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_LocalPosition.x

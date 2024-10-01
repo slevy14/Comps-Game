@@ -215,6 +215,7 @@ public class DesignerController : MonoBehaviour {
             // }
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
             // update current block
             currentBlock = newBlock;
         }
@@ -237,6 +238,7 @@ public class DesignerController : MonoBehaviour {
             // }
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
             // update current block
             currentBlock = newBlock;
         }
@@ -259,6 +261,7 @@ public class DesignerController : MonoBehaviour {
             // }
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
             // update current block
             currentBlock = newBlock;
         }

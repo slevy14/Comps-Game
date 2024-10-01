@@ -1186,7 +1186,10 @@ MonoBehaviour:
   - {fileID: 4470299066584205527, guid: b0405089d2e6348f1b1948b71726f4c4, type: 3}
   - {fileID: 1093675634848429789, guid: 85eafde7e53d04dacb8d00a303cb8b55, type: 3}
   - {fileID: 3051472885601951067, guid: dde6084c48c90426bbd621a5f02d1a07, type: 3}
-  behaviorBlocks: []
+  behaviorBlocks:
+  - {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+  - {fileID: 1098426666670071029, guid: 8d6d73d592aac4c1c88783654cc0c1f2, type: 3}
+  - {fileID: 1098426666670071029, guid: 61ba1f38109844194bbced16a86c5626, type: 3}
   editingIndex: 0
 --- !u!224 &231774488 stripped
 RectTransform:
