@@ -184,6 +184,7 @@ public class DesignerController : MonoBehaviour {
             newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
             // update block data
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+            newBlock.GetComponent<Draggable>().SetMaskable(true);
             try {
                 newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
             } catch (System.Exception) {
@@ -191,12 +192,77 @@ public class DesignerController : MonoBehaviour {
             }
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
             // update current block
             currentBlock = newBlock;
         }
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
-        // FIXME: DO THE SAME FOR ALL BEHAVIORS!!
+        // repeat for move
+        currentBlock = moveHeaderObject;
+        foreach (BlockDataStruct block in warriorData.moveFunctions) {
+            // instantiate block parented to whiteboard
+            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
+            // call initialize block draggable
+            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
+            // update block data
+            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+            newBlock.GetComponent<Draggable>().SetMaskable(true);
+            // try {
+            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+            // } catch (System.Exception) {
+            //     Debug.Log("no value for current property");
+            // }
+            // set current block.next to instantiated
+            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            // update current block
+            currentBlock = newBlock;
+        }
+        moveHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(moveHeaderObject, moveHeaderObject.transform.position);
+
+        // repeat for weapon
+        currentBlock = useWeaponHeaderObject;
+        foreach (BlockDataStruct block in warriorData.useWeaponFunctions) {
+            // instantiate block parented to whiteboard
+            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
+            // call initialize block draggable
+            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
+            // update block data
+            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+            newBlock.GetComponent<Draggable>().SetMaskable(true);
+            // try {
+            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+            // } catch (System.Exception) {
+            //     Debug.Log("no value for current property");
+            // }
+            // set current block.next to instantiated
+            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            // update current block
+            currentBlock = newBlock;
+        }
+        useWeaponHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(useWeaponHeaderObject, useWeaponHeaderObject.transform.position);
+
+        // repeat for special
+        currentBlock = useSpecialHeaderObject;
+        foreach (BlockDataStruct block in warriorData.useSpecialFunctions) {
+            // instantiate block parented to whiteboard
+            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
+            // call initialize block draggable
+            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
+            // update block data
+            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+            newBlock.GetComponent<Draggable>().SetMaskable(true);
+            // try {
+            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+            // } catch (System.Exception) {
+            //     Debug.Log("no value for current property");
+            // }
+            // set current block.next to instantiated
+            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+            // update current block
+            currentBlock = newBlock;
+        }
+        useSpecialHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(useSpecialHeaderObject, useSpecialHeaderObject.transform.position);
 
         // save warrior at end to make sure values are properly updated
         SaveWarrior();

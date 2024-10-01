@@ -5,7 +5,6 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using System;
-using Unity.VisualScripting;
 
 public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
@@ -39,6 +38,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             transform.SetParent(transform.root);
             transform.SetAsLastSibling();
             SetMaskable(false);
+
+            // remove from linked list
+            if (prevBlock != null) {
+                prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
+                Debug.Log("updated prev block next");
+                prevBlock = null;
+            }
             // SetBlockRaycasts(false);
         // } else {
             initialPos = transform.position;
@@ -79,9 +85,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
 
-            if (!SnapToBlock(eventData) && prevBlock != null) { // attempt to snap, but if not:
-                prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
-                prevBlock = null;
+            if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
+                // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
             }
 
             transform.SetParent(parentAfterDrag);
@@ -155,6 +160,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // } else {
         //     Debug.Log("next block set to null");
         // }
+    }
+
+    public void SetPrevBlock(GameObject prevBlock) {
+        this.prevBlock = prevBlock;
     }
 
     public GameObject GetNextBlock() {
