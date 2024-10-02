@@ -18,7 +18,6 @@ public class WarriorThumbnail : MonoBehaviour, IPointerDownHandler {
     }
 
     public void OnPointerDown(PointerEventData eventData) {
-        Debug.Log(gameObject.name + " clicked at index " + warriorIndex);
         if (SceneManager.GetActiveScene().name == "CodeEditor") {            
             designerController.LoadWarriorToWhiteboard(warriorIndex, false);
         }
