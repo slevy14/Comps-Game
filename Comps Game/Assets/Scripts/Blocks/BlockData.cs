@@ -91,7 +91,7 @@ public struct BlockDataStruct {
         this.behavior = BlockData.Behavior.NONE;
         this.property = property;
         this.values = values;
-        Debug.Log("created property struct");
+        // Debug.Log("created property struct");
     }
 
     // constructor for behavior
@@ -100,7 +100,7 @@ public struct BlockDataStruct {
         this.behavior = behavior;
         this.property = BlockData.Property.NONE;
         this.values = values;
-        Debug.Log("created behavior struct");
+        // Debug.Log("created behavior struct");
     }
 
     // constructor for function or header

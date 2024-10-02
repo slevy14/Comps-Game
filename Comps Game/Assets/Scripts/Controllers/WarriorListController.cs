@@ -6,6 +6,8 @@ public class WarriorListController : MonoBehaviour {
 
     [SerializeField] private WarriorListWrapper warriorListWrapper; //serializing for debug
 
+    public static WarriorListController Instance = null; // for persistent
+
     public void Awake() {
         CheckSingleton();
         warriorListWrapper = new WarriorListWrapper();
@@ -13,11 +15,19 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void CheckSingleton() {
-        DontDestroyOnLoad(this.gameObject);
-        GameObject found_object = GameObject.Find("WarriorListPersistent");
-        if (found_object != this.gameObject) {
+        // DontDestroyOnLoad(this.gameObject);
+        // GameObject found_object = GameObject.Find("WarriorListPersistent");
+        // if (found_object != this.gameObject) {
+        //     Destroy(this.gameObject);
+        // }
+        if (Instance == null) {
+            Instance = this;
+        } else {
             Destroy(this.gameObject);
+            return;
         }
+        // Make this object stay around when switching scenes
+        DontDestroyOnLoad(this.gameObject);
     }
 
     public void FindJSON() { // meant to be used for initialization
