@@ -58,6 +58,17 @@ public class WarriorListController : MonoBehaviour {
         UpdateJSON();
     }
 
+    public void RemoveWarrior(int index) {
+        warriorListWrapper.warriorList.RemoveAt(index);
+        for (int i = 0; i < warriorListWrapper.warriorList.Count; i++) {
+            warriorListWrapper.warriorList[i].warriorIndex = i;
+        }
+        Debug.Log("deleted! remaining warriors are:");
+        for (int i = 0; i < warriorListWrapper.warriorList.Count; i++) {
+            Debug.Log(warriorListWrapper.warriorList[i].warriorName);
+        }
+    }
+
     public int GetCount() {
         return warriorListWrapper.warriorList.Count;
     }

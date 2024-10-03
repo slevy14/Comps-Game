@@ -26,6 +26,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject warriorDrawer;
     [SerializeField] private DropdownOptions dropdown;
     [SerializeField] private GameObject whiteboard;
+    [SerializeField] private GameObject deleteMenu;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -103,6 +104,14 @@ public class DesignerController : MonoBehaviour {
         UpdateWarriorDrawerThumbnail(index);
     }
 
+    public void RemoveAllWarriorsFromDrawer() {
+        // loop through backwards to remove each warrior
+        int count = warriorListController.GetCount() + 1;
+        for (int i = count; i > 0; i--) {
+            Destroy(warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject);
+        }
+    }
+
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
         for (int i=0; i < warriorListController.GetCount(); i++) {
             AddWarriorToDrawer(i);
@@ -120,6 +129,8 @@ public class DesignerController : MonoBehaviour {
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
+
+        Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
 
     public void InitializeWarrior() {
@@ -278,9 +289,9 @@ public class DesignerController : MonoBehaviour {
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
                 if (blockData.property == BlockData.Property.NAME && (blockData.values.Count != 0)) {
-                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
                     name = blockData.values[0];
                 }
+                GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
@@ -295,7 +306,7 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 propertiesList.Add(blockDataStruct);
-                Debug.Log("added property");
+                // Debug.Log("added property");
                 if (blockData.property == BlockData.Property.NAME) {
                     GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0] : "[noname]";
                 }
@@ -313,7 +324,7 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 moveFunctions.Add(blockDataStruct);
-                Debug.Log("added move function");
+                // Debug.Log("added move function");
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
@@ -328,7 +339,7 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 useWeaponFunctions.Add(blockDataStruct);
-                Debug.Log("added use weapon function");
+                // Debug.Log("added use weapon function");
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
@@ -343,11 +354,47 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 useSpecialFunctions.Add(blockDataStruct);
-                Debug.Log("added use special function");
+                // Debug.Log("added use special function");
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
         return useSpecialFunctions;
+    }
+
+    // Deleting
+    // first prompt the user with the button to delete the currently selected warrior
+    public void PromptDelete() {
+        // show object that has the permanent delete button
+        deleteMenu.SetActive(true);
+    }
+
+    public void DontDelete() {
+        deleteMenu.SetActive(false);
+    }
+
+    public void DeleteWarrior() {
+        // hide object with permanent delete button
+        deleteMenu.SetActive(false);
+
+        // remove warrior from list
+        // renumber indices within list
+        warriorListController.RemoveWarrior(editingIndex);
+
+        // clear warrior drawer
+        RemoveAllWarriorsFromDrawer();
+
+        // load warrior at last index --> also clears whiteboard
+            // if list now empty, create a new blank one and load it
+        // reload warrior drawer
+        if (warriorListController.GetCount() == 0) {
+            warriorListController.AddWarrior(0, new WarriorFunctionalityData());
+        }
+        // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
+        LoadWarriorDrawer();
+        LoadWarriorToWhiteboard(editingIndex-1, true);
+        for (int i=0; i < warriorListController.GetCount(); i++) {
+            UpdateWarriorDrawerThumbnail(i);
+        }
     }
 
 }
