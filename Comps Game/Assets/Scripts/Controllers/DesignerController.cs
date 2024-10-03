@@ -117,7 +117,7 @@ public class DesignerController : MonoBehaviour {
         GameObject thumbnail = container.GetChild(index+1).gameObject;
         thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
-        thumbnail.GetComponent<WarriorThumbnail>().warriorIndex = index;
+        thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }

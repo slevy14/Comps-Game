@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class WarriorBehavior : MonoBehaviour {
+public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // codeable properties
     [Header("Properties")]
@@ -21,6 +22,14 @@ public class WarriorBehavior : MonoBehaviour {
     [SerializeField] private float healPower;
     [SerializeField] private float healSpeed;
 
+    [Space(20)]
+    [Header("References")]
+    private Sprite sprite;
+
+    [Header("vars")]
+    private bool isDragging;
+    private Vector3 offset;
+
     // block lists
     private List<BlockData> propertiesData;
     private List<BlockData> moveData;
@@ -31,7 +40,39 @@ public class WarriorBehavior : MonoBehaviour {
     // setup
     void Awake() {
         SetProperties();
+
+        // first child is visual
+        sprite = transform.GetChild(0).GetComponent<Sprite>();
     }
+
+    // dragging
+
+    public void OnMouseDown() {
+        isDragging = true;
+        offset = transform.position - InputManager.Instance.GetSelectedMapPosition();
+        Debug.Log("mousedown");
+    }
+
+    public void OnMouseDrag() {
+        transform.position = InputManager.Instance.GetSelectedMapPosition() + offset;
+    }
+
+    public void OnMouseUp() {
+        isDragging = false;
+    }
+
+    // public void OnBeginDrag(PointerEventData eventData) {
+    //     transform.position = InputManager.Instance.GetSelectedMapPosition();
+    //     Debug.Log("began drag");
+    // }
+
+    public void OnDrag(PointerEventData eventData) {
+        transform.position = InputManager.Instance.GetSelectedMapPosition();
+    }
+
+    // public void OnEndDrag(PointerEventData eventData) {
+
+    // }
 
 
     // Start is called before the first frame update

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1213668426891203332}
   - component: {fileID: 7423490586464735086}
   m_Layer: 5
-  m_Name: WarriorThumbnail
+  m_Name: WarriorEditorThumbnail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

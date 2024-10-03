@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public class WarriorThumbnail : MonoBehaviour, IPointerDownHandler {
+public class WarriorEditorThumbnail : MonoBehaviour, IPointerDownHandler {
 
     public WarriorListController warriorListController;
     public DesignerController designerController;

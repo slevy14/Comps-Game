@@ -26,6 +26,25 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private int editingIndex;
 
 
+    // SINGLETON
+    public static LevelController Instance = null; // for persistent
+
+    public void Awake() {
+        CheckSingleton();
+    }
+
+    public void CheckSingleton() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+        // Make this object stay around when switching scenes
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+
     void Start() {
         if (warriorListController == null) {
             warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
@@ -53,7 +72,7 @@ public class LevelController : MonoBehaviour {
         GameObject thumbnail = container.GetChild(index+1).gameObject;
         thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
-        thumbnail.GetComponent<WarriorThumbnail>().warriorIndex = index;
+        thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
