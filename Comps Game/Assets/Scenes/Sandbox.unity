@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 84164061}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -202,7 +202,7 @@ GameObject:
   - component: {fileID: 214010532}
   - component: {fileID: 214010534}
   - component: {fileID: 214010533}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,7 +277,7 @@ GameObject:
   - component: {fileID: 214321405}
   - component: {fileID: 214321407}
   - component: {fileID: 214321406}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: WarriorPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 214510690}
   - component: {fileID: 214510689}
   - component: {fileID: 214510692}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Viewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -468,7 +468,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 215825398}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,7 +503,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 443280463}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Sliding Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -681,7 +681,7 @@ GameObject:
   - component: {fileID: 592989793}
   - component: {fileID: 592989795}
   - component: {fileID: 592989794}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2111,7 +2111,7 @@ GameObject:
   - component: {fileID: 1004911423}
   - component: {fileID: 1004911425}
   - component: {fileID: 1004911424}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2271,7 +2271,7 @@ GameObject:
   - component: {fileID: 1042667526}
   - component: {fileID: 1042667525}
   - component: {fileID: 1042667524}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Scrollbar Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2398,7 +2398,7 @@ GameObject:
   - component: {fileID: 1105107901}
   - component: {fileID: 1105107900}
   - component: {fileID: 1105107903}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: EditorButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2580,6 +2580,7 @@ MonoBehaviour:
   mouseIndicator: {fileID: 1023632309}
   inputManager: {fileID: 1570545657}
   tilemap: {fileID: 792051390}
+  currentDraggingObject: {fileID: 0}
 --- !u!1001 &1185418479
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2649,7 +2650,7 @@ GameObject:
   - component: {fileID: 1187519518}
   - component: {fileID: 1187519517}
   - component: {fileID: 1187519516}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: UI Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2752,7 +2753,7 @@ GameObject:
   - component: {fileID: 1233500184}
   - component: {fileID: 1233500183}
   - component: {fileID: 1233500182}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Scroll View
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2990,7 +2991,7 @@ GameObject:
   - component: {fileID: 1518613717}
   - component: {fileID: 1518613719}
   - component: {fileID: 1518613718}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3173,7 +3174,7 @@ GameObject:
   - component: {fileID: 1618630161}
   - component: {fileID: 1618630160}
   - component: {fileID: 1618630159}
-  m_Layer: 2
+  m_Layer: 5
   m_Name: Scrollbar Vertical
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3300,7 +3301,7 @@ GameObject:
   - component: {fileID: 1642890536}
   - component: {fileID: 1642890535}
   - component: {fileID: 1642890539}
-  m_Layer: 5
+  m_Layer: 2
   m_Name: Background Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}

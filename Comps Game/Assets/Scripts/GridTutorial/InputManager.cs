@@ -10,23 +10,23 @@ public class InputManager : MonoBehaviour {
 
     [SerializeField] private LayerMask placementLayerMask;
 
-    // SINGLETON
-    public static InputManager Instance = null; // for persistent
+    // // SINGLETON
+    // public static InputManager Instance = null; // for persistent
 
-    public void Awake() {
-        CheckSingleton();
-    }
+    // public void Awake() {
+    //     CheckSingleton();
+    // }
 
-    public void CheckSingleton() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(this.gameObject);
-            return;
-        }
-        // Make this object stay around when switching scenes
-        DontDestroyOnLoad(this.gameObject);
-    }
+    // public void CheckSingleton() {
+    //     if (Instance == null) {
+    //         Instance = this;
+    //     } else {
+    //         Destroy(this.gameObject);
+    //         return;
+    //     }
+    //     // Make this object stay around when switching scenes
+    //     DontDestroyOnLoad(this.gameObject);
+    // }
 
     public Vector3 GetSelectedMapPosition() {
         Vector3 mousePos = Input.mousePosition;

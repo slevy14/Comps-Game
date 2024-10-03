@@ -25,10 +25,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [Space(20)]
     [Header("References")]
     private Sprite sprite;
+    private InputManager inputManager;
 
-    [Header("vars")]
-    public bool isDragging;
-    private Vector3 offset;
+    [Header("Dragging")]
+    private bool isDragging;
+    private Vector3 initialPos;
+    public bool isNew = true;
 
     // block lists
     private List<BlockData> propertiesData;
@@ -40,14 +42,43 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // setup
     void Awake() {
         SetProperties();
+        inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
     }
 
+    // DRAGGING
     // ondrag needed to start drag from ui
     public void OnDrag(PointerEventData eventData) {
-        transform.position = InputManager.Instance.GetSelectedMapPosition();
+        // transform.position = inputManager.GetSelectedMapPosition();
+    }
+
+    public void StartDrag() {
+        isDragging = true;
+        // save initial position
+        initialPos = transform.position;
+    }
+
+    public void EndDrag(int endIndex) { // index for switch
+        isDragging = false;
+        switch (endIndex) {
+            case 0: // end over empty grid tile
+                break;
+            case 1: // end over full grid tile
+            case 2: // end out of bounds
+                transform.position = initialPos;
+                break;
+            case 3: // end over drawer
+                Destroy(this.gameObject);
+                break;
+            default:
+                break;
+        }
+        // if over empty grid tile, place
+        // if over full grid tile, return to initial
+        // if out of bounds, return to initial
+        // if over drawer at bottom, destroy
     }
     
 
@@ -59,9 +90,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // Update is called once per frame
     void Update() {
-        if (isDragging) transform.position = InputManager.Instance.GetSelectedMapPosition(); // this allows dragging from worldspace
+        // // DRAG
+        if (isDragging) { // this allows dragging from worldspace
+            transform.position = inputManager.GetSelectedMapPosition();
+        }
         
     }
+
+    
 
 
     // FUNCTIONS FROM WHITEBOARD HEADERS

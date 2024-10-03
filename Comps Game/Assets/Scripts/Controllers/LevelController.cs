@@ -10,6 +10,7 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private WarriorListController warriorListController; 
 
     [Header("REFERENCES")]
+    [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
 
     [Header("Objects")]
     [SerializeField] private GameObject warriorDrawer;
@@ -26,24 +27,28 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private int editingIndex;
 
 
-    // SINGLETON
-    public static LevelController Instance = null; // for persistent
+    // // SINGLETON
+    // public static LevelController Instance = null; // for persistent
 
-    public void Awake() {
-        CheckSingleton();
+    // public void Awake() {
+    //     CheckSingleton();
+    // }
+
+    // public void CheckSingleton() {
+    //     if (Instance == null) {
+    //         Instance = this;
+    //     } else {
+    //         Destroy(this.gameObject);
+    //         return;
+    //     }
+    // }
+    //     // Make this object stay around when switching scenes
+    //     DontDestroyOnLoad(this.gameObject);
+    // }
+
+    void Awake() {
+        objectsOnGrid = new Dictionary<GameObject, Vector2>();
     }
-
-    public void CheckSingleton() {
-        if (Instance == null) {
-            Instance = this;
-        } else {
-            Destroy(this.gameObject);
-            return;
-        }
-        // Make this object stay around when switching scenes
-        DontDestroyOnLoad(this.gameObject);
-    }
-
 
     void Start() {
         if (warriorListController == null) {

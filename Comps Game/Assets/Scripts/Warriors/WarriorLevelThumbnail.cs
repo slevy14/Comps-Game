@@ -11,15 +11,24 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
     public int warriorIndex;
     public GameObject warriorPrefab;
 
+    private PlacementSystem placementSystem;
+
     public void Awake() {
         warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
-        levelController = LevelController.Instance;
+        levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
+        placementSystem = GameObject.Find("PlacementSystem").GetComponent<PlacementSystem>();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
         Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(this.transform.position.x, this.transform.position.y, 1));
         GameObject warrior = Instantiate(warriorPrefab, newPoint, this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
+
+        warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = levelController.spriteDataList[warriorListController.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
+
+
         eventData.pointerDrag = warrior;
+        warrior.GetComponent<WarriorBehavior>().StartDrag();
+        placementSystem.currentDraggingObject = warrior;
     }
 
     public void OnDrag(PointerEventData eventData) {
