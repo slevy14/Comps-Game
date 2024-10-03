@@ -13,26 +13,23 @@ public class PlacementSystem : MonoBehaviour {
 
     public GameObject currentDraggingObject;
 
-    private LevelController levelController;
+    // private LevelController levelController;
 
-    // // SINGLETON
-    // public static PlacementSystem Instance = null; // for persistent
+    // SINGLETON
+    public static PlacementSystem Instance = null; // for persistent
 
-    // public void Awake() {
-    //     CheckSingleton();
-    // }
-
-    // public void CheckSingleton() {
-    //     if (Instance == null) {
-    //         Instance = this;
-    //     } else {
-    //         Destroy(this.gameObject);
-    //         return;
-    //     }
-    // }
+    public void CheckSingleton() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
 
     void Awake() {
-        levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
+        CheckSingleton();
+        // levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
     }
 
     void Update() {
@@ -64,28 +61,29 @@ public class PlacementSystem : MonoBehaviour {
         }
 
         if (currentDraggingObject != null) {
-            if (tilemap.HasTile(gridPosition)) {
-                currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
-                // mouseIndicator.transform.position = mousePosition;
-            } else {
-                currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
-            }
+            // if (tilemap.HasTile(gridPosition)) {
+            //     currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
+            //     // mouseIndicator.transform.position = mousePosition;
+            // } else {
+            //     currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
+            // }
 
-            // currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
+            currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
         }
 
         if (Input.GetMouseButtonUp(0)) {
             if (currentDraggingObject != null) {
+                currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
                 Vector2 gridPosVec2 = new Vector2(gridPosition.x, gridPosition.y);
                 int endIndex = 0; // figure out what collision, 0 if none
                 if (IsOverUI()) { // if over drawer, index 3
                     endIndex = 3;
-                } else if (levelController.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
+                } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
                 } else if (!tilemap.HasTile(gridPosition)) { // if no tile, index 2
                     endIndex = 2;
                 } else {
-                    levelController.objectsOnGrid[currentDraggingObject] = gridPosVec2;
+                    LevelController.Instance.objectsOnGrid[currentDraggingObject] = gridPosVec2;
                 }
 
                 // special case -- if new and not on grid, just destroy it
@@ -95,7 +93,7 @@ public class PlacementSystem : MonoBehaviour {
                     currentDraggingObject.GetComponent<WarriorBehavior>().isNew = false;
                 }
 
-                Debug.Log(endIndex);
+                // Debug.Log(endIndex);
                 currentDraggingObject.GetComponent<WarriorBehavior>().EndDrag(endIndex);
                 currentDraggingObject = null;
             }
@@ -109,7 +107,7 @@ public class PlacementSystem : MonoBehaviour {
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
         for (int i = 0; i < raycastResults.Count; i++) {
-            Debug.Log(raycastResults[i].gameObject.name);
+            // Debug.Log(raycastResults[i].gameObject.name);
             if (raycastResults[i].gameObject.layer != 5) { // ui layer
                 raycastResults.RemoveAt(i);
                 i--;

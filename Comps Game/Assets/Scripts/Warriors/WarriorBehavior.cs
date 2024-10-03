@@ -58,6 +58,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         isDragging = true;
         // save initial position
         initialPos = transform.position;
+
+        // visuals
+        this.transform.localScale *= 1.5f;
     }
 
     public void EndDrag(int endIndex) { // index for switch
@@ -75,10 +78,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             default:
                 break;
         }
-        // if over empty grid tile, place
-        // if over full grid tile, return to initial
-        // if out of bounds, return to initial
-        // if over drawer at bottom, destroy
+        // visuals
+        this.transform.localScale /= 1.5f;
     }
     
 
@@ -91,9 +92,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // Update is called once per frame
     void Update() {
         // // DRAG
-        if (isDragging) { // this allows dragging from worldspace
-            transform.position = inputManager.GetSelectedMapPosition();
-        }
+        // if (isDragging) { // this allows dragging from worldspace
+        //     transform.position = inputManager.GetSelectedMapPosition();
+        // }
         
     }
 

@@ -27,26 +27,23 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private int editingIndex;
 
 
-    // // SINGLETON
-    // public static LevelController Instance = null; // for persistent
+    // SINGLETON
+    public static LevelController Instance = null; // for persistent
 
-    // public void Awake() {
-    //     CheckSingleton();
-    // }
-
-    // public void CheckSingleton() {
-    //     if (Instance == null) {
-    //         Instance = this;
-    //     } else {
-    //         Destroy(this.gameObject);
-    //         return;
-    //     }
-    // }
+    public void CheckSingleton() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
     //     // Make this object stay around when switching scenes
     //     DontDestroyOnLoad(this.gameObject);
     // }
 
     void Awake() {
+        CheckSingleton();
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
     }
 
