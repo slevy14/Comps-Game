@@ -27,7 +27,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private Sprite sprite;
 
     [Header("vars")]
-    private bool isDragging;
+    public bool isDragging;
     private Vector3 offset;
 
     // block lists
@@ -45,34 +45,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         sprite = transform.GetChild(0).GetComponent<Sprite>();
     }
 
-    // dragging
-
-    public void OnMouseDown() {
-        isDragging = true;
-        offset = transform.position - InputManager.Instance.GetSelectedMapPosition();
-        Debug.Log("mousedown");
-    }
-
-    public void OnMouseDrag() {
-        transform.position = InputManager.Instance.GetSelectedMapPosition() + offset;
-    }
-
-    public void OnMouseUp() {
-        isDragging = false;
-    }
-
-    // public void OnBeginDrag(PointerEventData eventData) {
-    //     transform.position = InputManager.Instance.GetSelectedMapPosition();
-    //     Debug.Log("began drag");
-    // }
-
+    // ondrag needed to start drag from ui
     public void OnDrag(PointerEventData eventData) {
         transform.position = InputManager.Instance.GetSelectedMapPosition();
     }
-
-    // public void OnEndDrag(PointerEventData eventData) {
-
-    // }
+    
 
 
     // Start is called before the first frame update
@@ -82,6 +59,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // Update is called once per frame
     void Update() {
+        if (isDragging) transform.position = InputManager.Instance.GetSelectedMapPosition(); // this allows dragging from worldspace
         
     }
 

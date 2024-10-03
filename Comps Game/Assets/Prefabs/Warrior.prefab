@@ -93,11 +93,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1412293607659242944}
-  - component: {fileID: 3205541287839864288}
   - component: {fileID: 6094265623376006910}
+  - component: {fileID: 218680730118774417}
   m_Layer: 0
   m_Name: Warrior
-  m_TagString: editingObject
+  m_TagString: warrior
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -118,32 +118,6 @@ Transform:
   - {fileID: 7943467810876172427}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3205541287839864288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5776567480984243591}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e67214d3b7e0d4df5b3b6577c25a787c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  warriorName: 
-  health: 0
-  defense: 0
-  moveSpeed: 0
-  meleeAttackPower: 0
-  meleeAttackSpeed: 0
-  meleeAttackRange: 0
-  rangedAttackPower: 0
-  rangedAttackSpeed: 0
-  distancedRange: 0
-  specialPower: 0
-  specialSpeed: 0
-  healPower: 0
-  healSpeed: 0
 --- !u!61 &6094265623376006910
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -189,3 +163,29 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.65, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &218680730118774417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5776567480984243591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e67214d3b7e0d4df5b3b6577c25a787c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warriorName: 
+  health: 0
+  defense: 0
+  moveSpeed: 0
+  meleeAttackPower: 0
+  meleeAttackSpeed: 0
+  meleeAttackRange: 0
+  rangedAttackPower: 0
+  rangedAttackSpeed: 0
+  distancedRange: 0
+  specialPower: 0
+  specialSpeed: 0
+  healPower: 0
+  healSpeed: 0
