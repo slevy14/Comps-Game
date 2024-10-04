@@ -59,6 +59,7 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void RemoveWarrior(int index) {
+        Debug.Log("count is " + warriorListWrapper.warriorList.Count + ", removing " + warriorListWrapper.warriorList[index].warriorName);
         warriorListWrapper.warriorList.RemoveAt(index);
         for (int i = 0; i < warriorListWrapper.warriorList.Count; i++) {
             warriorListWrapper.warriorList[i].warriorIndex = i;

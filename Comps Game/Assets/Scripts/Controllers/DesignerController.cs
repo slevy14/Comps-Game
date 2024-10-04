@@ -409,7 +409,8 @@ public class DesignerController : MonoBehaviour {
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex-1, true);
         DebugGetThumbnailData();
-        Debug.Log("got here");
+
+        // warriorListController.FindJSON(); // reload json file
     }
 
 }
