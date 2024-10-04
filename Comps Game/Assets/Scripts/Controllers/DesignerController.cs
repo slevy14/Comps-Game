@@ -112,6 +112,13 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    public void DebugGetThumbnailData() {
+        for (int i = 1; i < warriorListController.GetCount() + 1; i++) {
+            GameObject thumbnail = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject;
+            Debug.Log("index " + i + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + thumbnail.GetComponent<Image>().sprite);
+        }
+    }
+
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
         for (int i=0; i < warriorListController.GetCount(); i++) {
             AddWarriorToDrawer(i);
@@ -130,7 +137,7 @@ public class DesignerController : MonoBehaviour {
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
 
-        Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
+        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
 
     public void InitializeWarrior() {
@@ -380,8 +387,17 @@ public class DesignerController : MonoBehaviour {
         // renumber indices within list
         warriorListController.RemoveWarrior(editingIndex);
 
+        StartCoroutine(RemoveWarriorsDelay());
+
+        // // ALTERNATIVELY
+        // SceneController.Instance.LoadSceneByName("CodeEditor");
+    }
+
+    private IEnumerator RemoveWarriorsDelay() {
+        yield return new WaitForSeconds(.001f);
         // clear warrior drawer
         RemoveAllWarriorsFromDrawer();
+        yield return new WaitForSeconds(.001f);
 
         // load warrior at last index --> also clears whiteboard
             // if list now empty, create a new blank one and load it
@@ -392,9 +408,8 @@ public class DesignerController : MonoBehaviour {
         // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex-1, true);
-        for (int i=0; i < warriorListController.GetCount(); i++) {
-            UpdateWarriorDrawerThumbnail(i);
-        }
+        DebugGetThumbnailData();
+        Debug.Log("got here");
     }
 
 }
