@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,19 +9,20 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // codeable properties
     [Header("Properties")]
     [SerializeField] private string warriorName;
-    [SerializeField] private float health;
-    [SerializeField] private float defense;
-    [SerializeField] private float moveSpeed;
-    [SerializeField] private float meleeAttackPower;
-    [SerializeField] private float meleeAttackSpeed;
-    [SerializeField] private float meleeAttackRange;
-    [SerializeField] private float rangedAttackPower;
-    [SerializeField] private float rangedAttackSpeed;
-    [SerializeField] private float distancedRange;
-    [SerializeField] private float specialPower;
-    [SerializeField] private float specialSpeed;
-    [SerializeField] private float healPower;
-    [SerializeField] private float healSpeed;
+    // [SerializeField] private float health;
+    // [SerializeField] private float defense;
+    // [SerializeField] private float moveSpeed;
+    // [SerializeField] private float meleeAttackPower;
+    // [SerializeField] private float meleeAttackSpeed;
+    // [SerializeField] private float meleeAttackRange;
+    // [SerializeField] private float rangedAttackPower;
+    // [SerializeField] private float rangedAttackSpeed;
+    // [SerializeField] private float distancedRange;
+    // [SerializeField] private float specialPower;
+    // [SerializeField] private float specialSpeed;
+    // [SerializeField] private float healPower;
+    // [SerializeField] private float healSpeed;
+    [SerializeField] private Dictionary<BlockData.Property, float> propertiesDict;
 
     [Space(20)]
     [Header("References")]
@@ -33,15 +35,19 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public bool isNew = true;
 
     // block lists
-    private List<BlockData> propertiesData;
-    private List<BlockData> moveData;
-    private List<BlockData> useWeaponData;
-    private List<BlockData> useSpecialData;
+    private List<BlockDataStruct> propertiesData;
+    private List<BlockDataStruct> moveData;
+    private List<BlockDataStruct> useWeaponData;
+    private List<BlockDataStruct> useSpecialData;
 
 
     // setup
     void Awake() {
-        SetProperties();
+        // SetProperties();
+        propertiesDict = new Dictionary<BlockData.Property, float>();
+        // InitializeProperties();
+
+
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
         // first child is visual
@@ -86,7 +92,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // Start is called before the first frame update
     void Start() {
-        
     }
 
     // Update is called once per frame
@@ -98,12 +103,89 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         
     }
 
+    private void InitializeProperties() {
+        // set the value for each property to 0
+        // name and none are spectial properties that will be set to 0 but those values don't mean anything
+        foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
+            Debug.Log(property);
+            propertiesDict[property] = 0;
+        }
+        Debug.Log(this.propertiesDict);
+    }
+
+    public void SetPropertiesAndBehaviors(List<BlockDataStruct> properties, List<BlockDataStruct> move, List<BlockDataStruct> useWeapon, List<BlockDataStruct> useSpecials) {
+        InitializeProperties();
+        propertiesData = properties;
+        SetProperties();
+
+        moveData = move;
+        useWeaponData = useWeapon;
+        useSpecialData = useSpecials;
+    }
+
     
 
 
     // FUNCTIONS FROM WHITEBOARD HEADERS
     private void SetProperties() {
-
+        for (int i = 0; i < propertiesData.Count; i++) {
+            float newVal = 0;
+            switch (propertiesData[i].property) {
+                case BlockData.Property.HEALTH:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEALTH] = newVal;
+                    break;
+                case BlockData.Property.DEFENSE:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.DEFENSE] = newVal;
+                    break;
+                case BlockData.Property.MOVE_SPEED:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MOVE_SPEED] = newVal;
+                    break;
+                case BlockData.Property.MELEE_ATTACK_RANGE:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE] = newVal;
+                    break;
+                case BlockData.Property.MELEE_ATTACK_POWER:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_POWER] = newVal;
+                    break;
+                case BlockData.Property.MELEE_ATTACK_SPEED:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_SPEED] = newVal;
+                    break;
+                case BlockData.Property.DISTANCED_RANGE:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.DISTANCED_RANGE] = newVal;
+                    break;
+                case BlockData.Property.RANGED_ATTACK_POWER:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.RANGED_ATTACK_POWER] = newVal;
+                    break;
+                case BlockData.Property.RANGED_ATTACK_SPEED:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.RANGED_ATTACK_SPEED] = newVal;
+                    break;
+                case BlockData.Property.SPECIAL_POWER:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.SPECIAL_POWER] = newVal;
+                    break;
+                case BlockData.Property.SPECIAL_SPEED:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.SPECIAL_SPEED] = newVal;
+                    break;
+                case BlockData.Property.HEAL_POWER:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEAL_POWER] = newVal;
+                    break;
+                case BlockData.Property.HEAL_SPEED:
+                    float.TryParse(propertiesData[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEAL_SPEED] = newVal;
+                    break;
+                
+            }
+        }
     }
 
     private void Move() {

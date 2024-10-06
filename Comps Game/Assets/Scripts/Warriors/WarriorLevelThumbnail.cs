@@ -24,7 +24,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
         GameObject warrior = Instantiate(warriorPrefab, newPoint, this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
 
         warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = levelController.spriteDataList[warriorListController.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
-
+        warrior.GetComponent<WarriorBehavior>().SetPropertiesAndBehaviors(warriorListController.GetWarriorAtIndex(warriorIndex).properties, warriorListController.GetWarriorAtIndex(warriorIndex).moveFunctions, warriorListController.GetWarriorAtIndex(warriorIndex).useWeaponFunctions, warriorListController.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
 
         eventData.pointerDrag = warrior;
         warrior.GetComponent<WarriorBehavior>().StartDrag();

@@ -37,6 +37,7 @@ public class BlockData : MonoBehaviour {
 
     // make sure this is the same as property element
     // or does this make property element unnecessary?
+    [System.Serializable]
     public enum Property {
         NONE,
         NAME,
