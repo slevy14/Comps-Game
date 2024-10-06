@@ -22,17 +22,23 @@ public class BlockData : MonoBehaviour {
     // or does this make behavior element unnecessary?
     public enum Behavior {
         NONE,
-        FACE,
+        TURN,
         STEP,
         RUN,
         TELEPORT,
         MELEE_ATTACK,
         HEAL,
         CHARGE,
-        ENTER_RANGE,
-        SET_TARGET_ENEMY,
-        LOOP,
-        CONDITIONAL
+        SET_TARGET,
+        WHILE_LOOP,
+        FOR_LOOP,
+        END_LOOP,
+        IF,
+        ELSE,
+        END_IF,
+        MELEE_SETTINGS,
+        RANGED_SETTINGS,
+        FIRE_PROJECTILE
     }
 
     // make sure this is the same as property element
