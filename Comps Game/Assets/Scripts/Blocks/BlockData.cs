@@ -21,7 +21,7 @@ public class BlockData : MonoBehaviour {
     // make sure this is the same as behavior element
     // or does this make behavior element unnecessary?
     [System.Serializable]
-    public enum Behavior {
+    public enum BehaviorType {
         NONE              = 0,
         TURN              = 1,
         STEP              = 2,
@@ -63,7 +63,7 @@ public class BlockData : MonoBehaviour {
 
     // tagging as hidden for use in custom editor
      public BlockType blockType;
-     public Behavior behavior;
+     public BehaviorType behavior;
      public Property property;
      public List<string> values;
 
@@ -87,21 +87,21 @@ public class BlockData : MonoBehaviour {
 [System.Serializable]
 public struct BlockDataStruct {
     public BlockData.BlockType blockType;
-    public BlockData.Behavior behavior;
+    public BlockData.BehaviorType behavior;
     public BlockData.Property property;
     public List<string> values;
 
      // constructor for property
     public BlockDataStruct(BlockData.BlockType blockType, BlockData.Property property, List<string> values) {
         this.blockType = blockType;
-        this.behavior = BlockData.Behavior.NONE;
+        this.behavior = BlockData.BehaviorType.NONE;
         this.property = property;
         this.values = values;
         // Debug.Log("created property struct");
     }
 
     // constructor for behavior
-    public BlockDataStruct(BlockData.BlockType blockType, BlockData.Behavior behavior, List<string> values) {
+    public BlockDataStruct(BlockData.BlockType blockType, BlockData.BehaviorType behavior, List<string> values) {
         this.blockType = blockType;
         this.behavior = behavior;
         this.property = BlockData.Property.NONE;
@@ -112,7 +112,7 @@ public struct BlockDataStruct {
     // constructor for function or header
     public BlockDataStruct(BlockData.BlockType blockType, List<string> values) {
         this.blockType = blockType;
-        this.behavior = BlockData.Behavior.NONE;
+        this.behavior = BlockData.BehaviorType.NONE;
         this.property = BlockData.Property.NONE;
         this.values = values;
     }

@@ -2413,6 +2413,10 @@ PrefabInstance:
       value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: property
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: values.Array.size
       value: 0
       objectReference: {fileID: 0}

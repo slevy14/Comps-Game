@@ -622,7 +622,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288945708683385915, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: behavior
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3288945708683385915, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: values.Array.size

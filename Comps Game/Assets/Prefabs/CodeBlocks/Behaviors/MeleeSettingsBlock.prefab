@@ -2386,7 +2386,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name
-      value: MeleeSettingsBlock Var
+      value: MeleeSettingsBlock
       objectReference: {fileID: 0}
     - target: {fileID: 5939100936248499671, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2410,7 +2410,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: behavior
-      value: 15
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: property
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: values.Array.size

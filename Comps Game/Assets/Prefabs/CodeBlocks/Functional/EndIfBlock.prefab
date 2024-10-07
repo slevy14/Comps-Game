@@ -120,6 +120,10 @@ PrefabInstance:
       propertyPath: behavior
       value: 12
       objectReference: {fileID: 0}
+    - target: {fileID: 9223029475463859462, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: property
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6210969749071421444, guid: e916a860a0d8742ce930391f402760ba, type: 3}
