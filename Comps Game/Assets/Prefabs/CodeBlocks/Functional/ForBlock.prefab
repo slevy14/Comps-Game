@@ -36,8 +36,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 56.23761, y: 0}
-  m_SizeDelta: {x: 120.7, y: 30}
+  m_AnchoredPosition: {x: -16.1, y: 0}
+  m_SizeDelta: {x: 75.186, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2233214703703942961
 CanvasRenderer:
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Enter text...
+  m_text: '#'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -524,9 +524,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 692491535076271802, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.000015258789
+      objectReference: {fileID: 0}
+    - target: {fileID: 692491535076271802, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1137687353352619954, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: m_text
-      value: 'FOR:'
+      value: 'FOR              TIMES:'
+      objectReference: {fileID: 0}
+    - target: {fileID: 1137687353352619954, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: m_fontSize
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 2817435691589049168, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: m_Pivot.x
@@ -610,15 +622,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3288945708683385915, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: behavior
-      value: 11
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3288945708683385915, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: values.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8635968929498580786, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: m_Name
-      value: ForBlock Variant
+      value: ForBlock
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 318536039498789177, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+    - {fileID: 6316022460508859285, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+    - {fileID: 8835488669569451909, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+    - {fileID: 5830601501785978586, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2817435691589049168, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       insertIndex: -1
