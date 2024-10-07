@@ -42,7 +42,7 @@ public class DesignerController : MonoBehaviour {
     // INITIALIZING
     void Start() {
         if (warriorListController == null) {
-            warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
+            warriorListController = WarriorListController.Instance;
         }
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex, true);
@@ -385,10 +385,6 @@ public class DesignerController : MonoBehaviour {
         // hide object with permanent delete button
         deleteMenu.SetActive(false);
 
-        // remove warrior from list
-        // renumber indices within list
-        warriorListController.RemoveWarrior(editingIndex);
-
         StartCoroutine(RemoveWarriorsDelay());
 
         // // ALTERNATIVELY
@@ -396,10 +392,13 @@ public class DesignerController : MonoBehaviour {
     }
 
     private IEnumerator RemoveWarriorsDelay() {
-        yield return new WaitForSeconds(.001f);
+        // remove warrior from list
+        // renumber indices within list
+        warriorListController.RemoveWarrior(editingIndex);
+        yield return new WaitForSeconds(.01f);
         // clear warrior drawer
         RemoveAllWarriorsFromDrawer();
-        yield return new WaitForSeconds(.001f);
+        yield return new WaitForSeconds(.01f);
 
         // load warrior at last index --> also clears whiteboard
             // if list now empty, create a new blank one and load it

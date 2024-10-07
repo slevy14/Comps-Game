@@ -107,10 +107,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // set the value for each property to 0
         // name and none are spectial properties that will be set to 0 but those values don't mean anything
         foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
-            Debug.Log(property);
+            // Debug.Log(property);
             propertiesDict[property] = 0;
         }
-        Debug.Log(this.propertiesDict);
+        // Debug.Log(this.propertiesDict);
     }
 
     public void SetPropertiesAndBehaviors(List<BlockDataStruct> properties, List<BlockDataStruct> move, List<BlockDataStruct> useWeapon, List<BlockDataStruct> useSpecials) {

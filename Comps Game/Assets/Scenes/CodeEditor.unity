@@ -1489,7 +1489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEBUG_MODE: 0
-  warriorListController: {fileID: 1642187712}
+  warriorListController: {fileID: 0}
   propertiesHeaderObject: {fileID: 259251794}
   moveHeaderObject: {fileID: 1159484487}
   useWeaponHeaderObject: {fileID: 777713129}
@@ -7823,17 +7823,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2817435691589049168, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
   m_PrefabInstance: {fileID: 1612397760}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1642187712 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4962326441106925223, guid: f78d7fe8e02d2441d9569055a174b391, type: 3}
-  m_PrefabInstance: {fileID: 19677629185166727}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f4725eb0765f42eca4583caabbc5b0a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1674594768
 GameObject:
   m_ObjectHideFlags: 0
