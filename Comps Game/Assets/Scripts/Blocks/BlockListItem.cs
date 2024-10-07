@@ -24,6 +24,7 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
 
     public void InitializeBlockDraggable() {
         this.gameObject.AddComponent<Draggable>();
+        this.gameObject.GetComponent<Draggable>().onWhiteboard = true;
         Destroy(this.gameObject.GetComponent<BlockListItem>());
     }
 }
