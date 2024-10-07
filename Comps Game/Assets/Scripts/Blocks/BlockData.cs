@@ -62,10 +62,10 @@ public class BlockData : MonoBehaviour {
     }
 
     // tagging as hidden for use in custom editor
-    [HideInInspector] public BlockType blockType;
-    [HideInInspector] public Behavior behavior;
-    [HideInInspector] public Property property;
-    [HideInInspector] public List<string> values;
+     public BlockType blockType;
+     public Behavior behavior;
+     public Property property;
+     public List<string> values;
 
     public BlockDataStruct ConvertToStruct() {
         if (blockType == BlockType.PROPERTY) {
@@ -120,28 +120,28 @@ public struct BlockDataStruct {
 
 
 
-// EDITOR
-#if UNITY_EDITOR
-[CustomEditor(typeof(BlockData))]
-public class BlockData_Editor : Editor {
-    public override void OnInspectorGUI() {
-        var script = (BlockData)target;
+// // EDITOR
+// #if UNITY_EDITOR
+// [CustomEditor(typeof(BlockData))]
+// public class BlockData_Editor : Editor {
+//     public override void OnInspectorGUI() {
+//         var script = (BlockData)target;
 
-        script.blockType = (BlockData.BlockType)EditorGUILayout.EnumPopup("Block Type", script.blockType);
+//         script.blockType = (BlockData.BlockType)EditorGUILayout.EnumPopup("Block Type", script.blockType);
 
-        if (script.blockType == BlockData.BlockType.PROPERTY) {
-            script.property = (BlockData.Property)EditorGUILayout.EnumPopup("Property", script.property);
-        } else if (script.blockType == BlockData.BlockType.BEHAVIOR){
-            script.behavior = (BlockData.Behavior)EditorGUILayout.EnumPopup("Behavior", script.behavior);
-        } else {
-            return;
-        }
+//         if (script.blockType == BlockData.BlockType.PROPERTY) {
+//             script.property = (BlockData.Property)EditorGUILayout.EnumPopup("Property", script.property);
+//         } else if (script.blockType == BlockData.BlockType.BEHAVIOR){
+//             script.behavior = (BlockData.Behavior)EditorGUILayout.EnumPopup("Behavior", script.behavior);
+//         } else {
+//             return;
+//         }
 
-        SerializedObject so = new SerializedObject(target);
-        SerializedProperty stringsProperty = so.FindProperty("values");
+//         SerializedObject so = new SerializedObject(target);
+//         SerializedProperty stringsProperty = so.FindProperty("values");
 
-        EditorGUILayout.PropertyField(stringsProperty, true);
-        so.ApplyModifiedProperties();
-    }
-}
-#endif
+//         EditorGUILayout.PropertyField(stringsProperty, true);
+//         so.ApplyModifiedProperties();
+//     }
+// }
+// #endif

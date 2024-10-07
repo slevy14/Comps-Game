@@ -1290,7 +1290,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9223029475463859462, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: behavior
-      value: 9
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9223029475463859462, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: property
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9223029475463859462, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: values.Array.size
