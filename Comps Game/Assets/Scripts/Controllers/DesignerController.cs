@@ -166,6 +166,7 @@ public class DesignerController : MonoBehaviour {
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData);
         UpdateWarriorDrawerThumbnail(editingIndex);
+        warriorListController.FindJSON(); // reload json file
     }
 
 
@@ -410,7 +411,7 @@ public class DesignerController : MonoBehaviour {
         LoadWarriorToWhiteboard(editingIndex-1, true);
         DebugGetThumbnailData();
 
-        // warriorListController.FindJSON(); // reload json file
+        warriorListController.FindJSON(); // reload json file
     }
 
 }

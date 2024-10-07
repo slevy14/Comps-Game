@@ -27,8 +27,6 @@ public class BlockData : MonoBehaviour {
         RUN,
         TELEPORT,
         MELEE_ATTACK,
-        HEAL,
-        CHARGE,
         SET_TARGET,
         WHILE_LOOP,
         FOR_LOOP,
