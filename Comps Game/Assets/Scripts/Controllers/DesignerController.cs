@@ -145,9 +145,9 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
         _WarriorFunctionalityData.properties = ParseProperties();
-        _WarriorFunctionalityData.moveFunctions = ParseMove();
-        _WarriorFunctionalityData.useWeaponFunctions = ParseUseWeapon();
-        _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
+        _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
+        _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
+        _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData);
         AddWarriorToDrawer(editingIndex);
@@ -160,9 +160,9 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
         _WarriorFunctionalityData.properties = ParseProperties();
-        _WarriorFunctionalityData.moveFunctions = ParseMove();
-        _WarriorFunctionalityData.useWeaponFunctions = ParseUseWeapon();
-        _WarriorFunctionalityData.useSpecialFunctions = ParseUseSpecial();
+        _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
+        _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
+        _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData);
         UpdateWarriorDrawerThumbnail(editingIndex);
@@ -227,12 +227,14 @@ public class DesignerController : MonoBehaviour {
             // update block data
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
             newBlock.GetComponent<Draggable>().SetMaskable(true);
+
             // try {
             //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
             // } catch (System.Exception) {
             //     Debug.Log("no value for current property");
             // }
             // set current block.next to instantiated
+
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
             newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
             // update current block
@@ -325,49 +327,62 @@ public class DesignerController : MonoBehaviour {
         return propertiesList;
     }
 
-    public List<BlockDataStruct> ParseMove() {
-        List<BlockDataStruct> moveFunctions = new List<BlockDataStruct>();
-        GameObject current = moveHeaderObject.GetComponent<Draggable>().GetNextBlock();
+    public List<BlockDataStruct> ParseBehaviors(GameObject header) {
+        List<BlockDataStruct> behaviorsList = new List<BlockDataStruct>();
+        GameObject current = header.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
+                switch (blockData.behavior) {
+                    // no dropdowns
+                    case BlockData.BehaviorType.MELEE_ATTACK:
+                    case BlockData.BehaviorType.FIRE_PROJECTILE:
+                    case BlockData.BehaviorType.ELSE:
+                    case BlockData.BehaviorType.END_IF:
+                    case BlockData.BehaviorType.END_LOOP:
+                        break;
+                    // one dropdown, store value as string
+                    case BlockData.BehaviorType.TURN:
+                    case BlockData.BehaviorType.STEP:
+                    case BlockData.BehaviorType.RUN:
+                    case BlockData.BehaviorType.TELEPORT:
+                        if (blockData.values.Count != 0){
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
+                        } else {
+                            blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
+                        }
+                        break;
+                    // two dropdowns
+                    case BlockData.BehaviorType.SET_TARGET:
+                    case BlockData.BehaviorType.MELEE_SETTINGS:
+                    case BlockData.BehaviorType.RANGED_SETTINGS:
+                    case BlockData.BehaviorType.WHILE_LOOP:
+                    case BlockData.BehaviorType.IF:
+                        if (blockData.values.Count != 0) {
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
+                            blockData.values[1] = current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
+                        } else {
+                            blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
+                            blockData.values.Add(current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
+                        }
+                        break;
+                    // three dropdowns
+                    // input field
+                    case BlockData.BehaviorType.FOR_LOOP:
+                        if (blockData.values.Count != 0) {
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text;
+                        } else {
+                            blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text);
+                        }
+                        break;
+                }
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
-                moveFunctions.Add(blockDataStruct);
-                // Debug.Log("added move function");
-            }
-            current = current.GetComponent<Draggable>().GetNextBlock();
-        }
-        return moveFunctions;
-    }
-
-    public List<BlockDataStruct> ParseUseWeapon() {
-        List<BlockDataStruct> useWeaponFunctions = new List<BlockDataStruct>();
-        GameObject current = useWeaponHeaderObject.GetComponent<Draggable>().GetNextBlock();
-        while (current != null) {
-            BlockData blockData = current.GetComponent<BlockData>();
-            if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
-                BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
-                useWeaponFunctions.Add(blockDataStruct);
-                // Debug.Log("added use weapon function");
-            }
-            current = current.GetComponent<Draggable>().GetNextBlock();
-        }
-        return useWeaponFunctions;
-    }
-
-    public List<BlockDataStruct> ParseUseSpecial() {
-        List<BlockDataStruct> useSpecialFunctions = new List<BlockDataStruct>();
-        GameObject current = useSpecialHeaderObject.GetComponent<Draggable>().GetNextBlock();
-        while (current != null) {
-            BlockData blockData = current.GetComponent<BlockData>();
-            if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
-                BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
-                useSpecialFunctions.Add(blockDataStruct);
+                behaviorsList.Add(blockDataStruct);
                 // Debug.Log("added use special function");
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
-        return useSpecialFunctions;
+        return behaviorsList;
     }
 
     // Deleting

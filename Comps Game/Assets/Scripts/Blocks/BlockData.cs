@@ -18,8 +18,9 @@ public class BlockData : MonoBehaviour {
         HEADER     = 3
     }
 
-    // make sure this is the same as behavior element
-    // or does this make behavior element unnecessary?
+    // ALL PROPERTIES MUST BE MANUALLY INDEXED
+    // DO NOT CHANGE INDICES -- JUST ADD NEW ONES OR SKIP IF NEEDED
+    // name changed from "behavior" to get it to treat this like a new thing
     [System.Serializable]
     public enum BehaviorType {
         NONE              = 0,
@@ -40,8 +41,8 @@ public class BlockData : MonoBehaviour {
         FIRE_PROJECTILE   = 15
     }
 
-    // make sure this is the same as property element
-    // or does this make property element unnecessary?
+    // ALL PROPERTIES MUST BE MANUALLY INDEXED
+    // DO NOT CHANGE INDICES -- JUST ADD NEW ONES OR SKIP IF NEEDED
     [System.Serializable]
     public enum Property {
         NONE                  = 0,

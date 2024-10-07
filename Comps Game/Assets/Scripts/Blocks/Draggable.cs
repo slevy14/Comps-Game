@@ -115,7 +115,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // }
     }
 
-    public void SetInputFieldValue(String val) {
+    public void SetInputFieldValue(string val) {
         inputField.GetComponent<TMP_InputField>().text = val;
     }
 
