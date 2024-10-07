@@ -243,6 +243,7 @@ public class DesignerController : MonoBehaviour {
         // repeat for weapon
         currentBlock = useWeaponHeaderObject;
         foreach (BlockDataStruct block in warriorData.useWeaponFunctions) {
+            Debug.Log(block.behavior + ": " + (int)block.behavior);
             // instantiate block parented to whiteboard
             GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
             // call initialize block draggable

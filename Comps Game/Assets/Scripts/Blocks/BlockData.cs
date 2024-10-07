@@ -12,52 +12,53 @@ using UnityEditor;
 public class BlockData : MonoBehaviour {
     
     public enum BlockType {
-        PROPERTY,
-        BEHAVIOR,
-        FUNCTION,
-        HEADER
+        PROPERTY   = 0,
+        BEHAVIOR   = 1,
+        FUNCTION   = 2,
+        HEADER     = 3
     }
 
     // make sure this is the same as behavior element
     // or does this make behavior element unnecessary?
+    [System.Serializable]
     public enum Behavior {
-        NONE,
-        TURN,
-        STEP,
-        RUN,
-        TELEPORT,
-        MELEE_ATTACK,
-        SET_TARGET,
-        WHILE_LOOP,
-        FOR_LOOP,
-        END_LOOP,
-        IF,
-        ELSE,
-        END_IF,
-        MELEE_SETTINGS,
-        RANGED_SETTINGS,
-        FIRE_PROJECTILE
+        NONE              = 0,
+        TURN              = 1,
+        STEP              = 2,
+        RUN               = 3,
+        TELEPORT          = 4,
+        MELEE_ATTACK      = 5,
+        SET_TARGET        = 6,
+        WHILE_LOOP        = 7,
+        FOR_LOOP          = 8,
+        END_LOOP          = 9,
+        IF                = 10,
+        ELSE              = 11,
+        END_IF            = 12,
+        MELEE_SETTINGS    = 13,
+        RANGED_SETTINGS   = 14,
+        FIRE_PROJECTILE   = 15
     }
 
     // make sure this is the same as property element
     // or does this make property element unnecessary?
     [System.Serializable]
     public enum Property {
-        NONE,
-        NAME,
-        HEALTH,
-        DEFENSE,
-        MOVE_SPEED,
-        MELEE_ATTACK_RANGE,
-        MELEE_ATTACK_POWER,
-        MELEE_ATTACK_SPEED,
-        DISTANCED_RANGE,
-        RANGED_ATTACK_POWER,
-        RANGED_ATTACK_SPEED,
-        SPECIAL_POWER,
-        SPECIAL_SPEED,
-        HEAL_POWER,
-        HEAL_SPEED
+        NONE                  = 0,
+        NAME                  = 1,
+        HEALTH                = 2,
+        DEFENSE               = 3,
+        MOVE_SPEED            = 4,
+        MELEE_ATTACK_RANGE    = 5,
+        MELEE_ATTACK_POWER    = 6,
+        MELEE_ATTACK_SPEED    = 7,
+        DISTANCED_RANGE       = 8,
+        RANGED_ATTACK_POWER   = 9,
+        RANGED_ATTACK_SPEED   = 10,
+        SPECIAL_POWER         = 11,
+        SPECIAL_SPEED         = 12,
+        HEAL_POWER            = 13,
+        HEAL_SPEED            = 14
     }
 
     // tagging as hidden for use in custom editor
