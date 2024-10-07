@@ -228,12 +228,48 @@ public class DesignerController : MonoBehaviour {
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
             newBlock.GetComponent<Draggable>().SetMaskable(true);
 
-            // try {
-            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-            // } catch (System.Exception) {
-            //     Debug.Log("no value for current property");
-            // }
-            // set current block.next to instantiated
+            switch (block.behavior) {
+                // no dropdowns
+                case BlockData.BehaviorType.MELEE_ATTACK:
+                case BlockData.BehaviorType.FIRE_PROJECTILE:
+                case BlockData.BehaviorType.ELSE:
+                case BlockData.BehaviorType.END_IF:
+                case BlockData.BehaviorType.END_LOOP:
+                    break;
+                // one dropdown
+                case BlockData.BehaviorType.TURN:
+                case BlockData.BehaviorType.STEP:
+                case BlockData.BehaviorType.RUN:
+                case BlockData.BehaviorType.TELEPORT:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // two dropdowns
+                case BlockData.BehaviorType.SET_TARGET:
+                case BlockData.BehaviorType.MELEE_SETTINGS:
+                case BlockData.BehaviorType.RANGED_SETTINGS:
+                case BlockData.BehaviorType.WHILE_LOOP:
+                case BlockData.BehaviorType.IF:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // three dropdowns
+                // input field
+                case BlockData.BehaviorType.FOR_LOOP:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+            }
 
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
             newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
@@ -253,11 +289,51 @@ public class DesignerController : MonoBehaviour {
             // update block data
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
             newBlock.GetComponent<Draggable>().SetMaskable(true);
-            // try {
-            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-            // } catch (System.Exception) {
-            //     Debug.Log("no value for current property");
-            // }
+
+            switch (block.behavior) {
+                // no dropdowns
+                case BlockData.BehaviorType.MELEE_ATTACK:
+                case BlockData.BehaviorType.FIRE_PROJECTILE:
+                case BlockData.BehaviorType.ELSE:
+                case BlockData.BehaviorType.END_IF:
+                case BlockData.BehaviorType.END_LOOP:
+                    break;
+                // one dropdown
+                case BlockData.BehaviorType.TURN:
+                case BlockData.BehaviorType.STEP:
+                case BlockData.BehaviorType.RUN:
+                case BlockData.BehaviorType.TELEPORT:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // two dropdowns
+                case BlockData.BehaviorType.SET_TARGET:
+                case BlockData.BehaviorType.MELEE_SETTINGS:
+                case BlockData.BehaviorType.RANGED_SETTINGS:
+                case BlockData.BehaviorType.WHILE_LOOP:
+                case BlockData.BehaviorType.IF:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // three dropdowns
+                // input field
+                case BlockData.BehaviorType.FOR_LOOP:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+            }
+
+
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
             newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
@@ -276,11 +352,52 @@ public class DesignerController : MonoBehaviour {
             // update block data
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
             newBlock.GetComponent<Draggable>().SetMaskable(true);
-            // try {
-            //     newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-            // } catch (System.Exception) {
-            //     Debug.Log("no value for current property");
-            // }
+
+
+            switch (block.behavior) {
+                // no dropdowns
+                case BlockData.BehaviorType.MELEE_ATTACK:
+                case BlockData.BehaviorType.FIRE_PROJECTILE:
+                case BlockData.BehaviorType.ELSE:
+                case BlockData.BehaviorType.END_IF:
+                case BlockData.BehaviorType.END_LOOP:
+                    break;
+                // one dropdown
+                case BlockData.BehaviorType.TURN:
+                case BlockData.BehaviorType.STEP:
+                case BlockData.BehaviorType.RUN:
+                case BlockData.BehaviorType.TELEPORT:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // two dropdowns
+                case BlockData.BehaviorType.SET_TARGET:
+                case BlockData.BehaviorType.MELEE_SETTINGS:
+                case BlockData.BehaviorType.RANGED_SETTINGS:
+                case BlockData.BehaviorType.WHILE_LOOP:
+                case BlockData.BehaviorType.IF:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+                // three dropdowns
+                // input field
+                case BlockData.BehaviorType.FOR_LOOP:
+                    try {
+                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                    } catch (System.Exception) {
+                        Debug.Log("couldn't set value, likely an old warrior!");
+                    }
+                    break;
+            }
+
+
             // set current block.next to instantiated
             currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
             newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);

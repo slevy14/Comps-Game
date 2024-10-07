@@ -119,6 +119,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         inputField.GetComponent<TMP_InputField>().text = val;
     }
 
+    public void SetDropdownValue(string val, int childIndex) {
+        transform.GetChild(childIndex).gameObject.GetComponent<TMP_Dropdown>().value = int.Parse(val);
+    }
+
     void Awake() {
         int childCount = this.gameObject.transform.childCount;
         image = this.gameObject.GetComponent<Image>();
