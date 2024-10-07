@@ -11,7 +11,7 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
     [HideInInspector] public Transform parentAfterDrag;
 
     public void OnBeginDrag(PointerEventData eventData) {
-        GameObject clone = Instantiate(clonePrefab, this.transform.position, this.transform.rotation, transform.parent);
+        GameObject clone = Instantiate(this.gameObject, this.transform.position, this.transform.rotation, transform.parent);
         // Debug.Log("scroll parent");
         clone.AddComponent<Draggable>();
         Destroy(clone.gameObject.GetComponent<BlockListItem>());
