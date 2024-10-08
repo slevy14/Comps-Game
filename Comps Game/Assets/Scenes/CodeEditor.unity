@@ -1559,6 +1559,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DEBUG_MODE: 0
   warriorListController: {fileID: 0}
+  enemyListController: {fileID: 0}
   propertiesHeaderObject: {fileID: 259251794}
   moveHeaderObject: {fileID: 1159484487}
   useWeaponHeaderObject: {fileID: 777713129}
@@ -1580,6 +1581,23 @@ MonoBehaviour:
   - sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
     animator: {fileID: 0}
   - sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
+    animator: {fileID: 0}
+  enemySpriteDataList:
+  - sprite: {fileID: -120963063, guid: b6928f12b999343d88188c7fbe0faa10, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -754536012, guid: 5ac76611da5ed49a39a1a89839b9b9f1, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -1418316344, guid: 4526c09ec67624d10a1ff059a6a8652f, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: 390912729, guid: 5ecf987debac34173b9ec98fe6eae9c1, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -2073480682, guid: 10badc0965f3f40b79b0de055b73c867, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -929304319, guid: 4c12c34753fdc4c5fb416e9976718609, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: -909943919, guid: 2d3dca618319b487e8f768267bfb793c, type: 3}
+    animator: {fileID: 0}
+  - sprite: {fileID: 1233623321, guid: 9192d39b75c9d4b03b3f846e07f1feca, type: 3}
     animator: {fileID: 0}
   spriteDataIndex: 0
   propertyBlocks:

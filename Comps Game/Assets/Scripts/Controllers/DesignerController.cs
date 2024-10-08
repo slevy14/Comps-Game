@@ -12,7 +12,8 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private bool DEBUG_MODE; // set in inspector
 
     [Header("SAVE/LOAD")]
-    [SerializeField] private WarriorListController warriorListController; 
+    [SerializeField] private WarriorListController warriorListController;
+    [SerializeField] private EnemyListController enemyListController;
 
     [Header("REFERENCES")]
     [Header("Headers")]
@@ -32,6 +33,7 @@ public class DesignerController : MonoBehaviour {
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
     [SerializeField] public List<SpriteData> spriteDataList;
+    [SerializeField] public List<SpriteData> enemySpriteDataList;
     [SerializeField] public int spriteDataIndex;
 
     [Header("Vars")]
@@ -45,8 +47,13 @@ public class DesignerController : MonoBehaviour {
         if (warriorListController == null) {
             warriorListController = WarriorListController.Instance;
         }
+        if (enemyListController == null) {
+            enemyListController = EnemyListController.Instance;
+        }
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex, true);
+
+        LoadEnemyDrawer();
     }
 
 
@@ -155,6 +162,33 @@ public class DesignerController : MonoBehaviour {
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
+
+        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
+    }
+
+    public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
+        for (int i=0; i < enemyListController.GetCount(); i++) {
+            AddEnemyToDrawer(i);
+        }
+    }
+
+    public void AddEnemyToDrawer(int index) {
+        Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
+        Instantiate(warriorThumbnailPrefab, container);
+        UpdateEnemyDrawerThumbnail(index);
+    }
+
+    public void UpdateEnemyDrawerThumbnail(int index) {
+        // get references
+        Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
+        WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(index);
+        // update sprite
+        GameObject thumbnail = container.GetChild(index).gameObject;
+        thumbnail.GetComponent<Image>().sprite = enemySpriteDataList[enemy.spriteIndex].sprite;
+        // update list reference
+        thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
+        // update name
+        thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
 
         // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
