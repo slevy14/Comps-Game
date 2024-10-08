@@ -24,6 +24,7 @@ public class DesignerController : MonoBehaviour {
     [Header("Objects")]
     [SerializeField] private GameObject blockDrawer;
     [SerializeField] private GameObject warriorDrawer;
+    [SerializeField] private GameObject enemiesDrawer;
     [SerializeField] private DropdownOptions dropdown;
     [SerializeField] private GameObject whiteboard;
     [SerializeField] private GameObject deleteMenu;
@@ -57,6 +58,9 @@ public class DesignerController : MonoBehaviour {
         if (warriorDrawer.activeSelf) {
             warriorDrawer.SetActive(false);
         }
+        if (enemiesDrawer.activeSelf) {
+            enemiesDrawer.SetActive(false);
+        }
     }
 
     public void ShowWarriorDrawer() {
@@ -65,6 +69,21 @@ public class DesignerController : MonoBehaviour {
         }
         if (blockDrawer.activeSelf) {
             blockDrawer.SetActive(false);
+        }
+        if (enemiesDrawer.activeSelf) {
+            enemiesDrawer.SetActive(false);
+        }
+    }
+
+    public void ShowEnemiesDrawer() {
+        if (!enemiesDrawer.activeSelf) {
+            enemiesDrawer.SetActive(true);
+        }
+        if (blockDrawer.activeSelf) {
+            blockDrawer.SetActive(false);
+        }
+        if (warriorDrawer.activeSelf) {
+            warriorDrawer.SetActive(false);
         }
     }
 
@@ -281,7 +300,6 @@ public class DesignerController : MonoBehaviour {
         // repeat for weapon
         currentBlock = useWeaponHeaderObject;
         foreach (BlockDataStruct block in warriorData.useWeaponFunctions) {
-            Debug.Log(block.behavior + ": " + (int)block.behavior);
             // instantiate block parented to whiteboard
             GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
             // call initialize block draggable
