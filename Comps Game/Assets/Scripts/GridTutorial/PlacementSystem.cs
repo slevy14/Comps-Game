@@ -6,12 +6,20 @@ using UnityEngine.Tilemaps;
 
 public class PlacementSystem : MonoBehaviour {
 
+    [Header("References")]
     [SerializeField] private GameObject cellIndicator;
     [SerializeField] private GameObject mouseIndicator;
     [SerializeField] private InputManager inputManager;
     [SerializeField] private Tilemap tilemap;
 
+    [Space(20)]
     public GameObject currentDraggingObject;
+
+    [Space(20)]
+    [Header("Time")]
+    private float clickTime;
+    private float clickMaxTime = .1f;
+    private bool isDrag = false;
 
     // private LevelController levelController;
 
@@ -47,18 +55,37 @@ public class PlacementSystem : MonoBehaviour {
             // mouseIndicator.transform.position = new Vector3(0f, 0f, 1f);
         }
 
-        // dragging
-        if (Input.GetMouseButtonDown(0)) {
-            Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-            RaycastHit2D hit = Physics2D.Raycast(ray, ray);
-            if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
-                // Debug.Log(hit.collider.gameObject.name);
-                hit.collider.gameObject.GetComponent<WarriorBehavior>().StartDrag();
-                if (currentDraggingObject != hit.collider.gameObject) {
-                    currentDraggingObject = hit.collider.gameObject;
+        if (Input.GetMouseButton(0)) {
+            clickTime += Time.deltaTime;
+
+            if (clickTime >= clickMaxTime && isDrag == false) {
+                isDrag = true;
+                Debug.Log("drag started at " + Time.time);
+                // dragging logic
+                Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+                RaycastHit2D hit = Physics2D.Raycast(ray, ray);
+                if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
+                    // Debug.Log(hit.collider.gameObject.name);
+                    hit.collider.gameObject.GetComponent<WarriorBehavior>().StartDrag();
+                    Debug.Log("started drag from placement");
+                    if (currentDraggingObject != hit.collider.gameObject) {
+                        currentDraggingObject = hit.collider.gameObject;
+                    }
                 }
             }
         }
+
+        // if (Input.GetMouseButtonDown(0)) {
+        //     Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+        //     RaycastHit2D hit = Physics2D.Raycast(ray, ray);
+        //     if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
+        //         // Debug.Log(hit.collider.gameObject.name);
+        //         hit.collider.gameObject.GetComponent<WarriorBehavior>().StartDrag();
+        //         if (currentDraggingObject != hit.collider.gameObject) {
+        //             currentDraggingObject = hit.collider.gameObject;
+        //         }
+        //     }
+        // }
 
         if (currentDraggingObject != null) {
             // if (tilemap.HasTile(gridPosition)) {
@@ -97,6 +124,12 @@ public class PlacementSystem : MonoBehaviour {
                 currentDraggingObject.GetComponent<WarriorBehavior>().EndDrag(endIndex);
                 currentDraggingObject = null;
             }
+
+            if (isDrag == false) {
+                Debug.Log("twas a click at " + Time.time);
+            }
+            clickTime = 0f;
+            isDrag = false;
         }
     }
 

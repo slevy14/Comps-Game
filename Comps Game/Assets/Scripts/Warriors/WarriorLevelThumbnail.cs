@@ -28,6 +28,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
 
         eventData.pointerDrag = warrior;
         warrior.GetComponent<WarriorBehavior>().StartDrag();
+        Debug.Log("started drag from thumbnail");
         placementSystem.currentDraggingObject = warrior;
     }
 

@@ -49,7 +49,7 @@ public class LevelController : MonoBehaviour {
 
     void Start() {
         if (warriorListController == null) {
-            warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
+            warriorListController = WarriorListController.Instance;
         }
         LoadWarriorDrawer();
     }

@@ -30,7 +30,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private InputManager inputManager;
 
     [Header("Dragging")]
-    // private bool isDragging;
+    private bool isDragging;
     private Vector3 initialPos;
     public bool isNew = true;
 
@@ -61,7 +61,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void StartDrag() {
-        // isDragging = true;
+        if (isDragging) {
+            return;
+        }
+        
+        Debug.Log("started drag");
+        isDragging = true;
         // save initial position
         initialPos = transform.position;
 
@@ -70,7 +75,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void EndDrag(int endIndex) { // index for switch
-        // isDragging = false;
+        isDragging = false;
         switch (endIndex) {
             case 0: // end over empty grid tile
                 break;
