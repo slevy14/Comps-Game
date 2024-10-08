@@ -34,6 +34,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private Vector3 initialPos;
     public bool isNew = true;
 
+    public int warriorIndex;
+
     // block lists
     private List<BlockDataStruct> propertiesData;
     private List<BlockDataStruct> moveData;
@@ -64,8 +66,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         if (isDragging) {
             return;
         }
-        
-        Debug.Log("started drag");
+
+        // Debug.Log("started drag");
         isDragging = true;
         // save initial position
         initialPos = transform.position;

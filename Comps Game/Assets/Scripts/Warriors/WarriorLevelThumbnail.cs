@@ -25,11 +25,15 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
 
         warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = levelController.spriteDataList[warriorListController.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
         warrior.GetComponent<WarriorBehavior>().SetPropertiesAndBehaviors(warriorListController.GetWarriorAtIndex(warriorIndex).properties, warriorListController.GetWarriorAtIndex(warriorIndex).moveFunctions, warriorListController.GetWarriorAtIndex(warriorIndex).useWeaponFunctions, warriorListController.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
+        warrior.GetComponent<WarriorBehavior>().warriorIndex = warriorIndex;
 
         eventData.pointerDrag = warrior;
         warrior.GetComponent<WarriorBehavior>().StartDrag();
-        Debug.Log("started drag from thumbnail");
+        // Debug.Log("started drag from thumbnail");
         placementSystem.currentDraggingObject = warrior;
+
+        // FIXME: SHOW STATS SCREEN
+        LevelController.Instance.ShowStatsPanel(warriorIndex);
     }
 
     public void OnDrag(PointerEventData eventData) {

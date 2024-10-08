@@ -55,22 +55,28 @@ public class PlacementSystem : MonoBehaviour {
             // mouseIndicator.transform.position = new Vector3(0f, 0f, 1f);
         }
 
+
+
         if (Input.GetMouseButton(0)) {
             clickTime += Time.deltaTime;
 
+
             if (clickTime >= clickMaxTime && isDrag == false) {
                 isDrag = true;
-                Debug.Log("drag started at " + Time.time);
+                GameObject warrior = WarriorClicked();
+                // Debug.Log("drag started at " + Time.time);
                 // dragging logic
-                Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-                RaycastHit2D hit = Physics2D.Raycast(ray, ray);
-                if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
+                if (warrior != null) {
                     // Debug.Log(hit.collider.gameObject.name);
-                    hit.collider.gameObject.GetComponent<WarriorBehavior>().StartDrag();
-                    Debug.Log("started drag from placement");
-                    if (currentDraggingObject != hit.collider.gameObject) {
-                        currentDraggingObject = hit.collider.gameObject;
+                    warrior.GetComponent<WarriorBehavior>().StartDrag();
+                    // Debug.Log("started drag from placement");
+                    if (currentDraggingObject != warrior.gameObject) {
+                        currentDraggingObject = warrior.gameObject;
                     }
+
+                    // SHOW STATS SCREEN BASED ON WARRIOR INDEX
+                    Debug.Log("show stats screen from drag warrior");
+                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex);
                 }
             }
         }
@@ -127,6 +133,18 @@ public class PlacementSystem : MonoBehaviour {
 
             if (isDrag == false) {
                 Debug.Log("twas a click at " + Time.time);
+                GameObject thumbnail = ThumbnailClicked();
+                if (thumbnail != null) {
+                    // SHOW STATS SCREEN BASED ON WARRIOR INDEX
+                    LevelController.Instance.ShowStatsPanel(thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex);
+                    Debug.Log("show stats screen from click thumbnail");
+                }
+                GameObject warrior = WarriorClicked();
+                if (warrior != null) {
+                    // SHOW STATS SCREEN BASED ON WARRIOR INDEX
+                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex);
+                    Debug.Log("show stats screen from click warrior");
+                }
             }
             clickTime = 0f;
             isDrag = false;
@@ -147,6 +165,36 @@ public class PlacementSystem : MonoBehaviour {
             }
         }
         return raycastResults.Count > 0;
+    }
+
+    private GameObject ThumbnailClicked() { // meant to be called only when a click occurs
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        GameObject thumbnail = null;
+        for (int i = 0; i < raycastResults.Count; i++) {
+            // Debug.Log(raycastResults[i].gameObject.name);
+            if (raycastResults[i].gameObject.tag == "thumbnail") {
+                // Debug.Log("clicked on " + raycastResults[i].gameObject.name);
+                thumbnail = raycastResults[i].gameObject;
+            }
+        }
+
+        return thumbnail;
+    }
+
+    private GameObject WarriorClicked() {
+        GameObject warrior = null;
+        Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
+        RaycastHit2D hit = Physics2D.Raycast(ray, ray);
+
+        if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
+            warrior = hit.collider.gameObject;
+        }
+
+        return warrior;
     }
 
 }

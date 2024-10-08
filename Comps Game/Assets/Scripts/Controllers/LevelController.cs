@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -11,6 +12,7 @@ public class LevelController : MonoBehaviour {
 
     [Header("REFERENCES")]
     [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
+    [SerializeField] private GameObject statsPanel;
 
     [Header("Objects")]
     [SerializeField] private GameObject warriorDrawer;
@@ -45,6 +47,7 @@ public class LevelController : MonoBehaviour {
     void Awake() {
         CheckSingleton();
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
+        HideStatsPanel();
     }
 
     void Start() {
@@ -77,6 +80,95 @@ public class LevelController : MonoBehaviour {
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
+    }
+
+    public void ShowStatsPanel(int warriorIndex) {
+        if (!statsPanel.activeSelf) {
+            statsPanel.SetActive(true);
+        }
+
+        WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
+
+        statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
+        statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+    }
+
+    private string PropertiesString(WarriorFunctionalityData warriorData) {
+        string propertiesString = "";
+        List<BlockDataStruct> warriorProperties = warriorData.properties;
+        Dictionary<BlockData.Property, string> propertiesDict = new Dictionary<BlockData.Property, string>();
+        foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
+            // Debug.Log(property);
+            propertiesDict[property] = "";
+        }
+        for (int i = 0; i < warriorProperties.Count; i++) {
+            float newVal = 0;
+            switch (warriorProperties[i].property) {
+                case BlockData.Property.HEALTH:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEALTH] = newVal.ToString();
+                    break;
+                case BlockData.Property.DEFENSE:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.DEFENSE] = newVal.ToString();
+                    break;
+                case BlockData.Property.MOVE_SPEED:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MOVE_SPEED] = newVal.ToString();
+                    break;
+                case BlockData.Property.MELEE_ATTACK_RANGE:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE] = newVal.ToString();
+                    break;
+                case BlockData.Property.MELEE_ATTACK_POWER:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_POWER] = newVal.ToString();
+                    break;
+                case BlockData.Property.MELEE_ATTACK_SPEED:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.MELEE_ATTACK_SPEED] = newVal.ToString();
+                    break;
+                case BlockData.Property.DISTANCED_RANGE:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.DISTANCED_RANGE] = newVal.ToString();
+                    break;
+                case BlockData.Property.RANGED_ATTACK_POWER:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.RANGED_ATTACK_POWER] = newVal.ToString();
+                    break;
+                case BlockData.Property.RANGED_ATTACK_SPEED:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.RANGED_ATTACK_SPEED] = newVal.ToString();
+                    break;
+                case BlockData.Property.SPECIAL_POWER:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.SPECIAL_POWER] = newVal.ToString();
+                    break;
+                case BlockData.Property.SPECIAL_SPEED:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.SPECIAL_SPEED] = newVal.ToString();
+                    break;
+                case BlockData.Property.HEAL_POWER:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEAL_POWER] = newVal.ToString();
+                    break;
+                case BlockData.Property.HEAL_SPEED:
+                    float.TryParse(warriorProperties[i].values[0], out newVal);
+                    propertiesDict[BlockData.Property.HEAL_SPEED] = newVal.ToString();
+                    break;
+            }
+        }
+        foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
+            if (propertiesDict[property] != "") {
+                propertiesString += Enum.GetName(typeof(BlockData.Property), property) + ": " + propertiesDict[property] + "\n";
+            }
+        }
+        return propertiesString;
+    }
+
+    public void HideStatsPanel() {
+        statsPanel.SetActive(false);
     }
 
 }
