@@ -22,7 +22,7 @@ public class WarriorEditorThumbnail : MonoBehaviour, IPointerDownHandler {
     public void OnPointerDown(PointerEventData eventData) {
         if (SceneManager.GetActiveScene().name == "CodeEditor") {            
             // designerController.LoadWarriorToWhiteboard(warriorIndex, false);
-            designerController.ShowSavePrompt(warriorIndex);
+            designerController.ShowSavePrompt(warriorIndex, isEnemy);
         }
     }
 

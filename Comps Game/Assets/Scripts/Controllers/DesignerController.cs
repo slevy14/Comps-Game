@@ -15,6 +15,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private WarriorListController warriorListController;
     [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
+    [SerializeField] private bool isLoadingWarriorEnemy;
 
     [Header("REFERENCES")]
     [Header("Headers")]
@@ -53,7 +54,7 @@ public class DesignerController : MonoBehaviour {
             enemyListController = EnemyListController.Instance;
         }
         LoadWarriorDrawer();
-        LoadWarriorToWhiteboard(editingIndex, true);
+        LoadWarriorToWhiteboard(editingIndex, true, false);
 
         LoadEnemyDrawer();
     }
@@ -97,9 +98,10 @@ public class DesignerController : MonoBehaviour {
     }
 
     // switch save confirm buttons
-    public void ShowSavePrompt(int warriorIndex) {
+    public void ShowSavePrompt(int warriorIndex, bool isEnemy) {
         switchPromptMenu.SetActive(true);
         warriorToLoadIndex = warriorIndex;
+        isLoadingWarriorEnemy = isEnemy;
     }
 
     public void CancelSwitch() {
@@ -107,11 +109,11 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void SaveAndSwitch() {
-        LoadWarriorToWhiteboard(warriorToLoadIndex, false);
+        LoadWarriorToWhiteboard(warriorToLoadIndex, false, isLoadingWarriorEnemy);
     }
 
     public void NoSaveSwitch() {
-        LoadWarriorToWhiteboard(warriorToLoadIndex, true);
+        LoadWarriorToWhiteboard(warriorToLoadIndex, true, isLoadingWarriorEnemy);
     }
 
     // warrior creation
@@ -194,7 +196,8 @@ public class DesignerController : MonoBehaviour {
 
     public void AddEnemyToDrawer(int index) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
-        Instantiate(warriorThumbnailPrefab, container);
+        GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
+        enemyThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = true;
         UpdateEnemyDrawerThumbnail(index);
     }
 
@@ -255,7 +258,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     // Loading
-    public void LoadWarriorToWhiteboard(int index, bool noSave) { // check if initializing
+    public void LoadWarriorToWhiteboard(int index, bool noSave, bool isEnemy) { // check if initializing
         if (!noSave) {
             // save previous warrior and clear whiteboard
             SaveWarrior();
@@ -264,8 +267,19 @@ public class DesignerController : MonoBehaviour {
         // update index and load sprite
         editingIndex = index;
         // get data for warrior from list and load sprite
-        WarriorFunctionalityData warriorData = warriorListController.GetWarriorAtIndex(index);
-        dropdown.UpdateSprite(warriorData.spriteIndex);
+        WarriorFunctionalityData warriorData = new WarriorFunctionalityData();
+
+        if (!isEnemy) {
+            warriorData = warriorListController.GetWarriorAtIndex(index);
+        } else { // ENEMY
+            warriorData = EnemyListController.Instance.GetWarriorAtIndex(index);
+        }
+
+        if (!dropdown.gameObject.activeSelf) {
+            dropdown.gameObject.SetActive(true);
+        }
+        dropdown.UpdateSprite(warriorData.spriteIndex, isEnemy);
+
         // instantiate blocks onto the whiteboard, positioned and parented
         // might be best to do this by just parenting the objects and then running the update position function on each header
         GameObject currentBlock = propertiesHeaderObject;
@@ -612,7 +626,7 @@ public class DesignerController : MonoBehaviour {
         }
         // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
         LoadWarriorDrawer();
-        LoadWarriorToWhiteboard(editingIndex-1, true);
+        LoadWarriorToWhiteboard(editingIndex-1, true, false);
         DebugGetThumbnailData();
 
         warriorListController.FindJSON(); // reload json file

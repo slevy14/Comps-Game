@@ -27,7 +27,18 @@ public class DropdownOptions : MonoBehaviour {
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[index].sprite;
         dropdown.value = index;
         designerController.spriteDataIndex = index;
-    } 
+    }
+
+    public void UpdateSprite(int index, bool isEnemy) {
+        if (!isEnemy) {
+            activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[index].sprite;
+            dropdown.value = index;
+            designerController.spriteDataIndex = index;
+        } else { // ENEMY
+            activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[index].sprite;
+            this.gameObject.SetActive(false);
+        }
+    }
 
     public void ResetSprite() {
         dropdown.value = 0;
