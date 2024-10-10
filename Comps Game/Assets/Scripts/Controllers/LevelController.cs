@@ -83,7 +83,7 @@ public class LevelController : MonoBehaviour {
         WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
-        thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
@@ -98,7 +98,7 @@ public class LevelController : MonoBehaviour {
         WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
 
         statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-        statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
         statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
     }
 

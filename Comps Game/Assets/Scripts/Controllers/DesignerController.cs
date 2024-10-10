@@ -177,7 +177,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
-        thumbnail.GetComponent<Image>().sprite = spriteDataList[warrior.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
@@ -204,7 +204,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index).gameObject;
-        thumbnail.GetComponent<Image>().sprite = enemySpriteDataList[enemy.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = enemyListController.enemySpriteDataList[enemy.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
