@@ -142,6 +142,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         for (int i = 0; i < propertiesData.Count; i++) {
             float newVal = 0;
             switch (propertiesData[i].property) {
+                case BlockData.Property.NAME:
+                    // explicitly set name variable
+                    warriorName = propertiesData[i].values[0];
+                    break;
                 case BlockData.Property.HEALTH:
                     float.TryParse(propertiesData[i].values[0], out newVal);
                     propertiesDict[BlockData.Property.HEALTH] = newVal;
