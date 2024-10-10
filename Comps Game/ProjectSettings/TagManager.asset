@@ -11,6 +11,7 @@ TagManager:
   - editingObject
   - thumbnail
   - warrior
+  - enemy
   layers:
   - Default
   - TransparentFX

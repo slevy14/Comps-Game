@@ -8,7 +8,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // codeable properties
     [Header("Properties")]
-    [SerializeField] private string warriorName;
+    [SerializeField] public string warriorName;
     // [SerializeField] private float health;
     // [SerializeField] private float defense;
     // [SerializeField] private float moveSpeed;
@@ -128,6 +128,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         moveData = move;
         useWeaponData = useWeapon;
         useSpecialData = useSpecials;
+    }
+
+    public float GetProperty(BlockData.Property property) {
+        return propertiesDict[property];
     }
 
     

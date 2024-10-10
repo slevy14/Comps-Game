@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
+  m_Sprite: {fileID: -484624298, guid: b6928f12b999343d88188c7fbe0faa10, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -96,8 +96,8 @@ GameObject:
   - component: {fileID: 6094265623376006910}
   - component: {fileID: 218680730118774417}
   m_Layer: 0
-  m_Name: Warrior
-  m_TagString: warrior
+  m_Name: Enemy
+  m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

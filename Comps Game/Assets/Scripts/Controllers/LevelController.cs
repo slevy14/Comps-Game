@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,6 +28,13 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private List<GameObject> propertyBlocks;
     [SerializeField] private List<GameObject> behaviorBlocks;
     [SerializeField] private int editingIndex;
+
+
+    [Space(20)]
+    [Header("BATTLE WARRIORS")]
+    [SerializeField] List<WarriorBehavior> allWarriorsList; // sorted by SPEED VAL
+    [SerializeField] List<WarriorBehavior> yourWarriorsList;
+    [SerializeField] List<WarriorBehavior> enemyWarriorsList;
 
 
     // SINGLETON
@@ -170,5 +178,57 @@ public class LevelController : MonoBehaviour {
     public void HideStatsPanel() {
         statsPanel.SetActive(false);
     }
+
+
+    /*------------------------------------*/
+    /*          BEHAVIOR PARSING          */
+    /*------------------------------------*/
+
+
+    /* general flow of level:
+
+        PLAYER WILL:
+            investigate enemies
+            code warriors
+            place warriors
+            hit play (player can change speed of fight)
+            watch fight
+        
+        ONCE PLAY PRESSED:
+            get list of all warriors
+            get list of all enemies
+            get list of ALL UNITS TOTAL, SORTED BY SPEED
+            WHILE game not won or lost, loop through list of all units:
+                FOR unit:
+                    CALL Move
+                    CALL UseWeapon
+                    CALL UseSpecial
+                    IF action can't happen (e.g. can't move), it just doesn't
+                    limit to how many times a loop can run, functions can be called, etc
+                IF all enemies or all allies are defeated:
+                    show appropriate message and break from loop
+    */
+
+    public void CreateWarriorLists() {
+        foreach (KeyValuePair<GameObject, Vector2> warriorObject in objectsOnGrid) {
+            if (warriorObject.Key.tag == "warrior") { // add to ally list if ally
+                yourWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
+            }
+            if (warriorObject.Key.tag == "enemy") { // add to enemy list if enemy
+                enemyWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
+            }
+            // add to overall list too
+            allWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
+        }
+        // sort allWarriorsList by speed
+        allWarriorsList.Sort((x, y) => y.GetProperty(BlockData.Property.MOVE_SPEED).CompareTo(x.GetProperty(BlockData.Property.MOVE_SPEED)));
+        Debug.Log("warriors sorted by Speed: ");
+        foreach (WarriorBehavior warrior in allWarriorsList) {
+            Debug.Log(warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
+        }
+
+    }
+
+
 
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class WarriorListController : MonoBehaviour {
 
     [SerializeField] private WarriorListWrapper warriorListWrapper; //serializing for debug
+    [SerializeField] public List<SpriteData> spriteDataList;
 
     public static WarriorListController Instance = null; // for persistent
 
