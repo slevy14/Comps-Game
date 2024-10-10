@@ -14,6 +14,7 @@ public class DesignerController : MonoBehaviour {
     [Header("SAVE/LOAD")]
     [SerializeField] private WarriorListController warriorListController;
     [SerializeField] private EnemyListController enemyListController;
+    [SerializeField] private int warriorToLoadIndex;
 
     [Header("REFERENCES")]
     [Header("Headers")]
@@ -29,6 +30,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private DropdownOptions dropdown;
     [SerializeField] private GameObject whiteboard;
     [SerializeField] private GameObject deleteMenu;
+    [SerializeField] private GameObject switchPromptMenu;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -92,6 +94,24 @@ public class DesignerController : MonoBehaviour {
         if (warriorDrawer.activeSelf) {
             warriorDrawer.SetActive(false);
         }
+    }
+
+    // switch save confirm buttons
+    public void ShowSavePrompt(int warriorIndex) {
+        switchPromptMenu.SetActive(true);
+        warriorToLoadIndex = warriorIndex;
+    }
+
+    public void CancelSwitch() {
+        switchPromptMenu.SetActive(false);
+    }
+
+    public void SaveAndSwitch() {
+        LoadWarriorToWhiteboard(warriorToLoadIndex, false);
+    }
+
+    public void NoSaveSwitch() {
+        LoadWarriorToWhiteboard(warriorToLoadIndex, true);
     }
 
     // warrior creation
@@ -235,8 +255,8 @@ public class DesignerController : MonoBehaviour {
     }
 
     // Loading
-    public void LoadWarriorToWhiteboard(int index, bool init) { // check if initializing
-        if (!init) {
+    public void LoadWarriorToWhiteboard(int index, bool noSave) { // check if initializing
+        if (!noSave) {
             // save previous warrior and clear whiteboard
             SaveWarrior();
         }

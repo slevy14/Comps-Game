@@ -77,7 +77,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // remove from linked list
             if (prevBlock != null) {
                 prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
-                Debug.Log("updated prev block next");
+                // Debug.Log("updated prev block next");
                 prevBlock = null;
             }
             // SetBlockRaycasts(false);
@@ -95,7 +95,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
         // if (!isHeader) {
+            // Debug.Log(block.gameObject.name + "should set to: " + newPosition.y);
             block.transform.position = newPosition;
+            // Debug.Log(block.gameObject.name + " actual y pos: " + block.transform.position.y);
             if (nextBlock != null) {
                 nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
             }
@@ -118,7 +120,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 DestroyStack(this.gameObject);
             }
 
-            // blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+            // need to do this here because if instantiated, on awake offset set to 0 for some reason!
+            blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
 
             if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
