@@ -17,6 +17,7 @@ public class LevelController : MonoBehaviour {
 
     [Header("Objects")]
     [SerializeField] private GameObject warriorDrawer;
+    [SerializeField] private GameObject enemiesDrawer;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -63,10 +64,13 @@ public class LevelController : MonoBehaviour {
             warriorListController = WarriorListController.Instance;
         }
         LoadWarriorDrawer();
+        LoadEnemyDrawer();
     }
 
+    // DRAWERS
+    // Warriors
     public void AddWarriorToDrawer(int index) {
-        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
+        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         Instantiate(warriorThumbnailPrefab, container);
         UpdateWarriorDrawerThumbnail(index);
     }
@@ -79,10 +83,10 @@ public class LevelController : MonoBehaviour {
 
     public void UpdateWarriorDrawerThumbnail(int index) {
         // get references
-        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
+        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
         // update sprite
-        GameObject thumbnail = container.GetChild(index+1).gameObject;
+        GameObject thumbnail = container.GetChild(index).gameObject;
         thumbnail.GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
@@ -90,6 +94,36 @@ public class LevelController : MonoBehaviour {
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
 
+    // Enemeies
+    public void AddEnemyToDrawer(int index) {
+        Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
+        Instantiate(warriorThumbnailPrefab, container);
+        UpdateEnemyDrawerThumbnail(index);
+    }
+
+    public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
+        for (int i=0; i < EnemyListController.Instance.GetCount(); i++) {
+            AddEnemyToDrawer(i);
+        }
+    }
+
+    public void UpdateEnemyDrawerThumbnail(int index) {
+        // get references
+        Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
+        WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(index);
+        // update sprite
+        GameObject thumbnail = container.GetChild(index).gameObject;
+        thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.enemySpriteDataList[enemy.spriteIndex].sprite;
+        // update list reference
+        thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
+        // update name
+        thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
+
+        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
+    }
+
+
+    // STATS PANEL
     public void ShowStatsPanel(int warriorIndex) {
         if (!statsPanel.activeSelf) {
             statsPanel.SetActive(true);
