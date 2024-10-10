@@ -29,6 +29,41 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     // visuals
     [SerializeField] private TMP_Text namePreview;
 
+    void Awake() {
+        int childCount = this.gameObject.transform.childCount;
+        image = this.gameObject.GetComponent<Image>();
+        text = this.transform.GetChild(0).GetComponent<TMP_Text>();
+        overlapBox = this.transform.GetChild(1).GetComponent<Image>();
+        if (childCount > 2 && this.transform.GetChild(2).name == "InputField") {
+            inputField = this.transform.GetChild(2).gameObject;
+            inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
+        }
+
+        // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
+        blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+        Debug.Log("offset: " + blockOffset.y);
+        whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
+        // Debug.Log("awakened");
+
+        // when this script is instantiated,
+        // duplicate behavior of begin drag
+
+        // transform.SetParent(transform.root);
+        // Debug.Log("root");
+        if (!isHeader) {
+            parentAfterDrag = transform.parent;
+            onWhiteboard = false;
+            transform.SetAsLastSibling();
+            SetMaskable(false);
+            // SetBlockRaycasts(false);
+        }
+        // transform.SetAsLastSibling();
+        // image.raycastTarget = false;
+
+        // come back to this -- not good practice to find by name!
+        // TMP_Text namePreview = GameObject.Find("NamePreview").GetComponent<TMP_Text>();
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData) {
         // if (!isHeader) {
@@ -83,7 +118,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 DestroyStack(this.gameObject);
             }
 
-            blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+            // blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
 
             if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
@@ -121,40 +156,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void SetDropdownValue(string val, int childIndex) {
         transform.GetChild(childIndex).gameObject.GetComponent<TMP_Dropdown>().value = int.Parse(val);
-    }
-
-    void Awake() {
-        int childCount = this.gameObject.transform.childCount;
-        image = this.gameObject.GetComponent<Image>();
-        text = this.transform.GetChild(0).GetComponent<TMP_Text>();
-        overlapBox = this.transform.GetChild(1).GetComponent<Image>();
-        if (childCount > 2 && this.transform.GetChild(2).name == "InputField") {
-            inputField = this.transform.GetChild(2).gameObject;
-            inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
-        }
-
-        // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
-        blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
-        whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
-        // Debug.Log("awakened");
-
-        // when this script is instantiated,
-        // duplicate behavior of begin drag
-
-        // transform.SetParent(transform.root);
-        // Debug.Log("root");
-        if (!isHeader) {
-            parentAfterDrag = transform.parent;
-            onWhiteboard = false;
-            transform.SetAsLastSibling();
-            SetMaskable(false);
-            // SetBlockRaycasts(false);
-        }
-        // transform.SetAsLastSibling();
-        // image.raycastTarget = false;
-
-        // come back to this -- not good practice to find by name!
-        // TMP_Text namePreview = GameObject.Find("NamePreview").GetComponent<TMP_Text>();
     }
 
     public void SetNextBlock(GameObject nextBlock) {
