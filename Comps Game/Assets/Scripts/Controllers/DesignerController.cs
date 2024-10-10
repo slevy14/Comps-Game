@@ -16,6 +16,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
     [SerializeField] private bool isLoadingWarriorEnemy = false;
+    [SerializeField] private bool isCurrentWarriorEnemy = false;
     [SerializeField] public bool justSaved;
 
     [Header("REFERENCES")]
@@ -249,7 +250,7 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData, isLoadingWarriorEnemy);
+        UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
         AddWarriorToDrawer(editingIndex);
     }
 
@@ -265,7 +266,7 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData, isLoadingWarriorEnemy);
+        UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
         if (!isLoadingWarriorEnemy) {
             UpdateWarriorDrawerThumbnail(editingIndex);
             warriorListController.FindJSON(); // reload json file
@@ -292,7 +293,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     // Loading
-    public void LoadWarriorToWhiteboard(int index, bool noSave, bool isEnemy) { // check if initializing
+    public void LoadWarriorToWhiteboard(int index, bool noSave, bool isLoadingEnemy) { 
         if (!noSave) {
             // save previous warrior and clear whiteboard
             SaveWarrior();
@@ -303,7 +304,7 @@ public class DesignerController : MonoBehaviour {
         // get data for warrior from list and load sprite
         WarriorFunctionalityData warriorData = new WarriorFunctionalityData();
 
-        if (!isEnemy) {
+        if (!isLoadingEnemy) {
             warriorData = warriorListController.GetWarriorAtIndex(index);
         } else { // ENEMY
             warriorData = EnemyListController.Instance.GetWarriorAtIndex(index);
@@ -312,7 +313,7 @@ public class DesignerController : MonoBehaviour {
         if (!dropdown.gameObject.activeSelf) {
             dropdown.gameObject.SetActive(true);
         }
-        dropdown.UpdateSprite(warriorData.spriteIndex, isEnemy);
+        dropdown.UpdateSprite(warriorData.spriteIndex, isLoadingEnemy);
 
         // instantiate blocks onto the whiteboard, positioned and parented
         // might be best to do this by just parenting the objects and then running the update position function on each header
@@ -526,6 +527,7 @@ public class DesignerController : MonoBehaviour {
         }
         useSpecialHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(useSpecialHeaderObject, useSpecialHeaderObject.transform.position);
 
+        isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         // save warrior at end to make sure values are properly updated
         SaveWarrior();
     }
