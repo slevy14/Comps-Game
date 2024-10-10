@@ -138,6 +138,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 UpdateBlockPositions(this.gameObject, initialPos);
             }
         }
+        DesignerController.Instance.justSaved = false;
     }
 
     public void SetValue() {

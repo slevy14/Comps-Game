@@ -36,6 +36,7 @@ public class DropdownOptions : MonoBehaviour {
             designerController.spriteDataIndex = index;
         } else { // ENEMY
             activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[index].sprite;
+            designerController.spriteDataIndex = index;
             this.gameObject.SetActive(false);
         }
     }

@@ -15,7 +15,8 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private WarriorListController warriorListController;
     [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
-    [SerializeField] private bool isLoadingWarriorEnemy;
+    [SerializeField] private bool isLoadingWarriorEnemy = false;
+    [SerializeField] public bool justSaved;
 
     [Header("REFERENCES")]
     [Header("Headers")]
@@ -44,6 +45,23 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private List<GameObject> propertyBlocks;
     [SerializeField] private List<GameObject> behaviorBlocks;
     [SerializeField] private int editingIndex;
+
+    // SINGLETON
+    public static DesignerController Instance = null; // for persistent
+
+    public void CheckSingleton() {
+        if (Instance == null) {
+            Instance = this;
+        } else {
+            Destroy(this.gameObject);
+            return;
+        }
+    }
+
+    void Awake() {
+        CheckSingleton();
+        // levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
+    }
 
     // INITIALIZING
     void Start() {
@@ -99,9 +117,13 @@ public class DesignerController : MonoBehaviour {
 
     // switch save confirm buttons
     public void ShowSavePrompt(int warriorIndex, bool isEnemy) {
-        switchPromptMenu.SetActive(true);
         warriorToLoadIndex = warriorIndex;
         isLoadingWarriorEnemy = isEnemy;
+        if (justSaved) {
+            NoSaveSwitch();
+        } else {
+            switchPromptMenu.SetActive(true);
+        }
     }
 
     public void CancelSwitch() {
@@ -148,7 +170,8 @@ public class DesignerController : MonoBehaviour {
 
     public void AddWarriorToDrawer(int index) {
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
-        Instantiate(warriorThumbnailPrefab, container);
+        GameObject warriorThumbnail = Instantiate(warriorThumbnailPrefab, container);
+        warriorThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = false;
         UpdateWarriorDrawerThumbnail(index);
     }
 
@@ -217,6 +240,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void InitializeWarrior() {
+        justSaved = true;
         WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
@@ -225,13 +249,14 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData);
+        UpdateWarriorList(_WarriorFunctionalityData, isLoadingWarriorEnemy);
         AddWarriorToDrawer(editingIndex);
     }
 
 
     // Saving
     public void SaveWarrior() {
+        justSaved = true;
         WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
@@ -240,9 +265,14 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData);
-        UpdateWarriorDrawerThumbnail(editingIndex);
-        warriorListController.FindJSON(); // reload json file
+        UpdateWarriorList(_WarriorFunctionalityData, isLoadingWarriorEnemy);
+        if (!isLoadingWarriorEnemy) {
+            UpdateWarriorDrawerThumbnail(editingIndex);
+            warriorListController.FindJSON(); // reload json file
+        } else {
+            UpdateEnemyDrawerThumbnail(editingIndex);
+            enemyListController.FindJSON();
+        }
     }
 
 
@@ -253,8 +283,12 @@ public class DesignerController : MonoBehaviour {
         Debug.Log("saving json at " + filePath);
     }
 
-    public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData) {
-        warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+    public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
+        if (!isEnemy) {
+            warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+        } else {
+            enemyListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+        }
     }
 
     // Loading
