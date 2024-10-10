@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyListController : MonoBehaviour {
 
     [SerializeField] private EnemyListWrapper enemyListWrapper; //serializing for debug
-    [SerializeField] public List<SpriteData> enemySpriteDataList;
+    [SerializeField] public List<SpriteData> spriteDataList;
 
     public static EnemyListController Instance = null; // for persistent
 

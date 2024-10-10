@@ -76,7 +76,7 @@ public class PlacementSystem : MonoBehaviour {
 
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
                     Debug.Log("show stats screen from drag warrior");
-                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex);
+                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex, warrior.GetComponent<WarriorBehavior>().isEnemy);
                 }
             }
         }
@@ -136,13 +136,13 @@ public class PlacementSystem : MonoBehaviour {
                 GameObject thumbnail = ThumbnailClicked();
                 if (thumbnail != null) {
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
-                    LevelController.Instance.ShowStatsPanel(thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex);
+                    LevelController.Instance.ShowStatsPanel(thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex, thumbnail.GetComponent<WarriorLevelThumbnail>().isEnemy);
                     Debug.Log("show stats screen from click thumbnail");
                 }
                 GameObject warrior = WarriorClicked();
                 if (warrior != null) {
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
-                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex);
+                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorLevelThumbnail>().warriorIndex, warrior.GetComponent<WarriorLevelThumbnail>().isEnemy);
                     Debug.Log("show stats screen from click warrior");
                 }
             }

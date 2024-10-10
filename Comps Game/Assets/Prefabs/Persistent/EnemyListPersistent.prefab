@@ -46,10 +46,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyListWrapper:
     enemyList: []
-  enemySpriteDataList:
+  spriteDataList:
   - sprite: {fileID: -120963063, guid: b6928f12b999343d88188c7fbe0faa10, type: 3}
     animator: {fileID: 0}
-  - sprite: {fileID: -754536012, guid: 5ac76611da5ed49a39a1a89839b9b9f1, type: 3}
+  - sprite: {fileID: -371467114, guid: 5ac76611da5ed49a39a1a89839b9b9f1, type: 3}
     animator: {fileID: 0}
   - sprite: {fileID: -1418316344, guid: 4526c09ec67624d10a1ff059a6a8652f, type: 3}
     animator: {fileID: 0}

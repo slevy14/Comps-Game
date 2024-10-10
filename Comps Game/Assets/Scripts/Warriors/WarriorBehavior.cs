@@ -35,6 +35,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public bool isNew = true;
 
     public int warriorIndex;
+    public bool isEnemy;
 
     // block lists
     private List<BlockDataStruct> propertiesData;

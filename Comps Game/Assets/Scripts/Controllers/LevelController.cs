@@ -97,7 +97,8 @@ public class LevelController : MonoBehaviour {
     // Enemeies
     public void AddEnemyToDrawer(int index) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
-        Instantiate(warriorThumbnailPrefab, container);
+        GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
+        enemyThumbnail.GetComponent<WarriorLevelThumbnail>().isEnemy = true;
         UpdateEnemyDrawerThumbnail(index);
     }
 
@@ -113,7 +114,7 @@ public class LevelController : MonoBehaviour {
         WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index).gameObject;
-        thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.enemySpriteDataList[enemy.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
@@ -124,16 +125,22 @@ public class LevelController : MonoBehaviour {
 
 
     // STATS PANEL
-    public void ShowStatsPanel(int warriorIndex) {
+    public void ShowStatsPanel(int warriorIndex, bool isEnemy) {
         if (!statsPanel.activeSelf) {
             statsPanel.SetActive(true);
         }
 
-        WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
-
-        statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-        statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
-        statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+        if (!isEnemy) {
+            WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
+            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
+            statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
+            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+        } else { // enemy
+            WarriorFunctionalityData warrior = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
+            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
+            statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
+            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+        }
     }
 
     private string PropertiesString(WarriorFunctionalityData warriorData) {
@@ -247,9 +254,11 @@ public class LevelController : MonoBehaviour {
         foreach (KeyValuePair<GameObject, Vector2> warriorObject in objectsOnGrid) {
             if (warriorObject.Key.tag == "warrior") { // add to ally list if ally
                 yourWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
+                Debug.Log("found ally: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             if (warriorObject.Key.tag == "enemy") { // add to enemy list if enemy
                 enemyWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
+                Debug.Log("found enemy: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             // add to overall list too
             allWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());

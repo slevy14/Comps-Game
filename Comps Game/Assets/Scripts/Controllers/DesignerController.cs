@@ -204,7 +204,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index).gameObject;
-        thumbnail.GetComponent<Image>().sprite = enemyListController.enemySpriteDataList[enemy.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = enemyListController.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name

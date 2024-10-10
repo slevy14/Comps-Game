@@ -10,6 +10,8 @@ public class WarriorEditorThumbnail : MonoBehaviour, IPointerDownHandler {
     public DesignerController designerController;
     public int warriorIndex;
 
+    public bool isEnemy = false;
+
     public void Awake() {
         warriorListController = GameObject.Find("WarriorListPersistent").GetComponent<WarriorListController>();
         if (SceneManager.GetActiveScene().name == "CodeEditor") {
