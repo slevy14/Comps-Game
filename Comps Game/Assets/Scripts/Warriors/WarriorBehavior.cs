@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
@@ -39,6 +40,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [Header("References")]
     private Sprite sprite;
     private InputManager inputManager;
+    private Slider healthBar;
 
     [Header("Dragging")]
     private bool isDragging;
@@ -66,6 +68,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
+        healthBar = transform.GetChild(1).transform.GetChild(0).GetComponent<Slider>();
 
         heading = new Vector2((int)1, (int)0);
     }
@@ -168,6 +171,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.Property.HEALTH:
                     float.TryParse(propertiesData[i].values[0], out newVal);
                     propertiesDict[BlockData.Property.HEALTH] = newVal;
+                    if (newVal > 0) {
+                        healthBar.maxValue = newVal;
+                        healthBar.value = healthBar.maxValue;
+                    }
                     break;
                 case BlockData.Property.DEFENSE:
                     float.TryParse(propertiesData[i].values[0], out newVal);
@@ -228,6 +235,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // Major Functions
     public IEnumerator Move() {
+        // reset target each time bc it's coded in
+        // this will prevent targeting errors after destroying a warrior
+        target = null;
         Debug.Log("MOVE FUNCTIONS:");
         yield return StartCoroutine(RunBehaviorFunctions(moveData));
     }
@@ -511,10 +521,30 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.MELEE_SETTINGS:
                     // two dropdowns
                     Debug.Log("melee settings");
+                    // choose if heal or attack [0]
+                    // 0: attack
+                    // 1: heal
+
+                    // choose which team to attack [1]
+                    // 0: enemies
+                    // 1: allies
+
+                    isMeleeHeal = behaviorList[i].values[0] == "0" ? false : true;
+                    isMeleeTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
                 case BlockData.BehaviorType.RANGED_SETTINGS:
                     // two dropdowns
                     Debug.Log("ranged settings");
+                    // choose if heal or attack [0]
+                    // 0: attack
+                    // 1: heal
+
+                    // choose which team to attack [1]
+                    // 0: enemies
+                    // 1: allies
+
+                    isRangedHeal = behaviorList[i].values[0] == "0" ? false : true;
+                    isRangedTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
                     // no dropdowns

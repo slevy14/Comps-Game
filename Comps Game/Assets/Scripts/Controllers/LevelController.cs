@@ -224,9 +224,9 @@ public class LevelController : MonoBehaviour {
     }
 
 
-    /*------------------------------------*/
-    /*          BEHAVIOR PARSING          */
-    /*------------------------------------*/
+    /*--------------------------*/
+    /*          BATTLE          */
+    /*--------------------------*/
 
 
     /* general flow of level:
