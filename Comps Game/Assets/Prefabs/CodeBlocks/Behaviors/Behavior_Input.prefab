@@ -945,7 +945,7 @@ GameObject:
   - component: {fileID: 5228207880175789593}
   m_Layer: 5
   m_Name: Label
-  m_TagString: Untagged
+  m_TagString: disableCast
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -13,6 +13,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private TMP_Text text;
     private Image overlapBox;
     private GameObject inputField;
+    private GameObject dropdownOne;
+    private GameObject dropdownTwo;
     private GameObject whiteboard;
 
     // serialized for debug
@@ -34,14 +36,20 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         image = this.gameObject.GetComponent<Image>();
         text = this.transform.GetChild(0).GetComponent<TMP_Text>();
         overlapBox = this.transform.GetChild(1).GetComponent<Image>();
-        if (childCount > 2 && this.transform.GetChild(2).name == "InputField") {
+        if (childCount == 3 && this.transform.GetChild(2).name == "InputField") {
             inputField = this.transform.GetChild(2).gameObject;
             inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
+        }
+        if (childCount >= 3 && this.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>() != null) {
+            dropdownOne = this.transform.GetChild(2).gameObject;
+        }
+        if (childCount == 4 && this.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>() != null) {
+            dropdownTwo = this.transform.GetChild(3).gameObject;
         }
 
         // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
         blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
-        Debug.Log("offset: " + blockOffset.y);
+        // Debug.Log("offset: " + blockOffset.y);
         whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
 
@@ -105,6 +113,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void DestroyStack(GameObject block) {
+        Debug.Log("Destroying " + this.gameObject.name + " from destroy stack");
         if (this.nextBlock != null) {
             this.nextBlock.GetComponent<Draggable>().DestroyStack(nextBlock);
         }
@@ -113,6 +122,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void OnEndDrag(PointerEventData eventData) {
+        // if (MouseOverWhiteboard()) {
+        //     onWhiteboard = true;
+        // }
+        Debug.Log("ended drag over " + eventData.pointerCurrentRaycast.gameObject.name);
         if (!isHeader) {
             // Debug.Log("enddrag called");
 
@@ -188,6 +201,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //input field
         if (inputField != null) {
             inputField.GetComponent<Image>().raycastTarget = value;
+            // inputField.GetComponent<Image>().maskable = value;
             GameObject textArea = inputField.transform.GetChild(0).gameObject;
             int count = textArea.transform.childCount;
             for (int i = 0; i < count; i++) {
@@ -198,6 +212,28 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
             }
         }
+        // Dropdown One
+        if (dropdownOne != null) {
+            Debug.Log("setting values of dropdown one to " + value);
+            dropdownOne.GetComponent<Image>().raycastTarget = value;
+            // dropdownOne.GetComponent<Image>().maskable = value;
+            // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
+            int count = dropdownOne.transform.childCount;
+            dropdownOne.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+            // dropdownOne.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+            dropdownOne.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
+        }
+        // Dropdown Two
+        if (dropdownTwo != null) {
+            Debug.Log("setting values of dropdown two to " + value);
+            dropdownTwo.GetComponent<Image>().raycastTarget = value;
+            // dropdownOne.GetComponent<Image>().maskable = value;
+            // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
+            int count = dropdownTwo.transform.childCount;
+            dropdownTwo.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+            // dropdownTwo.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+            dropdownTwo.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
+        }
     }
 
     private void SetBlockRaycasts(bool value) {
@@ -206,12 +242,57 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvasGroup.ignoreParentGroups = value;
     }
 
+    private bool MouseOverWhiteboard() {
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        for (int i = 0; i < raycastResults.Count; i++) {
+            // Debug.Log(raycastResults[i].gameObject.name);
+            if (raycastResults[i].gameObject.tag != "whiteboard") { // ui layer
+                raycastResults.RemoveAt(i);
+                i--;
+            }
+        }
+        return raycastResults.Count > 0;
+    }
+
+    private GameObject MouseOverOverlapBox() {
+        Debug.Log("testing overlap");
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
+        foreach (RaycastResult raycastResult in raycastResults) {
+            Debug.Log("hit " + raycastResult.gameObject.transform.parent.name);
+        }
+        for (int i = 0; i < raycastResults.Count; i++) {
+            // Debug.Log(raycastResults[i].gameObject.name);
+            if (raycastResults[i].gameObject.tag != "overlapBox") { // ui layer
+                raycastResults.RemoveAt(i);
+                i--;
+            }
+        }
+        foreach (RaycastResult raycastResult in raycastResults) {
+            Debug.Log("hit overlap box of " + raycastResult.gameObject.transform.parent.name);
+        }
+        if (raycastResults.Count == 0) {
+            return null;
+        } else {
+            return raycastResults[0].gameObject.transform.parent.gameObject;
+        }
+    }
+
     // boolean, returns false if didn't snap
     private bool SnapToBlock(PointerEventData eventData) {
         // List<RaycastResult> result = new List<RaycastResult>();
         // EventSystem.current.RaycastAll(eventData.pointer)
         if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
             GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
+        // GameObject blockToSnapTo = MouseOverOverlapBox();
+        // if (MouseOverOverlapBox() != null) {
             if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
                 // Debug.Log("snapping!");
                 onWhiteboard = true; // make sure still set to true to snap
@@ -224,7 +305,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 this.prevBlock = blockToSnapTo;
                 prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - blockOffset);
-                Debug.Log(this.prevBlock.name);
+                // Debug.Log(this.prevBlock.name);
                 return true; // snapped 
             }
         }
