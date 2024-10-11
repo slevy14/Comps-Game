@@ -37,6 +37,9 @@ public class LevelController : MonoBehaviour {
     [SerializeField] List<WarriorBehavior> yourWarriorsList;
     [SerializeField] List<WarriorBehavior> enemyWarriorsList;
 
+    [Header("Battle")]
+    [SerializeField] public float battleSpeed;
+
 
     // SINGLETON
     public static LevelController Instance = null; // for persistent
@@ -249,17 +252,28 @@ public class LevelController : MonoBehaviour {
                     limit to how many times a loop can run, functions can be called, etc
                 IF all enemies or all allies are defeated:
                     show appropriate message and break from loop
+
+        ACTUAL PARSING DONE ON WARRIOR BEHAVIOR SCRIPT
+        
     */
 
-    public void StartBattle() {
+    public void TryParseBattleSpeed(string newBattleSpeedString) {
+        float.TryParse(newBattleSpeedString, out battleSpeed);
+    }
+
+    public void StartBattleWrapper() { // for the button
+        StartCoroutine(StartBattle());
+    }
+
+    public IEnumerator StartBattle() {
         CreateWarriorLists();
         // while (yourWarriorsList.Count != 0 && enemyWarriorsList.Count != 0) {
-        for (int i = 0; i < 3; i++) {
-            foreach (WarriorBehavior warrior in allWarriorsList) {
-                Debug.Log(warrior.warriorName + " is up!");
-                warrior.Move();
-                warrior.UseWeapon();
-                warrior.UseSpecial();
+        for (int j = 0; j < 3; j++) {
+            for (int i =0; i < allWarriorsList.Count; i++) { // doing this as a for loop so things can be deleted if they need to
+                Debug.Log(allWarriorsList[i].warriorName + " is up!");
+                yield return StartCoroutine(allWarriorsList[i].Move());
+                yield return StartCoroutine(allWarriorsList[i].UseWeapon());
+                yield return StartCoroutine(allWarriorsList[i].UseSpecial());
             }
         }
     }

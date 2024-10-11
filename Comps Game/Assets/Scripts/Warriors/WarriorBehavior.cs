@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -23,6 +24,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // [SerializeField] private float healPower;
     // [SerializeField] private float healSpeed;
     [SerializeField] private Dictionary<BlockData.Property, float> propertiesDict;
+
+    [Space(20)]
+    [Header("Hidden Properties")]
+    [Description("properties that exist for making the warriors move but not editable by the player")]
+    [SerializeField] private Vector2 heading;
 
     [Space(20)]
     [Header("References")]
@@ -55,6 +61,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
+
+        heading = new Vector2(1, 0);
     }
 
     // DRAGGING
@@ -202,31 +210,69 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
     }
 
-    public void Move() {
+    /*------------------------------------*/
+    /*          BEHAVIOR PARSING          */
+    /*------------------------------------*/
+
+    public IEnumerator Move() {
         Debug.Log("MOVE FUNCTIONS:");
-        RunBehaviorFunctions(moveData);
+        yield return StartCoroutine(RunBehaviorFunctions(moveData));
     }
 
-    public void UseWeapon() {
+    public IEnumerator UseWeapon() {
         Debug.Log("USE WEAPON FUNCTIONS:");
-        RunBehaviorFunctions(useWeaponData);
+        yield return StartCoroutine(RunBehaviorFunctions(useWeaponData));
     }
 
-    public void UseSpecial() {
+    public IEnumerator UseSpecial() {
         Debug.Log("USE SPECIAL FUNCTIONS:");
-        RunBehaviorFunctions(useSpecialData);
+        yield return StartCoroutine(RunBehaviorFunctions(useSpecialData));
     }
 
-    public void RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
+    public IEnumerator RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
         for (int i = 0; i < behaviorList.Count; i++) {
+            yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 case BlockData.BehaviorType.TURN:
                     // one dropdown
                     Debug.Log("turn");
+                    Debug.Log("heading before turn: " + heading);
+                    // List<Vector2> possibleHeadings = new List<Vector2> {new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1)};
+                    // int headingIndex = possibleHeadings.IndexOf(heading);
+                    Vector2 newHeading = heading;
+                    if (behaviorList[i].values[0] == "0") { // TURN LEFT
+                        // this.heading = possibleHeadings[(headingIndex + 1) % 4];
+                        newHeading = new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90), heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90));
+                        Debug.Log("after left rotation, " + newHeading);
+                    } else { // TURN RIGHT
+                        // this.heading = possibleHeadings[(headingIndex - 1) % 4];
+                        newHeading = new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90)), heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90)));
+                        Debug.Log("after right rotation, " + newHeading);
+                    }
+                    this.heading = newHeading;
+                    // Debug.Log("heading after turn: " + heading);
                     break;
                 case BlockData.BehaviorType.STEP:
                     // one dropdown
+                    Vector2 newPos = LevelController.Instance.objectsOnGrid[this.gameObject];
+                    // Debug.Log("pos before step: " + newPos);
                     Debug.Log("step");
+                    if (behaviorList[i].values[0] == "0") { // FORWARD
+                        // do something with heading
+                        newPos += heading;
+                    } else if (behaviorList[i].values[0] == "1") { // BACKWARD
+                        newPos -= heading;
+                    } else if (behaviorList[i].values[0] == "2") { // LEFT
+                        newPos += new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90), heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90));
+                    } else { // RIGHT
+                        newPos += new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90)), heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90)));
+                    }
+                    if (!LevelController.Instance.objectsOnGrid.ContainsValue(newPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)newPos.x, (int)newPos.y, 0))) {
+                        this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)newPos.x, (int)newPos.y, 0));
+                        LevelController.Instance.objectsOnGrid[this.gameObject] = newPos;
+                    } else {
+                        Debug.Log("either tile full or would move off map");
+                    }
                     break;
                 case BlockData.BehaviorType.RUN:
                     // one dropdown

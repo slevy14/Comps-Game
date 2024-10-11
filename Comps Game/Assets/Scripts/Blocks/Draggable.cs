@@ -113,7 +113,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void DestroyStack(GameObject block) {
-        Debug.Log("Destroying " + this.gameObject.name + " from destroy stack");
+        // Debug.Log("Destroying " + this.gameObject.name + " from destroy stack");
         if (this.nextBlock != null) {
             this.nextBlock.GetComponent<Draggable>().DestroyStack(nextBlock);
         }
@@ -125,7 +125,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // if (MouseOverWhiteboard()) {
         //     onWhiteboard = true;
         // }
-        Debug.Log("ended drag over " + eventData.pointerCurrentRaycast.gameObject.name);
+        // Debug.Log("ended drag over " + eventData.pointerCurrentRaycast.gameObject.name);
         if (!isHeader) {
             // Debug.Log("enddrag called");
 
@@ -214,7 +214,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         // Dropdown One
         if (dropdownOne != null) {
-            Debug.Log("setting values of dropdown one to " + value);
+            // Debug.Log("setting values of dropdown one to " + value);
             dropdownOne.GetComponent<Image>().raycastTarget = value;
             // dropdownOne.GetComponent<Image>().maskable = value;
             // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
@@ -225,7 +225,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         // Dropdown Two
         if (dropdownTwo != null) {
-            Debug.Log("setting values of dropdown two to " + value);
+            // Debug.Log("setting values of dropdown two to " + value);
             dropdownTwo.GetComponent<Image>().raycastTarget = value;
             // dropdownOne.GetComponent<Image>().maskable = value;
             // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
@@ -259,7 +259,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     private GameObject MouseOverOverlapBox() {
-        Debug.Log("testing overlap");
+        // Debug.Log("testing overlap");
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
         pointerEventData.position = Input.mousePosition;
 

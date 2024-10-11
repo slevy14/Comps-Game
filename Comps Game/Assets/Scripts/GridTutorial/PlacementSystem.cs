@@ -10,7 +10,7 @@ public class PlacementSystem : MonoBehaviour {
     [SerializeField] private GameObject cellIndicator;
     [SerializeField] private GameObject mouseIndicator;
     [SerializeField] private InputManager inputManager;
-    [SerializeField] private Tilemap tilemap;
+    [SerializeField] public Tilemap tilemap;
 
     [Space(20)]
     public GameObject currentDraggingObject;
