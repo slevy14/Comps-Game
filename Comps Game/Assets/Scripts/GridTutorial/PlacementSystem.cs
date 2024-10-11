@@ -142,7 +142,7 @@ public class PlacementSystem : MonoBehaviour {
                 GameObject warrior = WarriorClicked();
                 if (warrior != null) {
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
-                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorLevelThumbnail>().warriorIndex, warrior.GetComponent<WarriorLevelThumbnail>().isEnemy);
+                    LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex, warrior.GetComponent<WarriorBehavior>().isEnemy);
                     Debug.Log("show stats screen from click warrior");
                 }
             }

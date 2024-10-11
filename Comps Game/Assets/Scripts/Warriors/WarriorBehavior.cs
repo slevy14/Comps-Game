@@ -234,6 +234,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 case BlockData.BehaviorType.TURN:
+                    // rotate either left or right, set heading. affects what "forward" movement looks like
                     // one dropdown
                     Debug.Log("turn");
                     Debug.Log("heading before turn: " + heading);
@@ -253,33 +254,63 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // Debug.Log("heading after turn: " + heading);
                     break;
                 case BlockData.BehaviorType.STEP:
+                    // move one tile in the chosen direction
                     // one dropdown
                     Debug.Log("step");
-                    Vector2 newPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
+                    Vector2 stepPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
                     Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
                     if (behaviorList[i].values[0] == "0") { // FORWARD
                         // do something with heading
-                        newPos += heading;
-                        Debug.Log("newPos forward: " + newPos);
+                        stepPos += heading;
+                        Debug.Log("newPos forward: " + stepPos);
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
-                        newPos -= heading;
+                        stepPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
-                        newPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                        stepPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
                                               (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
                     } else { // RIGHT
-                        newPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                        stepPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
                                               (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
                     }
-                    if (!LevelController.Instance.objectsOnGrid.ContainsValue(newPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)newPos.x, (int)newPos.y, 0))) {
-                        this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)newPos.x, (int)newPos.y, 0));
-                        LevelController.Instance.objectsOnGrid[this.gameObject] = newPos;
+                    if (!LevelController.Instance.objectsOnGrid.ContainsValue(stepPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0))) {
+                        this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0));
+                        LevelController.Instance.objectsOnGrid[this.gameObject] = stepPos;
                     } else {
                         Debug.Log("either tile full or would move off map");
                     }
                     break;
                 case BlockData.BehaviorType.RUN:
+                    // move two tiles in the chosen direction
+                    // can be used to run past existing units
                     // one dropdown
                     Debug.Log("run");
+                    Vector2 runPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
+                    Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
+                    if (behaviorList[i].values[0] == "0") { // FORWARD
+                        // do something with heading
+                        runPos += heading;
+                        runPos += heading;
+                        Debug.Log("newPos forward: " + runPos);
+                    } else if (behaviorList[i].values[0] == "1") { // BACKWARD
+                        runPos -= heading;
+                        runPos -= heading;
+                    } else if (behaviorList[i].values[0] == "2") { // LEFT
+                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+                    } else { // RIGHT
+                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+                    }
+                    if (!LevelController.Instance.objectsOnGrid.ContainsValue(runPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)runPos.x, (int)runPos.y, 0))) {
+                        this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)runPos.x, (int)runPos.y, 0));
+                        LevelController.Instance.objectsOnGrid[this.gameObject] = runPos;
+                    } else {
+                        Debug.Log("either tile full or would move off map");
+                    }
                     break;
                 case BlockData.BehaviorType.TELEPORT:
                     // one dropdown
