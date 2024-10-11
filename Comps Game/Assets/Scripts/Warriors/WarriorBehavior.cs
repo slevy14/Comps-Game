@@ -62,7 +62,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
 
-        heading = new Vector2(1, 0);
+        heading = new Vector2((int)1, (int)0);
     }
 
     // DRAGGING
@@ -241,12 +241,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // int headingIndex = possibleHeadings.IndexOf(heading);
                     Vector2 newHeading = heading;
                     if (behaviorList[i].values[0] == "0") { // TURN LEFT
-                        // this.heading = possibleHeadings[(headingIndex + 1) % 4];
-                        newHeading = new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90), heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90));
+                        newHeading = new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                                                 (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
                         Debug.Log("after left rotation, " + newHeading);
                     } else { // TURN RIGHT
-                        // this.heading = possibleHeadings[(headingIndex - 1) % 4];
-                        newHeading = new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90)), heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90)));
+                        newHeading = new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                                                 (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
                         Debug.Log("after right rotation, " + newHeading);
                     }
                     this.heading = newHeading;
@@ -254,18 +254,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     break;
                 case BlockData.BehaviorType.STEP:
                     // one dropdown
-                    Vector2 newPos = LevelController.Instance.objectsOnGrid[this.gameObject];
-                    // Debug.Log("pos before step: " + newPos);
                     Debug.Log("step");
+                    Vector2 newPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
+                    Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
                     if (behaviorList[i].values[0] == "0") { // FORWARD
                         // do something with heading
                         newPos += heading;
+                        Debug.Log("newPos forward: " + newPos);
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
                         newPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
-                        newPos += new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90), heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90));
+                        newPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
                     } else { // RIGHT
-                        newPos += new Vector2(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90)), heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90)));
+                        newPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
                     }
                     if (!LevelController.Instance.objectsOnGrid.ContainsValue(newPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)newPos.x, (int)newPos.y, 0))) {
                         this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)newPos.x, (int)newPos.y, 0));
