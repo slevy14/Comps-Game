@@ -33,9 +33,9 @@ public class LevelController : MonoBehaviour {
 
     [Space(20)]
     [Header("BATTLE WARRIORS")]
-    [SerializeField] List<WarriorBehavior> allWarriorsList; // sorted by SPEED VAL
-    [SerializeField] List<WarriorBehavior> yourWarriorsList;
-    [SerializeField] List<WarriorBehavior> enemyWarriorsList;
+    [SerializeField] public List<WarriorBehavior> allWarriorsList; // sorted by SPEED VAL
+    [SerializeField] public List<WarriorBehavior> yourWarriorsList;
+    [SerializeField] public List<WarriorBehavior> enemyWarriorsList;
 
     [Header("Battle")]
     [SerializeField] public float battleSpeed;

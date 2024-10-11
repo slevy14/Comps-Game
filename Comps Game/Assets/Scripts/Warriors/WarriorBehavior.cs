@@ -29,6 +29,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [Header("Hidden Properties")]
     [Description("properties that exist for making the warriors move but not editable by the player")]
     [SerializeField] private Vector2 heading;
+    [SerializeField] private WarriorBehavior target;
 
     [Space(20)]
     [Header("References")]
@@ -234,8 +235,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 case BlockData.BehaviorType.TURN:
-                    // rotate either left or right, set heading. affects what "forward" movement looks like
                     // one dropdown
+                    // rotate either left or right, set heading. affects what "forward" movement looks like [0]
+                    // 0: left
+                    // 1: right
                     Debug.Log("turn");
                     Debug.Log("heading before turn: " + heading);
                     // List<Vector2> possibleHeadings = new List<Vector2> {new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1)};
@@ -254,8 +257,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // Debug.Log("heading after turn: " + heading);
                     break;
                 case BlockData.BehaviorType.STEP:
-                    // move one tile in the chosen direction
                     // one dropdown
+                    // move one tile in the chosen direction [0]
+                    // 0: forward
+                    // 1: backward
+                    // 2: left
+                    // 3: right
                     Debug.Log("step");
                     Vector2 stepPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
                     Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
@@ -280,9 +287,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
                     break;
                 case BlockData.BehaviorType.RUN:
-                    // move two tiles in the chosen direction
-                    // can be used to run past existing units
                     // one dropdown
+                    // move two tiles in the chosen direction [0]
+                    // 0: forward
+                    // 1: backward
+                    // 2: left
+                    // 3: right
+                    // can be used to run past existing units
                     Debug.Log("run");
                     Vector2 runPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
                     Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
@@ -322,7 +333,94 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     break;
                 case BlockData.BehaviorType.SET_TARGET:
                     // two dropdowns
-                    Debug.Log("set target");
+                    // choose team to target [1]
+                    // 0: enemy
+                    // 1: ally
+
+                    // find warrior to set as target [0]
+                    // 0: nearest
+                    // 1: strongest
+                    // 2: farthest
+                    // 3: weakest
+
+                    // assign to target value of this warrior
+                    Debug.Log("target");
+
+                    List<WarriorBehavior> targetTeam = new();
+                    if (behaviorList[i].values[1] == "0") { // enemy target
+                        targetTeam = LevelController.Instance.enemyWarriorsList;
+                    } else { // ally target
+                        targetTeam = LevelController.Instance.yourWarriorsList;
+                    }
+
+                    // check if empty (shouldn't ever be empty, but just in case):
+                    if (targetTeam.Count == 0) {
+                        break;
+                    }
+
+                    target = targetTeam[0];
+                    float distance = -1;
+                    if (target != this) {
+                        distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[target.gameObject]);
+                    }
+
+                    if (behaviorList[i].values[0] == "0") { // nearest
+                        // initialize nearest manhattan distance
+                        if (distance == -1) {
+                            distance = 1000;
+                        }
+                        // loop through target team:
+                        foreach (WarriorBehavior warrior in targetTeam) {
+                            if (warrior == this && targetTeam.Count != 1) {
+                                continue;
+                            }
+                            // calculate manhattan distance from current pos to warrior
+                            // if closer, replace object
+                            if (Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]) < distance) {
+                                distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]);
+                                target = warrior;
+                                Debug.Log(warrior.warriorName + " was closer");
+                            } else {
+                                Debug.Log(warrior.warriorName + " was not closer");
+                            }
+                        }
+                    } else if (behaviorList[i].values[0] == "1") { // strongest
+                        // initialize strongest
+                        // loop through target team:
+                            // calculate strongest (is this just most health? highest attack? combination?)
+                            // if stronger, replace object
+                        // set target to strongest
+                        Debug.Log("will set target to strongest, for now setting to first in list");
+
+                    } else if (behaviorList[i].values[0] == "2") { // farthest
+                        // initialize farthest manhattan distance
+                        if (distance == -1) {
+                            distance = 0;
+                        }
+                        // loop through target team:
+                        foreach (WarriorBehavior warrior in targetTeam) {
+                            if (warrior == this && targetTeam.Count != 1) {
+                                continue;
+                            }
+                            // calculate manhattan distance from current pos to warrior
+                            // if farther, replace object
+                            if (Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]) > distance) {
+                                distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]);
+                                target = warrior;
+                                Debug.Log(warrior.warriorName + " was further");
+                            } else {
+                                Debug.Log(warrior.warriorName + " was not further");
+                            }
+                        }
+                    } else { // weakest
+                        // initialize weakest
+                        // loop through target team:
+                            // calculate strongest (is this just most health? highest attack? combination?)
+                            // if weaker, replace object
+                        // set target to weakest
+                        Debug.Log("will set target to weakest, for now setting to first in list");
+                    }
+                    Debug.Log("set target to " + target.warriorName);
                     break;
                 case BlockData.BehaviorType.WHILE_LOOP:
                     // two dropdowns
