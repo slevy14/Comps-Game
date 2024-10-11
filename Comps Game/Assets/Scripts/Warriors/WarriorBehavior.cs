@@ -230,7 +230,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     /*------------------------------------*/
+    /*                                    */
     /*          BEHAVIOR PARSING          */
+    /*                                    */
     /*------------------------------------*/
 
     // Major Functions
@@ -252,16 +254,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         yield return StartCoroutine(RunBehaviorFunctions(useSpecialData));
     }
 
-    // Parser
+    // Parser:
+    // loop through all behavior, run code for each as needed
     public IEnumerator RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
         for (int i = 0; i < behaviorList.Count; i++) {
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
+                /*------------*/
+                /*    TURN    */
+                /*------------*/ /*
+                one dropdown
+                    choose which direction to rotate [0]
+                        0: left
+                        1: right
+                rotate either left or right, set heading. affects what "forward" movement looks like */
                 case BlockData.BehaviorType.TURN:
-                    // one dropdown
-                    // rotate either left or right, set heading. affects what "forward" movement looks like [0]
-                    // 0: left
-                    // 1: right
                     Debug.Log("turn");
                     Debug.Log("heading before turn: " + heading);
                     // List<Vector2> possibleHeadings = new List<Vector2> {new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1)};
@@ -277,13 +284,18 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     this.heading = newHeading;
                     // Debug.Log("heading after turn: " + heading);
                     break;
+
+                /*------------*/
+                /*    STEP    */
+                /*------------*/ /*
+                one dropdown
+                    choose direction [0]
+                        0: forward
+                        1: backward
+                        2: left
+                        3: right
+                move one tile in the chosen direction */
                 case BlockData.BehaviorType.STEP:
-                    // one dropdown
-                    // move one tile in the chosen direction [0]
-                    // 0: forward
-                    // 1: backward
-                    // 2: left
-                    // 3: right
                     Debug.Log("step");
                     Vector2 stepPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
                     Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
@@ -305,14 +317,18 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         Debug.Log("either tile full or would move off map");
                     }
                     break;
+
+                /*-----------*/
+                /*    RUN    */
+                /*-----------*/ /*
+                one dropdown
+                    choose direction [0]
+                        0: forward
+                        1: backward
+                        2: left
+                        3: right
+                move two tiles in one direction. can be used to run past existing units */
                 case BlockData.BehaviorType.RUN:
-                    // one dropdown
-                    // move two tiles in the chosen direction [0]
-                    // 0: forward
-                    // 1: backward
-                    // 2: left
-                    // 3: right
-                    // can be used to run past existing units
                     Debug.Log("run");
                     Vector2 runPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
                     Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
@@ -338,13 +354,17 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         Debug.Log("either tile full or would move off map");
                     }
                     break;
-                case BlockData.BehaviorType.TELEPORT:
-                    // one dropdown
-                    Debug.Log("teleport");
-                    // set where to teleport [0]
-                    // 0: behind target
-                    // 1: flank target
 
+                /*----------------*/
+                /*    TELEPORT    */
+                /*----------------*/ /*
+                one dropdown
+                    set where to teleport [0]
+                        0: behind target
+                        1: flank target
+                sneak behind enemies */
+                case BlockData.BehaviorType.TELEPORT:
+                    Debug.Log("teleport");
                     Vector2 teleportPos = new();
                     if (behaviorList[i].values[0] == "0") { // behind
                         if (target == null) {
@@ -387,33 +407,44 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         }
                     }
                     break;
-                case BlockData.BehaviorType.MELEE_ATTACK:
-                    // no dropdowns
-                    Debug.Log("melee attack");
-                    // use melee range to attack in facing direction
 
-                    // range values and what they mean:
-                    // 1: directly in front
-                    // 2: two in a straight line
-                    // 3: three wide
-                    // 4: T-shape in front
-                    // 5: 2x3 blocks in front
-                    // clamp at 5
+                /*--------------------*/
+                /*    MELEE ATTACK    */
+                /*--------------------*/ /*
+                no dropdowns,
+                use melee range values to attack in facing direction:
+                    1: directly in front
+                    2: two in a straight line
+                    3: three wide
+                    4: T-shape in front
+                    5: 2x3 blocks in front
+                    clamp at 5
+                do the actual melee attack*/
+                case BlockData.BehaviorType.MELEE_ATTACK:
+                    // 
+                    Debug.Log("melee attack");
+                    // 
 
 
 
                     break;
-                case BlockData.BehaviorType.SET_TARGET:
-                    // two dropdowns
-                    // choose team to target [1]
-                    // 0: enemy
-                    // 1: ally
 
-                    // find warrior to set as target [0]
-                    // 0: nearest
-                    // 1: strongest
-                    // 2: farthest
-                    // 3: weakest
+                /*------------------*/
+                /*    SET TARGET    */
+                /*------------------*/ /*
+                two dropdowns
+                    choose team to target [1]
+                        0: enemy
+                        1: ally
+
+                    find warrior to set as target [0]
+                        0: nearest
+                        1: strongest
+                        2: farthest
+                        3: weakest
+                pick a warrior to target with various attacks */
+                case BlockData.BehaviorType.SET_TARGET:
+                    
 
                     // assign to target value of this warrior
                     Debug.Log("target");
@@ -494,60 +525,110 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
                     Debug.Log("set target to " + target.warriorName);
                     break;
+
+                /*------------------*/
+                /*    WHILE LOOP    */
+                /*------------------*/ /*
+                two dropdowns
+                basic while looping */
                 case BlockData.BehaviorType.WHILE_LOOP:
-                    // two dropdowns
+                    
                     Debug.Log("while loop");
                     break;
+
+                /*----------------*/
+                /*    FOR LOOP    */
+                /*----------------*/ /*
+                input field
+                loop x times */
                 case BlockData.BehaviorType.FOR_LOOP:
-                    // input field
                     Debug.Log("for loop");
                     break;
+
+                /*----------------*/
+                /*    END LOOP    */
+                /*----------------*/ /*
+                no dropdowns
+                end either a for or while loop*/
                 case BlockData.BehaviorType.END_LOOP:
-                    // no dropdowns
                     Debug.Log("end loop");
                     break;
+                
+                /*----------*/
+                /*    IF    */
+                /*----------*/ /*
+                two dropdowns
+                basic conditional */
                 case BlockData.BehaviorType.IF:
-                    // two dropdowns
                     Debug.Log("if");
                     break;
+                
+                /*------------*/
+                /*    ELSE    */
+                /*------------*/ /*
+                no dropdowns
+                basic else case */
                 case BlockData.BehaviorType.ELSE:
-                    // no dropdowns
                     Debug.Log("else");
                     break;
+
+                /*--------------*/
+                /*    END IF    */
+                /*--------------*/ /*
+                no dropdowns
+                end conditional */
                 case BlockData.BehaviorType.END_IF:
-                    // no dropdowns
                     Debug.Log("end if");
                     break;
-                case BlockData.BehaviorType.MELEE_SETTINGS:
-                    // two dropdowns
-                    Debug.Log("melee settings");
-                    // choose if heal or attack [0]
-                    // 0: attack
-                    // 1: heal
+                
+                /*----------------------*/
+                /*    MELEE SETTINGS    */
+                /*----------------------*/ /*
+                two dropdowns
+                    choose if heal or attack [0]
+                        0: attack
+                        1: heal
 
-                    // choose which team to attack [1]
-                    // 0: enemies
-                    // 1: allies
+                    choose which team to attack [1]
+                        0: enemies
+                        1: allies
+                */
+                case BlockData.BehaviorType.MELEE_SETTINGS:
+                    Debug.Log("melee settings");
+                    
 
                     isMeleeHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isMeleeTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
-                case BlockData.BehaviorType.RANGED_SETTINGS:
-                    // two dropdowns
-                    Debug.Log("ranged settings");
-                    // choose if heal or attack [0]
-                    // 0: attack
-                    // 1: heal
+                
+                /*-----------------------*/
+                /*    RANGED SETTINGS    */
+                /*-----------------------*/ /*
+                two dropdowns
+                    choose if heal or attack [0]
+                        0: attack
+                        1: heal
 
-                    // choose which team to attack [1]
-                    // 0: enemies
-                    // 1: allies
+                    choose which team to attack [1]
+                        0: enemies
+                        1: allies
+                */
+                case BlockData.BehaviorType.RANGED_SETTINGS:
+                    
+                    Debug.Log("ranged settings");
+                    
 
                     isRangedHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isRangedTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
+                
+                /*-----------------------*/
+                /*    FIRE PROJECTILE    */
+                /*-----------------------*/ /*
+                no dropdowns
+                do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
-                    // no dropdowns
+                    
                     Debug.Log("fire projectile");
                     break;
             }
