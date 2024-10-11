@@ -239,6 +239,7 @@ public class LevelController : MonoBehaviour {
             get list of all warriors
             get list of all enemies
             get list of ALL UNITS TOTAL, SORTED BY SPEED
+
             WHILE game not won or lost, loop through list of all units:
                 FOR unit:
                     CALL Move
@@ -250,26 +251,38 @@ public class LevelController : MonoBehaviour {
                     show appropriate message and break from loop
     */
 
+    public void StartBattle() {
+        CreateWarriorLists();
+        // while (yourWarriorsList.Count != 0 && enemyWarriorsList.Count != 0) {
+        for (int i = 0; i < 3; i++) {
+            foreach (WarriorBehavior warrior in allWarriorsList) {
+                Debug.Log(warrior.warriorName + " is up!");
+                warrior.Move();
+                warrior.UseWeapon();
+                warrior.UseSpecial();
+            }
+        }
+    }
+
     public void CreateWarriorLists() {
         foreach (KeyValuePair<GameObject, Vector2> warriorObject in objectsOnGrid) {
             if (warriorObject.Key.tag == "warrior") { // add to ally list if ally
                 yourWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
-                Debug.Log("found ally: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
+                // Debug.Log("found ally: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             if (warriorObject.Key.tag == "enemy") { // add to enemy list if enemy
                 enemyWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
-                Debug.Log("found enemy: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
+                // Debug.Log("found enemy: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             // add to overall list too
             allWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
         }
         // sort allWarriorsList by speed
         allWarriorsList.Sort((x, y) => y.GetProperty(BlockData.Property.MOVE_SPEED).CompareTo(x.GetProperty(BlockData.Property.MOVE_SPEED)));
-        Debug.Log("warriors sorted by Speed: ");
-        foreach (WarriorBehavior warrior in allWarriorsList) {
-            Debug.Log(warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
-        }
-
+        // Debug.Log("warriors sorted by Speed: ");
+        // foreach (WarriorBehavior warrior in allWarriorsList) {
+        //     Debug.Log(warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
+        // }
     }
 
 

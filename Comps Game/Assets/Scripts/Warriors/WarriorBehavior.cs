@@ -135,8 +135,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return propertiesDict[property];
     }
 
-    
-
 
     // FUNCTIONS FROM WHITEBOARD HEADERS
     private void SetProperties() {
@@ -204,15 +202,85 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
     }
 
-    private void Move() {
-
+    public void Move() {
+        Debug.Log("MOVE FUNCTIONS:");
+        RunBehaviorFunctions(moveData);
     }
 
-    private void UseWeapon() {
-
+    public void UseWeapon() {
+        Debug.Log("USE WEAPON FUNCTIONS:");
+        RunBehaviorFunctions(useWeaponData);
     }
 
-    private void UseSpecial() {
+    public void UseSpecial() {
+        Debug.Log("USE SPECIAL FUNCTIONS:");
+        RunBehaviorFunctions(useSpecialData);
+    }
 
+    public void RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
+        for (int i = 0; i < behaviorList.Count; i++) {
+            switch (behaviorList[i].behavior) {
+                case BlockData.BehaviorType.TURN:
+                    // one dropdown
+                    Debug.Log("turn");
+                    break;
+                case BlockData.BehaviorType.STEP:
+                    // one dropdown
+                    Debug.Log("step");
+                    break;
+                case BlockData.BehaviorType.RUN:
+                    // one dropdown
+                    Debug.Log("run");
+                    break;
+                case BlockData.BehaviorType.TELEPORT:
+                    // one dropdown
+                    Debug.Log("teleport");
+                    break;
+                case BlockData.BehaviorType.MELEE_ATTACK:
+                    // no dropdowns
+                    Debug.Log("melee attack");
+                    break;
+                case BlockData.BehaviorType.SET_TARGET:
+                    // two dropdowns
+                    Debug.Log("set target");
+                    break;
+                case BlockData.BehaviorType.WHILE_LOOP:
+                    // two dropdowns
+                    Debug.Log("while loop");
+                    break;
+                case BlockData.BehaviorType.FOR_LOOP:
+                    // input field
+                    Debug.Log("for loop");
+                    break;
+                case BlockData.BehaviorType.END_LOOP:
+                    // no dropdowns
+                    Debug.Log("end loop");
+                    break;
+                case BlockData.BehaviorType.IF:
+                    // two dropdowns
+                    Debug.Log("if");
+                    break;
+                case BlockData.BehaviorType.ELSE:
+                    // no dropdowns
+                    Debug.Log("else");
+                    break;
+                case BlockData.BehaviorType.END_IF:
+                    // no dropdowns
+                    Debug.Log("end if");
+                    break;
+                case BlockData.BehaviorType.MELEE_SETTINGS:
+                    // two dropdowns
+                    Debug.Log("melee settings");
+                    break;
+                case BlockData.BehaviorType.RANGED_SETTINGS:
+                    // two dropdowns
+                    Debug.Log("ranged settings");
+                    break;
+                case BlockData.BehaviorType.FIRE_PROJECTILE:
+                    // no dropdowns
+                    Debug.Log("fire projectile");
+                    break;
+            }
+        }
     }
 }
