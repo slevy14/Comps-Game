@@ -106,6 +106,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 transform.position = initialPos;
                 break;
             case 3: // end over drawer
+                LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
                 Destroy(this.gameObject);
                 break;
             default:
@@ -257,12 +258,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // int headingIndex = possibleHeadings.IndexOf(heading);
                     Vector2 newHeading = heading;
                     if (behaviorList[i].values[0] == "0") { // TURN LEFT
-                        newHeading = new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
-                                                 (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+                        newHeading = RotateLeft(heading);
                         Debug.Log("after left rotation, " + newHeading);
                     } else { // TURN RIGHT
-                        newHeading = new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
-                                                 (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+                        newHeading = RotateRight(heading);
                         Debug.Log("after right rotation, " + newHeading);
                     }
                     this.heading = newHeading;
@@ -285,11 +284,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
                         stepPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
-                        stepPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+                        stepPos += RotateLeft(heading);
                     } else { // RIGHT
-                        stepPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+                        stepPos += RotateRight(heading);
                     }
                     if (!LevelController.Instance.objectsOnGrid.ContainsValue(stepPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0))) {
                         this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0));
@@ -318,15 +315,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         runPos -= heading;
                         runPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
-                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
-                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*90) - heading.y * Mathf.Sin(Mathf.Deg2Rad*90)),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*90) + heading.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+                        runPos += RotateLeft(heading);
+                        runPos += RotateLeft(heading);
                     } else { // RIGHT
-                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
-                        runPos += new Vector2((int)(heading.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - heading.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
-                                              (int)(heading.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + heading.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+                        runPos += RotateRight(heading);
+                        runPos += RotateRight(heading);
                     }
                     if (!LevelController.Instance.objectsOnGrid.ContainsValue(runPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)runPos.x, (int)runPos.y, 0))) {
                         this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)runPos.x, (int)runPos.y, 0));
@@ -341,7 +334,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // set where to teleport [0]
                     // 0: behind target
                     // 1: flank target
-                    // 2: retreat
 
                     Vector2 teleportPos = new();
                     if (behaviorList[i].values[0] == "0") { // behind
@@ -359,22 +351,31 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             Debug.Log("either tile full or would teleport off map");
                         }
                     } else if (behaviorList[i].values[0] == "1") { // flank
-                        if (target = null) {
+                        if (target == null) {
                             break;
                         }
                         // if left flank free:
+                        // rotate left and add to target position to check flank
+                        Vector2 leftFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateLeft(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateLeft(target.heading).y));
+                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(leftFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0))) {
                             // get target position plus rotated left heading
                             // try set this position to new position
+                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
+                            LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
+                            heading = RotateLeft(target.heading);
+                            break;
+                        }
                         // else if right flank free
+                        Vector2 rightFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateRight(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateRight(target.heading).y));
+                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(rightFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0))) {
                             // get target position plus rotated right heading
                             // try set this position to new position
-
-                    } else { // retreat
-                        // if ally, retreat to left wall
-                        // if enemy, retreat to right wall
+                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
+                            LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
+                            heading = RotateRight(target.heading);
+                            break;
+                        }
                     }
-
-
                     break;
                 case BlockData.BehaviorType.MELEE_ATTACK:
                     // no dropdowns

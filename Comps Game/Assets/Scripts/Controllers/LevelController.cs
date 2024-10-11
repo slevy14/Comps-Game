@@ -262,7 +262,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
-        battleSpeed = newBattleSpeed;
+        battleSpeed = 3.1f - newBattleSpeed;
     }
 
     public void StartBattleWrapper() { // for the button

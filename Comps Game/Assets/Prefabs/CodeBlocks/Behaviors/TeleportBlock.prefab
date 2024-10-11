@@ -370,8 +370,6 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Flank Target
       m_Image: {fileID: 0}
-    - m_Text: Retreat
-      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
