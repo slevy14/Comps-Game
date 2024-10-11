@@ -261,16 +261,27 @@ public class LevelController : MonoBehaviour {
         float.TryParse(newBattleSpeedString, out battleSpeed);
     }
 
+    public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
+        battleSpeed = newBattleSpeed;
+    }
+
     public void StartBattleWrapper() { // for the button
         StartCoroutine(StartBattle());
     }
 
     public IEnumerator StartBattle() {
+        // reset warrior lists if they're full
+        if (allWarriorsList.Count != 0) {
+            ClearWarriorLists();
+        }
+        // generate new warrior lists
         CreateWarriorLists();
+
+        // while game hasn't been won or lost, keep looping through
         // while (yourWarriorsList.Count != 0 && enemyWarriorsList.Count != 0) {
         for (int j = 0; j < 3; j++) {
             for (int i =0; i < allWarriorsList.Count; i++) { // doing this as a for loop so things can be deleted if they need to
-                Debug.Log(allWarriorsList[i].warriorName + " is up!");
+                Debug.Log(allWarriorsList[i].warriorName + " at position " + i + " is up!");
                 yield return StartCoroutine(allWarriorsList[i].Move());
                 yield return StartCoroutine(allWarriorsList[i].UseWeapon());
                 yield return StartCoroutine(allWarriorsList[i].UseSpecial());
@@ -293,10 +304,18 @@ public class LevelController : MonoBehaviour {
         }
         // sort allWarriorsList by speed
         allWarriorsList.Sort((x, y) => y.GetProperty(BlockData.Property.MOVE_SPEED).CompareTo(x.GetProperty(BlockData.Property.MOVE_SPEED)));
-        // Debug.Log("warriors sorted by Speed: ");
-        // foreach (WarriorBehavior warrior in allWarriorsList) {
-        //     Debug.Log(warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
-        // }
+        Debug.Log("warriors sorted by Speed: ");
+        int count = 0;
+        foreach (WarriorBehavior warrior in allWarriorsList) {
+            Debug.Log(count + " " + warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
+            count++;
+        }
+    }
+
+    public void ClearWarriorLists() {
+        yourWarriorsList.Clear();
+        enemyWarriorsList.Clear();
+        allWarriorsList.Clear();
     }
 
 
