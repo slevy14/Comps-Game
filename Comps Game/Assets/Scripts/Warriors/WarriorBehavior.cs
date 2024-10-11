@@ -326,10 +326,45 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.TELEPORT:
                     // one dropdown
                     Debug.Log("teleport");
+                    // set where to teleport [0]
+                    // 0: behind target
+                    // 1: flank target
+                    // 2: retreat
+
+                    if (behaviorList[i].values[0] == "0") { // behind
+                        // get target position minus heading
+                        // try set this position to new position
+
+                    } else if (behaviorList[i].values[0] == "1") { // flank
+                        // if left flank free:
+                            // get target position plus rotated left heading
+                            // try set this position to new position
+                        // else if right flank free
+                            // get target position plus rotated right heading
+                            // try set this position to new position
+
+                    } else { // retreat
+                        // if ally, retreat to left wall
+                        // if enemy, retreat to right wall
+                    }
+
+
                     break;
                 case BlockData.BehaviorType.MELEE_ATTACK:
                     // no dropdowns
                     Debug.Log("melee attack");
+                    // use melee range to attack in facing direction
+
+                    // range values and what they mean:
+                    // 1: directly in front
+                    // 2: two in a straight line
+                    // 3: three wide
+                    // 4: T-shape in front
+                    // 5: 2x3 blocks in front
+                    // clamp at 5
+
+
+
                     break;
                 case BlockData.BehaviorType.SET_TARGET:
                     // two dropdowns

@@ -368,9 +368,9 @@ MonoBehaviour:
     m_Options:
     - m_Text: Behind Target
       m_Image: {fileID: 0}
-    - m_Text: Retreat
+    - m_Text: Flank Target
       m_Image: {fileID: 0}
-    - m_Text: In Melee Range
+    - m_Text: Retreat
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
