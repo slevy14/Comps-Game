@@ -287,6 +287,8 @@ public class LevelController : MonoBehaviour {
                 yield return StartCoroutine(allWarriorsList[i].UseSpecial());
             }
         }
+
+        Debug.Log("battle over");
     }
 
     public void CreateWarriorLists() {

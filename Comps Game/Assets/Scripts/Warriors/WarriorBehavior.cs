@@ -30,6 +30,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [Description("properties that exist for making the warriors move but not editable by the player")]
     [SerializeField] private Vector2 heading;
     [SerializeField] private WarriorBehavior target;
+    [SerializeField] private bool isMeleeHeal;
+    [SerializeField] private bool isMeleeTargetAllies;
+    [SerializeField] private bool isRangedHeal;
+    [SerializeField] private bool isRangedTargetAllies;
 
     [Space(20)]
     [Header("References")]
@@ -64,6 +68,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         sprite = transform.GetChild(0).GetComponent<Sprite>();
 
         heading = new Vector2((int)1, (int)0);
+    }
+
+    public void SetIsEnemy() {
+        isEnemy = true;
+        heading = new Vector2((int)-1, (int)0);
+        this.gameObject.tag = "enemy";
     }
 
     // DRAGGING
@@ -215,6 +225,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*          BEHAVIOR PARSING          */
     /*------------------------------------*/
 
+    // Major Functions
     public IEnumerator Move() {
         Debug.Log("MOVE FUNCTIONS:");
         yield return StartCoroutine(RunBehaviorFunctions(moveData));
@@ -230,6 +241,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         yield return StartCoroutine(RunBehaviorFunctions(useSpecialData));
     }
 
+    // Parser
     public IEnumerator RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
         for (int i = 0; i < behaviorList.Count; i++) {
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
@@ -331,11 +343,25 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // 1: flank target
                     // 2: retreat
 
+                    Vector2 teleportPos = new();
                     if (behaviorList[i].values[0] == "0") { // behind
+                        if (target == null) {
+                            break;
+                        }
                         // get target position minus heading
+                        teleportPos = new Vector2((int)LevelController.Instance.objectsOnGrid[target.gameObject].x, (int)LevelController.Instance.objectsOnGrid[target.gameObject].y) - target.heading;
                         // try set this position to new position
-
+                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(teleportPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0))) {
+                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
+                            LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
+                            heading = target.heading;
+                        } else {
+                            Debug.Log("either tile full or would teleport off map");
+                        }
                     } else if (behaviorList[i].values[0] == "1") { // flank
+                        if (target = null) {
+                            break;
+                        }
                         // if left flank free:
                             // get target position plus rotated left heading
                             // try set this position to new position
@@ -495,5 +521,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     break;
             }
         }
+    }
+
+    // Helper Functions
+    public Vector2 RotateLeft(Vector2 vector) {
+        return new Vector2((int)(vector.x * Mathf.Cos(Mathf.Deg2Rad*90) - vector.y * Mathf.Sin(Mathf.Deg2Rad*90)),
+                           (int)(vector.x * Mathf.Sin(Mathf.Deg2Rad*90) + vector.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+    } 
+    public Vector2 RotateRight(Vector2 vector) {
+        return new Vector2((int)(vector.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - vector.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
+                           (int)(vector.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + vector.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
     }
 }

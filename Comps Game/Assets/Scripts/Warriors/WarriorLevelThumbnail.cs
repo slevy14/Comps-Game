@@ -41,8 +41,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
                                                       EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
             warriorBehavior.warriorIndex = warriorIndex;
             // explicitly set enemy
-            warriorBehavior.isEnemy = true;
-            warrior.tag = "enemy";
+            warriorBehavior.SetIsEnemy();
         }
 
         eventData.pointerDrag = warrior;

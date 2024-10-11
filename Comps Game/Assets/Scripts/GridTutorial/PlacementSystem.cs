@@ -190,7 +190,7 @@ public class PlacementSystem : MonoBehaviour {
         Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit = Physics2D.Raycast(ray, ray);
 
-        if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
+        if (hit.collider != null && (hit.collider.gameObject.tag == "warrior" || hit.collider.gameObject.tag == "enemy")) {
             warrior = hit.collider.gameObject;
         }
 
