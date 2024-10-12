@@ -14,6 +14,7 @@ public class LevelController : MonoBehaviour {
     [Header("REFERENCES")]
     [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
     [SerializeField] private GameObject statsPanel;
+    [SerializeField] private GameObject warriorsContainer;
 
     [Header("Objects")]
     [SerializeField] private GameObject warriorDrawer;
@@ -68,6 +69,8 @@ public class LevelController : MonoBehaviour {
         }
         LoadWarriorDrawer();
         LoadEnemyDrawer();
+
+        LoadSavedGrid();
     }
 
     // DRAWERS
@@ -124,6 +127,27 @@ public class LevelController : MonoBehaviour {
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
 
         // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
+    }
+
+    // SAVE / LOAD GRID
+    public void LoadSavedGrid() {
+        // clear grid
+        ClearGrid();
+        // foreach object in saved grid:
+            // instantiate into right position
+            // set properties like in WarriorLevelThumbnail
+            // add object to grid object dict
+    }
+
+    public void ClearGrid() {
+        // clear dict
+        // destroy objects
+        objectsOnGrid.Clear();
+        for (int i = 0; i < warriorsContainer.transform.childCount; i++) {
+            Destroy(warriorsContainer.transform.GetChild(i));
+            i--;
+        }
+
     }
 
 

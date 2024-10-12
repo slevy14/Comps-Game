@@ -115,6 +115,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             default:
                 break;
         }
+        GridSaveLoader.Instance.SaveGridToJSON();
         // visuals
         this.transform.localScale /= 1.5f;
     }
