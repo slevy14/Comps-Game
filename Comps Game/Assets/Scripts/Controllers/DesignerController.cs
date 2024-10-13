@@ -276,6 +276,16 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    // NEED TO ADD ERROR CHECKING FUNCTIONALITY!!!!
+    public void CheckSaveErrors() {
+        // THINGS TO CHECK:
+            // must have name
+            // must have health
+            // no unclosed loops/conditionals
+                // can check this by seeing if there are any ignores left when parsing loops/conditionals
+            // no extraneous endloop/endif/else
+    }
+
 
     public void SaveIntoJSON(WarriorFunctionalityData warriorFunctionalityData) {
         string warriorPropertiesJSON = JsonUtility.ToJson(warriorFunctionalityData);
@@ -621,7 +631,135 @@ public class DesignerController : MonoBehaviour {
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
+
+        // loop back through list to set jump points
+        for (int i = 0; i < behaviorsList.Count; i++) {
+            int ignores = 0;
+            // if WHILE or FOR found:
+                // save current index
+                // keep iterating to find an END LOOP block
+                // if another loop is found along the way, add to list of ignores
+                // if END found:
+                    // if ignores left, subtract from list of ignores
+                    // else, set jump point to that block index + 1
+                        // set jump point on that END block to this block index
+                // restore index
+            if (behaviorsList[i].behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                // jump point for while loop is values [2]
+                // jump point for end loop is values [0]
+                for (int j = i+1; j < behaviorsList.Count; j++) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
+                        ignores += 1;
+                    }
+
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                        if (ignores != 0) {
+                            ignores--;
+                        } else {
+                            // set jump points by adding to list, or updating if they exist
+                            if (behaviorsList[i].values.Count != 2) {
+                                behaviorsList[i].values[2] = (j+1).ToString();
+                            } else {
+                                behaviorsList[i].values.Add((j+1).ToString());
+                            }
+
+                            if (behaviorsList[j].values.Count != 0) {
+                                behaviorsList[j].values[0] = i.ToString();
+                            } else {
+                                behaviorsList[j].values.Add(i.ToString());
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (behaviorsList[i].behavior == BlockData.BehaviorType.FOR_LOOP) {
+                // jump point for for loop is values [1]
+                // jump point for end loop is values [0]
+                for (int j = i+1; j < behaviorsList.Count; j++) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
+                        ignores += 1;
+                    }
+
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                        if (ignores != 0) {
+                            ignores--;
+                        } else {
+                            // set jump points by adding to list, or updating if they exist
+                            if (behaviorsList[i].values.Count != 1) {
+                                behaviorsList[i].values[1] = (j+1).ToString();
+                            } else {
+                                behaviorsList[i].values.Add((j+1).ToString());
+                            }
+
+                            if (behaviorsList[j].values.Count != 0) {
+                                behaviorsList[j].values[0] = i.ToString();
+                            } else {
+                                behaviorsList[j].values.Add(i.ToString());
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // if IF block found:
+                // save current index
+                // keep iterating to find an ELSE or an END IF block
+                // if another conditional is found along the way, add to list of ignores
+                // if ELSE found:
+                    // if ignores left, move on
+                    // else, set ELSE jump point on this block
+                // if END IF found:
+                    // if ignores left, subtract from list of ignores
+                    // else, set END jump point on this block
+                // restore index
+            if (behaviorsList[i].behavior == BlockData.BehaviorType.IF) {
+                // ONLY NEED 1 JUMP INDEX:
+                // will always jump to else if it exists, otherwise to end
+                // but that can be stored as the same point! it does not actually matter
+                // jump point is values [2]
+
+                // set default value in case no else
+                int elseIndex = -1;
+                if (behaviorsList[i].values.Count > 2) {
+                    behaviorsList[i].values[2] = elseIndex.ToString();
+                } else {
+                    behaviorsList[i].values.Add(elseIndex.ToString());
+                }
+
+                for (int j = i+1; j < behaviorsList.Count; j++) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.IF) {
+                        ignores += 1;
+                    }
+
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.ELSE) {
+                        if (ignores == 0) {
+                            elseIndex = j;
+                            behaviorsList[i].values[2] = elseIndex.ToString();
+                        }
+                    }
+
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_IF) {
+                        if (ignores != 0) {
+                            ignores--;
+                        } else {
+                            // set jump point to end if need, otherwise break
+                            if (elseIndex == -1) {
+                                behaviorsList[i].values[2] = (j+1).ToString();
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+        }
         return behaviorsList;
+    }
+
+    public void SetJumpPoints() {
+        
     }
 
     // Deleting

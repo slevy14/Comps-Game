@@ -531,6 +531,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    WHILE LOOP    */
                 /*------------------*/ /*
                 two dropdowns
+                    choose condition [0]
+                        0: option
+                        1: option
+
+                    set boolean [1]
+                        0: true
+                        1: false
+                    
+                    JUMP INDEX [2]
                 basic while looping */
                 case BlockData.BehaviorType.WHILE_LOOP:
                     
@@ -541,6 +550,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    FOR LOOP    */
                 /*----------------*/ /*
                 input field
+                    set loop amount [0]
+                        0: loop amount
+
+                    JUMP INDEX [1]
                 loop x times */
                 case BlockData.BehaviorType.FOR_LOOP:
                     Debug.Log("for loop");
@@ -550,6 +563,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    END LOOP    */
                 /*----------------*/ /*
                 no dropdowns
+
+                    JUMP INDEX [0]
                 end either a for or while loop*/
                 case BlockData.BehaviorType.END_LOOP:
                     Debug.Log("end loop");
@@ -559,6 +574,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    IF    */
                 /*----------*/ /*
                 two dropdowns
+                    choose condition [0]
+                        0: option
+                        1: option
+
+                    set boolean [1]
+                        0: true
+                        1: false
+                    
+                    JUMP INDEX [2]
                 basic conditional */
                 case BlockData.BehaviorType.IF:
                     Debug.Log("if");
