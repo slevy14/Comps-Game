@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -132,11 +133,20 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void SaveAndSwitch() {
-        LoadWarriorToWhiteboard(warriorToLoadIndex, false, isLoadingWarriorEnemy);
+        // check for errors before saving!
+        if (SaveWarrior()) {
+            LoadWarriorToWhiteboard(warriorToLoadIndex, true, isLoadingWarriorEnemy);
+        } else {
+            Debug.Log("saving error! couldn't switch");
+        }
     }
 
     public void NoSaveSwitch() {
         LoadWarriorToWhiteboard(warriorToLoadIndex, true, isLoadingWarriorEnemy);
+    }
+
+    public void SaveWarriorWrapper() {
+        SaveWarrior();
     }
 
     // warrior creation
@@ -256,8 +266,7 @@ public class DesignerController : MonoBehaviour {
 
 
     // Saving
-    public void SaveWarrior() {
-        justSaved = true;
+    public bool SaveWarrior() {
         WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
@@ -265,25 +274,56 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
-        // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
-        if (!isLoadingWarriorEnemy) {
-            UpdateWarriorDrawerThumbnail(editingIndex);
-            warriorListController.FindJSON(); // reload json file
+
+        List<string> errorsList = CheckSaveErrors(_WarriorFunctionalityData);
+        if (errorsList.Count == 0) { // if no errors
+            justSaved = true;
+            // SaveIntoJSON(_WarriorFunctionalityData);
+            UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
+            if (!isLoadingWarriorEnemy) {
+                UpdateWarriorDrawerThumbnail(editingIndex);
+                warriorListController.FindJSON(); // reload json file
+            } else {
+                UpdateEnemyDrawerThumbnail(editingIndex);
+                enemyListController.FindJSON();
+            }
+            return true;
         } else {
-            UpdateEnemyDrawerThumbnail(editingIndex);
-            enemyListController.FindJSON();
+            justSaved = false;
+            Debug.Log("saving errors:");
+            foreach (string error in errorsList) {
+                Debug.Log(error);
+            }
+            return false;
         }
     }
 
     // NEED TO ADD ERROR CHECKING FUNCTIONALITY!!!!
-    public void CheckSaveErrors() {
+    public List<string> CheckSaveErrors(WarriorFunctionalityData warriorFunctionalityData) {
+        // return true if no errors
+        List<string> errorsToOutput = new List<string>();
         // THINGS TO CHECK:
-            // must have name
-            // must have health
-            // no unclosed loops/conditionals
-                // can check this by seeing if there are any ignores left when parsing loops/conditionals
-            // no extraneous endloop/endif/else
+        // must have name
+        if (ParseName() == "noname") {
+            errorsToOutput.Add("missing name!");
+        }
+        // must have health
+        if (!CheckForHealth()) {
+            errorsToOutput.Add("no health! warrior will die immediately :(");
+        }
+        
+        // no unclosed loops/conditionals
+            // can check this by seeing if there are any ignores left when parsing loops/conditionals
+        // no extraneous endloop/endif/else
+        List<string> loopingAndConditionalErrors = new List<string>();
+        loopingAndConditionalErrors.AddRange(CheckLoopingConditionalErrors("Move: ", warriorFunctionalityData.moveFunctions));
+        loopingAndConditionalErrors.AddRange(CheckLoopingConditionalErrors("Use Weapon: ", warriorFunctionalityData.useWeaponFunctions));
+        loopingAndConditionalErrors.AddRange(CheckLoopingConditionalErrors("Use Special: ", warriorFunctionalityData.useSpecialFunctions));
+        foreach (string error in loopingAndConditionalErrors) {
+            errorsToOutput.Add(error);
+        }
+
+        return errorsToOutput;
     }
 
 
@@ -558,6 +598,22 @@ public class DesignerController : MonoBehaviour {
         return name;
     }
 
+    public bool CheckForHealth() {
+        GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
+        while (current != null) {
+            BlockData blockData = current.GetComponent<BlockData>();
+            if (blockData.blockType == BlockData.BlockType.PROPERTY && blockData.property == BlockData.Property.HEALTH) {
+                if (blockData.values.Count != 0) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            current = current.GetComponent<Draggable>().GetNextBlock();
+        }
+        return false;
+    }
+
     public List<BlockDataStruct> ParseProperties() {
         List<BlockDataStruct> propertiesList = new List<BlockDataStruct>();
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
@@ -587,8 +643,25 @@ public class DesignerController : MonoBehaviour {
                     case BlockData.BehaviorType.MELEE_ATTACK:
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
                     case BlockData.BehaviorType.ELSE:
+                        if (blockData.values.Count != 0) {
+                            blockData.values[0] = (-1).ToString();
+                        } else {
+                            blockData.values.Add((-1).ToString());
+                        }
+                        break;
                     case BlockData.BehaviorType.END_IF:
+                        if (blockData.values.Count != 0) {
+                            blockData.values[0] = (-1).ToString();
+                        } else {
+                            blockData.values.Add((-1).ToString());
+                        }
+                        break;
                     case BlockData.BehaviorType.END_LOOP:
+                        if (blockData.values.Count != 0) {
+                            blockData.values[0] = (-1).ToString();
+                        } else {
+                            blockData.values.Add((-1).ToString());
+                        }
                         break;
                     // one dropdown, store value as string
                     case BlockData.BehaviorType.TURN:
@@ -632,7 +705,13 @@ public class DesignerController : MonoBehaviour {
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
 
-        // loop back through list to set jump points
+
+        // SET JUMP POINTS FOR LOOPS AND CONDITIONALS
+        
+        // setup tracker for what we're currently in
+        // this is needed to make sure we don't end loops/conditionals at weird times!
+        bool inLoop;
+
         for (int i = 0; i < behaviorsList.Count; i++) {
             int ignores = 0;
             // if WHILE or FOR found:
@@ -644,30 +723,37 @@ public class DesignerController : MonoBehaviour {
                     // else, set jump point to that block index + 1
                         // set jump point on that END block to this block index
                 // restore index
+
             if (behaviorsList[i].behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                inLoop = true; // track if we are in a loop or a conditional
+
+                int jumpIndex = -1;
+                if (behaviorsList[i].values.Count > 2) {
+                    behaviorsList[i].values[2] = jumpIndex.ToString();
+                } else {
+                    behaviorsList[i].values.Add(jumpIndex.ToString());
+                }
                 // jump point for while loop is values [2]
                 // jump point for end loop is values [0]
                 for (int j = i+1; j < behaviorsList.Count; j++) {
                     if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
                         ignores += 1;
+                        inLoop = true;
+                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.IF) {
+                        inLoop = false;
+                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.END_IF) {
+                        inLoop = true;
                     }
 
-                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP && inLoop) {
                         if (ignores != 0) {
                             ignores--;
                         } else {
                             // set jump points by adding to list, or updating if they exist
-                            if (behaviorsList[i].values.Count != 2) {
-                                behaviorsList[i].values[2] = (j+1).ToString();
-                            } else {
-                                behaviorsList[i].values.Add((j+1).ToString());
-                            }
+                            behaviorsList[i].values[2] = (j+1).ToString();
 
-                            if (behaviorsList[j].values.Count != 0) {
-                                behaviorsList[j].values[0] = i.ToString();
-                            } else {
-                                behaviorsList[j].values.Add(i.ToString());
-                            }
+                            // set jump point for end loop
+                            behaviorsList[j].values[0] = i.ToString();
                             break;
                         }
                     }
@@ -675,11 +761,25 @@ public class DesignerController : MonoBehaviour {
             }
 
             if (behaviorsList[i].behavior == BlockData.BehaviorType.FOR_LOOP) {
+                inLoop = true;
                 // jump point for for loop is values [1]
                 // jump point for end loop is values [0]
+
+                // set default jump point
+                int jumpIndex = -1;
+                if (behaviorsList[i].values.Count > 1) {
+                    behaviorsList[i].values[1] = jumpIndex.ToString();
+                } else {
+                    behaviorsList[i].values.Add(jumpIndex.ToString());
+                }
+
                 for (int j = i+1; j < behaviorsList.Count; j++) {
                     if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
                         ignores += 1;
+                    }  else if (behaviorsList[j].behavior == BlockData.BehaviorType.IF) {
+                        inLoop = false;
+                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.END_IF) {
+                        inLoop = true;
                     }
 
                     if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
@@ -687,17 +787,10 @@ public class DesignerController : MonoBehaviour {
                             ignores--;
                         } else {
                             // set jump points by adding to list, or updating if they exist
-                            if (behaviorsList[i].values.Count != 1) {
-                                behaviorsList[i].values[1] = (j+1).ToString();
-                            } else {
-                                behaviorsList[i].values.Add((j+1).ToString());
-                            }
+                            behaviorsList[i].values[1] = (j+1).ToString();
 
-                            if (behaviorsList[j].values.Count != 0) {
-                                behaviorsList[j].values[0] = i.ToString();
-                            } else {
-                                behaviorsList[j].values.Add(i.ToString());
-                            }
+                            // set jump point for end loop
+                            behaviorsList[j].values[0] = i.ToString();
                             break;
                         }
                     }
@@ -716,10 +809,14 @@ public class DesignerController : MonoBehaviour {
                     // else, set END jump point on this block
                 // restore index
             if (behaviorsList[i].behavior == BlockData.BehaviorType.IF) {
+                inLoop = false;
                 // ONLY NEED 1 JUMP INDEX:
                 // will always jump to else if it exists, otherwise to end
                 // but that can be stored as the same point! it does not actually matter
                 // jump point is values [2]
+
+                // STORING JUMP POINTS IN THE ELSE AND ENDIF BLOCKS ANYWAYS!!
+                // helps for error checking
 
                 // set default value in case no else
                 int elseIndex = -1;
@@ -732,16 +829,22 @@ public class DesignerController : MonoBehaviour {
                 for (int j = i+1; j < behaviorsList.Count; j++) {
                     if (behaviorsList[j].behavior == BlockData.BehaviorType.IF) {
                         ignores += 1;
+                        inLoop = false;
+                    }  else if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
+                        inLoop = true;
+                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                        inLoop = false;
                     }
 
-                    if (behaviorsList[j].behavior == BlockData.BehaviorType.ELSE) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.ELSE && inLoop == false) {
                         if (ignores == 0) {
                             elseIndex = j;
                             behaviorsList[i].values[2] = elseIndex.ToString();
+                            behaviorsList[j].values[0] = i.ToString();
                         }
                     }
 
-                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_IF) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_IF && inLoop == false) {
                         if (ignores != 0) {
                             ignores--;
                         } else {
@@ -749,17 +852,58 @@ public class DesignerController : MonoBehaviour {
                             if (elseIndex == -1) {
                                 behaviorsList[i].values[2] = (j+1).ToString();
                             }
+                            // assign jump point to endif for error checking
+                            behaviorsList[j].values[0] = i.ToString();
                             break;
                         }
                     }
                 }
             }
         }
+
         return behaviorsList;
     }
 
-    public void SetJumpPoints() {
-        
+    public List<string> CheckLoopingConditionalErrors(string headerName, List<BlockDataStruct> blocks) {
+        List<string> errorsList = new List<string>();
+
+        foreach (BlockDataStruct block in blocks) {
+            switch(block.behavior) {
+                case BlockData.BehaviorType.WHILE_LOOP:
+                    if (block.values[2] == "-1") {
+                        errorsList.Add("mismatched WHILE loop!");
+                    }
+                    break;
+                case BlockData.BehaviorType.FOR_LOOP:   
+                    if (block.values[1] == "-1") {
+                        errorsList.Add("mismatched FOR loop!");
+                    }
+                    break;
+                case BlockData.BehaviorType.END_LOOP:
+                    if (block.values[0] == "-1") {
+                        errorsList.Add("mismatched END LOOP");
+                    }
+                    break;
+                case BlockData.BehaviorType.IF:
+                    if (block.values[2] == "-1") {
+                        errorsList.Add("mismatched IF statement!");
+                    }
+                    break;
+                case BlockData.BehaviorType.ELSE:
+                    if (block.values[0] == "-1") {
+                        errorsList.Add("mismatched ELSE statement!");
+                    }
+                    break;
+                case BlockData.BehaviorType.END_IF:
+                    if (block.values[0] == "-1") {
+                        errorsList.Add("mismatched END IF!");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        return errorsList;
     }
 
     // Deleting

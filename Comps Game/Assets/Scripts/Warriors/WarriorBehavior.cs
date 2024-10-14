@@ -592,6 +592,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    ELSE    */
                 /*------------*/ /*
                 no dropdowns
+
+                    JUMP INDEX [0]
                 basic else case */
                 case BlockData.BehaviorType.ELSE:
                     Debug.Log("else");
@@ -601,6 +603,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*    END IF    */
                 /*--------------*/ /*
                 no dropdowns
+                
+                    JUMP INDEX [0]
                 end conditional */
                 case BlockData.BehaviorType.END_IF:
                     Debug.Log("end if");
