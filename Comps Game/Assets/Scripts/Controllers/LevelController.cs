@@ -243,6 +243,11 @@ public class LevelController : MonoBehaviour {
         return propertiesString;
     }
 
+    private string BehaviorString(WarriorFunctionalityData warriorData) {
+        // FIXME: add ability to print behaviors as string to the stats screen
+        return null;
+    }
+
     public void HideStatsPanel() {
         statsPanel.SetActive(false);
     }

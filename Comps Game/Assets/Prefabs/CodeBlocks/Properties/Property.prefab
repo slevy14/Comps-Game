@@ -377,7 +377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockType: 0
-  behavior: 11
+  behavior: 0
   property: 3
   values: []
 --- !u!114 &4747577901507089380

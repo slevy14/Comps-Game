@@ -48,7 +48,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
 
         // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
-        blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+        // SET OFFSET
+        SetBlockOffset(false);
         // Debug.Log("offset: " + blockOffset.y);
         whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
@@ -134,7 +135,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             }
 
             // need to do this here because if instantiated, on awake offset set to 0 for some reason!
-            blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+            SetBlockOffset(false);
 
             if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
@@ -190,6 +191,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public GameObject GetNextBlock() {
         return this.nextBlock;
+    }
+
+    public GameObject GetPrevBlock() {
+        return this.prevBlock;
     }
 
     public void SetMaskable(bool value) {
@@ -285,6 +290,21 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
+    public void SetBlockOffset(bool shiftBack) {
+        // shift back if placing an ELSE, END IF, or END LOOP
+        if (shiftBack) {
+            blockOffset = new Vector3(50, gameObject.GetComponent<RectTransform>().rect.height, 0);
+            return;
+        }
+        // set x val if FOR, WHILE, IF, or ELSE
+        BlockData.BehaviorType blockBehavior = this.gameObject.GetComponent<BlockData>().behavior;
+        if (blockBehavior == BlockData.BehaviorType.FOR_LOOP || blockBehavior == BlockData.BehaviorType.WHILE_LOOP || blockBehavior == BlockData.BehaviorType.IF || blockBehavior == BlockData.BehaviorType.ELSE) {
+            blockOffset = new Vector3(-50, gameObject.GetComponent<RectTransform>().rect.height, 0);
+        } else {
+            blockOffset = new Vector3(0, gameObject.GetComponent<RectTransform>().rect.height, 0);
+        }
+    }
+
     // boolean, returns false if didn't snap
     private bool SnapToBlock(PointerEventData eventData) {
         // List<RaycastResult> result = new List<RaycastResult>();
@@ -304,7 +324,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
                 this.prevBlock = blockToSnapTo;
                 prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
-                UpdateBlockPositions(this.gameObject, prevBlock.transform.position - blockOffset);
+
+                BlockData.BehaviorType thisBlockBehavior = gameObject.GetComponent<BlockData>().behavior;
+                if (thisBlockBehavior == BlockData.BehaviorType.END_LOOP || thisBlockBehavior == BlockData.BehaviorType.END_IF || thisBlockBehavior == BlockData.BehaviorType.ELSE) {
+                    prevBlock.GetComponent<Draggable>().SetBlockOffset(true);
+                } else {
+                    prevBlock.GetComponent<Draggable>().SetBlockOffset(false);
+                }
+                UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
                 // Debug.Log(this.prevBlock.name);
                 return true; // snapped 
             }
