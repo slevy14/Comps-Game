@@ -12,6 +12,8 @@ public class DesignerController : MonoBehaviour {
     [Header("DEBUG")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
 
+    [Space(20)]
+
     [Header("SAVE/LOAD")]
     [SerializeField] private WarriorListController warriorListController;
     [SerializeField] private EnemyListController enemyListController;
@@ -19,6 +21,8 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private bool isLoadingWarriorEnemy = false;
     [SerializeField] private bool isCurrentWarriorEnemy = false;
     [SerializeField] public bool justSaved;
+
+    [Space(20)]
 
     [Header("REFERENCES")]
     [Header("Headers")]
@@ -35,12 +39,15 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject whiteboard;
     [SerializeField] private GameObject deleteMenu;
     [SerializeField] private GameObject switchPromptMenu;
+    [SerializeField] private GameObject errorPopupMenu;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
     [SerializeField] public List<SpriteData> spriteDataList;
     [SerializeField] public List<SpriteData> enemySpriteDataList;
     [SerializeField] public int spriteDataIndex;
+
+    [Space(20)]
 
     [Header("Vars")]
     [Header("Property Blocks")]
@@ -149,7 +156,13 @@ public class DesignerController : MonoBehaviour {
         SaveWarrior();
     }
 
-    // warrior creation
+    // close error popup
+    public void CloseErrorPopup() {
+        errorPopupMenu.SetActive(false);
+    }
+
+
+    // WARRIOR CREATION
     public void CreateNewWarrior() {
         // save active warrior first, just in case
         SaveWarrior();
@@ -290,15 +303,36 @@ public class DesignerController : MonoBehaviour {
             return true;
         } else {
             justSaved = false;
-            Debug.Log("saving errors:");
+
+            TMP_Text errorText = errorPopupMenu.transform.GetChild(1).GetComponent<TMP_Text>(); // text component
+            string errorString = "Couldn't save due to the following errors:\n\n";
             foreach (string error in errorsList) {
-                Debug.Log(error);
+                errorString += error + "\n";
             }
+            errorText.text = errorString;
+            errorPopupMenu.SetActive(true);
+
             return false;
         }
     }
 
-    // NEED TO ADD ERROR CHECKING FUNCTIONALITY!!!!
+
+    public void SaveIntoJSON(WarriorFunctionalityData warriorFunctionalityData) {
+        string warriorPropertiesJSON = JsonUtility.ToJson(warriorFunctionalityData);
+        string filePath = Application.persistentDataPath + $"/{warriorFunctionalityData.warriorName}.json";
+        System.IO.File.WriteAllText(filePath, warriorPropertiesJSON);
+        Debug.Log("saving json at " + filePath);
+    }
+
+    public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
+        if (!isEnemy) {
+            warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+        } else {
+            enemyListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+        }
+    }
+
+    // Error Checking
     public List<string> CheckSaveErrors(WarriorFunctionalityData warriorFunctionalityData) {
         // return true if no errors
         List<string> errorsToOutput = new List<string>();
@@ -324,22 +358,6 @@ public class DesignerController : MonoBehaviour {
         }
 
         return errorsToOutput;
-    }
-
-
-    public void SaveIntoJSON(WarriorFunctionalityData warriorFunctionalityData) {
-        string warriorPropertiesJSON = JsonUtility.ToJson(warriorFunctionalityData);
-        string filePath = Application.persistentDataPath + $"/{warriorFunctionalityData.warriorName}.json";
-        System.IO.File.WriteAllText(filePath, warriorPropertiesJSON);
-        Debug.Log("saving json at " + filePath);
-    }
-
-    public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
-        if (!isEnemy) {
-            warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
-        } else {
-            enemyListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
-        }
     }
 
     // Loading
