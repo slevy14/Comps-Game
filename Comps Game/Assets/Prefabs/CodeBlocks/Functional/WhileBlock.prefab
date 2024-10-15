@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1725383046690132672, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_text
-      value: Enemy in Range
+      value: Target in Range
       objectReference: {fileID: 0}
     - target: {fileID: 1725383046690132672, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_fontSize
@@ -30,11 +30,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126043434187828629, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_Options.m_Options.Array.data[0].m_Text
-      value: Enemy in Range
+      value: Target in Range
       objectReference: {fileID: 0}
     - target: {fileID: 4126043434187828629, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_Options.m_Options.Array.data[1].m_Text
-      value: Ally in Range
+      value: Target Low Health
       objectReference: {fileID: 0}
     - target: {fileID: 4126043434187828629, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text

@@ -35,6 +35,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isMeleeTargetAllies;
     [SerializeField] private bool isRangedHeal;
     [SerializeField] private bool isRangedTargetAllies;
+    [SerializeField] private Dictionary<int, bool> conditionsDict;
+    [SerializeField] private Dictionary<int, int> forCounters;
+
+    private int MAX_INFINITY_COUNTER = 10;
+    [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
 
     [Space(20)]
     [Header("References")]
@@ -59,10 +64,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // setup
     void Awake() {
-        // SetProperties();
         propertiesDict = new Dictionary<BlockData.Property, float>();
-        // InitializeProperties();
+        conditionsDict = new();
+        forCounters = new();
 
+        infinityCounters = new();
 
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
@@ -230,11 +236,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
     }
 
-    /*------------------------------------*/
-    /*                                    */
-    /*          BEHAVIOR PARSING          */
-    /*                                    */
-    /*------------------------------------*/
+    /*----------------------------------------*/
+    /*                                        */
+    /*          BEHAVIOR INTERPRETER          */
+    /*                                        */
+    /*----------------------------------------*/
 
     // Major Functions
     public IEnumerator Move() {
@@ -258,12 +264,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // Parser:
     // loop through all behavior, run code for each as needed
     public IEnumerator RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
+        conditionsDict.Clear();
+        forCounters.Clear();
+        infinityCounters.Clear();
         for (int i = 0; i < behaviorList.Count; i++) {
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 /*------------*/
                 /*    TURN    */
-                /*------------*/ /*
+                /*------------*/ /*   Current Status: DONE
                 one dropdown
                     choose which direction to rotate [0]
                         0: left
@@ -288,7 +297,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*------------*/
                 /*    STEP    */
-                /*------------*/ /*
+                /*------------*/ /*   Current Status: DONE
                 one dropdown
                     choose direction [0]
                         0: forward
@@ -299,11 +308,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.STEP:
                     Debug.Log("step");
                     Vector2 stepPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
-                    Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
+                    // Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
                     if (behaviorList[i].values[0] == "0") { // FORWARD
                         // do something with heading
                         stepPos += heading;
-                        Debug.Log("newPos forward: " + stepPos);
+                        // Debug.Log("newPos forward: " + stepPos);
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
                         stepPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
@@ -321,7 +330,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*-----------*/
                 /*    RUN    */
-                /*-----------*/ /*
+                /*-----------*/ /*   Current Status: Done
                 one dropdown
                     choose direction [0]
                         0: forward
@@ -358,7 +367,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*----------------*/
                 /*    TELEPORT    */
-                /*----------------*/ /*
+                /*----------------*/ /*   Current Status: Done
                 one dropdown
                     set where to teleport [0]
                         0: behind target
@@ -411,7 +420,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*--------------------*/
                 /*    MELEE ATTACK    */
-                /*--------------------*/ /*
+                /*--------------------*/ /*   Current Status: NEED TO START
                 no dropdowns,
                 use melee range values to attack in facing direction:
                     1: directly in front
@@ -432,7 +441,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*------------------*/
                 /*    SET TARGET    */
-                /*------------------*/ /*
+                /*------------------*/ /*   Current Status: IN PROGRESS
                 two dropdowns
                     choose team to target [1]
                         0: enemy
@@ -529,11 +538,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*------------------*/
                 /*    WHILE LOOP    */
-                /*------------------*/ /*
+                /*------------------*/ /*   Current Status: IN PROGRESS / UNTESTED
                 two dropdowns
                     choose condition [0]
-                        0: option
-                        1: option
+                        0: target in range
+                        1: target low health
 
                     set boolean [1]
                         0: true
@@ -542,13 +551,36 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     JUMP INDEX [2]
                 basic while looping */
                 case BlockData.BehaviorType.WHILE_LOOP:
-                    
                     Debug.Log("while loop");
+                    if (!infinityCounters.ContainsKey(i)) {
+                        infinityCounters[i] = MAX_INFINITY_COUNTER;
+                    }
+                    // check condition
+                    // add index and result to conditions dict
+                    bool whileLoopCondition = behaviorList[i].values[1] == "0" ? true : false;
+
+                    if (behaviorList[i].values[0] == "0") { // target in range
+                        conditionsDict[i] = TargetInRange(i) == whileLoopCondition;
+                        Debug.Log("looping for target in range at index " + i);
+                    } else if (behaviorList[i].values[0] == "1") { // target low health
+                        conditionsDict[i] = TargetLowHealth(i) == whileLoopCondition;
+                        Debug.Log("looping for target low heatlh at index " + i);
+                    }
+
+                    // if false just jump past
+                    if (conditionsDict[i] == false || infinityCounters[i] <= 0) {
+                        infinityCounters[i] = MAX_INFINITY_COUNTER;
+                        Debug.Log("resetting infinity counter for index: " + i);
+                        i = int.Parse(behaviorList[i].values[2]) - 1;
+                        continue;
+                    }
+                    infinityCounters[i]--;
+                    Debug.Log("ticking down infinity counter at " + i + " is " + infinityCounters[i]);
                     break;
 
                 /*----------------*/
                 /*    FOR LOOP    */
-                /*----------------*/ /*
+                /*----------------*/ /*   Current Status: NOT STARTED
                 input field
                     set loop amount [0]
                         0: loop amount
@@ -561,18 +593,27 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*----------------*/
                 /*    END LOOP    */
-                /*----------------*/ /*
+                /*----------------*/ /*   Current Status: UNTESTED
                 no dropdowns
 
                     JUMP INDEX [0]
                 end either a for or while loop*/
                 case BlockData.BehaviorType.END_LOOP:
+                    // if conditions dict at jump index false, jump back
+                    // else continue
+                    // if (conditionsDict[int.Parse(behaviorList[i].values[0])])
+
+                    // OR
+                    // just jump back to the beginning because the loop jumps past this
                     Debug.Log("end loop");
+
+                    i = int.Parse(behaviorList[i].values[0])-1;
+
                     break;
                 
                 /*----------*/
                 /*    IF    */
-                /*----------*/ /*
+                /*----------*/ /*   Current Status: NOT STARTED
                 two dropdowns
                     choose condition [0]
                         0: option
@@ -586,11 +627,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 basic conditional */
                 case BlockData.BehaviorType.IF:
                     Debug.Log("if");
+
+                    // check condition
+                    // add index and result to conditions dict
+
                     break;
                 
                 /*------------*/
                 /*    ELSE    */
-                /*------------*/ /*
+                /*------------*/ /*   Current Status: NOT STARTED
                 no dropdowns
 
                     JUMP INDEX [0]
@@ -601,9 +646,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*--------------*/
                 /*    END IF    */
-                /*--------------*/ /*
+                /*--------------*/ /*   Current Status: NOT STARTED
                 no dropdowns
-                
+
                     JUMP INDEX [0]
                 end conditional */
                 case BlockData.BehaviorType.END_IF:
@@ -612,7 +657,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*----------------------*/
                 /*    MELEE SETTINGS    */
-                /*----------------------*/ /*
+                /*----------------------*/ /*   Current Status: Done
                 two dropdowns
                     choose if heal or attack [0]
                         0: attack
@@ -632,7 +677,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*-----------------------*/
                 /*    RANGED SETTINGS    */
-                /*-----------------------*/ /*
+                /*-----------------------*/ /*   Current Status: Done
                 two dropdowns
                     choose if heal or attack [0]
                         0: attack
@@ -643,9 +688,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         1: allies
                 */
                 case BlockData.BehaviorType.RANGED_SETTINGS:
-                    
                     Debug.Log("ranged settings");
-                    
 
                     isRangedHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isRangedTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
@@ -653,7 +696,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*-----------------------*/
                 /*    FIRE PROJECTILE    */
-                /*-----------------------*/ /*
+                /*-----------------------*/ /*   Current Status: NOT STARTED
                 no dropdowns
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
@@ -672,5 +715,20 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public Vector2 RotateRight(Vector2 vector) {
         return new Vector2((int)(vector.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - vector.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
                            (int)(vector.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + vector.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+    }
+
+    public bool TargetInRange(int index) {
+        // FIXME!!!
+        return true;
+    }
+
+    public bool TargetLowHealth(int index) {
+        // FIXME!!!
+        if (infinityCounters[index] == 7) {
+            Debug.Log("target low health returned false");
+            return false;
+        }
+        return true;
+
     }
 }

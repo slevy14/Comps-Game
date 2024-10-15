@@ -406,9 +406,9 @@ public class DesignerController : MonoBehaviour {
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
             bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            Debug.Log(shiftOffsetBack);
+            // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                Debug.Log("need to shift back");
+                // Debug.Log("need to shift back");
                 newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
                 // SetBlockOffset(true);
             }
@@ -478,9 +478,9 @@ public class DesignerController : MonoBehaviour {
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
             bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            Debug.Log(shiftOffsetBack);
+            // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                Debug.Log("need to shift back");
+                // Debug.Log("need to shift back");
                 newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
                 // SetBlockOffset(true);
             }
@@ -552,9 +552,9 @@ public class DesignerController : MonoBehaviour {
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
             bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            Debug.Log(shiftOffsetBack);
+            // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                Debug.Log("need to shift back");
+                // Debug.Log("need to shift back");
                 newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
                 // SetBlockOffset(true);
             }
@@ -627,9 +627,9 @@ public class DesignerController : MonoBehaviour {
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
             bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            Debug.Log(shiftOffsetBack);
+            // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                Debug.Log("need to shift back");
+                // Debug.Log("need to shift back");
                 newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
                 // SetBlockOffset(true);
             }
