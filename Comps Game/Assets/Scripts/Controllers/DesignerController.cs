@@ -872,10 +872,8 @@ public class DesignerController : MonoBehaviour {
                 // restore index
             if (behaviorsList[i].behavior == BlockData.BehaviorType.IF) {
                 inLoop = false;
-                // ONLY NEED 1 JUMP INDEX:
-                // will always jump to else if it exists, otherwise to end
-                // but that can be stored as the same point! it does not actually matter
                 // jump point is values [2]
+                // storing jump point to end in else [0] if it exists
 
                 // STORING JUMP POINTS IN THE ELSE AND ENDIF BLOCKS ANYWAYS!!
                 // helps for error checking
@@ -913,8 +911,11 @@ public class DesignerController : MonoBehaviour {
                             // set jump point to end if need, otherwise break
                             if (elseIndex == -1) {
                                 behaviorsList[i].values[2] = (j+1).ToString();
+                            } else {
+                                behaviorsList[elseIndex].values[0] = j.ToString();
                             }
-                            // assign jump point to endif for error checking
+                            // assign jump point to if for error checking
+
                             behaviorsList[j].values[0] = i.ToString();
                             break;
                         }

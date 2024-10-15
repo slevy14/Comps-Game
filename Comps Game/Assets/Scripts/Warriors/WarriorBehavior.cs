@@ -242,6 +242,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*                                        */
     /*----------------------------------------*/
 
+    // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else
+    // IN PROGRESS: Set Target, While Loop, If
+    // NOT STARTED: Melee Attack, Fire Projectile
+
     // Major Functions
     public IEnumerator Move() {
         // reset target each time bc it's coded in
@@ -420,7 +424,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*--------------------*/
                 /*    MELEE ATTACK    */
-                /*--------------------*/ /*   Current Status: NEED TO START
+                /*--------------------*/ /*   Current Status: NOT STARTED
                 no dropdowns,
                 use melee range values to attack in facing direction:
                     1: directly in front
@@ -623,7 +627,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*----------*/
                 /*    IF    */
-                /*----------*/ /*   Current Status: NOT STARTED
+                /*----------*/ /*   Current Status: IN PROGRESS
                 two dropdowns
                     choose condition [0]
                         0: option
@@ -640,26 +644,44 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     // check condition
                     // add index and result to conditions dict
+                    bool ifCondition = behaviorList[i].values[1] == "0" ? true : false;
 
+                    if (behaviorList[i].values[0] == "0") { // target in range
+                        conditionsDict[i] = TargetInRange(i) == ifCondition;
+                    } else if (behaviorList[i].values[0] == "1") { // target low health
+                        conditionsDict[i] = TargetLowHealth(i) == ifCondition;
+                    }
+
+                    // if false just jump past
+                    if (conditionsDict[i] == false) {
+                        i = int.Parse(behaviorList[i].values[2]) - 1;
+                        continue;
+                    }
                     break;
                 
                 /*------------*/
                 /*    ELSE    */
-                /*------------*/ /*   Current Status: NOT STARTED
+                /*------------*/ /*   Current Status: IN PROGRESS
                 no dropdowns
 
                     JUMP INDEX [0]
+                jumps to end if need to pass
                 basic else case */
                 case BlockData.BehaviorType.ELSE:
                     Debug.Log("else");
+                    if (conditionsDict[int.Parse(behaviorList[i].values[0])] == true) { // skip else, jump to endif
+                        i = int.Parse(behaviorList[i].values[0]) - 1;
+                        continue;
+                    }
                     break;
 
                 /*--------------*/
                 /*    END IF    */
-                /*--------------*/ /*   Current Status: NOT STARTED
+                /*--------------*/ /*   Current Status: Done
                 no dropdowns
 
                     JUMP INDEX [0]
+                this block does nothing itself, just a jump point
                 end conditional */
                 case BlockData.BehaviorType.END_IF:
                     Debug.Log("end if");
@@ -728,17 +750,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool TargetInRange(int index) {
-        // FIXME!!!
+        // FIXME!!! placeholder always true
         return true;
     }
 
     public bool TargetLowHealth(int index) {
-        // FIXME!!!
-        if (infinityCounters[index] == 7) {
-            Debug.Log("target low health returned false");
-            return false;
-        }
-        return true;
-
+        // FIXME!!! placeholder always false
+        return false;
     }
 }
