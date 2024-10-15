@@ -538,7 +538,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*------------------*/
                 /*    WHILE LOOP    */
-                /*------------------*/ /*   Current Status: IN PROGRESS / UNTESTED
+                /*------------------*/ /*   Current Status: IN PROGRESS
                 two dropdowns
                     choose condition [0]
                         0: target in range
@@ -580,7 +580,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*----------------*/
                 /*    FOR LOOP    */
-                /*----------------*/ /*   Current Status: NOT STARTED
+                /*----------------*/ /*   Current Status: Done
                 input field
                     set loop amount [0]
                         0: loop amount
@@ -589,11 +589,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 loop x times */
                 case BlockData.BehaviorType.FOR_LOOP:
                     Debug.Log("for loop");
+                    if (!forCounters.ContainsKey(i)) {
+                        forCounters[i] = int.Parse(behaviorList[i].values[0]);
+                    }
+
+                    if (forCounters[i] <= 0) {
+                        i = int.Parse(behaviorList[i].values[1]) - 1;
+                        continue;
+                    }
+                    forCounters[i]--;
+                    Debug.Log("ticking down for counter at " + i + " to " + forCounters[i]);
                     break;
 
                 /*----------------*/
                 /*    END LOOP    */
-                /*----------------*/ /*   Current Status: UNTESTED
+                /*----------------*/ /*   Current Status: Done
                 no dropdowns
 
                     JUMP INDEX [0]
