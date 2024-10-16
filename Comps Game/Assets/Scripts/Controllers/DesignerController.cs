@@ -897,7 +897,7 @@ public class DesignerController : MonoBehaviour {
                     }
 
                     if (behaviorsList[j].behavior == BlockData.BehaviorType.ELSE && inLoop == false) {
-                        if (ignores == 0) {
+                        if (ignores == 0 && elseIndex == -1) {
                             elseIndex = j;
                             behaviorsList[i].values[2] = elseIndex.ToString();
                             behaviorsList[j].values[0] = i.ToString();
