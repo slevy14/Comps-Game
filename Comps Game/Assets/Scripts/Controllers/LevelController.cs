@@ -41,6 +41,7 @@ public class LevelController : MonoBehaviour {
 
     [Header("Battle")]
     [SerializeField] public float battleSpeed;
+    [SerializeField] private int maxTurns = 50;
 
 
     // SINGLETON
@@ -343,17 +344,37 @@ public class LevelController : MonoBehaviour {
         // generate new warrior lists
         CreateWarriorLists();
 
+        int turnCounter = 0;
+        bool battleFinished = false;
         // while game hasn't been won or lost, keep looping through
-        // while (yourWarriorsList.Count != 0 && enemyWarriorsList.Count != 0) {
-        for (int j = 0; j < 3; j++) {
+        while (yourWarriorsList.Count > 0 && enemyWarriorsList.Count > 0 && turnCounter < maxTurns) {
+        // for (int j = 0; j < 5; j++) {
             for (int i =0; i < allWarriorsList.Count; i++) { // doing this as a for loop so things can be deleted if they need to
+                if (!allWarriorsList[i].isAlive) {
+                    continue;
+                }
                 Debug.Log(allWarriorsList[i].warriorName + " at position " + i + " is up!");
                 yield return StartCoroutine(allWarriorsList[i].Move());
                 yield return StartCoroutine(allWarriorsList[i].UseWeapon());
                 yield return StartCoroutine(allWarriorsList[i].UseSpecial());
+
+                if (yourWarriorsList.Count <= 0 && enemyWarriorsList.Count <= 0) {
+                    battleFinished = true;
+                }
             }
+            if (battleFinished) {
+                break;
+            }
+            turnCounter += 1;
         }
         Debug.Log("battle over");
+        if (enemyWarriorsList.Count <= 0) {
+            Debug.Log("you win!");
+        } else if (yourWarriorsList.Count <= 0) {
+            Debug.Log("enemies win!");
+        } else {
+            Debug.Log("battle timed out");
+        }
         ToggleResetButton(true);
     }
 

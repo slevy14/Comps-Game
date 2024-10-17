@@ -36,13 +36,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isMeleeTargetAllies;
     [SerializeField] private bool isRangedHeal;
     [SerializeField] private bool isRangedTargetAllies;
-    [SerializeField] private Dictionary<int, bool> conditionsDict;
-    [SerializeField] private Dictionary<int, int> forCounters;
     [SerializeField] private float maxHealth;
+    [SerializeField] public bool isAlive = true;
 
     [Header("Behind The Scenes")]
     private int MAX_INFINITY_COUNTER = 10;
     [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
+    [SerializeField] private Dictionary<int, bool> conditionsDict;
+    [SerializeField] private Dictionary<int, int> forCounters;
     [SerializeField] List<Vector2> tilesToHitRelative;
     [SerializeField] private GameObject meleePrefab;
     [SerializeField] private Sprite damageSprite;
@@ -827,9 +828,25 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         } else {
             propertiesDict[BlockData.Property.HEALTH] -= value;
             if (propertiesDict[BlockData.Property.HEALTH] <= 0) {
-                Debug.Log("dead!");
+                Die();
             }
         }
         healthBar.value = propertiesDict[BlockData.Property.HEALTH];
+    }
+
+    public void Die() {
+        Debug.Log("dead!");
+        // remove this object from grid
+        LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
+        // remove this object from ally or enemy list
+        if (!isEnemy) {
+            LevelController.Instance.yourWarriorsList.Remove(this);
+        } else {
+            LevelController.Instance.enemyWarriorsList.Remove(this);
+        }
+        // set warrior dead
+        isAlive = false;
+        // last, set game object active to false
+        this.gameObject.SetActive(false);
     }
 }
