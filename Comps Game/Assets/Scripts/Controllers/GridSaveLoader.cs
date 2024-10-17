@@ -33,10 +33,14 @@ public class GridSaveLoader : MonoBehaviour {
 
     public void LoadGridFromJson() {
         // load json file
-        GridWithObjects gridWithObjects = JsonUtility.FromJson<GridWithObjects>(filepath);
+        if (System.IO.File.Exists(filepath)) Debug.Log("warriors level file exists");
+        string json = System.IO.File.ReadAllText(filepath);
+        GridWithObjects gridWithObjects = JsonUtility.FromJson<GridWithObjects>(json);
+        Debug.Log("grid found");
         // load objects from json to grid
         // foreach object in saved grid:
         foreach (WarriorOnGrid warriorOnGrid in gridWithObjects.warriorList) {
+            Debug.Log("instantiating warrior from saved grid");
             // instantiate into right position
             GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
             // set properties like in WarriorLevelThumbnail
@@ -73,5 +77,9 @@ class GridWithObjects {
             WarriorBehavior warriorBehavior = warriorObject.GetComponent<WarriorBehavior>();
             warriorList.Add(new WarriorOnGrid(LevelController.Instance.objectsOnGrid[warriorObject], warriorBehavior.warriorIndex, warriorBehavior.isEnemy));
         }
+    }
+
+    public GridWithObjects() {
+        warriorList = new List<WarriorOnGrid>();
     }
 }

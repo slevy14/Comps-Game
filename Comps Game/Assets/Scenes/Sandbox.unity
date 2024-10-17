@@ -3947,10 +3947,10 @@ MonoBehaviour:
   m_FillRect: {fileID: 2046463256}
   m_HandleRect: {fileID: 845520350}
   m_Direction: 0
-  m_MinValue: 0.1
-  m_MaxValue: 3
+  m_MinValue: 0.01
+  m_MaxValue: 3.09
   m_WholeNumbers: 0
-  m_Value: 1.93
+  m_Value: 0.422
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5464,7 +5464,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1300486757}
         m_TargetAssemblyTypeName: LevelController, Assembly-CSharp
-        m_MethodName: LoadSavedGrid
+        m_MethodName: ResetGridButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

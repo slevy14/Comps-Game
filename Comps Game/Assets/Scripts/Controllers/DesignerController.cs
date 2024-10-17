@@ -765,6 +765,9 @@ public class DesignerController : MonoBehaviour {
                             blockData.values.Clear();
                             blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text);
                         }
+                        if (blockData.values[0] == "") {
+                            blockData.values[0] = "0";
+                        }
                         break;
                 }
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();

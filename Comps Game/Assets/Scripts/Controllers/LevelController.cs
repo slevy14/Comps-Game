@@ -137,7 +137,6 @@ public class LevelController : MonoBehaviour {
         ClearGrid();
         Debug.Log("grid cleared");
         GridSaveLoader.Instance.LoadGridFromJson();
-        ToggleResetButton(false);
     }
 
     public void ClearGrid() {
@@ -145,10 +144,14 @@ public class LevelController : MonoBehaviour {
         objectsOnGrid.Clear();
         Debug.Log("cleared from dict");
         // destroy objects
-        for (int i = 0; i < warriorsContainer.transform.childCount; i++) {
-            Debug.Log("destroying object");
-            Destroy(warriorsContainer.transform.GetChild(i));
-            i--;
+        int childCount = warriorsContainer.transform.childCount;
+        Debug.Log("child count" + childCount);
+        // for (int i = 0; i < childCount; i++) {
+        //     Debug.Log("destroying object");
+        //     Destroy(warriorsContainer.transform.GetChild(0).gameObject);
+        // }
+        foreach (Transform child in warriorsContainer.transform) {
+            Destroy(child.gameObject);
         }
     }
 
