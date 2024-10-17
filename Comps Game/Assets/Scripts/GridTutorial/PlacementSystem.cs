@@ -62,6 +62,9 @@ public class PlacementSystem : MonoBehaviour {
 
 
             if (clickTime >= clickMaxTime && isDrag == false) {
+                if (LevelController.Instance.inBattle || (!LevelController.Instance.inBattle && LevelController.Instance.battleFinished)) {
+                    return;
+                }
                 isDrag = true;
                 GameObject warrior = WarriorClicked();
                 // Debug.Log("drag started at " + Time.time);

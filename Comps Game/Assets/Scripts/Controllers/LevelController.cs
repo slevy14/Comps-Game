@@ -79,30 +79,28 @@ public class LevelController : MonoBehaviour {
     }
 
     void Update() {
-        if (inBattle) {
-            CheckForBattleOver();
+        if (inBattle && (enemyWarriorsList.Count <= 0 || yourWarriorsList.Count <= 0)) {
+            EndBattle();
         }
     }
 
-    void CheckForBattleOver() {
-        if (enemyWarriorsList.Count <= 0 || yourWarriorsList.Count <= 0) {
-            Debug.Log("battle over");
-            battleFinished = true;
-            // destroy all projectiles and melee indicators
-            GameObject[] icons = GameObject.FindGameObjectsWithTag("icon");
-            foreach (GameObject icon in icons) {
-                Destroy(icon);
-            }
-            if (enemyWarriorsList.Count <= 0) {
-                Debug.Log("you win!");
-            } else if (yourWarriorsList.Count <= 0) {
-                Debug.Log("enemies win!");
-            } else {
-                Debug.Log("battle timed out");
-            }
-            ToggleResetButton(true);
-            inBattle = false;
+    private void EndBattle() {
+        Debug.Log("battle over");
+        battleFinished = true;
+        // destroy all projectiles and melee indicators
+        GameObject[] icons = GameObject.FindGameObjectsWithTag("icon");
+        foreach (GameObject icon in icons) {
+            Destroy(icon);
         }
+        if (enemyWarriorsList.Count <= 0) {
+            Debug.Log("you win!");
+        } else if (yourWarriorsList.Count <= 0) {
+            Debug.Log("enemies win!");
+        } else {
+            Debug.Log("battle timed out");
+        }
+        ToggleResetButton(true);
+        inBattle = false;
     }
 
     // DRAWERS
@@ -187,6 +185,8 @@ public class LevelController : MonoBehaviour {
 
     public void ResetGridButton() {
         Debug.Log("reset button pressed");
+        inBattle = false;
+        battleFinished = false;
         LoadSavedGrid();
         ToggleResetButton(false);
     }
@@ -362,6 +362,11 @@ public class LevelController : MonoBehaviour {
     }
 
     public void StartBattleWrapper() { // for the button
+        if (inBattle) {
+            return;
+        } else if (battleFinished) {
+            ResetGridButton();
+        }
         StartCoroutine(StartBattle());
     }
 
@@ -406,6 +411,7 @@ public class LevelController : MonoBehaviour {
             }
             turnCounter += 1;
         }
+        EndBattle();
     }
 
     public void CreateWarriorLists() {

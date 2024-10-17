@@ -22,6 +22,9 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
+        if (LevelController.Instance.inBattle || (!LevelController.Instance.inBattle && LevelController.Instance.battleFinished)) {
+            return;
+        }
         Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(this.transform.position.x, this.transform.position.y, 1));
         GameObject warrior = Instantiate(warriorPrefab, newPoint, this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
         // WarriorBehavior warriorBehavior = warrior.GetComponent<WarriorBehavior>();
