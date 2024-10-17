@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 6528963689966741352}
   - component: {fileID: 2161083743716900374}
   m_Layer: 0
-  m_Name: sword
-  m_TagString: Untagged
+  m_Name: MeleeObject
+  m_TagString: icon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -97,3 +97,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17ca0a94f8564b20a2e63e2bc3ac9a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zRot: 0
+  maxZRot: 0
+  zStepPerFrame: 0

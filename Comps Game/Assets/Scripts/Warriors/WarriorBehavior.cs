@@ -38,16 +38,22 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isRangedTargetAllies;
     [SerializeField] private float maxHealth;
     [SerializeField] public bool isAlive = true;
+    [SerializeField] public bool isCurrentTurn;
 
-    [Header("Behind The Scenes")]
+    [Header("Conditionals/Looping")]
     private int MAX_INFINITY_COUNTER = 10;
     [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
     [SerializeField] private Dictionary<int, bool> conditionsDict;
     [SerializeField] private Dictionary<int, int> forCounters;
     [SerializeField] List<Vector2> tilesToHitRelative;
+
+    [Header("attack visuals")]
     [SerializeField] private GameObject meleePrefab;
     [SerializeField] private Sprite damageSprite;
     [SerializeField] private Sprite healSprite;
+    [SerializeField] private GameObject projectilePrefab;
+    [SerializeField] private Sprite projectileDamageSprite;
+    [SerializeField] private Sprite projectileHealSprite;
 
     [Space(20)]
     [Header("References")]
@@ -262,17 +268,23 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // this will prevent targeting errors after destroying a warrior
         target = null;
         Debug.Log("MOVE FUNCTIONS:");
-        yield return StartCoroutine(RunBehaviorFunctions(moveData));
+        if (gameObject.activeSelf) {
+            yield return StartCoroutine(RunBehaviorFunctions(moveData));
+        }
     }
 
     public IEnumerator UseWeapon() {
         Debug.Log("USE WEAPON FUNCTIONS:");
-        yield return StartCoroutine(RunBehaviorFunctions(useWeaponData));
+        if (gameObject.activeSelf) {
+            yield return StartCoroutine(RunBehaviorFunctions(useWeaponData));
+        }
     }
 
     public IEnumerator UseSpecial() {
         Debug.Log("USE SPECIAL FUNCTIONS:");
-        yield return StartCoroutine(RunBehaviorFunctions(useSpecialData));
+        if (gameObject.activeSelf) {
+            yield return StartCoroutine(RunBehaviorFunctions(useSpecialData));
+        }
     }
 
     // Parser:
@@ -283,6 +295,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         infinityCounters.Clear();
         for (int i = 0; i < behaviorList.Count; i++) {
             Debug.Log("i is " + i);
+            if (!isAlive || LevelController.Instance.battleFinished) {
+                break;
+            }
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 /*------------*/
@@ -763,7 +778,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.MELEE_SETTINGS:
                     Debug.Log("melee settings");
                     
-
                     isMeleeHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isMeleeTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
@@ -793,9 +807,24 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 no dropdowns
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
-                    
                     Debug.Log("fire projectile");
+
+                    // instantiate projectile
+                    GameObject projectile = Instantiate(projectilePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0)), transform.rotation, this.transform);
+                    // set projectile target to current target
+                    if (isRangedHeal) {
+                        projectile.GetComponent<ProjectileBehavior>().InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);
+                        projectile.GetComponent<SpriteRenderer>().sprite = projectileHealSprite;
+                    } else {
+                        Debug.Log(target.gameObject.name);
+                        projectile.GetComponent<ProjectileBehavior>().InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
+                    }
+                    // yield return projectile.GetComponent<ProjectileBehavior>().StartCoroutine(Move());
+                    // doing damage handled on projectile object
                     break;
+            }
+            if (propertiesDict[BlockData.Property.HEALTH] <= 0 && isCurrentTurn) {
+                Die();
             }
         }
     }
@@ -825,9 +854,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             } else {
                 propertiesDict[BlockData.Property.HEALTH] += value;
             }
+            Debug.Log("healed");
         } else {
             propertiesDict[BlockData.Property.HEALTH] -= value;
-            if (propertiesDict[BlockData.Property.HEALTH] <= 0) {
+            if (propertiesDict[BlockData.Property.HEALTH] <= 0 && !isCurrentTurn) { // if it is current turn, delay death til end of action
                 Die();
             }
         }
@@ -846,6 +876,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
         // set warrior dead
         isAlive = false;
+
+        this.gameObject.SetActive(false);
+        // delay death in case it's active turn
+        // StartCoroutine(DeathDelay());
+    }
+
+    public IEnumerator DeathDelay() {
+        Debug.Log("started death delay");
+        yield return new WaitForSeconds(LevelController.Instance.battleSpeed + .1f);
+        Debug.Log("ended death delay");
         // last, set game object active to false
         this.gameObject.SetActive(false);
     }
