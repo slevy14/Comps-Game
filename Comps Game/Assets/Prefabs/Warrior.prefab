@@ -347,6 +347,8 @@ MonoBehaviour:
   isMeleeTargetAllies: 0
   isRangedHeal: 0
   isRangedTargetAllies: 0
+  tilesToHitRelative: []
+  meleePrefab: {fileID: 5954012884242161711, guid: c176829d3e14e4a00a017c8898163da5, type: 3}
   isNew: 1
   warriorIndex: 0
   isEnemy: 0

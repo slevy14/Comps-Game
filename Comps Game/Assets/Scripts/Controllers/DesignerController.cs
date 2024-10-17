@@ -714,19 +714,19 @@ public class DesignerController : MonoBehaviour {
                         }
                         break;
                     case BlockData.BehaviorType.END_IF:
-                        if (blockData.values.Count != 0) {
-                            blockData.values[0] = (-1).ToString();
-                        } else {
+                        if (blockData.values.Count != 1) {
                             blockData.values.Clear();
                             blockData.values.Add((-1).ToString());
+                        } else {
+                            blockData.values[0] = (-1).ToString();
                         }
                         break;
                     case BlockData.BehaviorType.END_LOOP:
-                        if (blockData.values.Count < 1) {
-                            blockData.values[0] = (-1).ToString();
-                        } else {
+                        if (blockData.values.Count != 1) {
                             blockData.values.Clear();
                             blockData.values.Add((-1).ToString());
+                        } else {
+                            blockData.values[0] = (-1).ToString();
                         }
                         break;
                     // one dropdown, store value as string
@@ -734,11 +734,11 @@ public class DesignerController : MonoBehaviour {
                     case BlockData.BehaviorType.STEP:
                     case BlockData.BehaviorType.RUN:
                     case BlockData.BehaviorType.TELEPORT:
-                        if (blockData.values.Count < 1){
-                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
-                        } else {
+                        if (blockData.values.Count != 1){
                             blockData.values.Clear();
                             blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
+                        } else {
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
                         }
                         break;
                     // two dropdowns
@@ -747,23 +747,23 @@ public class DesignerController : MonoBehaviour {
                     case BlockData.BehaviorType.RANGED_SETTINGS:
                     case BlockData.BehaviorType.WHILE_LOOP:
                     case BlockData.BehaviorType.IF:
-                        if (blockData.values.Count < 2) {
-                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
-                            blockData.values[1] = current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
-                        } else {
+                        if (blockData.values.Count != 2) {
                             blockData.values.Clear();
                             blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
                             blockData.values.Add(current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString());
+                        } else {
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
+                            blockData.values[1] = current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
                         }
                         break;
                     // three dropdowns
                     // input field
                     case BlockData.BehaviorType.FOR_LOOP:
-                        if (blockData.values.Count != 0) {
-                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text;
-                        } else {
+                        if (blockData.values.Count != 1) {
                             blockData.values.Clear();
                             blockData.values.Add(current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text);
+                        } else {
+                            blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_InputField>().text;
                         }
                         if (blockData.values[0] == "") {
                             blockData.values[0] = "0";

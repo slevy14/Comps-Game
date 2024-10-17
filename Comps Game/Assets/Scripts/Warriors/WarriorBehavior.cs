@@ -38,8 +38,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private Dictionary<int, bool> conditionsDict;
     [SerializeField] private Dictionary<int, int> forCounters;
 
+    [Header("Behind The Scenes")]
     private int MAX_INFINITY_COUNTER = 10;
     [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
+    [SerializeField] List<Vector2> tilesToHitRelative;
+    [SerializeField] private GameObject meleePrefab;
 
     [Space(20)]
     [Header("References")]
@@ -77,6 +80,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         healthBar = transform.GetChild(1).transform.GetChild(0).GetComponent<Slider>();
 
         heading = new Vector2((int)1, (int)0);
+        tilesToHitRelative = new List<Vector2>{new Vector2((int)1, (int)0), new Vector2((int)2, (int)0), new Vector2((int)1, (int)1), new Vector2((int)1, (int)-1), new Vector2((int)2, (int)1), new Vector2((int)2, (int)-1)};
     }
 
     public void SetIsEnemy() {
@@ -425,7 +429,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*--------------------*/
                 /*    MELEE ATTACK    */
-                /*--------------------*/ /*   Current Status: NOT STARTED
+                /*--------------------*/ /*   Current Status: IN PROGRESS
                 no dropdowns,
                 use melee range values to attack in facing direction:
                     1: directly in front
@@ -436,12 +440,49 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     clamp at 5
                 do the actual melee attack*/
                 case BlockData.BehaviorType.MELEE_ATTACK:
-                    // 
                     Debug.Log("melee attack");
-                    // 
+                    // rotate all relative tiles to face same direction
+                    List<Vector2> rotatedList = new List<Vector2>(tilesToHitRelative);
+                    while (rotatedList[0] != heading) {
+                        Debug.Log("need to rotate range");
+                        for (int j = 0; j < rotatedList.Count; j++) {
+                            rotatedList[j] = RotateRight(rotatedList[j]);
+                        }
+                    }
+                    Debug.Log("range is facing the correct way!");
 
+                    // find the actual range
+                    List<Vector2> adjustedList = new List<Vector2>();
+                    switch(propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]) {
+                        case 1:
+                            adjustedList.Add(rotatedList[0]);
+                            break;
+                        case 2:
+                            adjustedList.Add(rotatedList[0]);
+                            adjustedList.Add(rotatedList[1]);
+                            break;
+                        case 3:
+                            adjustedList.Add(rotatedList[0]);
+                            adjustedList.Add(rotatedList[2]);
+                            adjustedList.Add(rotatedList[3]);
+                            break;
+                        case 4:
+                            adjustedList.Add(rotatedList[0]);
+                            adjustedList.Add(rotatedList[1]);
+                            adjustedList.Add(rotatedList[2]);
+                            adjustedList.Add(rotatedList[3]);
+                            break;
+                        case 5:
+                            adjustedList = new List<Vector2>(rotatedList);
+                            break;
+                    }
 
-
+                    // loop through adjusted list:
+                        // deal damage to square
+                    foreach (Vector2 tile in adjustedList) {
+                        Vector2 tileToAttack = new Vector2((int)(this.transform.position.x + tile.x), (int)(this.transform.position.y + tile.y));
+                        Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
+                    }
                     break;
 
                 /*------------------*/
@@ -459,10 +500,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         3: weakest
                 pick a warrior to target with various attacks */
                 case BlockData.BehaviorType.SET_TARGET:
-                    
+                    Debug.Log("target");
 
                     // assign to target value of this warrior
-                    Debug.Log("target");
 
                     List<WarriorBehavior> targetTeam = new();
                     if (behaviorList[i].values[1] == "0") { // enemy target
@@ -662,7 +702,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*------------*/
                 /*    ELSE    */
-                /*------------*/ /*   Current Status: IN PROGRESS
+                /*------------*/ /*   Current Status: Done
                 no dropdowns
 
                     JUMP INDEX [0]
