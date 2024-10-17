@@ -45,6 +45,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
     [SerializeField] List<Vector2> tilesToHitRelative;
     [SerializeField] private GameObject meleePrefab;
+    [SerializeField] private Sprite damageSprite;
+    [SerializeField] private Sprite healSprite;
 
     [Space(20)]
     [Header("References")]
@@ -484,7 +486,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         // deal damage to square
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
-                        Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
+                        GameObject icon = Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
+                        if (isMeleeHeal) {
+                            icon.GetComponent<SpriteRenderer>().sprite = healSprite;
+                        }
                         if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToAttack)) {
                             GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToAttack).Key;
                             if (isMeleeHeal) {
