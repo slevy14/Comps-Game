@@ -480,7 +480,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // loop through adjusted list:
                         // deal damage to square
                     foreach (Vector2 tile in adjustedList) {
-                        Vector2 tileToAttack = new Vector2((int)(this.transform.position.x + tile.x), (int)(this.transform.position.y + tile.y));
+                        Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                         Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
                     }
                     break;
@@ -785,12 +785,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // Helper Functions
     public Vector2 RotateLeft(Vector2 vector) {
-        return new Vector2((int)(vector.x * Mathf.Cos(Mathf.Deg2Rad*90) - vector.y * Mathf.Sin(Mathf.Deg2Rad*90)),
-                           (int)(vector.x * Mathf.Sin(Mathf.Deg2Rad*90) + vector.y * Mathf.Cos(Mathf.Deg2Rad*90)));
+        return new Vector2((int)-vector.y, (int)vector.x);
     } 
     public Vector2 RotateRight(Vector2 vector) {
-        return new Vector2((int)(vector.x * Mathf.Cos(Mathf.Deg2Rad*(-90)) - vector.y * Mathf.Sin(Mathf.Deg2Rad*(-90))),
-                           (int)(vector.x * Mathf.Sin(Mathf.Deg2Rad*(-90)) + vector.y * Mathf.Cos(Mathf.Deg2Rad*(-90))));
+        return new Vector2((int)(- vector.y * (-1)), (int)(vector.x * (-1)));
     }
 
     public bool TargetInRange(int index) {
