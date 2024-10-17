@@ -19,6 +19,7 @@ public class LevelController : MonoBehaviour {
     [Header("Objects")]
     [SerializeField] private GameObject warriorDrawer;
     [SerializeField] private GameObject enemiesDrawer;
+    [SerializeField] private GameObject resetButton;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -61,6 +62,7 @@ public class LevelController : MonoBehaviour {
         CheckSingleton();
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
         HideStatsPanel();
+        ToggleResetButton(false);
     }
 
     void Start() {
@@ -70,7 +72,7 @@ public class LevelController : MonoBehaviour {
         LoadWarriorDrawer();
         LoadEnemyDrawer();
 
-        LoadSavedGrid();
+        // LoadSavedGrid();
     }
 
     // DRAWERS
@@ -100,7 +102,7 @@ public class LevelController : MonoBehaviour {
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
     }
 
-    // Enemeies
+    // Enemies
     public void AddEnemyToDrawer(int index) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
@@ -133,21 +135,49 @@ public class LevelController : MonoBehaviour {
     public void LoadSavedGrid() {
         // clear grid
         ClearGrid();
-        // foreach object in saved grid:
-            // instantiate into right position
-            // set properties like in WarriorLevelThumbnail
-            // add object to grid object dict
+        Debug.Log("grid cleared");
+        GridSaveLoader.Instance.LoadGridFromJson();
+        ToggleResetButton(false);
     }
 
     public void ClearGrid() {
         // clear dict
-        // destroy objects
         objectsOnGrid.Clear();
+        Debug.Log("cleared from dict");
+        // destroy objects
         for (int i = 0; i < warriorsContainer.transform.childCount; i++) {
+            Debug.Log("destroying object");
             Destroy(warriorsContainer.transform.GetChild(i));
             i--;
         }
+    }
 
+    public void ResetGridButton() {
+        Debug.Log("reset button pressed");
+        LoadSavedGrid();
+        ToggleResetButton(false);
+    }
+
+    // Loading Warriors
+    public void SetWarriorData(GameObject warrior, bool isEnemy, int warriorIndex) {
+        WarriorBehavior warriorBehavior = warrior.GetComponent<WarriorBehavior>();
+        if (!isEnemy) {
+            warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
+            warriorBehavior.SetPropertiesAndBehaviors(WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).properties,
+                                                      WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions,
+                                                      WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions,
+                                                      WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
+            warriorBehavior.warriorIndex = warriorIndex;
+        } else { // PULL FROM ENEMY DATA FOR ENEMY
+            warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
+            warriorBehavior.SetPropertiesAndBehaviors(EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).properties,
+                                                      EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions,
+                                                      EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions,
+                                                      EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
+            warriorBehavior.warriorIndex = warriorIndex;
+            // explicitly set enemy
+            warriorBehavior.SetIsEnemy();
+        }
     }
 
 
@@ -252,6 +282,10 @@ public class LevelController : MonoBehaviour {
         statsPanel.SetActive(false);
     }
 
+    public void ToggleResetButton(bool value) {
+        resetButton.SetActive(value);
+    }
+
 
     /*--------------------------*/
     /*          BATTLE          */
@@ -316,8 +350,8 @@ public class LevelController : MonoBehaviour {
                 yield return StartCoroutine(allWarriorsList[i].UseSpecial());
             }
         }
-
         Debug.Log("battle over");
+        ToggleResetButton(true);
     }
 
     public void CreateWarriorLists() {

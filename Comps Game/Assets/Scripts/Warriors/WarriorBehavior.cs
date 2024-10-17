@@ -272,6 +272,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         forCounters.Clear();
         infinityCounters.Clear();
         for (int i = 0; i < behaviorList.Count; i++) {
+            Debug.Log("i is " + i);
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 /*------------*/
@@ -665,12 +666,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 no dropdowns
 
                     JUMP INDEX [0]
+                    END INDEX  [1]
                 jumps to end if need to pass
                 basic else case */
                 case BlockData.BehaviorType.ELSE:
                     Debug.Log("else");
+                    Debug.Log("checking to see if condition from IF at index " + behaviorList[i].values[0] + " is true");
                     if (conditionsDict[int.Parse(behaviorList[i].values[0])] == true) { // skip else, jump to endif
-                        i = int.Parse(behaviorList[i].values[0]) - 1;
+                        Debug.Log("try jump to " + (int.Parse(behaviorList[i].values[1]) - 1));
+                        i = int.Parse(behaviorList[i].values[1]) - 1;
                         continue;
                     }
                     break;

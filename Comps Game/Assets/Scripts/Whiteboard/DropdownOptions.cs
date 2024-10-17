@@ -13,6 +13,7 @@ public class DropdownOptions : MonoBehaviour {
     void Awake() {
         activeWarrior = GameObject.FindGameObjectWithTag("editingObject");
         dropdown = this.gameObject.GetComponent<TMP_Dropdown>();
+        SetSpriteOptions(false);
         // dropdown.onValueChanged.AddListener(delegate{UpdateSprite();});
     }
 
@@ -44,6 +45,15 @@ public class DropdownOptions : MonoBehaviour {
     public void ResetSprite() {
         dropdown.value = 0;
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[0].sprite;
+    }
+
+    public void SetSpriteOptions(bool isEnemy) {
+        if (!isEnemy) {
+            dropdown.ClearOptions();
+            foreach (SpriteData sprite in WarriorListController.Instance.spriteDataList) {
+                dropdown.options.Add(new TMP_Dropdown.OptionData(sprite.spriteName, sprite.sprite));
+            }
+        }
     }
 
 

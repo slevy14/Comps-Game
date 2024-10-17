@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5864363605656123280}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -47,13 +47,39 @@ MonoBehaviour:
   warriorListWrapper:
     warriorList: []
   spriteDataList:
-  - sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
+  - spriteName: Knight
+    sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
     animator: {fileID: 0}
-  - sprite: {fileID: 892689537, guid: 33eb14522c3d8488c80ad906faa202ae, type: 3}
+  - spriteName: Prince
+    sprite: {fileID: 892689537, guid: 33eb14522c3d8488c80ad906faa202ae, type: 3}
     animator: {fileID: 0}
-  - sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
+  - spriteName: Cleric
+    sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
     animator: {fileID: 0}
-  - sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
+  - spriteName: Horse
+    sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
     animator: {fileID: 0}
-  - sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
+  - spriteName: Mage
+    sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Archer
+    sprite: {fileID: 365562794, guid: ff574194bb8fc4c6e82a308d552e68c0, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Cavalier
+    sprite: {fileID: -1537209106, guid: 941cf8f0a05734f439f39162a2894728, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Spear
+    sprite: {fileID: 1028348280, guid: 111325212d4b34b25b16046cc6ec8431, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Halberd
+    sprite: {fileID: 305258765, guid: 15900067e4e0e430f9a2734a2d35e763, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Crossbow
+    sprite: {fileID: 31259240, guid: ba8da757b64534a8baaace75e83755ab, type: 3}
+    animator: {fileID: 0}
+  - spriteName: King
+    sprite: {fileID: -102110970, guid: f7d210bf42aae45eebda255e0496b68f, type: 3}
+    animator: {fileID: 0}
+  - spriteName: Shield
+    sprite: {fileID: 1830575405, guid: 8ab6bbb730f64471e8f21166a34fa529, type: 3}
     animator: {fileID: 0}

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridSaveLoader : MonoBehaviour {
 
     private string filepath;
+    public GameObject warriorPrefab;
 
     // singleton
     public static GridSaveLoader Instance = null; // for persistent
@@ -28,6 +29,22 @@ public class GridSaveLoader : MonoBehaviour {
         string warriorsJSON = JsonUtility.ToJson(new GridWithObjects(LevelController.Instance.objectsOnGrid));
         System.IO.File.WriteAllText(filepath, warriorsJSON);
         Debug.Log("saving json at " + filepath);
+    }
+
+    public void LoadGridFromJson() {
+        // load json file
+        GridWithObjects gridWithObjects = JsonUtility.FromJson<GridWithObjects>(filepath);
+        // load objects from json to grid
+        // foreach object in saved grid:
+        foreach (WarriorOnGrid warriorOnGrid in gridWithObjects.warriorList) {
+            // instantiate into right position
+            GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
+            // set properties like in WarriorLevelThumbnail
+            LevelController.Instance.SetWarriorData(warrior, warriorOnGrid.isEnemy, warriorOnGrid.warriorIndex);
+            // add object to grid object dict
+            LevelController.Instance.objectsOnGrid[warrior] = warriorOnGrid.pos;
+        }
+
     }
 
 }
