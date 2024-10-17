@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -37,6 +38,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isRangedTargetAllies;
     [SerializeField] private Dictionary<int, bool> conditionsDict;
     [SerializeField] private Dictionary<int, int> forCounters;
+    [SerializeField] private float maxHealth;
 
     [Header("Behind The Scenes")]
     private int MAX_INFINITY_COUNTER = 10;
@@ -185,6 +187,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     if (newVal > 0) {
                         healthBar.maxValue = newVal;
                         healthBar.value = healthBar.maxValue;
+                        maxHealth = newVal;
                     }
                     break;
                 case BlockData.Property.DEFENSE:
@@ -247,8 +250,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*----------------------------------------*/
 
     // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else
-    // IN PROGRESS: Set Target, While Loop, If
-    // NOT STARTED: Melee Attack, Fire Projectile
+    // IN PROGRESS: Set Target, While Loop, If, Melee Attack
+    // NOT STARTED: Fire Projectile
 
     // Major Functions
     public IEnumerator Move() {
@@ -482,6 +485,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                         Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
+                        if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToAttack)) {
+                            GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToAttack).Key;
+                            if (isMeleeHeal) {
+                                hitWarrior.GetComponent<WarriorBehavior>().DoDamageOrHeal(this.propertiesDict[BlockData.Property.HEAL_POWER], isMeleeHeal);
+                            } else {
+                                hitWarrior.GetComponent<WarriorBehavior>().DoDamageOrHeal(this.propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], isMeleeHeal);
+                            }
+                        }
                     }
                     break;
 
@@ -799,5 +810,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public bool TargetLowHealth(int index) {
         // FIXME!!! placeholder always false
         return false;
+    }
+
+    public void DoDamageOrHeal(float value, bool isHeal) {
+        if (isHeal) {
+            if (propertiesDict[BlockData.Property.HEALTH] + value >= maxHealth) {
+                propertiesDict[BlockData.Property.HEALTH] = maxHealth;
+            } else {
+                propertiesDict[BlockData.Property.HEALTH] += value;
+            }
+        } else {
+            propertiesDict[BlockData.Property.HEALTH] -= value;
+            if (propertiesDict[BlockData.Property.HEALTH] <= 0) {
+                Debug.Log("dead!");
+            }
+        }
+        healthBar.value = propertiesDict[BlockData.Property.HEALTH];
     }
 }
