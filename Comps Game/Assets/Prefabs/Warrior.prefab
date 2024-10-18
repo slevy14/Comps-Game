@@ -379,6 +379,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 5954012884242161711, guid: 5e14a1d67db674ab78cc3ddb74bb98e0, type: 3}
   projectileDamageSprite: {fileID: 21300000, guid: 00b62ff57530946599e1ee5f3fa87cd1, type: 3}
   projectileHealSprite: {fileID: 21300000, guid: 1ca68f45a5cb2412f8efd0ce741df26f, type: 3}
+  animator: {fileID: 7813883477709150906}
   isNew: 1
   warriorIndex: 0
   isEnemy: 0

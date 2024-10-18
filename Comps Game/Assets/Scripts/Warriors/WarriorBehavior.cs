@@ -12,19 +12,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // codeable properties
     [Header("Properties")]
     [SerializeField] public string warriorName;
-    // [SerializeField] private float health;
-    // [SerializeField] private float defense;
-    // [SerializeField] private float moveSpeed;
-    // [SerializeField] private float meleeAttackPower;
-    // [SerializeField] private float meleeAttackSpeed;
-    // [SerializeField] private float meleeAttackRange;
-    // [SerializeField] private float rangedAttackPower;
-    // [SerializeField] private float rangedAttackSpeed;
-    // [SerializeField] private float distancedRange;
-    // [SerializeField] private float specialPower;
-    // [SerializeField] private float specialSpeed;
-    // [SerializeField] private float healPower;
-    // [SerializeField] private float healSpeed;
     [SerializeField] private Dictionary<BlockData.Property, float> propertiesDict;
 
     [Space(20)]
@@ -54,6 +41,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private Sprite projectileDamageSprite;
     [SerializeField] private Sprite projectileHealSprite;
+    [SerializeField] private Animator animator;
 
     [Space(20)]
     [Header("References")]
@@ -153,6 +141,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // if (isDragging) { // this allows dragging from worldspace
         //     transform.position = inputManager.GetSelectedMapPosition();
         // }
+        animator.speed = 3.1f - LevelController.Instance.battleSpeed;
         
     }
 
@@ -500,6 +489,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     // loop through adjusted list:
                         // deal damage to square
+                    this.animator.SetTrigger("Attack");
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                         GameObject icon = Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
@@ -808,6 +798,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
                     Debug.Log("fire projectile");
+                    if (target == null) {
+                        break;
+                    }
+                    this.animator.SetTrigger("Attack");
 
                     // instantiate projectile
                     GameObject projectile = Instantiate(projectilePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0)), transform.rotation, this.transform);
@@ -856,6 +850,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             }
             Debug.Log("healed");
         } else {
+            this.animator.SetTrigger("TakeDamage");
             propertiesDict[BlockData.Property.HEALTH] -= value;
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && !isCurrentTurn) { // if it is current turn, delay death til end of action
                 Die();
@@ -884,6 +879,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public IEnumerator DeathDelay() {
         Debug.Log("started death delay");
+        this.animator.SetTrigger("Die");
         yield return new WaitForSeconds(LevelController.Instance.battleSpeed + .1f);
         Debug.Log("ended death delay");
         // last, set game object active to false

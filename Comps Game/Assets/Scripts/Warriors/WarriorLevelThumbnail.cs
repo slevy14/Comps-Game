@@ -47,6 +47,8 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
         //     warriorBehavior.SetIsEnemy();
         // }
         levelController.SetWarriorData(warrior, isEnemy, warriorIndex);
+        Debug.Log("warrior " + warrior.GetComponent<WarriorBehavior>().warriorName + ". is enemy " + isEnemy + ". index: " + warriorIndex);
+        warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !this.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].animatorController;
 
         eventData.pointerDrag = warrior;
         warrior.GetComponent<WarriorBehavior>().StartDrag();
