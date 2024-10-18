@@ -491,7 +491,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         // deal damage to square
 
                     this.animator.SetTrigger("Attack");
-                    yield return new WaitForSeconds(this.animator.speed/10f);
+                    yield return new WaitForSeconds(LevelController.Instance.battleSpeed/2.5f);
 
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
@@ -808,10 +808,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
                         this.animator.SetTrigger("RangedAttack");
-                        yield return new WaitForSeconds(this.animator.speed/10f);
+                        yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
                     } else {
                         this.animator.SetTrigger("Attack");
-                        yield return new WaitForSeconds(this.animator.speed/10f);
+                        yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
                     }
 
                     // instantiate projectile

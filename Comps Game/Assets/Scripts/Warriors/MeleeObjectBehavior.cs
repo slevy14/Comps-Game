@@ -11,7 +11,7 @@ public class MeleeObjectBehavior : MonoBehaviour {
     void Awake() {
         zRot = 0;
         maxZRot = 180;
-        zStepPerFrame = .75f;
+        zStepPerFrame = 2f;
     }
 
     void Update() {
