@@ -45,6 +45,7 @@ public class GridSaveLoader : MonoBehaviour {
             GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
             // set properties like in WarriorLevelThumbnail
             LevelController.Instance.SetWarriorData(warrior, warriorOnGrid.isEnemy, warriorOnGrid.warriorIndex);
+            warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !warriorOnGrid.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController;
             // add object to grid object dict
             LevelController.Instance.objectsOnGrid[warrior] = warriorOnGrid.pos;
         }
