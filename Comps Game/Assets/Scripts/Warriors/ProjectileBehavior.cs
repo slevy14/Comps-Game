@@ -13,7 +13,7 @@ public class ProjectileBehavior : MonoBehaviour {
 
     void Awake() {
         speed = 6f;
-        rotSpeed = 2f;
+        rotSpeed = 12f;
     }
 
     public void InitializeProjectile(GameObject newTarget, float power, bool isHeal) {
@@ -23,7 +23,7 @@ public class ProjectileBehavior : MonoBehaviour {
         this.isHeal = isHeal;
     }
 
-    void Update() {
+    void FixedUpdate() {
         transform.Rotate(new Vector3(0, 0, rotSpeed));
         if (target != null) {
             this.transform.position += speed * Time.deltaTime * (target.transform.position - this.transform.position).normalized;

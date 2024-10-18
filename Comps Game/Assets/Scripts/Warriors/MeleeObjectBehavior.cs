@@ -11,10 +11,10 @@ public class MeleeObjectBehavior : MonoBehaviour {
     void Awake() {
         zRot = 0;
         maxZRot = 180;
-        zStepPerFrame = 2f;
+        zStepPerFrame = 12f;
     }
 
-    void Update() {
+    void FixedUpdate() {
         transform.Rotate(new Vector3(0, 0, zStepPerFrame));
         zRot += zStepPerFrame;
         if (zRot > maxZRot) {

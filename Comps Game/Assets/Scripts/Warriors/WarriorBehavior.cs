@@ -80,6 +80,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
         heading = new Vector2((int)1, (int)0);
         tilesToHitRelative = new List<Vector2>{new Vector2((int)1, (int)0), new Vector2((int)2, (int)0), new Vector2((int)1, (int)1), new Vector2((int)1, (int)-1), new Vector2((int)2, (int)1), new Vector2((int)2, (int)-1)};
+        animator.speed = 3.1f - LevelController.Instance.battleSpeed;
     }
 
     public void SetIsEnemy() {
@@ -883,9 +884,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // set warrior dead
         isAlive = false;
 
-        this.gameObject.SetActive(false);
+        // this.gameObject.SetActive(false);
         // delay death in case it's active turn
-        // StartCoroutine(DeathDelay());
+        StartCoroutine(DeathDelay());
     }
 
     public IEnumerator DeathDelay() {

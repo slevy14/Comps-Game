@@ -67,19 +67,19 @@ MonoBehaviour:
     animatorController: {fileID: 22100000, guid: b7a04490205b2432c83f1f7d0b2181dd, type: 2}
   - spriteName: Cavalier
     sprite: {fileID: -1537209106, guid: 941cf8f0a05734f439f39162a2894728, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: a4a10428ee0e74029815a8c4e8621525, type: 2}
   - spriteName: Spear
     sprite: {fileID: 1028348280, guid: 111325212d4b34b25b16046cc6ec8431, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: dd5afb57a64db4a13855e2d852df37ce, type: 2}
   - spriteName: Halberd
     sprite: {fileID: 305258765, guid: 15900067e4e0e430f9a2734a2d35e763, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: ab38c6380dca04133b1521c2894aedc1, type: 2}
   - spriteName: Crossbow
     sprite: {fileID: 31259240, guid: ba8da757b64534a8baaace75e83755ab, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 0db9fbb10ae904be095af251a7418e5e, type: 2}
   - spriteName: King
     sprite: {fileID: -102110970, guid: f7d210bf42aae45eebda255e0496b68f, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: c7978ceb280734adc97ee74afa520b5c, type: 2}
   - spriteName: Shield
     sprite: {fileID: 1830575405, guid: 8ab6bbb730f64471e8f21166a34fa529, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 368a75202c5d0466cb006c364f768855, type: 2}

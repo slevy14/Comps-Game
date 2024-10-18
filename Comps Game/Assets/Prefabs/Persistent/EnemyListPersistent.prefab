@@ -49,25 +49,25 @@ MonoBehaviour:
   spriteDataList:
   - spriteName: Skeleton
     sprite: {fileID: -120963063, guid: b6928f12b999343d88188c7fbe0faa10, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 1c5e8014872114746b9a02212989a67b, type: 2}
   - spriteName: Skeleton Archer
     sprite: {fileID: -371467114, guid: 5ac76611da5ed49a39a1a89839b9b9f1, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 4c998e58dbdcb4fcbaf9840f52755c7f, type: 2}
   - spriteName: Reaper
     sprite: {fileID: -1418316344, guid: 4526c09ec67624d10a1ff059a6a8652f, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 99ebc233faf114c2c9d712819190c789, type: 2}
   - spriteName: Necromancer
     sprite: {fileID: 390912729, guid: 5ecf987debac34173b9ec98fe6eae9c1, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 51cbab462dc86475d8c67c286a64e3a7, type: 2}
   - spriteName: Lich
     sprite: {fileID: -2073480682, guid: 10badc0965f3f40b79b0de055b73c867, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: d6197d6207b6843d294bb241410ea13e, type: 2}
   - spriteName: Ghost
     sprite: {fileID: -929304319, guid: 4c12c34753fdc4c5fb416e9976718609, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 41bd13e3a40c64a42b9d7732ef65b477, type: 2}
   - spriteName: Dread Knight
     sprite: {fileID: -909943919, guid: 2d3dca618319b487e8f768267bfb793c, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 785d3e7ff4a154e339e8c712cef1682c, type: 2}
   - spriteName: Zombie
     sprite: {fileID: 1233623321, guid: 9192d39b75c9d4b03b3f846e07f1feca, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 528593224b8b84bf8a7e6f3eeae44d24, type: 2}
