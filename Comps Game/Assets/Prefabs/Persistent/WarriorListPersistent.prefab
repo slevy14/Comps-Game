@@ -55,16 +55,16 @@ MonoBehaviour:
     animatorController: {fileID: 22100000, guid: 3102356fca9b64118a2080bb8bbc4373, type: 2}
   - spriteName: Cleric
     sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: ff4377cd2f2a54245b949f007d78bb9d, type: 2}
   - spriteName: Horse
     sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: d924d298b72b74e4a9e8406be6bc1d1f, type: 2}
   - spriteName: Mage
     sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: 19c272d1207dd4fa782b904c363da815, type: 2}
   - spriteName: Archer
     sprite: {fileID: 365562794, guid: ff574194bb8fc4c6e82a308d552e68c0, type: 3}
-    animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
+    animatorController: {fileID: 22100000, guid: b7a04490205b2432c83f1f7d0b2181dd, type: 2}
   - spriteName: Cavalier
     sprite: {fileID: -1537209106, guid: 941cf8f0a05734f439f39162a2894728, type: 3}
     animatorController: {fileID: 22100000, guid: 29b37676e3ffd40769183bea49cc918c, type: 2}
