@@ -5,10 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour {
 
+    // for transitions
+    public float transitionTime;
+
     public static SceneController Instance = null; // for persistent
 
     public void Awake() {
         CheckSingleton();
+        transitionTime = .5f;
     }
 
     public void CheckSingleton() {
@@ -23,6 +27,15 @@ public class SceneController : MonoBehaviour {
     }
 
     public void LoadSceneByName(string name) {
+        // SceneManager.LoadScene(name);
+        StartCoroutine(LoadSceneByNameCoroutine(name));
+    }
+
+    public IEnumerator LoadSceneByNameCoroutine(string name) {
+        GameObject.Find("TransitionCanvas").GetComponent<Animator>().SetTrigger("Start");
+
+        yield return new WaitForSeconds(transitionTime);
+
         SceneManager.LoadScene(name);
     }
 
