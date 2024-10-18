@@ -489,7 +489,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     // loop through adjusted list:
                         // deal damage to square
+
                     this.animator.SetTrigger("Attack");
+
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                         GameObject icon = Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
@@ -801,7 +803,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     if (target == null) {
                         break;
                     }
-                    this.animator.SetTrigger("Attack");
+
+
+                    if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
+                        this.animator.SetTrigger("RangedAttack");
+                    } else {
+                        this.animator.SetTrigger("Attack");
+                    }
 
                     // instantiate projectile
                     GameObject projectile = Instantiate(projectilePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0)), transform.rotation, this.transform);
