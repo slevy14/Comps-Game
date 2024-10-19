@@ -15,8 +15,9 @@ public class MeleeObjectBehavior : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        transform.Rotate(new Vector3(0, 0, zStepPerFrame));
-        zRot += zStepPerFrame;
+        float rotAmt = zStepPerFrame * (3.1f-LevelController.Instance.battleSpeed);
+        transform.Rotate(new Vector3(0, 0,rotAmt));
+        zRot += rotAmt;
         if (zRot > maxZRot) {
             Destroy(this.gameObject);
             // Debug.Log("destroying, " + zRot);

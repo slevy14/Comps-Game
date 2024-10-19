@@ -24,9 +24,11 @@ public class ProjectileBehavior : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        transform.Rotate(new Vector3(0, 0, rotSpeed));
+        float multSpeed = speed * (3.1f-LevelController.Instance.battleSpeed);
+        float multRot = rotSpeed * (3.1f-LevelController.Instance.battleSpeed);
+        transform.Rotate(new Vector3(0, 0, multRot));
         if (target != null) {
-            this.transform.position += speed * Time.deltaTime * (target.transform.position - this.transform.position).normalized;
+            this.transform.position += multSpeed * Time.deltaTime * (target.transform.position - this.transform.position).normalized;
 
             if (Vector3.Distance(this.transform.position, target.transform.position) <= 0.2f) {
                 target.GetComponent<WarriorBehavior>().DoDamageOrHeal(power, isHeal);
