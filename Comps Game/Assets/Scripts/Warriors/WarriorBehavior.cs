@@ -909,6 +909,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             case 5:
                 adjustedList = new List<Vector2>(rotatedList);
                 break;
+            default:
+                adjustedList.Add(rotatedList[0]);
+                break;
         }
         return adjustedList;
     }
