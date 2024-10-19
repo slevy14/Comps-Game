@@ -77,6 +77,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
         healthBar = transform.GetChild(1).transform.GetChild(0).GetComponent<Slider>();
+        SetImageFacing();
 
         heading = new Vector2((int)1, (int)0);
         tilesToHitRelative = new List<Vector2>{new Vector2((int)1, (int)0), new Vector2((int)2, (int)0), new Vector2((int)1, (int)1), new Vector2((int)1, (int)-1), new Vector2((int)2, (int)1), new Vector2((int)2, (int)-1)};
@@ -86,6 +87,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public void SetIsEnemy() {
         isEnemy = true;
         heading = new Vector2((int)-1, (int)0);
+        SetImageFacing();
         this.gameObject.tag = "enemy";
     }
 
@@ -249,8 +251,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*----------------------------------------*/
 
     // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else
-    // IN PROGRESS: Set Target, While Loop, If, Melee Attack
-    // NOT STARTED: Fire Projectile
+    // IN PROGRESS: Set Target, While Loop, If, Melee Attack, Fire Projectile
+    // NOT STARTED: 
+
+    // BIG TODO: projectile range???
 
     // Major Functions
     public IEnumerator Move() {
@@ -312,6 +316,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         Debug.Log("after right rotation, " + newHeading);
                     }
                     this.heading = newHeading;
+                    SetImageFacing();
                     // Debug.Log("heading after turn: " + heading);
                     break;
 
@@ -452,41 +457,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 do the actual melee attack*/
                 case BlockData.BehaviorType.MELEE_ATTACK:
                     Debug.Log("melee attack");
-                    // rotate all relative tiles to face same direction
-                    List<Vector2> rotatedList = new List<Vector2>(tilesToHitRelative);
-                    while (rotatedList[0] != heading) {
-                        Debug.Log("need to rotate range");
-                        for (int j = 0; j < rotatedList.Count; j++) {
-                            rotatedList[j] = RotateRight(rotatedList[j]);
-                        }
-                    }
-                    Debug.Log("range is facing the correct way!");
-
-                    // find the actual range
-                    List<Vector2> adjustedList = new List<Vector2>();
-                    switch(propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]) {
-                        case 1:
-                            adjustedList.Add(rotatedList[0]);
-                            break;
-                        case 2:
-                            adjustedList.Add(rotatedList[0]);
-                            adjustedList.Add(rotatedList[1]);
-                            break;
-                        case 3:
-                            adjustedList.Add(rotatedList[0]);
-                            adjustedList.Add(rotatedList[2]);
-                            adjustedList.Add(rotatedList[3]);
-                            break;
-                        case 4:
-                            adjustedList.Add(rotatedList[0]);
-                            adjustedList.Add(rotatedList[1]);
-                            adjustedList.Add(rotatedList[2]);
-                            adjustedList.Add(rotatedList[3]);
-                            break;
-                        case 5:
-                            adjustedList = new List<Vector2>(rotatedList);
-                            break;
-                    }
+                    List<Vector2> adjustedList = GetMeleeRange();
 
                     // loop through adjusted list:
                         // deal damage to square
@@ -513,7 +484,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*------------------*/
                 /*    SET TARGET    */
-                /*------------------*/ /*   Current Status: IN PROGRESS
+                /*------------------*/ /*   Current Status: Done
                 two dropdowns
                     choose team to target [1]
                         0: enemy
@@ -574,7 +545,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // calculate strongest (is this just most health? highest attack? combination?)
                             // if stronger, replace object
                         // set target to strongest
-                        Debug.Log("will set target to strongest, for now setting to first in list");
+                        target = CalculateStrongest(targetTeam);
 
                     } else if (behaviorList[i].values[0] == "2") { // farthest
                         // initialize farthest manhattan distance
@@ -602,7 +573,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // calculate strongest (is this just most health? highest attack? combination?)
                             // if weaker, replace object
                         // set target to weakest
-                        Debug.Log("will set target to weakest, for now setting to first in list");
+                        target = CalculateWeakest(targetTeam);
                     }
                     Debug.Log("set target to " + target.warriorName);
                     break;
@@ -631,10 +602,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     bool whileLoopCondition = behaviorList[i].values[1] == "0" ? true : false;
 
                     if (behaviorList[i].values[0] == "0") { // target in range
-                        conditionsDict[i] = TargetInRange(i) == whileLoopCondition;
+                        conditionsDict[i] = TargetInRange() == whileLoopCondition;
                         Debug.Log("looping for target in range at index " + i);
                     } else if (behaviorList[i].values[0] == "1") { // target low health
-                        conditionsDict[i] = TargetLowHealth(i) == whileLoopCondition;
+                        conditionsDict[i] = TargetLowHealth() == whileLoopCondition;
                         Debug.Log("looping for target low heatlh at index " + i);
                     }
 
@@ -714,9 +685,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     bool ifCondition = behaviorList[i].values[1] == "0" ? true : false;
 
                     if (behaviorList[i].values[0] == "0") { // target in range
-                        conditionsDict[i] = TargetInRange(i) == ifCondition;
+                        conditionsDict[i] = TargetInRange() == ifCondition;
                     } else if (behaviorList[i].values[0] == "1") { // target low health
-                        conditionsDict[i] = TargetLowHealth(i) == ifCondition;
+                        conditionsDict[i] = TargetLowHealth() == ifCondition;
                     }
 
                     // if false just jump past
@@ -797,7 +768,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*-----------------------*/
                 /*    FIRE PROJECTILE    */
-                /*-----------------------*/ /*   Current Status: NOT STARTED
+                /*-----------------------*/ /*   Current Status: IN PROGRESS
                 no dropdowns
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
@@ -843,14 +814,103 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return new Vector2((int)(- vector.y * (-1)), (int)(vector.x * (-1)));
     }
 
-    public bool TargetInRange(int index) {
-        // FIXME!!! placeholder always true
-        return true;
+    public bool TargetInRange() {
+        List<Vector2> meleeRange = GetMeleeRange();
+
+        foreach (Vector2 tile in meleeRange) {
+            Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
+            if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
+                GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
+                if (hitWarrior.GetComponent<WarriorBehavior>() == target) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
-    public bool TargetLowHealth(int index) {
-        // FIXME!!! placeholder always false
+    public bool TargetLowHealth() {
+        if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
+            return true;
+        }
         return false;
+    }
+
+    public WarriorBehavior CalculateStrongest(List<WarriorBehavior> warriorList) {
+        // right now just gets warrior with highest health
+        // possibility of introducing some kind of formula to factor in ""strength"" value associated with warrior?
+        // incorporate attack, defense, etc.
+        WarriorBehavior strongest = warriorList[0];
+        foreach (WarriorBehavior warrior in warriorList) {
+            if (warrior.propertiesDict[BlockData.Property.HEALTH] > strongest.propertiesDict[BlockData.Property.HEALTH]) {
+                strongest = warrior;
+            }
+        }
+        return strongest;
+    }
+
+    public WarriorBehavior CalculateWeakest(List<WarriorBehavior> warriorList) {
+        // right now just gets warrior with lowest health
+        // possibility of introducing some kind of formula to factor in ""strength"" value associated with warrior?
+        // incorporate attack, defense, etc.
+        WarriorBehavior strongest = warriorList[0];
+        foreach (WarriorBehavior warrior in warriorList) {
+            if (warrior.propertiesDict[BlockData.Property.HEALTH] < strongest.propertiesDict[BlockData.Property.HEALTH]) {
+                strongest = warrior;
+            }
+        }
+        return strongest;
+    }
+
+    public void SetImageFacing() {
+        Transform visualTransform = transform.GetChild(0);
+        if (heading == new Vector2((int)-1, (int)0)) {
+            visualTransform.rotation = Quaternion.Euler(0, 180, 0);
+        } else if (heading == new Vector2((int)1, (int)0)) {
+            visualTransform.rotation = Quaternion.Euler(0, 0, 0);
+        } else if (heading == new Vector2((int)0, (int)1)) {
+            visualTransform.rotation = Quaternion.Euler(0, 0, 90);
+        }else if (heading == new Vector2((int)1, (int)0)) {
+            visualTransform.rotation = Quaternion.Euler(0, 0, -90);
+        }
+    }
+
+    public List<Vector2> GetMeleeRange() {
+        List<Vector2> rotatedList = new List<Vector2>(tilesToHitRelative);
+        while (rotatedList[0] != heading) {
+            Debug.Log("need to rotate range");
+            for (int j = 0; j < rotatedList.Count; j++) {
+                rotatedList[j] = RotateRight(rotatedList[j]);
+            }
+        }
+        Debug.Log("range is facing the correct way!");
+
+        // find the actual range
+        List<Vector2> adjustedList = new List<Vector2>();
+        switch(propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]) {
+            case 1:
+                adjustedList.Add(rotatedList[0]);
+                break;
+            case 2:
+                adjustedList.Add(rotatedList[0]);
+                adjustedList.Add(rotatedList[1]);
+                break;
+            case 3:
+                adjustedList.Add(rotatedList[0]);
+                adjustedList.Add(rotatedList[2]);
+                adjustedList.Add(rotatedList[3]);
+                break;
+            case 4:
+                adjustedList.Add(rotatedList[0]);
+                adjustedList.Add(rotatedList[1]);
+                adjustedList.Add(rotatedList[2]);
+                adjustedList.Add(rotatedList[3]);
+                break;
+            case 5:
+                adjustedList = new List<Vector2>(rotatedList);
+                break;
+        }
+        return adjustedList;
     }
 
     public void DoDamageOrHeal(float value, bool isHeal) {

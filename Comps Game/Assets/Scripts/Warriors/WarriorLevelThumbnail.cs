@@ -27,25 +27,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
         }
         Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(this.transform.position.x, this.transform.position.y, 1));
         GameObject warrior = Instantiate(warriorPrefab, newPoint, this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
-        // WarriorBehavior warriorBehavior = warrior.GetComponent<WarriorBehavior>();
-
-        // if (!isEnemy) {
-        //     warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
-        //     warriorBehavior.SetPropertiesAndBehaviors(WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).properties,
-        //                                               WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions,
-        //                                               WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions,
-        //                                               WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
-        //     warriorBehavior.warriorIndex = warriorIndex;
-        // } else { // PULL FROM ENEMY DATA FOR ENEMY
-        //     warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
-        //     warriorBehavior.SetPropertiesAndBehaviors(EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).properties,
-        //                                               EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions,
-        //                                               EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions,
-        //                                               EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions);
-        //     warriorBehavior.warriorIndex = warriorIndex;
-        //     // explicitly set enemy
-        //     warriorBehavior.SetIsEnemy();
-        // }
+        
         levelController.SetWarriorData(warrior, isEnemy, warriorIndex);
         Debug.Log("warrior " + warrior.GetComponent<WarriorBehavior>().warriorName + ". is enemy " + isEnemy + ". index: " + warriorIndex);
         warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !this.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].animatorController;
