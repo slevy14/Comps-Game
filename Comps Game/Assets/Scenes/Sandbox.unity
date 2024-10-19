@@ -3209,7 +3209,7 @@ MonoBehaviour:
   m_Content: {fileID: 301447623}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -4176,7 +4176,7 @@ MonoBehaviour:
   m_Content: {fileID: 215825398}
   m_Horizontal: 1
   m_Vertical: 0
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -4343,19 +4343,19 @@ MonoBehaviour:
   spriteDataList:
   - spriteName: 
     sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
   - spriteName: 
     sprite: {fileID: 892689537, guid: 33eb14522c3d8488c80ad906faa202ae, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
   - spriteName: 
     sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
   - spriteName: 
     sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
   - spriteName: 
     sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
-    animator: {fileID: 0}
+    animatorController: {fileID: 0}
   spriteDataIndex: 0
   propertyBlocks: []
   behaviorBlocks: []
