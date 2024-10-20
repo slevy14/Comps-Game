@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -166,6 +167,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         moveData = move;
         useWeaponData = useWeapon;
         useSpecialData = useSpecials;
+
+        UpdateHealthDisplay();
+    }
+
+    public void UpdateHealthDisplay() {
+        healthBar.transform.GetChild(2).GetComponent<TMP_Text>().text = Mathf.CeilToInt(propertiesDict[BlockData.Property.HEALTH]) + " / " + maxHealth;
     }
 
     public float GetProperty(BlockData.Property property) {
@@ -935,6 +942,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             }
         }
         healthBar.value = propertiesDict[BlockData.Property.HEALTH];
+        UpdateHealthDisplay();
     }
 
     public float DamageCalculator(float damage) {
