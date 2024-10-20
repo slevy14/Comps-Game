@@ -289,9 +289,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         infinityCounters.Clear();
         for (int i = 0; i < behaviorList.Count; i++) {
             Debug.Log("i is " + i);
+            // quit if battle over
             if (!isAlive || LevelController.Instance.battleFinished) {
                 break;
             }
+
+            // wait between actions
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             switch (behaviorList[i].behavior) {
                 /*------------*/
@@ -926,12 +929,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             Debug.Log("healed");
         } else {
             this.animator.SetTrigger("TakeDamage");
-            propertiesDict[BlockData.Property.HEALTH] -= value;
+            propertiesDict[BlockData.Property.HEALTH] -= DamageCalculator(value);
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && !isCurrentTurn) { // if it is current turn, delay death til end of action
                 Die();
             }
         }
         healthBar.value = propertiesDict[BlockData.Property.HEALTH];
+    }
+
+    public float DamageCalculator(float damage) {
+        return damage * (1 - (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth)));
     }
 
     public void Die() {
