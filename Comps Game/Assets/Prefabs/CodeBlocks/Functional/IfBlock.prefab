@@ -133,6 +133,10 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Target Low Health
       m_Image: {fileID: 0}
+    - m_Text: Facing Target
+      m_Image: {fileID: 0}
+    - m_Text: Self Low Health
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []

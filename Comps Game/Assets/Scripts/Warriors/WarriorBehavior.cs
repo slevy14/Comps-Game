@@ -602,6 +602,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     choose condition [0]
                         0: target in range
                         1: target low health
+                        2: facing target
+                        3: self low health
 
                     set boolean [1]
                         0: true
@@ -624,6 +626,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else if (behaviorList[i].values[0] == "1") { // target low health
                         conditionsDict[i] = TargetLowHealth() == whileLoopCondition;
                         Debug.Log("looping for target low heatlh at index " + i);
+                    }  else if (behaviorList[i].values[0] == "2") { // facing target
+                        conditionsDict[i] = FacingTarget() == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "3") { // self low health
+                        conditionsDict[i] = SelfLowHealth() == whileLoopCondition;
                     }
 
                     // if false just jump past
@@ -685,8 +691,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 /*----------*/ /*   Current Status: IN PROGRESS
                 two dropdowns
                     choose condition [0]
-                        0: option
-                        1: option
+                        0: target in range
+                        1: target low health
+                        2: facing target
+                        3: self low health
 
                     set boolean [1]
                         0: true
@@ -705,6 +713,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = TargetInRange() == ifCondition;
                     } else if (behaviorList[i].values[0] == "1") { // target low health
                         conditionsDict[i] = TargetLowHealth() == ifCondition;
+                    } else if (behaviorList[i].values[0] == "2") { // facing target
+                        conditionsDict[i] = FacingTarget() == ifCondition;
+                    } else if (behaviorList[i].values[0] == "3") { // self low health
+                        conditionsDict[i] = SelfLowHealth() == ifCondition;
                     }
 
                     // if false just jump past
@@ -846,8 +858,29 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return false;
     }
 
+    public bool FacingTarget() {
+        if (target == this) { // edge case
+            return true;
+        }
+
+        Vector2 targetPos = LevelController.Instance.objectsOnGrid[target.gameObject];
+        Vector2 hereToTarget = new Vector2((int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x), (int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x));
+        if (Vector2.Angle(heading, hereToTarget) <= 45) {
+            return true;
+        }
+        
+        return false;
+    }
+
     public bool TargetLowHealth() {
         if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
+            return true;
+        }
+        return false;
+    }
+
+    public bool SelfLowHealth() {
+        if (propertiesDict[BlockData.Property.HEALTH] / maxHealth < 0.34) {
             return true;
         }
         return false;

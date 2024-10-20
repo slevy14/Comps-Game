@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4126043434187828629, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_Options.m_Options.Array.data[2].m_Text
-      value: Target Low Health
+      value: Facing Target
       objectReference: {fileID: 0}
     - target: {fileID: 4812890322427269857, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_AnchoredPosition.x
