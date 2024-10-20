@@ -49,6 +49,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private Sprite sprite;
     private InputManager inputManager;
     private Slider healthBar;
+    private GameObject pointer;
 
     [Header("Dragging")]
     private bool isDragging;
@@ -78,6 +79,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // first child is visual
         sprite = transform.GetChild(0).GetComponent<Sprite>();
         healthBar = transform.GetChild(1).transform.GetChild(0).GetComponent<Slider>();
+        pointer = transform.GetChild(2).gameObject;
         SetImageFacing();
 
         heading = new Vector2((int)1, (int)0);
@@ -157,6 +159,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             propertiesDict[property] = 0;
         }
         // Debug.Log(this.propertiesDict);
+    }
+
+    public void MarkCurrentTurn(bool value) {
+        isCurrentTurn = value;
+        pointer.SetActive(value);
     }
 
     public void SetPropertiesAndBehaviors(List<BlockDataStruct> properties, List<BlockDataStruct> move, List<BlockDataStruct> useWeapon, List<BlockDataStruct> useSpecials) {

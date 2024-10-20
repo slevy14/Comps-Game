@@ -389,7 +389,7 @@ public class LevelController : MonoBehaviour {
                     continue;
                 }
                 Debug.Log(allWarriorsList[i].warriorName + " at position " + i + " is up!");
-                allWarriorsList[i].isCurrentTurn = true;
+                allWarriorsList[i].MarkCurrentTurn(true);
 
                 if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].Move());
@@ -400,7 +400,7 @@ public class LevelController : MonoBehaviour {
                     yield return StartCoroutine(allWarriorsList[i].UseSpecial());
                 }
 
-                allWarriorsList[i].isCurrentTurn = false;
+                allWarriorsList[i].MarkCurrentTurn(false);
 
                 // if (yourWarriorsList.Count <= 0 && enemyWarriorsList.Count <= 0) {
                 //     battleFinished = true;
