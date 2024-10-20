@@ -489,11 +489,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             icon.GetComponent<SpriteRenderer>().sprite = healSprite;
                         }
                         if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToAttack)) {
-                            GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToAttack).Key;
+                            WarriorBehavior hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToAttack).Key.GetComponent<WarriorBehavior>();
+                            if (hitWarrior.isEnemy == this.isMeleeTargetAllies) {
+                                continue;
+                            }
                             if (isMeleeHeal) {
-                                hitWarrior.GetComponent<WarriorBehavior>().DoDamageOrHeal(this.propertiesDict[BlockData.Property.HEAL_POWER], isMeleeHeal);
+                                hitWarrior.DoDamageOrHeal(this.propertiesDict[BlockData.Property.HEAL_POWER], isMeleeHeal);
                             } else {
-                                hitWarrior.GetComponent<WarriorBehavior>().DoDamageOrHeal(this.propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], isMeleeHeal);
+                                hitWarrior.DoDamageOrHeal(this.propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], isMeleeHeal);
                             }
                         }
                     }
