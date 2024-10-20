@@ -863,9 +863,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return true;
         }
 
+        // Debug.Log("checking if facing " +target.warriorName);
+
         Vector2 targetPos = LevelController.Instance.objectsOnGrid[target.gameObject];
-        Vector2 hereToTarget = new Vector2((int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x), (int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x));
+        Vector2 hereToTarget = new Vector2((int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x), (int)(targetPos.y - LevelController.Instance.objectsOnGrid[this.gameObject].y));
         if (Vector2.Angle(heading, hereToTarget) <= 45) {
+            Debug.Log ("distance vec: " + hereToTarget + ", current heading: " + heading);
+            Debug.Log("facing " + target.warriorName + ", angle " + Vector2.Angle(heading, hereToTarget));
             return true;
         }
         
