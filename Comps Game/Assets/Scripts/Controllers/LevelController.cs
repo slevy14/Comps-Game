@@ -225,13 +225,19 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
             statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text += "\n\n" + BehaviorString(warrior);
         } else { // enemy
-            WarriorFunctionalityData warrior = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
-            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
-            statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+            WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
+            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
+            statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
+            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
+            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text += "\n\n" + BehaviorString(enemy);
         }
     }
+
+    // PRINTING THE CODE
+    // this could also maybe be done by storing the relevant string within the block when saving and then printing them all here
+    // but that's for a refactor later if time
 
     private string PropertiesString(WarriorFunctionalityData warriorData) {
         string propertiesString = "";
@@ -308,7 +314,202 @@ public class LevelController : MonoBehaviour {
 
     private string BehaviorString(WarriorFunctionalityData warriorData) {
         // FIXME: add ability to print behaviors as string to the stats screen
-        return null;
+        string behaviorString = "";
+        string indent = "    ";
+        string indentToAdd = "";
+        List<List<BlockDataStruct>> warriorBehaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
+        foreach (List<BlockDataStruct> warriorBehaviorList in warriorBehaviorLists) {
+            // check which header we're using
+            if (warriorBehaviorList == warriorData.moveFunctions) {
+                behaviorString += "Move: \n";
+            } else if (warriorBehaviorList == warriorData.useWeaponFunctions) {
+                behaviorString += "UseWeapon: \n";
+            } else if (warriorBehaviorList == warriorData.useSpecialFunctions) {
+                behaviorString += "UseSpecial: \n";
+            }
+            indentToAdd += indent;
+
+            for (int i = 0; i < warriorBehaviorList.Count; i++) {
+                switch (warriorBehaviorList[i].behavior) {
+                    case BlockData.BehaviorType.TURN:
+                        behaviorString += indentToAdd + "TURN ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "left";
+                        } else {
+                            behaviorString += "left";
+                        }
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.STEP:
+                        behaviorString += indentToAdd + "STEP ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "forward";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "backward";
+                        } else if (warriorBehaviorList[i].values[0] == "2") {
+                            behaviorString += "left";
+                        } else if (warriorBehaviorList[i].values[0] == "3") {
+                            behaviorString += "right";
+                        }
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.RUN:
+                        behaviorString += indentToAdd + "RUN ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "forward";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "backward";
+                        } else if (warriorBehaviorList[i].values[0] == "2") {
+                            behaviorString += "left";
+                        } else if (warriorBehaviorList[i].values[0] == "3") {
+                            behaviorString += "right";
+                        }
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.TELEPORT:
+                        behaviorString += indentToAdd + "TELEPORT ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "behind target";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "flank target";
+                        }
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.MELEE_ATTACK:
+                        behaviorString += indentToAdd + "DO MELEE";
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.SET_TARGET:
+                        behaviorString += indentToAdd + "SET TARGET ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "nearest ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "strongest ";
+                        } else if (warriorBehaviorList[i].values[0] == "2") {
+                            behaviorString += "farthest ";
+                        } else if (warriorBehaviorList[i].values[0] == "3") {
+                            behaviorString += "weakest ";
+                        }
+
+                        if (warriorBehaviorList[i].values[1] == "0") {
+                            behaviorString += "enemy";
+                        } else if (warriorBehaviorList[i].values[1] == "1") {
+                            behaviorString += "ally";
+                        }
+
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.WHILE_LOOP:
+                        behaviorString += indentToAdd + "WHILE ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "target in range ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "target low health ";
+                        } else if (warriorBehaviorList[i].values[0] == "2") {
+                            behaviorString += "facing target ";
+                        } else if (warriorBehaviorList[i].values[0] == "3") {
+                            behaviorString += "self low health ";
+                        }
+
+                        behaviorString += "IS ";
+
+                        if (warriorBehaviorList[i].values[1] == "0") {
+                            behaviorString += "true";
+                        } else if (warriorBehaviorList[i].values[1] == "1") {
+                            behaviorString += "false";
+                        }
+
+                        behaviorString += ":\n";
+                        indentToAdd += indent;
+                        break;
+                    case BlockData.BehaviorType.FOR_LOOP:
+                        behaviorString += indentToAdd + "FOR " + warriorBehaviorList[i].values[0] + " TIMES:";
+                        behaviorString += "\n";
+                        indentToAdd += indent;
+                        break;
+                    case BlockData.BehaviorType.END_LOOP:
+                        indentToAdd.Remove(0, indent.Length);
+                        behaviorString += indentToAdd + "END LOOP";
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.IF:
+                        behaviorString += indentToAdd + "IF ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "target in range ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "target low health ";
+                        } else if (warriorBehaviorList[i].values[0] == "2") {
+                            behaviorString += "facing target ";
+                        } else if (warriorBehaviorList[i].values[0] == "3") {
+                            behaviorString += "self low health ";
+                        }
+
+                        behaviorString += "IS ";
+
+                        if (warriorBehaviorList[i].values[1] == "0") {
+                            behaviorString += "true";
+                        } else if (warriorBehaviorList[i].values[1] == "1") {
+                            behaviorString += "false";
+                        }
+
+                        behaviorString += ":\n";
+                        indentToAdd += indent;
+                        break;
+                    case BlockData.BehaviorType.ELSE:
+                        indentToAdd.Remove(0, indent.Length);
+                        behaviorString += indentToAdd + "ELSE";
+                        behaviorString += "\n";
+                        indentToAdd += indent;
+                        break;
+                    case BlockData.BehaviorType.END_IF:
+                        indentToAdd.Remove(0, indent.Length);
+                        behaviorString += indentToAdd + "END IF";
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.MELEE_SETTINGS:
+                        behaviorString += indentToAdd + "MELEE WILL ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "attack ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "heal ";
+                        }
+
+                        if (warriorBehaviorList[i].values[1] == "0") {
+                            behaviorString += "enemies";
+                        } else if (warriorBehaviorList[i].values[1] == "1") {
+                            behaviorString += "allies";
+                        }
+
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.RANGED_SETTINGS:
+                        behaviorString += indentToAdd + "PROJECTILES WILL ";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "attack ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "heal ";
+                        }
+
+                        if (warriorBehaviorList[i].values[1] == "0") {
+                            behaviorString += "enemies";
+                        } else if (warriorBehaviorList[i].values[1] == "1") {
+                            behaviorString += "allies";
+                        }
+
+                        behaviorString += "\n";
+                        break;
+                    case BlockData.BehaviorType.FIRE_PROJECTILE:
+                        behaviorString += indentToAdd + "FIRE PROJECTILE";
+                        behaviorString += "\n";
+                        break;
+                }
+            }
+            // reset indent
+            indentToAdd = "";
+            behaviorString += "\n";
+        }
+
+        return behaviorString;
     }
 
     public void HideStatsPanel() {
