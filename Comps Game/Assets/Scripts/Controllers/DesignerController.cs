@@ -8,8 +8,9 @@ using UnityEngine.UI;
 
 public class DesignerController : MonoBehaviour {
 
-    [Header("DEBUG")]
+    [Header("Meta")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
+    [SerializeField] private bool isSandbox;
 
     [Space(20)]
 
@@ -55,8 +56,10 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private List<GameObject> behaviorBlocks;
     [SerializeField] private GameObject spacer;
     [SerializeField] private GameObject sectionHeader;
+
+
     // SINGLETON
-    public static DesignerController Instance = null; // for persistent
+    public static DesignerController Instance = null; 
 
     public void CheckSingleton() {
         if (Instance == null) {
@@ -69,7 +72,7 @@ public class DesignerController : MonoBehaviour {
 
     void Awake() {
         CheckSingleton();
-        // levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
+        isSandbox = SceneController.Instance.GetCurrentSceneName() == "Sandbox" ? true : false;
     }
 
     // INITIALIZING

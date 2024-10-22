@@ -31,6 +31,10 @@ public class SceneController : MonoBehaviour {
         StartCoroutine(LoadSceneByNameCoroutine(name));
     }
 
+    public string GetCurrentSceneName() {
+        return SceneManager.GetActiveScene().name;
+    }
+
     public IEnumerator LoadSceneByNameCoroutine(string name) {
         GameObject.Find("TransitionCanvas").GetComponent<Animator>().SetTrigger("Start");
 
@@ -38,7 +42,5 @@ public class SceneController : MonoBehaviour {
 
         SceneManager.LoadScene(name);
     }
-
-
 
 }
