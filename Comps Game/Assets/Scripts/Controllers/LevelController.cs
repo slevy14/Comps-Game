@@ -220,18 +220,24 @@ public class LevelController : MonoBehaviour {
             statsPanel.SetActive(true);
         }
 
+        // old object before scroll
+        // TMP_Text statsDisplay = statsPanel.transform.GetChild(2).GetComponent<TMP_Text>();
+
+        // new object
+        TMP_Text statsDisplay = GameObject.Find("StatsDisplayScroll").GetComponent<TMP_Text>();
+
         if (!isEnemy) {
             WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
-            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text += "\n\n" + BehaviorString(warrior);
+            statsDisplay.text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
+            statsDisplay.text += "\n\n" + BehaviorString(warrior);
         } else { // enemy
             WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
-            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
-            statsPanel.transform.GetChild(2).GetComponent<TMP_Text>().text += "\n\n" + BehaviorString(enemy);
+            statsDisplay.text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
+            statsDisplay.text += "\n\n" + BehaviorString(enemy);
         }
     }
 
@@ -316,7 +322,7 @@ public class LevelController : MonoBehaviour {
         // FIXME: add ability to print behaviors as string to the stats screen
         string behaviorString = "";
         string indent = "    ";
-        string indentToAdd = "";
+        int indentLevel = 0;
         List<List<BlockDataStruct>> warriorBehaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
         foreach (List<BlockDataStruct> warriorBehaviorList in warriorBehaviorLists) {
             // check which header we're using
@@ -327,12 +333,12 @@ public class LevelController : MonoBehaviour {
             } else if (warriorBehaviorList == warriorData.useSpecialFunctions) {
                 behaviorString += "UseSpecial: \n";
             }
-            indentToAdd += indent;
+            indentLevel += 1;
 
             for (int i = 0; i < warriorBehaviorList.Count; i++) {
                 switch (warriorBehaviorList[i].behavior) {
                     case BlockData.BehaviorType.TURN:
-                        behaviorString += indentToAdd + "TURN ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "TURN ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "left";
                         } else {
@@ -341,7 +347,7 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.STEP:
-                        behaviorString += indentToAdd + "STEP ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "STEP ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "forward";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -354,7 +360,7 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.RUN:
-                        behaviorString += indentToAdd + "RUN ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "RUN ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "forward";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -367,7 +373,7 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.TELEPORT:
-                        behaviorString += indentToAdd + "TELEPORT ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "TELEPORT ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "behind target";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -376,11 +382,11 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.MELEE_ATTACK:
-                        behaviorString += indentToAdd + "DO MELEE";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "DO MELEE";
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.SET_TARGET:
-                        behaviorString += indentToAdd + "SET TARGET ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "SET TARGET ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "nearest ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -400,7 +406,7 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.WHILE_LOOP:
-                        behaviorString += indentToAdd + "WHILE ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "WHILE ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "target in range ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -420,20 +426,20 @@ public class LevelController : MonoBehaviour {
                         }
 
                         behaviorString += ":\n";
-                        indentToAdd += indent;
+                        indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.FOR_LOOP:
-                        behaviorString += indentToAdd + "FOR " + warriorBehaviorList[i].values[0] + " TIMES:";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FOR " + warriorBehaviorList[i].values[0] + " TIMES:";
                         behaviorString += "\n";
-                        indentToAdd += indent;
+                        indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.END_LOOP:
-                        indentToAdd.Remove(0, indent.Length);
-                        behaviorString += indentToAdd + "END LOOP";
+                        indentLevel -= 1;
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END LOOP";
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.IF:
-                        behaviorString += indentToAdd + "IF ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "IF ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "target in range ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -453,21 +459,21 @@ public class LevelController : MonoBehaviour {
                         }
 
                         behaviorString += ":\n";
-                        indentToAdd += indent;
+                        indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.ELSE:
-                        indentToAdd.Remove(0, indent.Length);
-                        behaviorString += indentToAdd + "ELSE";
+                        indentLevel -= 1;
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "ELSE";
                         behaviorString += "\n";
-                        indentToAdd += indent;
+                        indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.END_IF:
-                        indentToAdd.Remove(0, indent.Length);
-                        behaviorString += indentToAdd + "END IF";
+                        indentLevel -= 1;
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END IF";
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.MELEE_SETTINGS:
-                        behaviorString += indentToAdd + "MELEE WILL ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "MELEE WILL ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "attack ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -483,7 +489,7 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.RANGED_SETTINGS:
-                        behaviorString += indentToAdd + "PROJECTILES WILL ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "PROJECTILES WILL ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "attack ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -499,13 +505,13 @@ public class LevelController : MonoBehaviour {
                         behaviorString += "\n";
                         break;
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
-                        behaviorString += indentToAdd + "FIRE PROJECTILE";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FIRE PROJECTILE";
                         behaviorString += "\n";
                         break;
                 }
             }
             // reset indent
-            indentToAdd = "";
+            indentLevel = 0;
             behaviorString += "\n";
         }
 
