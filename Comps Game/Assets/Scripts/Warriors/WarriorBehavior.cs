@@ -310,6 +310,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
             // wait between actions
             yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
+
+            // hold if paused
+            while (LevelController.Instance.isPaused) {
+                yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
+            }
+
+            // switch behavior
             switch (behaviorList[i].behavior) {
                 /*------------*/
                 /*    TURN    */
@@ -997,21 +1004,23 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void Die() {
-        Debug.Log("dead!");
-        // remove this object from grid
-        LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
-        // remove this object from ally or enemy list
-        if (!isEnemy) {
-            LevelController.Instance.yourWarriorsList.Remove(this);
-        } else {
-            LevelController.Instance.enemyWarriorsList.Remove(this);
-        }
-        // set warrior dead
-        isAlive = false;
+        if (isAlive) { // adding check bc it runs multiple times if battle speed too fast
+            isAlive = false;
+            Debug.Log("dead!");
+            // remove this object from grid
+            LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
+            // remove this object from ally or enemy list
+            if (!isEnemy) {
+                LevelController.Instance.yourWarriorsList.Remove(this);
+            } else {
+                LevelController.Instance.enemyWarriorsList.Remove(this);
+            }
+            // set warrior dead
 
-        // this.gameObject.SetActive(false);
-        // delay death in case it's active turn
-        StartCoroutine(DeathDelay());
+            // this.gameObject.SetActive(false);
+            // delay death in case it's active turn
+            StartCoroutine(DeathDelay());
+        }
     }
 
     public IEnumerator DeathDelay() {

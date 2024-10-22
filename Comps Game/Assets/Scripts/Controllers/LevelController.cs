@@ -20,6 +20,7 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private GameObject warriorDrawer;
     [SerializeField] private GameObject enemiesDrawer;
     [SerializeField] private GameObject resetButton;
+    [SerializeField] private GameObject pauseButton;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -44,6 +45,7 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private int maxTurns = 50;
     public bool battleFinished = false;
     public bool inBattle = false;
+    public bool isPaused = false;
 
 
     // SINGLETON
@@ -66,6 +68,7 @@ public class LevelController : MonoBehaviour {
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
         HideStatsPanel();
         ToggleResetButton(false);
+        TogglePauseButton(false);
     }
 
     void Start() {
@@ -100,6 +103,7 @@ public class LevelController : MonoBehaviour {
             Debug.Log("battle timed out");
         }
         ToggleResetButton(true);
+        TogglePauseButton(false);
         inBattle = false;
     }
 
@@ -189,6 +193,17 @@ public class LevelController : MonoBehaviour {
         battleFinished = false;
         LoadSavedGrid();
         ToggleResetButton(false);
+        TogglePauseButton(false);
+    }
+
+    public void PauseBattle() {
+        if (inBattle && !isPaused) {
+            isPaused = true;
+            pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Resume";
+        } else if (inBattle && isPaused) {
+            isPaused = false;
+            pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Pause";
+        }
     }
 
     // Loading Warriors
@@ -526,6 +541,10 @@ public class LevelController : MonoBehaviour {
         resetButton.SetActive(value);
     }
 
+    public void TogglePauseButton(bool value) {
+        pauseButton.SetActive(value);
+    }
+
 
     /*--------------------------*/
     /*          BATTLE          */
@@ -586,6 +605,10 @@ public class LevelController : MonoBehaviour {
         }
         // generate new warrior lists
         CreateWarriorLists();
+
+        // reset pause
+        isPaused = false;
+        TogglePauseButton(true);
 
         int turnCounter = 0;
         // while game hasn't been won or lost, keep looping through
