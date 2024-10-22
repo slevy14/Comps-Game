@@ -16,11 +16,6 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void CheckSingleton() {
-        // DontDestroyOnLoad(this.gameObject);
-        // GameObject found_object = GameObject.Find("WarriorListPersistent");
-        // if (found_object != this.gameObject) {
-        //     Destroy(this.gameObject);
-        // }
         if (Instance == null) {
             Instance = this;
         } else {

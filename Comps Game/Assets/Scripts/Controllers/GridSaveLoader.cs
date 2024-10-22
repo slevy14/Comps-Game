@@ -55,7 +55,7 @@ public class GridSaveLoader : MonoBehaviour {
 }
 
 [System.Serializable]
-struct WarriorOnGrid {
+public struct WarriorOnGrid {
     public Vector2 pos;
     public int warriorIndex;
     public bool isEnemy;

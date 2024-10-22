@@ -20,6 +20,8 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private bool isLoadingWarriorEnemy = false;
     [SerializeField] private bool isCurrentWarriorEnemy = false;
     [SerializeField] public bool justSaved;
+    [SerializeField] private int editingIndex;
+
 
     [Space(20)]
 
@@ -48,12 +50,11 @@ public class DesignerController : MonoBehaviour {
 
     [Space(20)]
 
-    [Header("Vars")]
-    [Header("Property Blocks")]
+    [Header("Blocks")]
     [SerializeField] private List<GameObject> propertyBlocks;
     [SerializeField] private List<GameObject> behaviorBlocks;
-    [SerializeField] private int editingIndex;
-
+    [SerializeField] private GameObject spacer;
+    [SerializeField] private GameObject sectionHeader;
     // SINGLETON
     public static DesignerController Instance = null; // for persistent
 
