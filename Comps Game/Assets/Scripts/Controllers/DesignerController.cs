@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +43,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject deleteMenu;
     [SerializeField] private GameObject switchPromptMenu;
     [SerializeField] private GameObject errorPopupMenu;
+    [SerializeField] private GameObject switchLevelButtonObject;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -72,7 +74,6 @@ public class DesignerController : MonoBehaviour {
 
     void Awake() {
         CheckSingleton();
-        isSandbox = SceneController.Instance.GetCurrentSceneName() == "Sandbox" ? true : false;
     }
 
     // INITIALIZING
@@ -83,10 +84,24 @@ public class DesignerController : MonoBehaviour {
         // if (enemyListController == null) {
         //     enemyListController = EnemyListController.Instance;
         // }
+        isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex, true, false);
 
         LoadEnemyDrawer();
+
+        InitializeLevelSwitchButton();
+    }
+
+    private void InitializeLevelSwitchButton() {
+        switchLevelButtonObject.GetComponent<Button>().onClick.RemoveAllListeners();
+        if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
+            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {switchLevelButtonObject.GetComponent<ButtonData>().GoToSandbox();});
+            switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Sandbox";
+        } else { // make return to level button
+            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {switchLevelButtonObject.GetComponent<ButtonData>().BackToLevel();});
+            switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Level";
+        }
     }
 
 
@@ -240,6 +255,7 @@ public class DesignerController : MonoBehaviour {
 
     public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
         if (isSandbox) {
+            Debug.Log("in sandbox, there are " + EnemyListController.Instance.GetCount() + " enemies");
             for (int i=0; i < EnemyListController.Instance.GetCount(); i++) {
                 AddEnemyToDrawer(i, i);
             }
@@ -255,7 +271,7 @@ public class DesignerController : MonoBehaviour {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
         enemyThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = true;
-        UpdateEnemyDrawerThumbnail(enemyThumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex, thumbnailIndex);
+        UpdateEnemyDrawerThumbnail(warriorIndex, thumbnailIndex);
     }
 
     public void UpdateEnemyDrawerThumbnail(int warriorIndex, int thumbnailIndex) {
@@ -266,7 +282,7 @@ public class DesignerController : MonoBehaviour {
         GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
         thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
-        // thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
+        thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = warriorIndex;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
 
@@ -1041,6 +1057,8 @@ public class DesignerController : MonoBehaviour {
         } else {
             WarriorListController.Instance.UpdateJSON("level_warriors");
         }
+        // if deletion, will have to reset grid
+        ProgressionController.Instance.madeListEdits = true;
     }
 
 }

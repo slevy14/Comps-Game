@@ -12,6 +12,7 @@ public class ProgressionController : MonoBehaviour {
     [Header("Save/Load")]
     // [SerializeField] public PlayerProgressionAndSettings playerProgressionAndSettings;
     [SerializeField] public bool isLevelJustStarted;
+    [SerializeField] public bool madeListEdits; // true if deleted warrior, etc. need to reset grid
 
 
     public static ProgressionController Instance = null; // for persistent

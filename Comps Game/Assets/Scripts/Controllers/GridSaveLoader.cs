@@ -31,13 +31,25 @@ public class GridSaveLoader : MonoBehaviour {
         isSandbox = ProgressionController.Instance.currentLevel == 0;
         if (isSandbox) {
             filepath = Application.persistentDataPath + $"/sandbox_grid.json";
-            ResetGrid();
+            if (ProgressionController.Instance.madeListEdits) {
+                ProgressionController.Instance.madeListEdits = false;
+                ResetGrid();
+                SaveGridToJSON();
+            } else {
+                LoadGridFromJson();
+            }
         } else {
             filepath = Application.persistentDataPath + $"/{ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].levelNumber}_grid.json";
             if (ProgressionController.Instance.isLevelJustStarted) {
                 ProgressionController.Instance.SetLevelStarted();
-                SaveGridToJSON();
                 LoadGridFromLevelData();
+                SaveGridToJSON();
+            } else if (ProgressionController.Instance.madeListEdits) {
+                ProgressionController.Instance.madeListEdits = false;
+                LoadGridFromLevelData();
+                SaveGridToJSON();
+            } else {
+                LoadGridFromJson();
             }
         }
     }

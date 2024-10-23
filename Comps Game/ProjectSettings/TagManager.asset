@@ -12,6 +12,7 @@ TagManager:
   - thumbnail
   - warrior
   - enemy
+  - icon
   layers:
   - Default
   - TransparentFX

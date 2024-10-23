@@ -13,6 +13,11 @@ public class ButtonData : MonoBehaviour {
 
     public void ContinueGame() {
         ProgressionController.Instance.currentLevel = ProgressionController.Instance.continueLevelFrom;
+        ProgressionController.Instance.StartNewLevel(ProgressionController.Instance.currentLevel);
+        SceneController.Instance.LoadSceneByName("LevelScene");
+    }
+
+    public void BackToLevel() {
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
 
