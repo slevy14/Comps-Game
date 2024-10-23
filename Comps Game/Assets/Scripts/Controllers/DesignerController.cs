@@ -239,27 +239,34 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
-        for (int i=0; i < enemyListController.GetCount(); i++) {
-            AddEnemyToDrawer(i);
+        if (isSandbox) {
+            for (int i=0; i < enemyListController.GetCount(); i++) {
+                AddEnemyToDrawer(i, i);
+            }
+        } else { // only load specific ones for level
+            int level = ProgressionController.Instance.currentLevel;
+            for (int i = 0; i < ProgressionController.Instance.levelDataList[level].availableEnemyIndices.Count; i++) {
+                AddEnemyToDrawer(ProgressionController.Instance.levelDataList[level].availableEnemyIndices[i], i);
+            }
         }
     }
 
-    public void AddEnemyToDrawer(int index) {
+    public void AddEnemyToDrawer(int warriorIndex, int thumbnailIndex) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
         enemyThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = true;
-        UpdateEnemyDrawerThumbnail(index);
+        UpdateEnemyDrawerThumbnail(enemyThumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex, thumbnailIndex);
     }
 
-    public void UpdateEnemyDrawerThumbnail(int index) {
+    public void UpdateEnemyDrawerThumbnail(int warriorIndex, int thumbnailIndex) {
         // get references
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
-        WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(index);
+        WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(warriorIndex);
         // update sprite
-        GameObject thumbnail = container.GetChild(index).gameObject;
+        GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
         thumbnail.GetComponent<Image>().sprite = enemyListController.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
-        thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
+        // thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
 
@@ -304,7 +311,7 @@ public class DesignerController : MonoBehaviour {
                     warriorListController.FindJSON("level_warriors");
                 }
             } else {
-                UpdateEnemyDrawerThumbnail(editingIndex);
+                UpdateEnemyDrawerThumbnail(editingIndex, editingIndex);
                 enemyListController.FindJSON();
             }
             return true;
