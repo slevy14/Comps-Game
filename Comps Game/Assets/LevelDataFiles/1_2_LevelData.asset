@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
+  m_Name: 1_2_LevelData
+  m_EditorClassIdentifier: 
+  levelName: Level 2
+  levelNumber: 2
+  availableEnemyIndices: 0000000001000000
+  enemyPlacementsList:
+  - pos: {x: 0, y: 0}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 1, y: 1}
+    warriorIndex: 1
+    isEnemy: 1
+  availablePropertiesIndices: 000000000100000002000000
+  availableBehaviorsIndices: 0d00000005000000
+  isMoveHeaderAvailable: 0
+  isUseSpecialHeaderAvailable: 0
+  maxTotalStrength: 1000
+  maxBlocks: 1000
+  actionPoints: 1000
+  maxWarriorsToPlace: 5
+  battleTutorialDialog: []
+  editorTutorialDialog: []

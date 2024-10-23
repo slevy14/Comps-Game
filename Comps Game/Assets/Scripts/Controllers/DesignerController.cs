@@ -15,8 +15,8 @@ public class DesignerController : MonoBehaviour {
     [Space(20)]
 
     [Header("SAVE/LOAD")]
-    [SerializeField] private WarriorListController warriorListController;
-    [SerializeField] private EnemyListController enemyListController;
+    // [SerializeField] private WarriorListController warriorListController;
+    // [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
     [SerializeField] private bool isLoadingWarriorEnemy = false;
     [SerializeField] private bool isCurrentWarriorEnemy = false;
@@ -77,12 +77,12 @@ public class DesignerController : MonoBehaviour {
 
     // INITIALIZING
     void Start() {
-        if (warriorListController == null) {
-            warriorListController = WarriorListController.Instance;
-        }
-        if (enemyListController == null) {
-            enemyListController = EnemyListController.Instance;
-        }
+        // if (warriorListController == null) {
+        //     warriorListController = WarriorListController.Instance;
+        // }
+        // if (enemyListController == null) {
+        //     enemyListController = EnemyListController.Instance;
+        // }
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingIndex, true, false);
 
@@ -170,7 +170,7 @@ public class DesignerController : MonoBehaviour {
         // save active warrior first, just in case
         SaveWarrior();
         // get index
-        editingIndex = warriorListController.GetCount();
+        editingIndex = WarriorListController.Instance.GetCount();
         // reset name display
         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname]";
         // reset dropdown
@@ -204,21 +204,21 @@ public class DesignerController : MonoBehaviour {
 
     public void RemoveAllWarriorsFromDrawer() {
         // loop through backwards to remove each warrior
-        int count = warriorListController.GetCount() + 1;
+        int count = WarriorListController.Instance.GetCount() + 1;
         for (int i = count; i > 0; i--) {
             Destroy(warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject);
         }
     }
 
     public void DebugGetThumbnailData() {
-        for (int i = 1; i < warriorListController.GetCount() + 1; i++) {
+        for (int i = 1; i < WarriorListController.Instance.GetCount() + 1; i++) {
             GameObject thumbnail = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject;
             Debug.Log("index " + i + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + thumbnail.GetComponent<Image>().sprite);
         }
     }
 
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
-        for (int i=0; i < warriorListController.GetCount(); i++) {
+        for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
         }
     }
@@ -226,10 +226,10 @@ public class DesignerController : MonoBehaviour {
     public void UpdateWarriorDrawerThumbnail(int index) {
         // get references
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
-        WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
+        WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
-        thumbnail.GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
@@ -240,7 +240,7 @@ public class DesignerController : MonoBehaviour {
 
     public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
         if (isSandbox) {
-            for (int i=0; i < enemyListController.GetCount(); i++) {
+            for (int i=0; i < EnemyListController.Instance.GetCount(); i++) {
                 AddEnemyToDrawer(i, i);
             }
         } else { // only load specific ones for level
@@ -261,10 +261,10 @@ public class DesignerController : MonoBehaviour {
     public void UpdateEnemyDrawerThumbnail(int warriorIndex, int thumbnailIndex) {
         // get references
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
-        WarriorFunctionalityData enemy = enemyListController.GetWarriorAtIndex(warriorIndex);
+        WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
         // update sprite
         GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
-        thumbnail.GetComponent<Image>().sprite = enemyListController.spriteDataList[enemy.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
         // thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
@@ -306,13 +306,13 @@ public class DesignerController : MonoBehaviour {
             if (!isLoadingWarriorEnemy) {
                 UpdateWarriorDrawerThumbnail(editingIndex);
                 if (isSandbox) {
-                    warriorListController.FindJSON("sandbox_warriors"); // reload json file
+                    WarriorListController.Instance.FindJSON("sandbox_warriors"); // reload json file
                 } else {
-                    warriorListController.FindJSON("level_warriors");
+                    WarriorListController.Instance.FindJSON("level_warriors");
                 }
             } else {
                 UpdateEnemyDrawerThumbnail(editingIndex, editingIndex);
-                enemyListController.FindJSON();
+                EnemyListController.Instance.FindJSON();
             }
             return true;
         } else {
@@ -340,9 +340,9 @@ public class DesignerController : MonoBehaviour {
 
     public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
         if (!isEnemy) {
-            warriorListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+            WarriorListController.Instance.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
         } else {
-            enemyListController.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
+            EnemyListController.Instance.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
         }
     }
 
@@ -387,7 +387,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData warriorData = new WarriorFunctionalityData();
 
         if (!isLoadingEnemy) {
-            warriorData = warriorListController.GetWarriorAtIndex(index);
+            warriorData = WarriorListController.Instance.GetWarriorAtIndex(index);
         } else { // ENEMY
             warriorData = EnemyListController.Instance.GetWarriorAtIndex(index);
         }
@@ -1019,7 +1019,7 @@ public class DesignerController : MonoBehaviour {
     private IEnumerator RemoveWarriorsDelay() {
         // remove warrior from list
         // renumber indices within list
-        warriorListController.RemoveWarrior(editingIndex);
+        WarriorListController.Instance.RemoveWarrior(editingIndex);
         yield return new WaitForSeconds(.01f);
         // clear warrior drawer
         RemoveAllWarriorsFromDrawer();
@@ -1028,8 +1028,8 @@ public class DesignerController : MonoBehaviour {
         // load warrior at last index --> also clears whiteboard
             // if list now empty, create a new blank one and load it
         // reload warrior drawer
-        if (warriorListController.GetCount() == 0) {
-            warriorListController.AddWarrior(0, new WarriorFunctionalityData());
+        if (WarriorListController.Instance.GetCount() == 0) {
+            WarriorListController.Instance.AddWarrior(0, new WarriorFunctionalityData());
         }
         // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
         LoadWarriorDrawer();
@@ -1037,9 +1037,9 @@ public class DesignerController : MonoBehaviour {
         DebugGetThumbnailData();
 
         if (isSandbox) {
-            warriorListController.FindJSON("sandbox_warriors"); // reload json file
+            WarriorListController.Instance.FindJSON("sandbox_warriors"); // reload json file
         } else {
-            warriorListController.UpdateJSON("level_warriors");
+            WarriorListController.Instance.UpdateJSON("level_warriors");
         }
     }
 

@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class LevelController : MonoBehaviour {
 
     [Header("SAVE/LOAD")]
-    [SerializeField] private WarriorListController warriorListController; 
+    // [SerializeField] private WarriorListController warriorListController; 
     [SerializeField] private bool isSandbox;
 
     [Header("REFERENCES")]
@@ -74,9 +74,9 @@ public class LevelController : MonoBehaviour {
     }
 
     void Start() {
-        if (warriorListController == null) {
-            warriorListController = WarriorListController.Instance;
-        }
+        // if (warriorListController == null) {
+        //     warriorListController = WarriorListController.Instance;
+        // }
         LoadWarriorDrawer();
 
         if (isSandbox) {
@@ -123,18 +123,20 @@ public class LevelController : MonoBehaviour {
     }
 
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
-        for (int i=0; i < warriorListController.GetCount(); i++) {
+        Debug.Log("there are " + WarriorListController.Instance.GetCount() + " warriors to add to drawer");
+        for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
         }
+        Debug.Log("added warriors to placeable drawer");
     }
 
     public void UpdateWarriorDrawerThumbnail(int index) {
         // get references
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
-        WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(index);
+        WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index).gameObject;
-        thumbnail.GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
+        thumbnail.GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
@@ -249,8 +251,8 @@ public class LevelController : MonoBehaviour {
         TMP_Text statsDisplay = GameObject.Find("StatsDisplayScroll").GetComponent<TMP_Text>();
 
         if (!isEnemy) {
-            WarriorFunctionalityData warrior = warriorListController.GetWarriorAtIndex(warriorIndex);
-            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = warriorListController.spriteDataList[warrior.spriteIndex].sprite;
+            WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(warriorIndex);
+            statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
             statsDisplay.text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
             statsDisplay.text += "\n\n" + BehaviorString(warrior);

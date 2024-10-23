@@ -6,13 +6,15 @@ public class GridSaveLoader : MonoBehaviour {
 
     private string filepath;
     public GameObject warriorPrefab;
+    private bool isSandbox;
 
     // singleton
     public static GridSaveLoader Instance = null; // for persistent
 
     public void Awake() {
         CheckSingleton();
-        filepath = Application.persistentDataPath + $"/start-level-grid.json";
+        // filepath = Application.persistentDataPath + $"/start-level-grid.json";
+        // rest of initialization happens in start
     }
 
     public void CheckSingleton() {
@@ -23,6 +25,21 @@ public class GridSaveLoader : MonoBehaviour {
             return;
         }
         // Make this object stay around when switching scenes
+    }
+
+    public void Start() {
+        isSandbox = ProgressionController.Instance.currentLevel == 0;
+        if (isSandbox) {
+            filepath = Application.persistentDataPath + $"/sandbox_grid.json";
+            ResetGrid();
+        } else {
+            filepath = Application.persistentDataPath + $"/{ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].levelNumber}_grid.json";
+            if (ProgressionController.Instance.isLevelJustStarted) {
+                ProgressionController.Instance.SetLevelStarted();
+                SaveGridToJSON();
+                LoadGridFromLevelData();
+            }
+        }
     }
 
     public void SaveGridToJSON() {
@@ -50,6 +67,27 @@ public class GridSaveLoader : MonoBehaviour {
             LevelController.Instance.objectsOnGrid[warrior] = warriorOnGrid.pos;
         }
 
+    }
+
+    public void LoadGridFromLevelData() {
+        // units to preload are always enemies
+        foreach (WarriorOnGrid enemy in ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].enemyPlacementsList) {
+            Debug.Log("instantiating enemy from level data");
+            // instantiate into right position
+            GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)enemy.pos.x, (int)enemy.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
+            // set properties like in WarriorLevelThumbnail
+            LevelController.Instance.SetWarriorData(warrior, enemy.isEnemy, enemy.warriorIndex);
+            warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !enemy.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(enemy.warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(enemy.warriorIndex).spriteIndex].animatorController;
+            // add object to grid object dict
+            LevelController.Instance.objectsOnGrid[warrior] = enemy.pos;
+        }
+    }
+
+    public void ResetGrid() {
+        string warriorsJSON = JsonUtility.ToJson(new GridWithObjects());
+        System.IO.File.WriteAllText(filepath, warriorsJSON);
+        Debug.Log("saving json at " + filepath);
+        SaveGridToJSON();
     }
 
 }

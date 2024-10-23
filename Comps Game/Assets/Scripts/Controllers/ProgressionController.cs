@@ -10,7 +10,8 @@ public class ProgressionController : MonoBehaviour {
     [SerializeField] public int currentLevel; // 0 is sandbox
 
     [Header("Save/Load")]
-    [SerializeField] public PlayerProgressionAndSettings playerProgressionAndSettings;
+    // [SerializeField] public PlayerProgressionAndSettings playerProgressionAndSettings;
+    [SerializeField] public bool isLevelJustStarted;
 
 
     public static ProgressionController Instance = null; // for persistent
@@ -33,30 +34,42 @@ public class ProgressionController : MonoBehaviour {
 
     public void InitializeSavedData() {
         FindJSON();
-        continueLevelFrom = playerProgressionAndSettings.continueLevelFrom;
     }
 
     public bool FindJSON() { // meant to be used for initialization
         string filepath = Application.persistentDataPath + $"/player_progression_and_settings.json";
+        PlayerProgressionAndSettings playerProgressionAndSettings;
         if (System.IO.File.Exists(filepath)) {
             string json = System.IO.File.ReadAllText(filepath);
             playerProgressionAndSettings = JsonUtility.FromJson<PlayerProgressionAndSettings>(json);
-            Debug.Log("Player Save Data file fxists!");
+            continueLevelFrom = playerProgressionAndSettings.continueLevelFrom;
+            Debug.Log("Player Save Data file exists!");
             return true;
         }
         Debug.Log("Player Save Data file doesn't exist. Creating a new file.");
-        playerProgressionAndSettings.continueLevelFrom = 0;
-        this.UpdateJSON();
+        playerProgressionAndSettings.continueLevelFrom = -1;
+        continueLevelFrom = playerProgressionAndSettings.continueLevelFrom;
+        this.SaveProgressToJson();
         return false;
     }
 
-    public void UpdateJSON() {
+    public void SaveProgressToJson() {
         string filePath = Application.persistentDataPath + $"/player_progression_and_settings.json";
-        string saveDataJSON = JsonUtility.ToJson(playerProgressionAndSettings);
+        string saveDataJSON = JsonUtility.ToJson(new PlayerProgressionAndSettings(continueLevelFrom));
         System.IO.File.WriteAllText(filePath, saveDataJSON);
         Debug.Log("saving json at " + filePath);
     }
 
+    public void StartNewLevel(int newLevel) {
+        continueLevelFrom = newLevel;
+        currentLevel = newLevel;
+        isLevelJustStarted = true;
+        SaveProgressToJson();
+    }
+
+    public void SetLevelStarted() {
+        isLevelJustStarted = false;
+    }
 }
 
 [System.Serializable]

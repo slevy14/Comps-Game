@@ -12,11 +12,6 @@ public class WarriorListController : MonoBehaviour {
     public void Awake() {
         CheckSingleton();
         warriorListWrapper = new WarriorListWrapper();
-        if (SceneController.Instance.GetCurrentSceneName() == "Sandbox") {
-            FindJSON("sandbox_warriors");
-        } else {
-            FindJSON("level_warriors");
-        }
     }
 
     public void CheckSingleton() {
@@ -33,6 +28,16 @@ public class WarriorListController : MonoBehaviour {
         }
         // Make this object stay around when switching scenes
         DontDestroyOnLoad(this.gameObject);
+    }
+
+    void Start() {
+        Debug.Log("current level is " + ProgressionController.Instance.currentLevel);
+        if (ProgressionController.Instance.currentLevel == 0) {
+            FindJSON("sandbox_warriors");
+        } else {
+            FindJSON("level_warriors");
+        }
+        Debug.Log("there are " + GetCount() + " warriors to add to drawer");
     }
 
     public void FindJSON(string warriorsFile) { // meant to be used for initialization

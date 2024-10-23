@@ -27,7 +27,7 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void FindJSON() { // meant to be used for initialization
-        string filepath = Application.persistentDataPath + $"/all_enemies.json";
+        string filepath = Application.persistentDataPath + $"/ALL_ENEMIES.json";
         if (System.IO.File.Exists(filepath)) {
             string json = System.IO.File.ReadAllText(filepath);
             enemyListWrapper = JsonUtility.FromJson<EnemyListWrapper>(json);
@@ -39,7 +39,7 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void UpdateJSON() {
-        string filePath = Application.persistentDataPath + $"/all_enemies.json";
+        string filePath = Application.persistentDataPath + $"/ALL_ENEMIES.json";
         string warriorsJSON = JsonUtility.ToJson(enemyListWrapper);
         System.IO.File.WriteAllText(filePath, warriorsJSON);
         Debug.Log("saving json at " + filePath);
