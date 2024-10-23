@@ -10,7 +10,7 @@ public class DesignerController : MonoBehaviour {
 
     [Header("Meta")]
     [SerializeField] private bool DEBUG_MODE; // set in inspector
-    [SerializeField] private bool isSandbox;
+    [SerializeField] public bool isSandbox;
 
     [Space(20)]
 
@@ -298,7 +298,11 @@ public class DesignerController : MonoBehaviour {
             UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
             if (!isLoadingWarriorEnemy) {
                 UpdateWarriorDrawerThumbnail(editingIndex);
-                warriorListController.FindJSON(); // reload json file
+                if (isSandbox) {
+                    warriorListController.FindJSON("sandbox_warriors"); // reload json file
+                } else {
+                    warriorListController.FindJSON("level_warriors");
+                }
             } else {
                 UpdateEnemyDrawerThumbnail(editingIndex);
                 enemyListController.FindJSON();
@@ -1025,7 +1029,11 @@ public class DesignerController : MonoBehaviour {
         LoadWarriorToWhiteboard(editingIndex-1, true, false);
         DebugGetThumbnailData();
 
-        warriorListController.FindJSON(); // reload json file
+        if (isSandbox) {
+            warriorListController.FindJSON("sandbox_warriors"); // reload json file
+        } else {
+            warriorListController.UpdateJSON("level_warriors");
+        }
     }
 
 }

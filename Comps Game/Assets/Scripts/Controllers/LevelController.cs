@@ -10,6 +10,7 @@ public class LevelController : MonoBehaviour {
 
     [Header("SAVE/LOAD")]
     [SerializeField] private WarriorListController warriorListController; 
+    [SerializeField] private bool isSandbox;
 
     [Header("REFERENCES")]
     [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
@@ -66,6 +67,7 @@ public class LevelController : MonoBehaviour {
     void Awake() {
         CheckSingleton();
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
+        isSandbox = SceneController.Instance.GetCurrentSceneName() == "Sandbox" ? true : false;
         HideStatsPanel();
         ToggleResetButton(false);
         TogglePauseButton(false);
@@ -76,7 +78,12 @@ public class LevelController : MonoBehaviour {
             warriorListController = WarriorListController.Instance;
         }
         LoadWarriorDrawer();
-        LoadEnemyDrawer();
+
+        if (isSandbox) {
+            LoadEnemyDrawer();
+        } else {
+            enemiesDrawer.SetActive(false);
+        }
 
         // LoadSavedGrid();
     }

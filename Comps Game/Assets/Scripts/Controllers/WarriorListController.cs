@@ -12,7 +12,11 @@ public class WarriorListController : MonoBehaviour {
     public void Awake() {
         CheckSingleton();
         warriorListWrapper = new WarriorListWrapper();
-        FindJSON();
+        if (SceneController.Instance.GetCurrentSceneName() == "Sandbox") {
+            FindJSON("sandbox_warriors");
+        } else {
+            FindJSON("level_warriors");
+        }
     }
 
     public void CheckSingleton() {
@@ -31,8 +35,8 @@ public class WarriorListController : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void FindJSON() { // meant to be used for initialization
-        string filepath = Application.persistentDataPath + $"/warriors.json";
+    public void FindJSON(string warriorsFile) { // meant to be used for initialization
+        string filepath = Application.persistentDataPath + $"/{warriorsFile}.json";
         if (System.IO.File.Exists(filepath)) {
             string json = System.IO.File.ReadAllText(filepath);
             warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
@@ -43,8 +47,8 @@ public class WarriorListController : MonoBehaviour {
         AddWarrior(0, new WarriorFunctionalityData());
     }
 
-    public void UpdateJSON() {
-        string filePath = Application.persistentDataPath + $"/warriors.json";
+    public void UpdateJSON(string warriorsFile) {
+        string filePath = Application.persistentDataPath + $"/{warriorsFile}.json";
         string warriorsJSON = JsonUtility.ToJson(warriorListWrapper);
         System.IO.File.WriteAllText(filePath, warriorsJSON);
         Debug.Log("saving json at " + filePath);
@@ -56,7 +60,12 @@ public class WarriorListController : MonoBehaviour {
         } else { // editing an existing warrior
             warriorListWrapper.warriorList[index] = warriorData;
         }
-        UpdateJSON();
+
+        if (DesignerController.Instance.isSandbox) {
+            UpdateJSON("sandbox_warriors");
+        } else {
+            UpdateJSON("level_warriors");
+        }
     }
 
     public void RemoveWarrior(int index) {

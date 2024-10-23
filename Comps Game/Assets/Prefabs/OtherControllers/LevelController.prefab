@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4717900876311487353
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7971607591515798844}
+  - component: {fileID: 8513796534954702401}
+  m_Layer: 0
+  m_Name: LevelController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7971607591515798844
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717900876311487353}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8513796534954702401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4717900876311487353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec8a61149d3e4b4aa16cadc8e3c0bc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warriorListController: {fileID: 0}
+  isSandbox: 0
+  statsPanel: {fileID: 0}
+  warriorsContainer: {fileID: 0}
+  warriorDrawer: {fileID: 0}
+  enemiesDrawer: {fileID: 0}
+  resetButton: {fileID: 0}
+  pauseButton: {fileID: 0}
+  warriorThumbnailPrefab: {fileID: 2618148630434642962, guid: 665173e7412c54b8fb2a1a8bf0acd013, type: 3}
+  spriteDataList:
+  - spriteName: 
+    sprite: {fileID: 1872999392, guid: 849e8cb3d37d643f18b06ca2e7710e92, type: 3}
+    animatorController: {fileID: 0}
+  - spriteName: 
+    sprite: {fileID: 892689537, guid: 33eb14522c3d8488c80ad906faa202ae, type: 3}
+    animatorController: {fileID: 0}
+  - spriteName: 
+    sprite: {fileID: -2104065788, guid: c63b7cacf9f3643ff9066fbca67c48fe, type: 3}
+    animatorController: {fileID: 0}
+  - spriteName: 
+    sprite: {fileID: -206209405, guid: dd12b08cff8e54ef6979f35c7e958269, type: 3}
+    animatorController: {fileID: 0}
+  - spriteName: 
+    sprite: {fileID: 238590231, guid: b1c95510b1dee492ab816c48b0bff9fd, type: 3}
+    animatorController: {fileID: 0}
+  spriteDataIndex: 0
+  propertyBlocks: []
+  behaviorBlocks: []
+  editingIndex: 0
+  allWarriorsList: []
+  yourWarriorsList: []
+  enemyWarriorsList: []
+  battleSpeed: 1
+  maxTurns: 50
+  battleFinished: 0
+  inBattle: 0
+  isPaused: 0
