@@ -9,6 +9,7 @@ public class WarriorEditorThumbnail : MonoBehaviour, IPointerDownHandler {
     public WarriorListController warriorListController;
     public DesignerController designerController;
     public int warriorIndex;
+    public int thumbnailIndex;
 
     public bool isEnemy = false;
 
@@ -22,7 +23,7 @@ public class WarriorEditorThumbnail : MonoBehaviour, IPointerDownHandler {
     public void OnPointerDown(PointerEventData eventData) {
         if (SceneManager.GetActiveScene().name == "CodeEditor") {            
             // designerController.LoadWarriorToWhiteboard(warriorIndex, false);
-            designerController.ShowSavePrompt(warriorIndex, isEnemy);
+            designerController.ShowSavePrompt(warriorIndex, thumbnailIndex, isEnemy);
         }
     }
 

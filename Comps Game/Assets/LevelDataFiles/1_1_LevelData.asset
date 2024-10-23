@@ -19,7 +19,7 @@ MonoBehaviour:
   - pos: {x: 0, y: 0}
     warriorIndex: 0
     isEnemy: 1
-  availablePropertiesIndices: 000000000100000002000000
+  availablePropertiesIndices: 010000000200000006000000
   availableBehaviorsIndices: 0d00000005000000
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
@@ -27,4 +27,5 @@ MonoBehaviour:
   maxBlocks: 1000
   actionPoints: 1000
   maxWarriorsToPlace: 5
-  tutorialDialog: []
+  battleTutorialDialog: []
+  editorTutorialDialog: []

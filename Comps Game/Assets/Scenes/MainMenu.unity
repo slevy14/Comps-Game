@@ -2820,14 +2820,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ProgressionController
       objectReference: {fileID: 0}
-    - target: {fileID: 6487718132313918813, guid: 74dfbf612b7274f2e8b9a65fffc7b347, type: 3}
-      propertyPath: levelDataList.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 6487718132313918813, guid: 74dfbf612b7274f2e8b9a65fffc7b347, type: 3}
-      propertyPath: levelDataList.Array.data[2]
-      value: 
-      objectReference: {fileID: 11400000, guid: 1c08d073f0f694091a096f6336a2a76a, type: 2}
     - target: {fileID: 7734752256897410922, guid: 74dfbf612b7274f2e8b9a65fffc7b347, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

@@ -19,10 +19,12 @@ public class DesignerController : MonoBehaviour {
     // [SerializeField] private WarriorListController warriorListController;
     // [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
+    [SerializeField] private int warriorToLoadThumbnailIndex;
     [SerializeField] private bool isLoadingWarriorEnemy = false;
     [SerializeField] private bool isCurrentWarriorEnemy = false;
     [SerializeField] public bool justSaved;
-    [SerializeField] private int editingIndex;
+    [SerializeField] private int editingWarriorIndex;
+    [SerializeField] private int editingThumbnailIndex;
 
 
     [Space(20)]
@@ -86,9 +88,10 @@ public class DesignerController : MonoBehaviour {
         // }
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
         LoadWarriorDrawer();
-        LoadWarriorToWhiteboard(editingIndex, true, false);
-
+        LoadWarriorToWhiteboard(editingWarriorIndex, editingWarriorIndex, true, false);
         LoadEnemyDrawer();
+
+        InitializeBlocksDrawer();
 
         InitializeLevelSwitchButton();
     }
@@ -143,8 +146,9 @@ public class DesignerController : MonoBehaviour {
     }
 
     // switch save confirm buttons
-    public void ShowSavePrompt(int warriorIndex, bool isEnemy) {
+    public void ShowSavePrompt(int warriorIndex, int thumbnailIndex, bool isEnemy) {
         warriorToLoadIndex = warriorIndex;
+        warriorToLoadThumbnailIndex = thumbnailIndex;
         isLoadingWarriorEnemy = isEnemy;
         if (justSaved) {
             NoSaveSwitch();
@@ -160,14 +164,14 @@ public class DesignerController : MonoBehaviour {
     public void SaveAndSwitch() {
         // check for errors before saving!
         if (SaveWarrior()) {
-            LoadWarriorToWhiteboard(warriorToLoadIndex, true, isLoadingWarriorEnemy);
+            LoadWarriorToWhiteboard(warriorToLoadIndex, warriorToLoadThumbnailIndex, true, isLoadingWarriorEnemy);
         } else {
             Debug.Log("saving error! couldn't switch");
         }
     }
 
     public void NoSaveSwitch() {
-        LoadWarriorToWhiteboard(warriorToLoadIndex, true, isLoadingWarriorEnemy);
+        LoadWarriorToWhiteboard(warriorToLoadIndex, warriorToLoadThumbnailIndex, true, isLoadingWarriorEnemy);
     }
 
     public void SaveWarriorWrapper() {
@@ -185,7 +189,7 @@ public class DesignerController : MonoBehaviour {
         // save active warrior first, just in case
         SaveWarrior();
         // get index
-        editingIndex = WarriorListController.Instance.GetCount();
+        editingWarriorIndex = WarriorListController.Instance.GetCount();
         // reset name display
         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname]";
         // reset dropdown
@@ -279,10 +283,12 @@ public class DesignerController : MonoBehaviour {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
         // update sprite
+        Debug.Log("warrior index: " + warriorIndex + ", thumbnail index: " + thumbnailIndex);
         GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
         thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = warriorIndex;
+        thumbnail.GetComponent<WarriorEditorThumbnail>().thumbnailIndex = thumbnailIndex;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
 
@@ -291,7 +297,7 @@ public class DesignerController : MonoBehaviour {
 
     public void InitializeWarrior() {
         justSaved = true;
-        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
+        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingWarriorIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
         _WarriorFunctionalityData.properties = ParseProperties();
@@ -300,13 +306,13 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         // SaveIntoJSON(_WarriorFunctionalityData);
         UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
-        AddWarriorToDrawer(editingIndex);
+        AddWarriorToDrawer(editingWarriorIndex);
     }
 
 
     // Saving
     public bool SaveWarrior() {
-        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingIndex);
+        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingWarriorIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
         _WarriorFunctionalityData.properties = ParseProperties();
@@ -320,14 +326,14 @@ public class DesignerController : MonoBehaviour {
             // SaveIntoJSON(_WarriorFunctionalityData);
             UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
             if (!isLoadingWarriorEnemy) {
-                UpdateWarriorDrawerThumbnail(editingIndex);
+                UpdateWarriorDrawerThumbnail(editingWarriorIndex);
                 if (isSandbox) {
                     WarriorListController.Instance.FindJSON("sandbox_warriors"); // reload json file
                 } else {
                     WarriorListController.Instance.FindJSON("level_warriors");
                 }
             } else {
-                UpdateEnemyDrawerThumbnail(editingIndex, editingIndex);
+                UpdateEnemyDrawerThumbnail(editingWarriorIndex, editingThumbnailIndex);
                 EnemyListController.Instance.FindJSON();
             }
             return true;
@@ -362,6 +368,86 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    // Loading blocks
+    public void InitializeBlocksDrawer() {
+        // only need to do this if we're in a level
+        if (isSandbox) {
+            return;
+        }
+
+        Transform blocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0);
+        ClearAllChildren(blocksContainer);
+
+        List<int> propertyIndices = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availablePropertiesIndices;
+        // need to process behaviors differently because functional and behaviors combined
+        List<int> behaviorIndices = SplitBehaviorsAndFunctional(ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availableBehaviorsIndices, true);
+        List<int> functionalIndices = SplitBehaviorsAndFunctional(ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availableBehaviorsIndices, false);
+
+        // ADD ALL BLOCKS
+        // add headers and spacers for each set of blocks
+        // add additional spacers after set if needed
+        GameObject propertiesSectionHeader = Instantiate(sectionHeader, blocksContainer);
+        propertiesSectionHeader.GetComponent<TMP_Text>().text = "PROPERTIES:";
+        Instantiate(spacer, blocksContainer);
+        foreach (int index in propertyIndices) {
+            Instantiate(propertyBlocks[index], blocksContainer);
+        }
+        if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+            Instantiate(spacer, blocksContainer);
+        }
+
+        GameObject behaviorsSectionHeader = Instantiate(sectionHeader, blocksContainer);
+        behaviorsSectionHeader.GetComponent<TMP_Text>().text = "BEHAVIORS:";
+        Instantiate(spacer, blocksContainer);
+        foreach (int index in behaviorIndices) {
+            Instantiate(behaviorBlocks[index], blocksContainer);
+        }
+        if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+            Instantiate(spacer, blocksContainer);
+        }
+
+        if (functionalIndices.Count != 0 ) { // early levels don't have functional, hide from player
+            GameObject functionalSectionHeader = Instantiate(sectionHeader, blocksContainer);
+            functionalSectionHeader.GetComponent<TMP_Text>().text = "FUNCTIONAL:";
+            Instantiate(spacer, blocksContainer);
+            foreach (int index in functionalIndices) {
+                Instantiate(behaviorBlocks[index], blocksContainer);
+            }
+            if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+                Instantiate(spacer, blocksContainer);
+            }
+        }
+
+    }
+
+    public void ClearAllChildren(Transform parent) {
+        foreach (Transform child in parent.transform) {
+            Destroy(child.gameObject);
+        }
+    }
+
+    public List<int> SplitBehaviorsAndFunctional(List<int> combinedList, bool isBehaviors) {
+        List<int> functionalIndices = new List<int> {7, 8, 9, 10, 11, 12};
+        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
+
+        List<int> splitList = new();
+
+        if (isBehaviors) {
+            for (int i = 0; i < combinedList.Count; i++) {
+                if (behaviorIndices.Contains(combinedList[i])) {
+                    splitList.Add(combinedList[i]);
+                }
+            }
+        } else { // functional
+            for (int i = 0; i < combinedList.Count; i++) {
+                if (functionalIndices.Contains(combinedList[i])) {
+                    splitList.Add(combinedList[i]);
+                }
+            }
+        }
+        return splitList;
+    }
+
     // Error Checking
     public List<string> CheckSaveErrors(WarriorFunctionalityData warriorFunctionalityData) {
         // return true if no errors
@@ -375,6 +461,8 @@ public class DesignerController : MonoBehaviour {
         if (!CheckForHealth()) {
             errorsToOutput.Add("no health! warrior will die immediately :(");
         }
+
+        // FIXME: No missing targets
         
         // no unclosed loops/conditionals
             // can check this by seeing if there are any ignores left when parsing loops/conditionals
@@ -391,21 +479,22 @@ public class DesignerController : MonoBehaviour {
     }
 
     // Loading
-    public void LoadWarriorToWhiteboard(int index, bool noSave, bool isLoadingEnemy) { 
+    public void LoadWarriorToWhiteboard(int indexToLoad, int thumbnailIndex, bool noSave, bool isLoadingEnemy) { 
         if (!noSave) {
             // save previous warrior and clear whiteboard
             SaveWarrior();
         }
         ClearWhiteboard();
         // update index and load sprite
-        editingIndex = index;
+        editingWarriorIndex = indexToLoad;
+        editingThumbnailIndex = thumbnailIndex;
         // get data for warrior from list and load sprite
         WarriorFunctionalityData warriorData = new WarriorFunctionalityData();
 
         if (!isLoadingEnemy) {
-            warriorData = WarriorListController.Instance.GetWarriorAtIndex(index);
+            warriorData = WarriorListController.Instance.GetWarriorAtIndex(indexToLoad);
         } else { // ENEMY
-            warriorData = EnemyListController.Instance.GetWarriorAtIndex(index);
+            warriorData = EnemyListController.Instance.GetWarriorAtIndex(indexToLoad);
         }
 
         if (!dropdown.gameObject.activeSelf) {
@@ -1035,7 +1124,7 @@ public class DesignerController : MonoBehaviour {
     private IEnumerator RemoveWarriorsDelay() {
         // remove warrior from list
         // renumber indices within list
-        WarriorListController.Instance.RemoveWarrior(editingIndex);
+        WarriorListController.Instance.RemoveWarrior(editingWarriorIndex);
         yield return new WaitForSeconds(.01f);
         // clear warrior drawer
         RemoveAllWarriorsFromDrawer();
@@ -1049,7 +1138,7 @@ public class DesignerController : MonoBehaviour {
         }
         // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
         LoadWarriorDrawer();
-        LoadWarriorToWhiteboard(editingIndex-1, true, false);
+        LoadWarriorToWhiteboard(editingWarriorIndex-1, editingWarriorIndex-1, true, false);
         DebugGetThumbnailData();
 
         if (isSandbox) {

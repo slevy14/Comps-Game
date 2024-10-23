@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
-  m_Name: 1_2_LevelData
+  m_Name: 1_3_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 2
-  levelNumber: 2
-  availableEnemyIndices: 00000000
+  levelName: Level 3
+  levelNumber: 3
+  availableEnemyIndices: 01000000
   enemyPlacementsList:
-  - pos: {x: 0, y: 0}
-    warriorIndex: 0
-    isEnemy: 1
   - pos: {x: 0, y: 2}
-    warriorIndex: 0
+    warriorIndex: 1
+    isEnemy: 1
+  - pos: {x: 0, y: 0}
+    warriorIndex: 1
     isEnemy: 1
   - pos: {x: 0, y: -1}
-    warriorIndex: 0
+    warriorIndex: 1
     isEnemy: 1
   - pos: {x: 0, y: -3}
-    warriorIndex: 0
+    warriorIndex: 1
     isEnemy: 1
-  availablePropertiesIndices: 010000000200000006000000
+  availablePropertiesIndices: 01000000020000000600000005000000
   availableBehaviorsIndices: 0d00000005000000
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
