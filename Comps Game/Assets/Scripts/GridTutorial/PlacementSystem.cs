@@ -68,8 +68,9 @@ public class PlacementSystem : MonoBehaviour {
                 isDrag = true;
                 GameObject warrior = WarriorClicked();
                 // Debug.Log("drag started at " + Time.time);
+
                 // dragging logic
-                if (warrior != null) {
+                if (warrior != null && (!warrior.GetComponent<WarriorBehavior>().isEnemy || ProgressionController.Instance.currentLevel == 0)) {
                     // Debug.Log(hit.collider.gameObject.name);
                     warrior.GetComponent<WarriorBehavior>().StartDrag();
                     // Debug.Log("started drag from placement");
