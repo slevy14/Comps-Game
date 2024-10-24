@@ -27,6 +27,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private float maxHealth;
     [SerializeField] public bool isAlive = true;
     [SerializeField] public bool isCurrentTurn;
+    [SerializeField] public int totalStrength;
 
     [Header("Conditionals/Looping")]
     private int MAX_INFINITY_COUNTER = 10;
@@ -135,12 +136,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         this.transform.localScale /= 1.5f;
     }
     
-
-
-    // Start is called before the first frame update
-    void Start() {
-    }
-
     // Update is called once per frame
     void Update() {
         // // DRAG
@@ -176,6 +171,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         useSpecialData = useSpecials;
 
         UpdateHealthDisplay();
+
+        totalStrength = CalculateTotalStrength();
     }
 
     public void UpdateHealthDisplay() {
@@ -184,6 +181,18 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public float GetProperty(BlockData.Property property) {
         return propertiesDict[property];
+    }
+
+    public int CalculateTotalStrength() {
+        // FORMULA:
+        // strength = attack*(range/2) + heal*(range/2) + projectilePower + maxHealth*(defense/(defense+maxHealth)) + speed/10
+        // (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
+        
+        float strength = propertiesDict[BlockData.Property.MELEE_ATTACK_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
+                         + propertiesDict[BlockData.Property.HEAL_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
+                         + maxHealth*(propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
+                         + propertiesDict[BlockData.Property.MOVE_SPEED]/10;
+        return (int)strength;
     }
 
 

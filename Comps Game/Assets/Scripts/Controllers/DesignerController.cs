@@ -463,6 +463,9 @@ public class DesignerController : MonoBehaviour {
         }
 
         // FIXME: No missing targets
+        if (!CheckTargetAssigned(warriorFunctionalityData)) {
+            errorsToOutput.Add("missing target! don't forget to assign a target!");
+        }
         
         // no unclosed loops/conditionals
             // can check this by seeing if there are any ignores left when parsing loops/conditionals
@@ -1098,6 +1101,38 @@ public class DesignerController : MonoBehaviour {
             }
         }
         return errorsList;
+    }
+
+    public bool CheckTargetAssigned(WarriorFunctionalityData warriorFunctionalityData) {
+        // loop through all behavior lists
+        // first, if find target, return true
+        // then, if find need target but target not assigned, return false
+        // end, return true by default
+        foreach (BlockDataStruct block in warriorFunctionalityData.moveFunctions) {
+            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+                return true;
+            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                // we only hit this case if we haven't already found a target
+                return false;
+            }
+        }
+        foreach (BlockDataStruct block in warriorFunctionalityData.useWeaponFunctions) {
+            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+                return true;
+            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                // we only hit this case if we haven't already found a target
+                return false;
+            }
+        }
+        foreach (BlockDataStruct block in warriorFunctionalityData.useSpecialFunctions) {
+            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+                return true;
+            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                // we only hit this case if we haven't already found a target
+                return false;
+            }
+        }
+        return true;
     }
 
     // Deleting
