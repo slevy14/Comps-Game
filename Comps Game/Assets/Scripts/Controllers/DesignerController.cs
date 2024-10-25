@@ -545,226 +545,81 @@ public class DesignerController : MonoBehaviour {
         }
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
-        // repeat for move
-        currentBlock = moveHeaderObject;
-        foreach (BlockDataStruct block in warriorData.moveFunctions) {
-            // instantiate block parented to whiteboard
-            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
-            // call initialize block draggable
-            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
-            // update block data
-            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
-            newBlock.GetComponent<Draggable>().SetMaskable(true);
+        // CONDENSE BEHAVIOR LOADING
+        List<GameObject> headers = new List<GameObject> {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
+        List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
+        for (int i = 0; i < headers.Count; i++) {
+            currentBlock = headers[i];
+            foreach (BlockDataStruct block in behaviorLists[i]) {
+                // instantiate block parented to whiteboard
+                GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
+                // call initialize block draggable
+                newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
+                // update block data
+                newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
+                newBlock.GetComponent<Draggable>().SetMaskable(true);
 
-            switch (block.behavior) {
-                // no dropdowns
-                case BlockData.BehaviorType.MELEE_ATTACK:
-                case BlockData.BehaviorType.FIRE_PROJECTILE:
-                case BlockData.BehaviorType.ELSE:
-                case BlockData.BehaviorType.END_IF:
-                case BlockData.BehaviorType.END_LOOP:
-                    break;
-                // one dropdown
-                case BlockData.BehaviorType.TURN:
-                case BlockData.BehaviorType.STEP:
-                case BlockData.BehaviorType.RUN:
-                case BlockData.BehaviorType.TELEPORT:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // two dropdowns
-                case BlockData.BehaviorType.SET_TARGET:
-                case BlockData.BehaviorType.MELEE_SETTINGS:
-                case BlockData.BehaviorType.RANGED_SETTINGS:
-                case BlockData.BehaviorType.WHILE_LOOP:
-                case BlockData.BehaviorType.IF:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // three dropdowns
-                // input field
-                case BlockData.BehaviorType.FOR_LOOP:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
+                switch (block.behavior) {
+                    // no dropdowns
+                    case BlockData.BehaviorType.MELEE_ATTACK:
+                    case BlockData.BehaviorType.FIRE_PROJECTILE:
+                    case BlockData.BehaviorType.ELSE:
+                    case BlockData.BehaviorType.END_IF:
+                    case BlockData.BehaviorType.END_LOOP:
+                        break;
+                    // one dropdown
+                    case BlockData.BehaviorType.TURN:
+                    case BlockData.BehaviorType.STEP:
+                    case BlockData.BehaviorType.RUN:
+                    case BlockData.BehaviorType.TELEPORT:
+                        try {
+                            newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                        } catch (System.Exception) {
+                            Debug.Log("couldn't set value, likely an old warrior!");
+                        }
+                        break;
+                    // two dropdowns
+                    case BlockData.BehaviorType.SET_TARGET:
+                    case BlockData.BehaviorType.MELEE_SETTINGS:
+                    case BlockData.BehaviorType.RANGED_SETTINGS:
+                    case BlockData.BehaviorType.WHILE_LOOP:
+                    case BlockData.BehaviorType.IF:
+                        try {
+                            newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
+                            newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
+                        } catch (System.Exception) {
+                            Debug.Log("couldn't set value, likely an old warrior!");
+                        }
+                        break;
+                    // three dropdowns
+                    // input field
+                    case BlockData.BehaviorType.FOR_LOOP:
+                        try {
+                            newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                        } catch (System.Exception) {
+                            Debug.Log("couldn't set value, likely an old warrior!");
+                        }
+                        break;
+                }
+
+                currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
+                newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
+
+                // check if current block needs to adjust next block placement;
+                BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
+                bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
+                // Debug.Log(shiftOffsetBack);
+                if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
+                    // Debug.Log("need to shift back");
+                    newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
+                    // SetBlockOffset(true);
+                }
+
+                // update current block
+                currentBlock = newBlock;
             }
-
-            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
-            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
-
-            // check if current block needs to adjust next block placement;
-            BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
-            bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            // Debug.Log(shiftOffsetBack);
-            if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                // Debug.Log("need to shift back");
-                newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
-                // SetBlockOffset(true);
-            }
-
-            // update current block
-            currentBlock = newBlock;
+            headers[i].GetComponent<Draggable>().UpdateBlockPositions(headers[i], headers[i].transform.position);
         }
-        moveHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(moveHeaderObject, moveHeaderObject.transform.position);
-
-        // repeat for weapon
-        currentBlock = useWeaponHeaderObject;
-        foreach (BlockDataStruct block in warriorData.useWeaponFunctions) {
-            // instantiate block parented to whiteboard
-            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
-            // call initialize block draggable
-            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
-            // update block data
-            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
-            newBlock.GetComponent<Draggable>().SetMaskable(true);
-
-            switch (block.behavior) {
-                // no dropdowns
-                case BlockData.BehaviorType.MELEE_ATTACK:
-                case BlockData.BehaviorType.FIRE_PROJECTILE:
-                case BlockData.BehaviorType.ELSE:
-                case BlockData.BehaviorType.END_IF:
-                case BlockData.BehaviorType.END_LOOP:
-                    break;
-                // one dropdown
-                case BlockData.BehaviorType.TURN:
-                case BlockData.BehaviorType.STEP:
-                case BlockData.BehaviorType.RUN:
-                case BlockData.BehaviorType.TELEPORT:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // two dropdowns
-                case BlockData.BehaviorType.SET_TARGET:
-                case BlockData.BehaviorType.MELEE_SETTINGS:
-                case BlockData.BehaviorType.RANGED_SETTINGS:
-                case BlockData.BehaviorType.WHILE_LOOP:
-                case BlockData.BehaviorType.IF:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // three dropdowns
-                // input field
-                case BlockData.BehaviorType.FOR_LOOP:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-            }
-
-
-            // set current block.next to instantiated
-            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
-            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
-
-            // check if current block needs to adjust next block placement;
-            BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
-            bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            // Debug.Log(shiftOffsetBack);
-            if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                // Debug.Log("need to shift back");
-                newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
-                // SetBlockOffset(true);
-            }
-
-            // update current block
-            currentBlock = newBlock;
-        }
-        useWeaponHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(useWeaponHeaderObject, useWeaponHeaderObject.transform.position);
-
-        // repeat for special
-        currentBlock = useSpecialHeaderObject;
-        foreach (BlockDataStruct block in warriorData.useSpecialFunctions) {
-            // instantiate block parented to whiteboard
-            GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
-            // call initialize block draggable
-            newBlock.GetComponent<BlockListItem>().InitializeBlockDraggable();
-            // update block data
-            newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
-            newBlock.GetComponent<Draggable>().SetMaskable(true);
-
-
-            switch (block.behavior) {
-                // no dropdowns
-                case BlockData.BehaviorType.MELEE_ATTACK:
-                case BlockData.BehaviorType.FIRE_PROJECTILE:
-                case BlockData.BehaviorType.ELSE:
-                case BlockData.BehaviorType.END_IF:
-                case BlockData.BehaviorType.END_LOOP:
-                    break;
-                // one dropdown
-                case BlockData.BehaviorType.TURN:
-                case BlockData.BehaviorType.STEP:
-                case BlockData.BehaviorType.RUN:
-                case BlockData.BehaviorType.TELEPORT:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // two dropdowns
-                case BlockData.BehaviorType.SET_TARGET:
-                case BlockData.BehaviorType.MELEE_SETTINGS:
-                case BlockData.BehaviorType.RANGED_SETTINGS:
-                case BlockData.BehaviorType.WHILE_LOOP:
-                case BlockData.BehaviorType.IF:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[0], 2);
-                        newBlock.GetComponent<Draggable>().SetDropdownValue(block.values[1], 3);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-                // three dropdowns
-                // input field
-                case BlockData.BehaviorType.FOR_LOOP:
-                    try {
-                        newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
-                    } catch (System.Exception) {
-                        Debug.Log("couldn't set value, likely an old warrior!");
-                    }
-                    break;
-            }
-
-
-            // set current block.next to instantiated
-            currentBlock.GetComponent<Draggable>().SetNextBlock(newBlock);
-            newBlock.GetComponent<Draggable>().SetPrevBlock(currentBlock);
-
-            // check if current block needs to adjust next block placement;
-            BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
-            bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            // Debug.Log(shiftOffsetBack);
-            if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                // Debug.Log("need to shift back");
-                newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
-                // SetBlockOffset(true);
-            }
-
-            // update current block
-            currentBlock = newBlock;
-        }
-        useSpecialHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(useSpecialHeaderObject, useSpecialHeaderObject.transform.position);
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         // save warrior at end to make sure values are properly updated
