@@ -11,14 +11,16 @@ public class MeleeObjectBehavior : MonoBehaviour {
     void Awake() {
         zRot = 0;
         maxZRot = 180;
-        zStepPerFrame = 20f;
+        zStepPerFrame = 12f;
+        Debug.Log("created melee icon at" + Time.time);
     }
 
     void FixedUpdate() {
-        float rotAmt = zStepPerFrame / (1.01f - LevelController.Instance.battleSpeed);
+        float rotAmt = zStepPerFrame;
         transform.Rotate(new Vector3(0, 0,rotAmt));
         zRot += rotAmt;
         if (zRot > maxZRot) {
+            Debug.Log("destroyed melee icon at" + Time.time);
             Destroy(this.gameObject);
             // Debug.Log("destroying, " + zRot);
         }

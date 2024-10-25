@@ -460,16 +460,21 @@ public class DesignerController : MonoBehaviour {
         // THINGS TO CHECK:
         // must have name
         if (ParseName() == "noname") {
-            errorsToOutput.Add("missing name!");
+            errorsToOutput.Add("missing name! who is it??");
         }
         // must have health
         if (!CheckForHealth()) {
             errorsToOutput.Add("no health! warrior will die immediately :(");
         }
 
-        // FIXME: No missing targets
+        // No missing targets
         if (!CheckTargetAssigned(warriorFunctionalityData)) {
             errorsToOutput.Add("missing target! don't forget to assign a target!");
+        }
+
+        // if in level, not too many blocks
+        if (!isSandbox && !CheckUnderBehaviorLimit(warriorFunctionalityData)) {
+            errorsToOutput.Add("too many behaviors! stay under the limit!");
         }
         
         // no unclosed loops/conditionals
@@ -623,7 +628,10 @@ public class DesignerController : MonoBehaviour {
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         // save warrior at end to make sure values are properly updated
-        SaveWarrior();
+        if (!noSave) {
+            // save previous warrior and clear whiteboard
+            SaveWarrior();
+        }
     }
 
     public string ParseName() {
@@ -968,31 +976,56 @@ public class DesignerController : MonoBehaviour {
         // first, if find target, return true
         // then, if find need target but target not assigned, return false
         // end, return true by default
-        foreach (BlockDataStruct block in warriorFunctionalityData.moveFunctions) {
-            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-                return true;
-            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-                // we only hit this case if we haven't already found a target
-                return false;
+        List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorFunctionalityData.moveFunctions, warriorFunctionalityData.useWeaponFunctions, warriorFunctionalityData.useSpecialFunctions};
+        foreach (List<BlockDataStruct> behaviorList in behaviorLists) {
+            foreach (BlockDataStruct block in behaviorList) {
+                if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+                    return true;
+                } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+                    // we only hit this case if we haven't already found a target
+                    return false;
+                }
             }
         }
-        foreach (BlockDataStruct block in warriorFunctionalityData.useWeaponFunctions) {
-            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-                return true;
-            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-                // we only hit this case if we haven't already found a target
-                return false;
-            }
-        }
-        foreach (BlockDataStruct block in warriorFunctionalityData.useSpecialFunctions) {
-            if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-                return true;
-            } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-                // we only hit this case if we haven't already found a target
-                return false;
-            }
-        }
+        // foreach (BlockDataStruct block in warriorFunctionalityData.moveFunctions) {
+        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+        //         return true;
+        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+        //         // we only hit this case if we haven't already found a target
+        //         return false;
+        //     }
+        // }
+        // foreach (BlockDataStruct block in warriorFunctionalityData.useWeaponFunctions) {
+        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+        //         return true;
+        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+        //         // we only hit this case if we haven't already found a target
+        //         return false;
+        //     }
+        // }
+        // foreach (BlockDataStruct block in warriorFunctionalityData.useSpecialFunctions) {
+        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
+        //         return true;
+        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
+        //         // we only hit this case if we haven't already found a target
+        //         return false;
+        //     }
+        // }
         return true;
+    }
+
+    public bool CheckUnderBehaviorLimit(WarriorFunctionalityData warriorFunctionalityData) {
+        int count = 0;
+        List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorFunctionalityData.moveFunctions, warriorFunctionalityData.useWeaponFunctions, warriorFunctionalityData.useSpecialFunctions};
+        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
+        foreach (List<BlockDataStruct> behaviorList in behaviorLists) {
+            foreach (BlockDataStruct block in behaviorList) {
+                if (behaviorIndices.Contains((int)block.behavior)) {
+                    count += 1;
+                }
+            }
+        }
+        return count <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
     }
 
     // Deleting

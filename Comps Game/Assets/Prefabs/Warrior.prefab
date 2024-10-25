@@ -374,6 +374,7 @@ MonoBehaviour:
   maxHealth: 0
   isAlive: 1
   isCurrentTurn: 0
+  totalStrength: 0
   tilesToHitRelative: []
   meleePrefab: {fileID: 5954012884242161711, guid: c176829d3e14e4a00a017c8898163da5, type: 3}
   damageSprite: {fileID: 21300000, guid: bccceab7e3a09481d8918df01e851734, type: 3}
@@ -545,7 +546,7 @@ Transform:
   m_GameObject: {fileID: 6158185727221953444}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
-  m_LocalPosition: {x: 0, y: 2, z: 0}
+  m_LocalPosition: {x: 0, y: 2, z: -2}
   m_LocalScale: {x: 7.54, y: 7.54, z: 7.54}
   m_ConstrainProportionsScale: 1
   m_Children: []

@@ -500,7 +500,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
-                        GameObject icon = Instantiate(meleePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0)), transform.rotation, this.transform);
+                        Vector3 meleeIconPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0));
+                        meleeIconPlacement.z = -1; // keep on top
+                        GameObject icon = Instantiate(meleePrefab, meleeIconPlacement, transform.rotation, this.transform);
                         if (isMeleeHeal) {
                             icon.GetComponent<SpriteRenderer>().sprite = healSprite;
                         }
@@ -835,7 +837,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
 
                     // instantiate projectile
-                    GameObject projectile = Instantiate(projectilePrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0)), transform.rotation, this.transform);
+                    Vector3 projectileInitialPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0));
+                    projectileInitialPlacement.z = -1; // keep on top
+                    GameObject projectile = Instantiate(projectilePrefab, projectileInitialPlacement, transform.rotation, this.transform);
                     // set projectile target to current target
                     if (isRangedHeal) {
                         projectile.GetComponent<ProjectileBehavior>().InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);

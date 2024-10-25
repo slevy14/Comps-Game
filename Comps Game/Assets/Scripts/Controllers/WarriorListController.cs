@@ -66,7 +66,7 @@ public class WarriorListController : MonoBehaviour {
             warriorListWrapper.warriorList[index] = warriorData;
         }
 
-        if (DesignerController.Instance.isSandbox) {
+        if (ProgressionController.Instance.currentLevel == 0) {
             UpdateJSON("sandbox_warriors");
         } else {
             UpdateJSON("level_warriors");

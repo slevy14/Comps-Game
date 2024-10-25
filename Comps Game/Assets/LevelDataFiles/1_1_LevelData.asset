@@ -24,8 +24,8 @@ MonoBehaviour:
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
   maxTotalStrength: 1000
-  maxBlocks: 1000
-  actionPoints: 1000
+  maxBlocks: 3
+  actionPoints: 0
   maxWarriorsToPlace: 1
   battleTutorialDialog: []
   editorTutorialDialog: []

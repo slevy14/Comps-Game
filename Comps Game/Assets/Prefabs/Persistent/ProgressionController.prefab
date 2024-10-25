@@ -50,6 +50,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1c08d073f0f694091a096f6336a2a76a, type: 2}
   - {fileID: 11400000, guid: 0d5be2ebde16a46eba83925d580cc22d, type: 2}
   continueLevelFrom: 0
-  currentLevel: 0
+  currentLevel: -1
   isLevelJustStarted: 0
   madeListEdits: 0

@@ -649,22 +649,33 @@ public class LevelController : MonoBehaviour {
         }
         if (enemyWarriorsList.Count <= 0) {
             Debug.Log("you win!");
-            levelCompleteMenu.SetActive(true);
+            StartCoroutine(ShowEndResults(true, false));
         } else if (yourWarriorsList.Count <= 0) {
             Debug.Log("enemies win!");
-            levelLostMenu.SetActive(true);
+            StartCoroutine(ShowEndResults(false, false));
         } else {
             Debug.Log("battle timed out");
+            StartCoroutine(ShowEndResults(false, true));
+        }
+        ToggleResetButton(true);
+        TogglePauseButton(false);
+        inBattle = false;
+    }
+
+    private IEnumerator ShowEndResults(bool battleWon, bool timedOut) {
+        yield return new WaitForSeconds(1.5f);
+        if (battleWon) {
+            levelCompleteMenu.SetActive(true);
+        } else {
             levelLostMenu.SetActive(true);
+        }
+        if (timedOut) {
             try {
                 levelLostMenu.transform.GetChild(1).GetComponent<TMP_Text>().text += "\n\n(battle timed out)";
             } catch (System.Exception) {
                 Debug.Log("no menu exists to add timeout");
             }
         }
-        ToggleResetButton(true);
-        TogglePauseButton(false);
-        inBattle = false;
     }
 
     public void CreateWarriorLists() {
