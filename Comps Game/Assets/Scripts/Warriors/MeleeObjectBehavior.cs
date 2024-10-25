@@ -11,11 +11,11 @@ public class MeleeObjectBehavior : MonoBehaviour {
     void Awake() {
         zRot = 0;
         maxZRot = 180;
-        zStepPerFrame = 12f;
+        zStepPerFrame = 20f;
     }
 
     void FixedUpdate() {
-        float rotAmt = zStepPerFrame * (3.1f-LevelController.Instance.battleSpeed);
+        float rotAmt = zStepPerFrame / (1.01f - LevelController.Instance.battleSpeed);
         transform.Rotate(new Vector3(0, 0,rotAmt));
         zRot += rotAmt;
         if (zRot > maxZRot) {

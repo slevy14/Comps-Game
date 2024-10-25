@@ -85,7 +85,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
         heading = new Vector2((int)1, (int)0);
         tilesToHitRelative = new List<Vector2>{new Vector2((int)1, (int)0), new Vector2((int)2, (int)0), new Vector2((int)1, (int)1), new Vector2((int)1, (int)-1), new Vector2((int)2, (int)1), new Vector2((int)2, (int)-1)};
-        animator.speed = 3.1f - LevelController.Instance.battleSpeed;
+        animator.speed = 2.01f - LevelController.Instance.battleSpeed;
     }
 
     public void SetIsEnemy() {
@@ -142,7 +142,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // if (isDragging) { // this allows dragging from worldspace
         //     transform.position = inputManager.GetSelectedMapPosition();
         // }
-        animator.speed = 3.1f - LevelController.Instance.battleSpeed;
+        animator.speed = 2.01f - LevelController.Instance.battleSpeed;
         
     }
 
@@ -496,7 +496,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         // deal damage to square
 
                     this.animator.SetTrigger("Attack");
-                    yield return new WaitForSeconds(LevelController.Instance.battleSpeed/2.5f);
+                    yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
 
                     foreach (Vector2 tile in adjustedList) {
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
@@ -1039,5 +1039,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         Debug.Log("ended death delay");
         // last, set game object active to false
         this.gameObject.SetActive(false);
+        yield return new WaitForSeconds(LevelController.Instance.battleSpeed + .3f);
     }
 }

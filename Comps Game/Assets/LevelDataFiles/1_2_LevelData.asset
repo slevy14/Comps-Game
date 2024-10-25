@@ -35,6 +35,6 @@ MonoBehaviour:
   maxTotalStrength: 1000
   maxBlocks: 1000
   actionPoints: 1000
-  maxWarriorsToPlace: 5
+  maxWarriorsToPlace: 4
   battleTutorialDialog: []
   editorTutorialDialog: []

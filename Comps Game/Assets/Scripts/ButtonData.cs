@@ -17,6 +17,17 @@ public class ButtonData : MonoBehaviour {
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
 
+    public void NextLevel() {
+        if (ProgressionController.Instance.continueLevelFrom + 1 >= ProgressionController.Instance.levelDataList.Count) { // load game end screen if all levels complete
+            SceneController.Instance.LoadSceneByName("GameEnd");
+            return;
+        }
+        ProgressionController.Instance.continueLevelFrom += 1;
+        ProgressionController.Instance.currentLevel = ProgressionController.Instance.continueLevelFrom;
+        ProgressionController.Instance.StartNewLevel(ProgressionController.Instance.currentLevel);
+        SceneController.Instance.LoadSceneByName("LevelScene");
+    }
+
     public void BackToLevel() {
         SceneController.Instance.LoadSceneByName("LevelScene");
     }

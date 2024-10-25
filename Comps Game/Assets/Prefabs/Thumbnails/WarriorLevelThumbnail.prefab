@@ -89,10 +89,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4703f40866e74bcf9fad3efedb6b6bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warriorListController: {fileID: 0}
   levelController: {fileID: 0}
   warriorIndex: 0
   warriorPrefab: {fileID: 5776567480984243591, guid: 894a2df4f9ced4f1dbe8ba98a4722262, type: 3}
+  isEnemy: 0
 --- !u!1 &3252323195197643385
 GameObject:
   m_ObjectHideFlags: 0

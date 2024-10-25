@@ -22,6 +22,8 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private GameObject enemiesDrawer;
     [SerializeField] private GameObject resetButton;
     [SerializeField] private GameObject pauseButton;
+    [SerializeField] private GameObject levelCompleteMenu;
+    [SerializeField] private GameObject levelLostMenu;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -70,6 +72,7 @@ public class LevelController : MonoBehaviour {
         HideStatsPanel();
         ToggleResetButton(false);
         TogglePauseButton(false);
+        // levelCompleteMenu.SetActive(false);
     }
 
     void Start() {
@@ -95,26 +98,6 @@ public class LevelController : MonoBehaviour {
         if (inBattle && (enemyWarriorsList.Count <= 0 || yourWarriorsList.Count <= 0)) {
             EndBattle();
         }
-    }
-
-    private void EndBattle() {
-        Debug.Log("battle over");
-        battleFinished = true;
-        // destroy all projectiles and melee indicators
-        GameObject[] icons = GameObject.FindGameObjectsWithTag("icon");
-        foreach (GameObject icon in icons) {
-            Destroy(icon);
-        }
-        if (enemyWarriorsList.Count <= 0) {
-            Debug.Log("you win!");
-        } else if (yourWarriorsList.Count <= 0) {
-            Debug.Log("enemies win!");
-        } else {
-            Debug.Log("battle timed out");
-        }
-        ToggleResetButton(true);
-        TogglePauseButton(false);
-        inBattle = false;
     }
 
     // DRAWERS
@@ -150,7 +133,7 @@ public class LevelController : MonoBehaviour {
     public void AddEnemyToDrawer(int index) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
-        enemyThumbnail.GetComponent<WarriorLevelThumbnail>().isEnemy = true;
+        enemyThumbnail.GetComponent<WarriorLevelThumbnail>().SetIsEnemy(true);
         UpdateEnemyDrawerThumbnail(index);
     }
 
@@ -596,7 +579,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
-        battleSpeed = 3.1f - newBattleSpeed;
+        battleSpeed = 1.01f - newBattleSpeed;
     }
 
     public void StartBattleWrapper() { // for the button
@@ -654,6 +637,34 @@ public class LevelController : MonoBehaviour {
             turnCounter += 1;
         }
         EndBattle();
+    }
+
+    private void EndBattle() {
+        Debug.Log("battle over");
+        battleFinished = true;
+        // destroy all projectiles and melee indicators
+        GameObject[] icons = GameObject.FindGameObjectsWithTag("icon");
+        foreach (GameObject icon in icons) {
+            Destroy(icon);
+        }
+        if (enemyWarriorsList.Count <= 0) {
+            Debug.Log("you win!");
+            levelCompleteMenu.SetActive(true);
+        } else if (yourWarriorsList.Count <= 0) {
+            Debug.Log("enemies win!");
+            levelLostMenu.SetActive(true);
+        } else {
+            Debug.Log("battle timed out");
+            levelLostMenu.SetActive(true);
+            try {
+                levelLostMenu.transform.GetChild(1).GetComponent<TMP_Text>().text += "\n\n(battle timed out)";
+            } catch (System.Exception) {
+                Debug.Log("no menu exists to add timeout");
+            }
+        }
+        ToggleResetButton(true);
+        TogglePauseButton(false);
+        inBattle = false;
     }
 
     public void CreateWarriorLists() {

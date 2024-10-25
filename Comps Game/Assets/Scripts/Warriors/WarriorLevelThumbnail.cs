@@ -40,6 +40,15 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
         LevelController.Instance.ShowStatsPanel(warriorIndex, warrior.GetComponent<WarriorBehavior>().isEnemy);
     }
 
+    public void SetIsEnemy(bool value) {
+        isEnemy = value;
+        if (isEnemy) {
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            Transform nameText = transform.GetChild(0).transform;
+            nameText.localScale = new Vector3(-nameText.localScale.x, nameText.localScale.y, nameText.localScale.z);
+        }
+    }
+
     public void OnDrag(PointerEventData eventData) {
 
     }
