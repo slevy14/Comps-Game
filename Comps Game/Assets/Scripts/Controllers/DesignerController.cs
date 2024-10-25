@@ -628,10 +628,7 @@ public class DesignerController : MonoBehaviour {
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         // save warrior at end to make sure values are properly updated
-        if (!noSave) {
-            // save previous warrior and clear whiteboard
-            SaveWarrior();
-        }
+        SaveWarrior();
     }
 
     public string ParseName() {

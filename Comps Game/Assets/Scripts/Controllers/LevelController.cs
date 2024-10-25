@@ -15,6 +15,7 @@ public class LevelController : MonoBehaviour {
     [Header("REFERENCES")]
     [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
     [SerializeField] private GameObject statsPanel;
+    [SerializeField] private GameObject levelInfoPanel;
     [SerializeField] private GameObject warriorsContainer;
 
     [Header("Objects")]
@@ -88,6 +89,9 @@ public class LevelController : MonoBehaviour {
             enemiesDrawer.SetActive(false);
         }
 
+        if (!isSandbox) {
+            SetLevelInfoPanel();
+        }
         // LoadSavedGrid();
     }
 
@@ -229,6 +233,14 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    // LEVEL INFO PANEL
+
+    public void SetLevelInfoPanel() {
+        levelInfoPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "Level " + ProgressionController.Instance.currentLevel + ":";
+        levelInfoPanel.transform.GetChild(1).GetComponent<TMP_Text>().text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].levelName;
+        levelInfoPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = "Max Warriors: " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace;
+        levelInfoPanel.transform.GetChild(3).GetComponent<TMP_Text>().text = "Max Strength: " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+    }
 
     // STATS PANEL
     public void ShowStatsPanel(int warriorIndex, bool isEnemy) {

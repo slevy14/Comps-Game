@@ -17,7 +17,7 @@ public class WarriorFunctionalityData {
 
 
     public WarriorFunctionalityData() { // set default values with constructor
-        warriorName = "noname";
+        warriorName = "knight";
 
         spriteIndex = 0;
 
