@@ -778,7 +778,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 788245013}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.54607356
+  m_Size: 0.5461962
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1560,10 +1560,12 @@ MonoBehaviour:
   DEBUG_MODE: 0
   isSandbox: 0
   warriorToLoadIndex: 0
+  warriorToLoadThumbnailIndex: 0
   isLoadingWarriorEnemy: 0
   isCurrentWarriorEnemy: 0
   justSaved: 0
-  editingIndex: 0
+  editingWarriorIndex: 0
+  editingThumbnailIndex: 0
   propertiesHeaderObject: {fileID: 259251794}
   moveHeaderObject: {fileID: 1159484487}
   useWeaponHeaderObject: {fileID: 777713129}
@@ -1731,7 +1733,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -4970,7 +4972,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 751866526}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.5151873
+  m_Size: 0.51526606
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8555,7 +8557,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00004283293}
+  m_AnchoredPosition: {x: 0, y: 645.918}
   m_SizeDelta: {x: 672.58, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1471602811
@@ -8678,8 +8680,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 158451983}
   m_HandleRect: {fileID: 158451982}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.5177122
+  m_Value: 0.000019748784
+  m_Size: 0.5179621
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10688,7 +10690,7 @@ MonoBehaviour:
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -13801,6 +13803,10 @@ PrefabInstance:
     - target: {fileID: 2713717046231159319, guid: 49cebee0ce04842458cd435706e4ba0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902551723543332639, guid: 49cebee0ce04842458cd435706e4ba0a, type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

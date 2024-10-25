@@ -675,7 +675,7 @@ public class LevelController : MonoBehaviour {
             Debug.Log("battle timed out");
             StartCoroutine(ShowEndResults(false, true));
         }
-        ToggleResetButton(true);
+        // ToggleResetButton(true);
         TogglePauseButton(false);
         inBattle = false;
     }
