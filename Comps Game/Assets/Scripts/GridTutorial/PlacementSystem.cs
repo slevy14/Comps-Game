@@ -113,7 +113,7 @@ public class PlacementSystem : MonoBehaviour {
                 currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
                 Vector2 gridPosVec2 = new Vector2(gridPosition.x, gridPosition.y);
                 int endIndex = 0; // figure out what collision, 0 if none
-                if (IsOverUI()) { // if over drawer, index 3
+                if (IsOverUI() || IsTooManyWarriors()) { // if over drawer or too many placed, index 3
                     endIndex = 3;
                 } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
@@ -169,6 +169,27 @@ public class PlacementSystem : MonoBehaviour {
             }
         }
         return raycastResults.Count > 0;
+    }
+
+    private bool IsTooManyWarriors() {
+        if (ProgressionController.Instance.currentLevel == 0) { // if sandbox, return false
+            return false;
+        }
+
+        int warriorCount = 0;
+        foreach (KeyValuePair<GameObject, Vector2> warriorObject in LevelController.Instance.objectsOnGrid) {
+            if (warriorObject.Key.tag == "warrior") {
+                warriorCount += 1;
+            }
+        }
+        Debug.Log("currently " + warriorCount + " warriors");
+        if (warriorCount < ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace) {
+            Debug.Log("there is space for warrior!");
+            return false;
+        }
+
+        Debug.Log("Too many warriors! you can only place " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace + " warriors");
+        return true;
     }
 
     private GameObject ThumbnailClicked() { // meant to be called only when a click occurs
