@@ -78,8 +78,9 @@ public class LevelController : MonoBehaviour {
     void Start() {
 
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
-        LoadWarriorFile();
+        StartCoroutine(LoadWarriorFileWrapper());
         LoadWarriorDrawer();
+        GridSaveLoader.Instance.InitializeGrid();
 
         if (isSandbox) {
             LoadEnemyDrawer();
@@ -90,8 +91,13 @@ public class LevelController : MonoBehaviour {
         // LoadSavedGrid();
     }
 
-    private void LoadWarriorFile() {
+    private IEnumerator LoadWarriorFile() {
         WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
+        yield return null;
+    }
+
+    private IEnumerator LoadWarriorFileWrapper() {
+        yield return StartCoroutine(LoadWarriorFile());
     }
 
     void Update() {
@@ -663,7 +669,7 @@ public class LevelController : MonoBehaviour {
     }
 
     private IEnumerator ShowEndResults(bool battleWon, bool timedOut) {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(ProgressionController.Instance.currentLevel == 0 ? 0.2f : 1.5f);
         if (battleWon) {
             levelCompleteMenu.SetActive(true);
         } else {

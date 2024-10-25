@@ -27,7 +27,7 @@ public class GridSaveLoader : MonoBehaviour {
         // Make this object stay around when switching scenes
     }
 
-    public void Start() {
+    public void InitializeGrid() {
         isSandbox = ProgressionController.Instance.currentLevel == 0;
         if (isSandbox) {
             filepath = Application.persistentDataPath + $"/sandbox_grid.json";
