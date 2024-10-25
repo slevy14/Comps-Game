@@ -87,6 +87,7 @@ public class DesignerController : MonoBehaviour {
         //     enemyListController = EnemyListController.Instance;
         // }
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
+        LoadWarriorFile();
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingWarriorIndex, editingWarriorIndex, true, false);
         LoadEnemyDrawer();
@@ -94,6 +95,10 @@ public class DesignerController : MonoBehaviour {
         InitializeBlocksDrawer();
 
         InitializeLevelSwitchButton();
+    }
+
+    private void LoadWarriorFile() {
+        WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
     }
 
     private void InitializeLevelSwitchButton() {

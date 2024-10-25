@@ -67,16 +67,15 @@ public class LevelController : MonoBehaviour {
     void Awake() {
         CheckSingleton();
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
-        isSandbox = SceneController.Instance.GetCurrentSceneName() == "Sandbox" ? true : false;
         HideStatsPanel();
         ToggleResetButton(false);
         TogglePauseButton(false);
     }
 
     void Start() {
-        // if (warriorListController == null) {
-        //     warriorListController = WarriorListController.Instance;
-        // }
+
+        isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
+        LoadWarriorFile();
         LoadWarriorDrawer();
 
         if (isSandbox) {
@@ -86,6 +85,10 @@ public class LevelController : MonoBehaviour {
         }
 
         // LoadSavedGrid();
+    }
+
+    private void LoadWarriorFile() {
+        WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
     }
 
     void Update() {
