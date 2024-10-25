@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ProgressionController : MonoBehaviour {
 
@@ -20,6 +21,13 @@ public class ProgressionController : MonoBehaviour {
     public void Awake() {
         CheckSingleton();
         InitializeSavedData();
+
+        // MOSTLY FOR DEBUG
+        if (SceneManager.GetActiveScene().name == "Sandbox") {
+            currentLevel = 0;
+        } else {
+            currentLevel = continueLevelFrom;
+        }
     }
 
     public void CheckSingleton() {

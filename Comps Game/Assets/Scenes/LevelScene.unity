@@ -5694,6 +5694,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 75800933}
   - {fileID: 214321405}
   - {fileID: 160699948}
   - {fileID: 1105107899}
@@ -5705,7 +5706,6 @@ RectTransform:
   - {fileID: 1733762022}
   - {fileID: 1033424001}
   - {fileID: 1374131941}
-  - {fileID: 75800933}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10250,6 +10250,10 @@ PrefabInstance:
       propertyPath: warriorDrawer
       value: 
       objectReference: {fileID: 214321404}
+    - target: {fileID: 8513796534954702401, guid: 176c782726a1b435e94c658620b5402e, type: 3}
+      propertyPath: levelInfoPanel
+      value: 
+      objectReference: {fileID: 75800932}
     - target: {fileID: 8513796534954702401, guid: 176c782726a1b435e94c658620b5402e, type: 3}
       propertyPath: levelCompleteMenu
       value: 
