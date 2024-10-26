@@ -421,6 +421,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else {
                         Debug.Log("either tile full or would move off map");
                     }
+                    AudioController.Instance.PlaySoundEffect("Footsteps");
                     break;
 
                 /*----------------*/
@@ -474,6 +475,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             break;
                         }
                     }
+                    AudioController.Instance.PlaySoundEffect("Teleport");
                     break;
 
                 /*--------------------*/
@@ -518,6 +520,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             }
                         }
                     }
+                    AudioController.Instance.PlaySoundEffect("Melee Attack");
                     break;
 
                 /*------------------*/
@@ -850,6 +853,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
                     // yield return projectile.GetComponent<ProjectileBehavior>().StartCoroutine(Move());
                     // doing damage handled on projectile object
+                    AudioController.Instance.PlaySoundEffect("Fire Projectile");
                     break;
             }
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && isCurrentTurn) {
@@ -1000,9 +1004,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             } else {
                 propertiesDict[BlockData.Property.HEALTH] += value;
             }
+            AudioController.Instance.PlaySoundEffect("Heal");
             Debug.Log("healed");
         } else {
             this.animator.SetTrigger("TakeDamage");
+            AudioController.Instance.PlaySoundEffect("Take damage");
             propertiesDict[BlockData.Property.HEALTH] -= DamageCalculator(value);
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && !isCurrentTurn) { // if it is current turn, delay death til end of action
                 Die();
@@ -1039,6 +1045,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public IEnumerator DeathDelay() {
         Debug.Log("started death delay");
         this.animator.SetTrigger("Die");
+        AudioController.Instance.PlaySoundEffect("Die");
         yield return new WaitForSeconds(LevelController.Instance.battleSpeed + .1f);
         Debug.Log("ended death delay");
         // last, set game object active to false

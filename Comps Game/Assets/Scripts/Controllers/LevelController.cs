@@ -199,6 +199,7 @@ public class LevelController : MonoBehaviour {
         LoadSavedGrid();
         ToggleResetButton(false);
         TogglePauseButton(false);
+        AudioController.Instance.PlaySoundEffect("Reset Battle");
     }
 
     public void PauseBattle() {
@@ -209,6 +210,7 @@ public class LevelController : MonoBehaviour {
             isPaused = false;
             pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Pause";
         }
+        AudioController.Instance.PlaySoundEffect("Pause Battle");
     }
 
     // Loading Warriors
@@ -606,6 +608,7 @@ public class LevelController : MonoBehaviour {
         } else if (battleFinished) {
             ResetGridButton();
         }
+        AudioController.Instance.PlaySoundEffect("Start Battle");
         StartCoroutine(StartBattle());
     }
 
@@ -684,10 +687,13 @@ public class LevelController : MonoBehaviour {
         yield return new WaitForSeconds(ProgressionController.Instance.currentLevel == 0 ? 0.2f : 1.5f);
         if (battleWon) {
             levelCompleteMenu.SetActive(true);
+            AudioController.Instance.PlaySoundEffect("Level Win");
         } else {
             levelLostMenu.SetActive(true);
+            AudioController.Instance.PlaySoundEffect("Level Lose");
         }
         if (timedOut) {
+            AudioController.Instance.PlaySoundEffect("Level Lose");
             try {
                 levelLostMenu.transform.GetChild(1).GetComponent<TMP_Text>().text += "\n\n(battle timed out)";
             } catch (System.Exception) {

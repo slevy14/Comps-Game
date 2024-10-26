@@ -37,9 +37,11 @@ public class SceneController : MonoBehaviour {
 
     public IEnumerator LoadSceneByNameCoroutine(string name) {
         GameObject.Find("TransitionCanvas").GetComponent<Animator>().SetTrigger("Start");
+        AudioController.Instance.PlaySoundEffect("Transition");
 
         yield return new WaitForSeconds(transitionTime);
 
+        AudioController.Instance.PlaySoundEffect("Transition");
         SceneManager.LoadScene(name);
     }
 

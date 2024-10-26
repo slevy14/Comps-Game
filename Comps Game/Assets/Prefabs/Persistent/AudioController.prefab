@@ -146,7 +146,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 5e17bda29b7094ee7a4ab389d511573e, type: 3}
   - name: Slider Adjust
     audioClip: {fileID: 8300000, guid: 62e44f99133ee45f48cc56353037b773, type: 3}
-  - name: Start Fight
+  - name: Start Battle
     audioClip: {fileID: 8300000, guid: 5e77dda9fbe7e4a4693e1c4df604f125, type: 3}
   - name: Block Pickup
     audioClip: {fileID: 8300000, guid: 25d23e33d09b94522b094e94f4e6786b, type: 3}
@@ -160,7 +160,7 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 18e6f05c103d740b0bf9b4aba186ebf2, type: 3}
   - name: Melee Attack
     audioClip: {fileID: 8300000, guid: 350cc78ace45341b2889b61445b82342, type: 3}
-  - name: Ranged Attack
+  - name: Fire Projectile
     audioClip: {fileID: 8300000, guid: f17f7aa8d397949dbb1948f8cd9fbd79, type: 3}
   - name: Heal
     audioClip: {fileID: 8300000, guid: 57364f41e2a494272b07500ee044ca6f, type: 3}
@@ -180,8 +180,10 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 26430e715b20e457caebab2b173c4ad7, type: 3}
   - name: Open Menu
     audioClip: {fileID: 8300000, guid: b24f03aa7742543e3b595d7684292156, type: 3}
-  - name: Restart Battle
+  - name: Reset Battle
     audioClip: {fileID: 8300000, guid: dc569b6e441cd47c3a2cacd326e8782b, type: 3}
+  - name: Die
+    audioClip: {fileID: 8300000, guid: 2dbd41cc840174f26aeb5984afc178ad, type: 3}
   BGMList:
   - name: Main Menu BGM
     audioClip: {fileID: 0}
