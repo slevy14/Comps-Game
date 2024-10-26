@@ -10,7 +10,7 @@ public class LevelController : MonoBehaviour {
 
     [Header("SAVE/LOAD")]
     // [SerializeField] private WarriorListController warriorListController; 
-    [SerializeField] private bool isSandbox;
+    [SerializeField] public bool isSandbox;
 
     [Header("REFERENCES")]
     [SerializeField] public Dictionary<GameObject, Vector2> objectsOnGrid;
@@ -600,6 +600,9 @@ public class LevelController : MonoBehaviour {
 
     public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
         battleSpeed = 1.01f - newBattleSpeed;
+
+        // Too loud and repeating lol. prob don't need if we have click effect
+        // AudioController.Instance.PlaySoundEffect("Slider Adjust");
     }
 
     public void StartBattleWrapper() { // for the button

@@ -117,6 +117,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
         // visuals
         this.transform.localScale *= 1.5f;
+
+        // audio
+        AudioController.Instance.PlaySoundEffect("Warrior Pickup");
     }
 
     public void EndDrag(int endIndex) { // index for switch
@@ -138,6 +141,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         GridSaveLoader.Instance.SaveGridToJSON();
         // visuals
         this.transform.localScale /= 1.5f;
+
+        // audio
+        AudioController.Instance.PlaySoundEffect("Warrior Drop");
     }
     
     // Update is called once per frame
@@ -1012,7 +1018,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             Debug.Log("healed");
         } else {
             this.animator.SetTrigger("TakeDamage");
-            AudioController.Instance.PlaySoundEffect("Take damage");
+            AudioController.Instance.PlaySoundEffect("Take Damage");
             propertiesDict[BlockData.Property.HEALTH] -= DamageCalculator(value);
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && !isCurrentTurn) { // if it is current turn, delay death til end of action
                 Die();

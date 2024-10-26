@@ -52,14 +52,17 @@ public class PlacementSystem : MonoBehaviour {
 
         if (tilemap.HasTile(gridPosition)) {
             cellIndicator.transform.position = tilemap.GetCellCenterWorld(gridPosition);
-            if (gridPosition.x < 0) {
-                cellIndicator.GetComponent<SpriteRenderer>().material.color = new Color(104f/255f, 124/255f, 241/255f, initialCellIndicatorColor.a*2);
+            if (LevelController.Instance.isSandbox) {
+                cellIndicator.GetComponent<SpriteRenderer>().material.color = initialCellIndicatorColor;
                 isPlayerSide = true;
-                Debug.Log("setting player color");
+            } else if (gridPosition.x < 0) {
+                cellIndicator.GetComponent<SpriteRenderer>().material.color = new Color(104f/255f, 104/255f, 241/255f, initialCellIndicatorColor.a*2);
+                isPlayerSide = true;
+                // Debug.Log("setting player color");
             } else {
                 cellIndicator.GetComponent<SpriteRenderer>().material.color = new Color(241/255f, 104/255f, 104/255f, initialCellIndicatorColor.a*2);
                 isPlayerSide = false;
-                Debug.Log("setting enemy color");
+                // Debug.Log("setting enemy color");
             }
             // mouseIndicator.transform.position = mousePosition;
         } else {
@@ -131,7 +134,7 @@ public class PlacementSystem : MonoBehaviour {
                     endIndex = 3;
                 } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
-                } else if (!tilemap.HasTile(gridPosition) || !isPlayerSide) { // if no tile or on wrong side, index 2
+                } else if (!tilemap.HasTile(gridPosition) || (!isPlayerSide && !LevelController.Instance.isSandbox)) { // if no tile or on wrong side, index 2
                     endIndex = 2;
                 } else {
                     LevelController.Instance.objectsOnGrid[currentDraggingObject] = gridPosVec2;
