@@ -1363,10 +1363,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioController
       objectReference: {fileID: 0}
-    - target: {fileID: 5436077634466516891, guid: 91dfcbda7e53a42539b4779cc5b3e04d, type: 3}
-      propertyPath: SFXList.Array.data[19].name
-      value: Reset Battle
-      objectReference: {fileID: 0}
     - target: {fileID: 7793208395522156930, guid: 91dfcbda7e53a42539b4779cc5b3e04d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

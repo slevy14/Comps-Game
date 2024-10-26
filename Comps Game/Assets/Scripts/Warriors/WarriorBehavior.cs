@@ -106,6 +106,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return;
         }
 
+        if (LevelController.Instance.objectsOnGrid.ContainsKey(this.gameObject)) {
+            LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
+        }
+
         // Debug.Log("started drag");
         isDragging = true;
         // save initial position

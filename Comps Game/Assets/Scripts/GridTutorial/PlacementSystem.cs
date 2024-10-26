@@ -8,6 +8,8 @@ public class PlacementSystem : MonoBehaviour {
 
     [Header("References")]
     [SerializeField] private GameObject cellIndicator;
+    private Color initialCellIndicatorColor;
+    private bool isPlayerSide;
     [SerializeField] private GameObject mouseIndicator;
     [SerializeField] private InputManager inputManager;
     [SerializeField] public Tilemap tilemap;
@@ -38,6 +40,8 @@ public class PlacementSystem : MonoBehaviour {
     void Awake() {
         CheckSingleton();
         // levelController = GameObject.Find("LevelController").GetComponent<LevelController>();
+        initialCellIndicatorColor = cellIndicator.GetComponent<SpriteRenderer>().color;
+
     }
 
     void Update() {
@@ -48,10 +52,20 @@ public class PlacementSystem : MonoBehaviour {
 
         if (tilemap.HasTile(gridPosition)) {
             cellIndicator.transform.position = tilemap.GetCellCenterWorld(gridPosition);
+            if (gridPosition.x < 0) {
+                cellIndicator.GetComponent<SpriteRenderer>().material.color = new Color(104f/255f, 124/255f, 241/255f, initialCellIndicatorColor.a*2);
+                isPlayerSide = true;
+                Debug.Log("setting player color");
+            } else {
+                cellIndicator.GetComponent<SpriteRenderer>().material.color = new Color(241/255f, 104/255f, 104/255f, initialCellIndicatorColor.a*2);
+                isPlayerSide = false;
+                Debug.Log("setting enemy color");
+            }
             // mouseIndicator.transform.position = mousePosition;
         } else {
             // Debug.Log("no tile at " + gridPosition);
             cellIndicator.transform.position = new Vector3(0f, 0f, 1f);
+            cellIndicator.GetComponent<SpriteRenderer>().material.color = initialCellIndicatorColor;
             // mouseIndicator.transform.position = new Vector3(0f, 0f, 1f);
         }
 
@@ -117,7 +131,7 @@ public class PlacementSystem : MonoBehaviour {
                     endIndex = 3;
                 } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
-                } else if (!tilemap.HasTile(gridPosition)) { // if no tile, index 2
+                } else if (!tilemap.HasTile(gridPosition) || !isPlayerSide) { // if no tile or on wrong side, index 2
                     endIndex = 2;
                 } else {
                     LevelController.Instance.objectsOnGrid[currentDraggingObject] = gridPosVec2;
