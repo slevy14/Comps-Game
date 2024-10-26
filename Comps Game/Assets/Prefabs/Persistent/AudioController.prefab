@@ -1,0 +1,196 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3790532387285504387
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7793208395522156930}
+  - component: {fileID: 4189215984706274160}
+  - component: {fileID: 5436077634466516891}
+  m_Layer: 0
+  m_Name: AudioController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7793208395522156930
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3790532387285504387}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &4189215984706274160
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3790532387285504387}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &5436077634466516891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3790532387285504387}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee380df3f76004863abe9977f045add4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SFXList:
+  - name: Click
+    audioClip: {fileID: 8300000, guid: 5e17bda29b7094ee7a4ab389d511573e, type: 3}
+  - name: Slider Adjust
+    audioClip: {fileID: 8300000, guid: 62e44f99133ee45f48cc56353037b773, type: 3}
+  - name: Start Fight
+    audioClip: {fileID: 8300000, guid: 5e77dda9fbe7e4a4693e1c4df604f125, type: 3}
+  - name: Block Pickup
+    audioClip: {fileID: 8300000, guid: 25d23e33d09b94522b094e94f4e6786b, type: 3}
+  - name: Block Drop
+    audioClip: {fileID: 8300000, guid: 2e955fe4e06e44e9393cd5ec36d26b0c, type: 3}
+  - name: Block Snap
+    audioClip: {fileID: 8300000, guid: 64a4a357117014d9eb0f825b69fd89ae, type: 3}
+  - name: Delete
+    audioClip: {fileID: 8300000, guid: 86644d45e646a47e9b293ccbc775c426, type: 3}
+  - name: Transition
+    audioClip: {fileID: 8300000, guid: 18e6f05c103d740b0bf9b4aba186ebf2, type: 3}
+  - name: Melee Attack
+    audioClip: {fileID: 8300000, guid: 350cc78ace45341b2889b61445b82342, type: 3}
+  - name: Ranged Attack
+    audioClip: {fileID: 8300000, guid: f17f7aa8d397949dbb1948f8cd9fbd79, type: 3}
+  - name: Heal
+    audioClip: {fileID: 8300000, guid: 57364f41e2a494272b07500ee044ca6f, type: 3}
+  - name: Take Damage
+    audioClip: {fileID: 8300000, guid: 4ca4ba4fb355b46029f00c8a8df9dd2f, type: 3}
+  - name: Footsteps
+    audioClip: {fileID: 8300000, guid: c412d2778302f4a209203a5268ebca8c, type: 3}
+  - name: Teleport
+    audioClip: {fileID: 8300000, guid: 55e7e61c4ea314f66bcd6102e620b633, type: 3}
+  - name: Level Win
+    audioClip: {fileID: 8300000, guid: 2cb2b1953dc7c4a6f95753d55523caa9, type: 3}
+  - name: Level Lose
+    audioClip: {fileID: 8300000, guid: f47bdfa17110a4087ad5b355af96550d, type: 3}
+  - name: Editing Error
+    audioClip: {fileID: 8300000, guid: 53fe874852fb2443ebde78371edfaf92, type: 3}
+  - name: Pause Battle
+    audioClip: {fileID: 8300000, guid: 26430e715b20e457caebab2b173c4ad7, type: 3}
+  - name: Open Menu
+    audioClip: {fileID: 8300000, guid: b24f03aa7742543e3b595d7684292156, type: 3}
+  - name: Restart Battle
+    audioClip: {fileID: 8300000, guid: dc569b6e441cd47c3a2cacd326e8782b, type: 3}
+  BGMList:
+  - name: Main Menu BGM
+    audioClip: {fileID: 0}
+  - name: Coding BGM
+    audioClip: {fileID: 0}
+  - name: World 1 BGM
+    audioClip: {fileID: 0}
+  - name: World 2 BGM
+    audioClip: {fileID: 0}
+  - name: World 3 BGM
+    audioClip: {fileID: 0}
+  audioSource: {fileID: 4189215984706274160}
