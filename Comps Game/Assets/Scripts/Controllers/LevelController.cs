@@ -50,7 +50,7 @@ public class LevelController : MonoBehaviour {
     public bool battleFinished = false;
     public bool inBattle = false;
     public bool isPaused = false;
-    private bool canResetFromPaused = false;
+    // private bool canResetFromPaused = false;
 
 
     // SINGLETON

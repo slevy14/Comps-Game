@@ -180,6 +180,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void SaveWarriorWrapper() {
+        AudioController.Instance.PlaySoundEffect("Save");
         SaveWarrior();
     }
 
@@ -1039,6 +1040,8 @@ public class DesignerController : MonoBehaviour {
     public void DeleteWarrior() {
         // hide object with permanent delete button
         deleteMenu.SetActive(false);
+
+        AudioController.Instance.PlaySoundEffect("Delete");
 
         StartCoroutine(RemoveWarriorsDelay());
 

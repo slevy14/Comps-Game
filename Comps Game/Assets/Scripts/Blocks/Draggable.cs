@@ -93,6 +93,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // } else {
             initialPos = transform.position;
         // }
+        AudioController.Instance.PlaySoundEffect("Block Pickup");
     }
 
     public void OnDrag(PointerEventData eventData) {
@@ -131,6 +132,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // Debug.Log("enddrag called");
 
             if (!onWhiteboard) {
+                AudioController.Instance.PlaySoundEffect("Delete");
                 DestroyStack(this.gameObject);
             }
 
@@ -139,6 +141,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
+                AudioController.Instance.PlaySoundEffect("Block Drop");
             }
 
             transform.SetParent(parentAfterDrag);
@@ -333,6 +336,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
                 // Debug.Log(this.prevBlock.name);
+                AudioController.Instance.PlaySoundEffect("Block Snap");
                 return true; // snapped 
             }
         }
