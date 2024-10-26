@@ -47,9 +47,11 @@ public class WarriorListController : MonoBehaviour {
             warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
             Debug.Log("Warriors File exists!");
             return;
+        } else {
+            Debug.Log("Enemies file doesn't exist. Pulling from asset files.");
+            string json = System.IO.File.ReadAllText("Assets/LevelDataFiles/ALL_WARRIORS_DEFAULT.json");
+            warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
         }
-        Debug.Log("Warriors file doesn't exist. Creating a new file.");
-        AddWarrior(0, new WarriorFunctionalityData());
     }
 
     public void UpdateJSON(string warriorsFile) {
