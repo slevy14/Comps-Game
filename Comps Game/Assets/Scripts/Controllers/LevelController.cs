@@ -50,6 +50,7 @@ public class LevelController : MonoBehaviour {
     public bool battleFinished = false;
     public bool inBattle = false;
     public bool isPaused = false;
+    private bool canResetFromPaused = false;
 
 
     // SINGLETON
@@ -202,13 +203,19 @@ public class LevelController : MonoBehaviour {
         AudioController.Instance.PlaySoundEffect("Reset Battle");
     }
 
+    public void ResetWholeLevelButton() {
+        SceneController.Instance.LoadSceneByName(SceneController.Instance.GetCurrentSceneName());
+    }
+
     public void PauseBattle() {
         if (inBattle && !isPaused) {
             isPaused = true;
             pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Resume";
+            ToggleResetButton(true);
         } else if (inBattle && isPaused) {
             isPaused = false;
             pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Pause";
+            ToggleResetButton(false);
         }
         AudioController.Instance.PlaySoundEffect("Pause Battle");
     }
@@ -645,7 +652,8 @@ public class LevelController : MonoBehaviour {
                 }
                 if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].UseWeapon());
-                } if (!battleFinished) {
+                }
+                if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].UseSpecial());
                 }
 
