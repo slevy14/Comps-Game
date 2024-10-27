@@ -17,7 +17,7 @@ public class BlockListItem : MonoBehaviour, IBeginDragHandler, IDragHandler {
         Destroy(clone.gameObject.GetComponent<BlockListItem>());
         eventData.pointerDrag = clone;
 
-        // AudioController.Instance.PlaySoundEffect("Block Pickup");
+        AudioController.Instance.PlaySoundEffect("Block Pickup");
     }
 
     public void OnDrag(PointerEventData eventData) {

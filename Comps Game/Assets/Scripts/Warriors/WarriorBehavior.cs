@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -145,6 +146,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // audio
         AudioController.Instance.PlaySoundEffect("Warrior Drop");
     }
+
+    void OnMouseEnter() {
+        transform.GetChild(0).GetComponent<SpriteOutline>().enabled = true;
+    }
+
+    void OnMouseExit() {
+        transform.GetChild(0).GetComponent<SpriteOutline>().enabled = false;
+    }
+
+
     
     // Update is called once per frame
     void Update() {
@@ -152,7 +163,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // if (isDragging) { // this allows dragging from worldspace
         //     transform.position = inputManager.GetSelectedMapPosition();
         // }
-        animator.speed = 2.01f - LevelController.Instance.battleSpeed;
+        animator.speed = 3.01f - LevelController.Instance.battleSpeed;
         
     }
 
