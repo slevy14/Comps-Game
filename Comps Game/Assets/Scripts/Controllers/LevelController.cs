@@ -695,7 +695,7 @@ public class LevelController : MonoBehaviour {
     }
 
     private IEnumerator ShowEndResults(bool battleWon, bool timedOut) {
-        yield return new WaitForSeconds(ProgressionController.Instance.currentLevel == 0 ? 0.2f : 1.5f);
+        yield return new WaitForSeconds(ProgressionController.Instance.currentLevel == 0 ? 0.2f : 0.7f);
         if (battleWon) {
             levelCompleteMenu.SetActive(true);
             AudioController.Instance.PlaySoundEffect("Level Win");

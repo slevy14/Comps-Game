@@ -67,7 +67,7 @@ public class PlacementSystem : MonoBehaviour {
             // mouseIndicator.transform.position = mousePosition;
         } else {
             // Debug.Log("no tile at " + gridPosition);
-            cellIndicator.transform.position = new Vector3(0f, 0f, 1f);
+            cellIndicator.transform.position = new Vector3(0f, 0f, 10f);
             cellIndicator.GetComponent<SpriteRenderer>().material.color = initialCellIndicatorColor;
             // mouseIndicator.transform.position = new Vector3(0f, 0f, 1f);
         }
