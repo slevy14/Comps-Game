@@ -210,18 +210,18 @@ public class DesignerController : MonoBehaviour {
 
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raycastResults);
-        if (raycastResults.Count == 0) {
-            Debug.Log("no raycasts");
-        } else {
-            Debug.Log("found " + raycastResults.Count + " raycasts");
-        }
+        // if (raycastResults.Count == 0) {
+        //     Debug.Log("no raycasts");
+        // } else {
+        //     Debug.Log("found " + raycastResults.Count + " raycasts");
+        // }
 
         for (int i = 0; i < raycastResults.Count; i++) {
             Transform overlapParent = raycastResults[i].gameObject.transform.parent;
             if (overlapParent != parent && raycastResults[i].gameObject.tag == "overlapSpace" && overlapParent.gameObject.GetComponent<Draggable>()) {
-                Debug.Log("in first if");
+                // Debug.Log("in first if");
                 if (overlapParent.GetComponent<Draggable>().GetNextBlock() == null) {
-                    Debug.Log("found one!");
+                    // Debug.Log("found one!");
                     return overlapParent.gameObject;
                 }
             }

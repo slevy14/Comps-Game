@@ -142,14 +142,17 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // need to do this here because if instantiated, on awake offset set to 0 for some reason!
             SetBlockOffset(false);
 
-            if (!SnapToBlock(eventData)) { // attempt to snap, but if not:
+            if (SnapToBlock(eventData)) { // attempt to snap
+                parentAfterDrag = whiteboard.transform;
+            } else { // didn't snap
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
                 AudioController.Instance.PlaySoundEffect("Block Drop");
+                Debug.Log("not snapping");
             }
 
             transform.SetParent(parentAfterDrag);
-            SetMaskable(true);
-            // SetBlockRaycasts(true);
+            Debug.Log("set parent to " + parentAfterDrag.name);
+            SetMaskable(true); 
         } else { // is header
             transform.SetParent(parentAfterDrag);
             SetMaskable(true);

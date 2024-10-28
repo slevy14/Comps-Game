@@ -6559,7 +6559,7 @@ MonoBehaviour:
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
-  m_ScrollSensitivity: 1
+  m_ScrollSensitivity: 15
   m_Viewport: {fileID: 583726679}
   m_HorizontalScrollbar: {fileID: 0}
   m_VerticalScrollbar: {fileID: 506260330}
@@ -8410,10 +8410,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: AudioController
       objectReference: {fileID: 0}
-    - target: {fileID: 5436077634466516891, guid: 91dfcbda7e53a42539b4779cc5b3e04d, type: 3}
-      propertyPath: SFXList.Array.data[3].audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: a59615ca35f354ee7a9ab629c858e45c, type: 3}
     - target: {fileID: 7793208395522156930, guid: 91dfcbda7e53a42539b4779cc5b3e04d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
