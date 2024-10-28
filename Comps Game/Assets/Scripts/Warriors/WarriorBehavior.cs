@@ -149,6 +149,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     void OnMouseEnter() {
         transform.GetChild(0).GetComponent<SpriteOutline>().enabled = true;
+        // if (!isEnemy) {
+        //     transform.GetChild(0).GetComponent<SpriteOutline>().SetColor(new Color(104, 104, 241));
+        // } else {
+        //     transform.GetChild(0).GetComponent<SpriteOutline>().SetColor(new Color(241, 104, 104));
+        // }
     }
 
     void OnMouseExit() {

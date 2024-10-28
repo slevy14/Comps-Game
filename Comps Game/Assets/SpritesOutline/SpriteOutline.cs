@@ -46,6 +46,11 @@ public class SpriteOutline : MonoBehaviour {
 		}
 	}
 
+	public void SetColor(Color color) {
+		this.color = color;
+		Debug.Log("setting color");
+	}
+
 
 	private static Material _defaultMaterial = null;
 	public static Material defaultMaterial{
