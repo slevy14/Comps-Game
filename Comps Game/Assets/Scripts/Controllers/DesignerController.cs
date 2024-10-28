@@ -202,6 +202,8 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    // return the block that a currently dragged block should snap to
+    // returns false if not snapping
     public GameObject FindBlockToSnapTo(PointerEventData eventData, Transform parent) {
         // PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
         // pointerEventData.position = Input.mousePosition;

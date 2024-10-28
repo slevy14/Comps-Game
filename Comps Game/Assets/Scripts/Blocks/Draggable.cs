@@ -133,8 +133,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         if (!isHeader) {
             // Debug.Log("enddrag called");
 
-            if (!onWhiteboard) {
+            if (!onWhiteboard && !DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform)) {
                 AudioController.Instance.PlaySoundEffect("Delete");
+                Debug.Log("not on whiteboard or snapping!");
                 DestroyStack(this.gameObject);
             }
 
@@ -246,55 +247,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
-    private void SetBlockRaycasts(bool value) {
-        CanvasGroup canvasGroup = gameObject.GetComponent<CanvasGroup>();
-        canvasGroup.blocksRaycasts = value;
-        canvasGroup.ignoreParentGroups = value;
-    }
-
-    private bool MouseOverWhiteboard() {
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        pointerEventData.position = Input.mousePosition;
-
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
-        for (int i = 0; i < raycastResults.Count; i++) {
-            // Debug.Log(raycastResults[i].gameObject.name);
-            if (raycastResults[i].gameObject.tag != "whiteboard") { // ui layer
-                raycastResults.RemoveAt(i);
-                i--;
-            }
-        }
-        return raycastResults.Count > 0;
-    }
-
-    private GameObject MouseOverOverlapBox() {
-        // Debug.Log("testing overlap");
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        pointerEventData.position = Input.mousePosition;
-
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
-        foreach (RaycastResult raycastResult in raycastResults) {
-            Debug.Log("hit " + raycastResult.gameObject.transform.parent.name);
-        }
-        for (int i = 0; i < raycastResults.Count; i++) {
-            // Debug.Log(raycastResults[i].gameObject.name);
-            if (raycastResults[i].gameObject.tag != "overlapBox") { // ui layer
-                raycastResults.RemoveAt(i);
-                i--;
-            }
-        }
-        foreach (RaycastResult raycastResult in raycastResults) {
-            Debug.Log("hit overlap box of " + raycastResult.gameObject.transform.parent.name);
-        }
-        if (raycastResults.Count == 0) {
-            return null;
-        } else {
-            return raycastResults[0].gameObject.transform.parent.gameObject;
-        }
-    }
-
     public void SetBlockOffset(bool shiftBack) {
         // shift back if placing an ELSE, END IF, or END LOOP
         if (shiftBack) {
@@ -312,12 +264,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     // boolean, returns false if didn't snap
     private bool SnapToBlock(PointerEventData eventData) {
-        // List<RaycastResult> result = new List<RaycastResult>();
-        // EventSystem.current.RaycastAll(eventData.pointer)
-        if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
-            GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
-        // GameObject blockToSnapTo = MouseOverOverlapBox();
-        // if (MouseOverOverlapBox() != null) {
+        GameObject blockToSnapTo = DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform);
+
+        if (blockToSnapTo != null) {
+            // GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
             if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
                 // Debug.Log("snapping!");
                 onWhiteboard = true; // make sure still set to true to snap
