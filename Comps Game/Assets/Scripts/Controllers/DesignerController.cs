@@ -189,6 +189,17 @@ public class DesignerController : MonoBehaviour {
         errorPopupMenu.SetActive(false);
     }
 
+    public void ToggleSnappingIndicator(GameObject overlapBlock) {
+        if ((overlapBlock != null) && !DesignerController.Instance.overlapSpaceIndicator.activeSelf) {
+            Debug.Log("over overlap space");
+            overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
+            overlapSpaceIndicator.SetActive(true);
+        } else if ((overlapBlock == null) && DesignerController.Instance.overlapSpaceIndicator.activeSelf) {
+            Debug.Log("no longer over overlap space");
+            overlapSpaceIndicator.SetActive(false);
+        }
+    }
+
 
     // WARRIOR CREATION
     public void CreateNewWarrior() {
@@ -985,30 +996,6 @@ public class DesignerController : MonoBehaviour {
                 }
             }
         }
-        // foreach (BlockDataStruct block in warriorFunctionalityData.moveFunctions) {
-        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-        //         return true;
-        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-        //         // we only hit this case if we haven't already found a target
-        //         return false;
-        //     }
-        // }
-        // foreach (BlockDataStruct block in warriorFunctionalityData.useWeaponFunctions) {
-        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-        //         return true;
-        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-        //         // we only hit this case if we haven't already found a target
-        //         return false;
-        //     }
-        // }
-        // foreach (BlockDataStruct block in warriorFunctionalityData.useSpecialFunctions) {
-        //     if (block.behavior == BlockData.BehaviorType.SET_TARGET) {
-        //         return true;
-        //     } else if (block.behavior == BlockData.BehaviorType.TELEPORT || block.behavior == BlockData.BehaviorType.FIRE_PROJECTILE || block.behavior == BlockData.BehaviorType.IF || block.behavior == BlockData.BehaviorType.WHILE_LOOP) {
-        //         // we only hit this case if we haven't already found a target
-        //         return false;
-        //     }
-        // }
         return true;
     }
 

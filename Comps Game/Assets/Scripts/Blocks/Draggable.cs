@@ -101,11 +101,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
         // show overlap space if need to
         GameObject overlapBlock = OverlappingFreeSnapSpace(eventData);
-        if ((overlapBlock != null) && !DesignerController.Instance.overlapSpaceIndicator.activeSelf) {
-            DesignerController.Instance.overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
-        } else if (!OverlappingFreeSnapSpace(eventData)) {
-            DesignerController.Instance.overlapSpaceIndicator.SetActive(false);
-        }
+        DesignerController.Instance.ToggleSnappingIndicator(overlapBlock);
     }
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
@@ -340,6 +336,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     prevBlock.GetComponent<Draggable>().SetBlockOffset(false);
                 }
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
+                DesignerController.Instance.ToggleSnappingIndicator(null); // disable the snapping indicator
                 // Debug.Log(this.prevBlock.name);
                 AudioController.Instance.PlaySoundEffect("Block Snap");
                 return true; // snapped 
@@ -351,8 +348,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private GameObject OverlappingFreeSnapSpace(PointerEventData eventData) {
         if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
             GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
-            if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
-                return blockToSnapTo;
+            try {
+                if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
+                    return blockToSnapTo;
+                }
+            } catch (System.Exception) {
+                Debug.Log("couldn't find draggable component when finding overlap space");
             }
         }
         return null;
