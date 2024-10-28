@@ -100,7 +100,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         UpdateBlockPositions(this.gameObject, Input.mousePosition);
 
         // show overlap space if need to
-        GameObject overlapBlock = OverlappingFreeSnapSpace(eventData);
+        // GameObject overlapBlock = OverlappingFreeSnapSpace(eventData);
+        GameObject overlapBlock = DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform);
         DesignerController.Instance.ToggleSnappingIndicator(overlapBlock);
     }
 

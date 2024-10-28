@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DesignerController : MonoBehaviour {
@@ -189,15 +190,42 @@ public class DesignerController : MonoBehaviour {
         errorPopupMenu.SetActive(false);
     }
 
+    // snapping
     public void ToggleSnappingIndicator(GameObject overlapBlock) {
-        if ((overlapBlock != null) && !DesignerController.Instance.overlapSpaceIndicator.activeSelf) {
+        if ((overlapBlock != null) && !overlapSpaceIndicator.activeSelf) {
             Debug.Log("over overlap space");
             overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
             overlapSpaceIndicator.SetActive(true);
-        } else if ((overlapBlock == null) && DesignerController.Instance.overlapSpaceIndicator.activeSelf) {
+        } else if ((overlapBlock == null) && overlapSpaceIndicator.activeSelf) {
             Debug.Log("no longer over overlap space");
             overlapSpaceIndicator.SetActive(false);
         }
+    }
+
+    public GameObject FindBlockToSnapTo(PointerEventData eventData, Transform parent) {
+        // PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        // pointerEventData.position = Input.mousePosition;
+
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+        if (raycastResults.Count == 0) {
+            Debug.Log("no raycasts");
+        } else {
+            Debug.Log("found " + raycastResults.Count + " raycasts");
+        }
+
+        for (int i = 0; i < raycastResults.Count; i++) {
+            Transform overlapParent = raycastResults[i].gameObject.transform.parent;
+            if (overlapParent != parent && raycastResults[i].gameObject.tag == "overlapSpace" && overlapParent.gameObject.GetComponent<Draggable>()) {
+                Debug.Log("in first if");
+                if (overlapParent.GetComponent<Draggable>().GetNextBlock() == null) {
+                    Debug.Log("found one!");
+                    return overlapParent.gameObject;
+                }
+            }
+        }
+        Debug.Log("found no overlap space");
+        return null;
     }
 
 
