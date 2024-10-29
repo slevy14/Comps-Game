@@ -23,7 +23,7 @@ public class ProgressionController : MonoBehaviour {
         InitializeSavedData();
 
         // MOSTLY FOR DEBUG
-        if (SceneManager.GetActiveScene().name == "Sandbox") {
+        if (SceneManager.GetActiveScene().name == "Sandbox" || SceneManager.GetActiveScene().name == "CodeEditor") {
             currentLevel = 0;
         } else {
             currentLevel = continueLevelFrom;
