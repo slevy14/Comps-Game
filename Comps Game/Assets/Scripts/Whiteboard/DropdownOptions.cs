@@ -20,8 +20,8 @@ public class DropdownOptions : MonoBehaviour {
     public void UpdateSprite() {
         int selectedIndex = dropdown.value;
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[selectedIndex].sprite;
+        activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = WarriorListController.Instance.spriteDataList[selectedIndex].animatorController;
         designerController.spriteDataIndex = selectedIndex;
-        // dropdown.options[selectedIndex].image;
     }
 
     public void UpdateSprite(int index) {
@@ -33,18 +33,22 @@ public class DropdownOptions : MonoBehaviour {
     public void UpdateSprite(int index, bool isEnemy) {
         if (!isEnemy) {
             activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[index].sprite;
+            activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = WarriorListController.Instance.spriteDataList[index].animatorController;
             dropdown.value = index;
             designerController.spriteDataIndex = index;
         } else { // ENEMY
             activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[index].sprite;
+            activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = EnemyListController.Instance.spriteDataList[index].animatorController;
             designerController.spriteDataIndex = index;
             this.gameObject.SetActive(false);
         }
+        activeWarrior.transform.GetChild(0).GetComponent<Animator>().speed = 0.4f;
     }
 
     public void ResetSprite() {
         dropdown.value = 0;
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[0].sprite;
+        activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = EnemyListController.Instance.spriteDataList[0].animatorController;
     }
 
     public void SetSpriteOptions(bool isEnemy) {
