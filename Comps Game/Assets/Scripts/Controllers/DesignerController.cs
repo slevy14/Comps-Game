@@ -399,14 +399,6 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
-
-    public void SaveIntoJSON(WarriorFunctionalityData warriorFunctionalityData) {
-        string warriorPropertiesJSON = JsonUtility.ToJson(warriorFunctionalityData);
-        string filePath = Application.persistentDataPath + $"/{warriorFunctionalityData.warriorName}.json";
-        System.IO.File.WriteAllText(filePath, warriorPropertiesJSON);
-        Debug.Log("saving json at " + filePath);
-    }
-
     public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
         if (!isEnemy) {
             WarriorListController.Instance.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
@@ -422,8 +414,12 @@ public class DesignerController : MonoBehaviour {
             return;
         }
 
-        Transform blocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0);
-        ClearAllChildren(blocksContainer);
+        Transform propertyBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
+        ClearAllChildren(propertyBlocksContainer);
+        Transform behaviorBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1);
+        ClearAllChildren(behaviorBlocksContainer);
+        Transform functionalBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2);
+        ClearAllChildren(functionalBlocksContainer);
 
         List<int> propertyIndices = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availablePropertiesIndices;
         // need to process behaviors differently because functional and behaviors combined
@@ -433,35 +429,35 @@ public class DesignerController : MonoBehaviour {
         // ADD ALL BLOCKS
         // add headers and spacers for each set of blocks
         // add additional spacers after set if needed
-        GameObject propertiesSectionHeader = Instantiate(sectionHeader, blocksContainer);
+        GameObject propertiesSectionHeader = Instantiate(sectionHeader, propertyBlocksContainer);
         propertiesSectionHeader.GetComponent<TMP_Text>().text = "PROPERTIES:";
-        Instantiate(spacer, blocksContainer);
+        Instantiate(spacer, propertyBlocksContainer);
         foreach (int index in propertyIndices) {
-            Instantiate(propertyBlocks[index], blocksContainer);
+            Instantiate(propertyBlocks[index], propertyBlocksContainer);
         }
-        if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-            Instantiate(spacer, blocksContainer);
+        if (propertyBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+            Instantiate(spacer, propertyBlocksContainer);
         }
 
-        GameObject behaviorsSectionHeader = Instantiate(sectionHeader, blocksContainer);
+        GameObject behaviorsSectionHeader = Instantiate(sectionHeader, behaviorBlocksContainer);
         behaviorsSectionHeader.GetComponent<TMP_Text>().text = "BEHAVIORS:";
-        Instantiate(spacer, blocksContainer);
+        Instantiate(spacer, behaviorBlocksContainer);
         foreach (int index in behaviorIndices) {
-            Instantiate(behaviorBlocks[index], blocksContainer);
+            Instantiate(behaviorBlocks[index], behaviorBlocksContainer);
         }
-        if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-            Instantiate(spacer, blocksContainer);
+        if (behaviorBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+            Instantiate(spacer, behaviorBlocksContainer);
         }
 
         if (functionalIndices.Count != 0 ) { // early levels don't have functional, hide from player
-            GameObject functionalSectionHeader = Instantiate(sectionHeader, blocksContainer);
+            GameObject functionalSectionHeader = Instantiate(sectionHeader, functionalBlocksContainer);
             functionalSectionHeader.GetComponent<TMP_Text>().text = "FUNCTIONAL:";
-            Instantiate(spacer, blocksContainer);
+            Instantiate(spacer, functionalBlocksContainer);
             foreach (int index in functionalIndices) {
-                Instantiate(behaviorBlocks[index], blocksContainer);
+                Instantiate(behaviorBlocks[index], functionalBlocksContainer);
             }
-            if (blocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-                Instantiate(spacer, blocksContainer);
+            if (functionalBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+                Instantiate(spacer, functionalBlocksContainer);
             }
         }
 
@@ -569,7 +565,11 @@ public class DesignerController : MonoBehaviour {
             newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
             newBlock.GetComponent<Draggable>().SetMaskable(true);
             try {
-                newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                if (newBlock.GetComponent<BlockData>().property == BlockData.Property.NAME) {
+                    newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
+                } else {
+                    newBlock.GetComponent<Draggable>().SetSliderValue(block.values[0]);
+                }
             } catch (System.Exception) {
                 Debug.Log("no value for current property");
             }

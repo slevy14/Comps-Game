@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PropertySlider : MonoBehaviour {
+public class PropertySlider : MonoBehaviour, IPointerUpHandler {
 
     [SerializeField] TMP_Text valueText;
 
@@ -17,5 +17,8 @@ public class PropertySlider : MonoBehaviour {
         valueText.text = "" + Mathf.RoundToInt(value);
     }
 
-
+    public void OnPointerUp(PointerEventData eventData) {
+        Debug.Log("done sliding");
+        transform.parent.GetComponent<Draggable>().SetValueFromSlider();
+    }
 }

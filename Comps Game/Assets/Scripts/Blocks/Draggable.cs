@@ -12,10 +12,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Image image;
     private TMP_Text text;
     private Image overlapBox;
-    private GameObject inputField;
-    private GameObject dropdownOne;
-    private GameObject dropdownTwo;
-    private GameObject whiteboard;
+    // private GameObject inputField;
+    // private GameObject dropdownOne;
+    // private GameObject dropdownTwo;
 
     // serialized for debug
     [SerializeField] private GameObject prevBlock;
@@ -32,26 +31,25 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private TMP_Text namePreview;
 
     void Awake() {
-        int childCount = this.gameObject.transform.childCount;
         image = this.gameObject.GetComponent<Image>();
         text = this.transform.GetChild(0).GetComponent<TMP_Text>();
         overlapBox = this.transform.GetChild(1).GetComponent<Image>();
-        if (childCount == 3 && this.transform.GetChild(2).name == "InputField") {
-            inputField = this.transform.GetChild(2).gameObject;
-            inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
-        }
-        if (childCount >= 3 && this.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>() != null) {
-            dropdownOne = this.transform.GetChild(2).gameObject;
-        }
-        if (childCount == 4 && this.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>() != null) {
-            dropdownTwo = this.transform.GetChild(3).gameObject;
-        }
+
+        // if (childCount == 3 && this.transform.GetChild(2).name == "InputField") {
+        //     inputField = this.transform.GetChild(2).gameObject;
+        //     inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
+        // }
+        // if (childCount >= 3 && this.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>() != null) {
+        //     dropdownOne = this.transform.GetChild(2).gameObject;
+        // }
+        // if (childCount == 4 && this.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>() != null) {
+        //     dropdownTwo = this.transform.GetChild(3).gameObject;
+        // }
 
         // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
         // SET OFFSET
         SetBlockOffset(false);
         // Debug.Log("offset: " + blockOffset.y);
-        whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         // Debug.Log("awakened");
 
         // when this script is instantiated,
@@ -171,21 +169,34 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         DesignerController.Instance.justSaved = false;
     }
 
-    public void SetValue() {
+    public void SetValueFromSlider() {
         BlockData blockData = this.gameObject.GetComponent<BlockData>();
         if (blockData.values.Count == 0) {
-            blockData.values.Add(inputField.GetComponent<TMP_InputField>().text);
+            blockData.values.Add(transform.GetChild(2).GetComponent<Slider>().value + "");
         } else {
-            blockData.values[0] = inputField.GetComponent<TMP_InputField>().text;
+            blockData.values[0] = transform.GetChild(2).GetComponent<Slider>().value + "";
         }
+    }
 
-        // if (blockData.property == BlockData.Property.NAME) {
-        //     GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = inputField.GetComponent<TMP_InputField>().text + ":";
-        // }
+    public void SetValueFromInputField() {
+        BlockData blockData = this.gameObject.GetComponent<BlockData>();
+        if (blockData.values.Count == 0) {
+            blockData.values.Add(transform.GetChild(2).GetComponent<TMP_InputField>().text);
+        } else {
+            blockData.values[0] = transform.GetChild(2).GetComponent<TMP_InputField>().text;
+        }
+        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
     }
 
     public void SetInputFieldValue(string val) {
+        TMP_InputField inputField = transform.GetChild(2).GetComponent<TMP_InputField>();
         inputField.GetComponent<TMP_InputField>().text = val;
+    }
+
+    public void SetSliderValue(string val) {
+        Slider slider = transform.GetChild(2).GetComponent<Slider>();
+        slider.value = float.Parse(val);
+        slider.GetComponent<PropertySlider>().DynamicUpdateValueText(slider.value);
     }
 
     public void SetDropdownValue(string val, int childIndex) {
@@ -219,41 +230,49 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         text.maskable = value;
         overlapBox.raycastTarget = value;
 
-        //input field
-        if (inputField != null) {
-            inputField.GetComponent<Image>().raycastTarget = value;
-            // inputField.GetComponent<Image>().maskable = value;
-            GameObject textArea = inputField.transform.GetChild(0).gameObject;
-            int count = textArea.transform.childCount;
-            for (int i = 0; i < count; i++) {
-                if (textArea.transform.GetChild(i).gameObject.tag == "disableCast") {
-                    textArea.transform.GetChild(i).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
-                } else { // caret
-                    textArea.transform.GetChild(i).gameObject.GetComponent<TMP_SelectionCaret>().raycastTarget = value;
-                }
+        // loop through rest of children and handle cases
+        int childCount = this.gameObject.transform.childCount;
+        // POSSIBLE CASES: dropdown, slider, input field, text
+        for (int i = 2; i < childCount; i++) {
+            GameObject child = this.transform.GetChild(i).gameObject;
+            // DROPDOWN CASE
+            if (child.GetComponent<TMP_Dropdown>()) {
+                child.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+                child.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
+                continue;
             }
-        }
-        // Dropdown One
-        if (dropdownOne != null) {
-            // Debug.Log("setting values of dropdown one to " + value);
-            dropdownOne.GetComponent<Image>().raycastTarget = value;
-            // dropdownOne.GetComponent<Image>().maskable = value;
-            // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
-            int count = dropdownOne.transform.childCount;
-            dropdownOne.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
-            // dropdownOne.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
-            dropdownOne.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
-        }
-        // Dropdown Two
-        if (dropdownTwo != null) {
-            // Debug.Log("setting values of dropdown two to " + value);
-            dropdownTwo.GetComponent<Image>().raycastTarget = value;
-            // dropdownOne.GetComponent<Image>().maskable = value;
-            // GameObject textArea = dropdownOne.transform.GetChild(0).gameObject;
-            int count = dropdownTwo.transform.childCount;
-            dropdownTwo.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
-            // dropdownTwo.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
-            dropdownTwo.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
+            // INPUT FIELD CASE
+            if (child.GetComponent<TMP_InputField>()) {
+                child.GetComponent<Image>().raycastTarget = value;
+                GameObject textArea = child.transform.GetChild(0).gameObject;
+                int count = textArea.transform.childCount;
+                for (int j = 0; j < count; j++) {
+                    if (textArea.transform.GetChild(i).gameObject.tag == "disableCast") {
+                        textArea.transform.GetChild(i).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+                    } else { // caret
+                        textArea.transform.GetChild(i).gameObject.GetComponent<TMP_SelectionCaret>().raycastTarget = value;
+                    }
+                }
+                continue;
+            }
+            // SLIDER CASE
+            if (child.GetComponent<Slider>()) {
+                child.GetComponent<Slider>().interactable = value;
+                child.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(0).gameObject.GetComponent<Image>().maskable = value;
+                child.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().maskable = value;
+                child.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().maskable = value;
+                continue;
+            }
+            // TEXT CASE
+            if (child.GetComponent<TMP_Text>()) {
+                child.GetComponent<TMP_Text>().maskable = value;
+                continue;
+            }
+
         }
     }
 
