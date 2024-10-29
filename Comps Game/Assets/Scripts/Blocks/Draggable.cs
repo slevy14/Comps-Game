@@ -185,7 +185,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         } else {
             blockData.values[0] = transform.GetChild(2).GetComponent<TMP_InputField>().text;
         }
-        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
+        if (blockData.property == BlockData.Property.NAME) {
+            GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0] + ",";
+        }
     }
 
     public void SetInputFieldValue(string val) {

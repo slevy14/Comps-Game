@@ -682,7 +682,7 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
                 if (blockData.property == BlockData.Property.NAME && (blockData.values.Count != 0)) {
                     name = blockData.values[0];
-                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0] + ",";
                 }
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
