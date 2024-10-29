@@ -211,12 +211,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public int CalculateTotalStrength() {
         // FORMULA:
-        // strength = attack*(range/2) + heal*(range/2) + projectilePower + maxHealth*(defense/(defense+maxHealth)) + speed/10
+        // strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
         // (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
         
         float strength = propertiesDict[BlockData.Property.MELEE_ATTACK_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
                          + propertiesDict[BlockData.Property.HEAL_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
-                         + maxHealth*(propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
+                         + maxHealth*(1+(propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth)))
                          + propertiesDict[BlockData.Property.MOVE_SPEED]/10;
         return (int)strength;
     }

@@ -34,20 +34,6 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         image = this.gameObject.GetComponent<Image>();
         text = this.transform.GetChild(0).GetComponent<TMP_Text>();
         overlapBox = this.transform.GetChild(1).GetComponent<Image>();
-
-        // if (childCount == 3 && this.transform.GetChild(2).name == "InputField") {
-        //     inputField = this.transform.GetChild(2).gameObject;
-        //     inputField.GetComponent<TMP_InputField>().onEndEdit.AddListener(delegate{SetValue();});
-        // }
-        // if (childCount >= 3 && this.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>() != null) {
-        //     dropdownOne = this.transform.GetChild(2).gameObject;
-        // }
-        // if (childCount == 4 && this.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>() != null) {
-        //     dropdownTwo = this.transform.GetChild(3).gameObject;
-        // }
-
-        // Debug.Log(gameObject.name + " height: " + gameObject.GetComponent<RectTransform>().rect.height);
-        // SET OFFSET
         SetBlockOffset(false);
         // Debug.Log("offset: " + blockOffset.y);
         // Debug.Log("awakened");
@@ -62,7 +48,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             onWhiteboard = false;
             transform.SetAsLastSibling();
             SetMaskable(false);
-            // SetBlockRaycasts(false);
+            
+            if (transform.childCount >= 3) {
+                if (this.transform.GetChild(2).GetComponent<Slider>()) { // if has slider
+                    SetValueFromSlider();
+                } else if (this.transform.GetChild(2).GetComponent<TMP_InputField>()) { // if has input field
+                    SetValueFromInputField();
+                }
+            }
         }
         // transform.SetAsLastSibling();
         // image.raycastTarget = false;
@@ -84,6 +77,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // remove from linked list
             if (prevBlock != null) {
                 prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
+                DesignerController.Instance.UpdateStrengthDisplay();
                 // Debug.Log("updated prev block next");
                 prevBlock = null;
             }
@@ -140,7 +134,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
             if (!onWhiteboard && !DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform)) {
                 AudioController.Instance.PlaySoundEffect("Delete");
-                Debug.Log("not on whiteboard or snapping!");
+                DesignerController.Instance.UpdateStrengthDisplay();
                 DestroyStack(this.gameObject);
             }
 
@@ -193,12 +187,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void SetInputFieldValue(string val) {
         TMP_InputField inputField = transform.GetChild(2).GetComponent<TMP_InputField>();
         inputField.GetComponent<TMP_InputField>().text = val;
+        SetValueFromInputField();
     }
 
     public void SetSliderValue(string val) {
         Slider slider = transform.GetChild(2).GetComponent<Slider>();
         slider.value = float.Parse(val);
         slider.GetComponent<PropertySlider>().DynamicUpdateValueText(slider.value);
+        SetValueFromSlider();
     }
 
     public void SetDropdownValue(string val, int childIndex) {
@@ -319,6 +315,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
                 DesignerController.Instance.ToggleSnappingIndicator(null, gameObject.GetComponent<RectTransform>()); // disable the snapping indicator
+                DesignerController.Instance.UpdateStrengthDisplay();
                 // Debug.Log(this.prevBlock.name);
                 AudioController.Instance.PlaySoundEffect("Block Snap");
                 return true; // snapped 

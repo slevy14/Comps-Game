@@ -47,6 +47,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject errorPopupMenu;
     [SerializeField] private GameObject switchLevelButtonObject;
     [SerializeField] public GameObject overlapSpaceIndicator;
+    [SerializeField] private TMP_Text strengthDisplay;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -239,7 +240,7 @@ public class DesignerController : MonoBehaviour {
         // get index
         editingWarriorIndex = WarriorListController.Instance.GetCount();
         // reset name display
-        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname]";
+        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname],";
         // reset dropdown
         dropdown.ResetSprite();
         // clear whiteboard
@@ -670,6 +671,7 @@ public class DesignerController : MonoBehaviour {
         }
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
+        UpdateStrengthDisplay();
         // save warrior at end to make sure values are properly updated
         SaveWarrior();
     }
@@ -716,12 +718,60 @@ public class DesignerController : MonoBehaviour {
                 propertiesList.Add(blockDataStruct);
                 // Debug.Log("added property");
                 if (blockData.property == BlockData.Property.NAME) {
-                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0] : "[noname]";
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0] + "," : "[noname],";
                 }
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
         return propertiesList;
+    }
+
+    public int CalculateCurrentStrength() {
+        List<BlockDataStruct> propertiesList = ParseProperties();
+
+        // FORMULA:
+        // strength = attack*(range/2) + heal*(range/2) + projectilePower + maxHealth*(defense/(defense+maxHealth+1)) + speed/10
+        int attackPower = 0;
+        int attackRange = 1;
+        int healPower = 0;
+        int projectilePower = 0;
+        int maxHealth = 1;
+        int defense = 0;
+        int speed = 0;
+
+        foreach (BlockDataStruct block in propertiesList) {
+            switch (block.property) {
+                case BlockData.Property.MELEE_ATTACK_POWER:
+                    attackPower = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.MELEE_ATTACK_RANGE:
+                    attackRange = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.HEAL_POWER:
+                    healPower = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.RANGED_ATTACK_POWER:
+                    projectilePower = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.HEALTH:
+                    maxHealth = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.DEFENSE:
+                    defense = int.Parse(block.values[0]);
+                    break;
+                case BlockData.Property.MOVE_SPEED:
+                    speed = int.Parse(block.values[0]);
+                    break;
+            }
+        }
+
+        Debug.Log(attackPower + ", " + attackRange + ", " + healPower + ", " + projectilePower + ", " + maxHealth + ", " + defense + ", " + speed);
+
+        // float strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
+        // defense+maxHealth+1)
+        Debug.Log("defense multiplier: " + (1+((float)defense / (float)(defense+maxHealth))));
+        float strength = attackPower*attackRange + healPower*attackRange + projectilePower + speed/10 + maxHealth*(1 + ((float)defense / (float)(defense+maxHealth)));
+        return Mathf.RoundToInt(strength);
     }
 
     public List<BlockDataStruct> ParseBehaviors(GameObject header) {
@@ -1042,6 +1092,16 @@ public class DesignerController : MonoBehaviour {
             }
         }
         return count <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
+    }
+
+    public void UpdateStrengthDisplay() {
+        int newStrength = CalculateCurrentStrength();
+        if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength) {
+            strengthDisplay.color = new Color(241, 104, 104);
+        } else {
+            strengthDisplay.color = new Color(104, 241, 104);
+        }
+        strengthDisplay.text = "Strength\n" + newStrength + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
     }
 
     // Deleting
