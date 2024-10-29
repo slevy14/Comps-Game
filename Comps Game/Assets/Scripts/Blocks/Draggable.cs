@@ -130,6 +130,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //     onWhiteboard = true;
         // }
         // Debug.Log("ended drag over " + eventData.pointerCurrentRaycast.gameObject.name);
+
+        GameObject whiteboard = OverWhiteboard(eventData);
+        if (whiteboard != null) {
+            onWhiteboard = true;
+            parentAfterDrag = whiteboard.transform;
+        }
+
         if (!isHeader) {
             // Debug.Log("enddrag called");
 
@@ -299,17 +306,21 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return false; // didn't snap
     }
 
-    private GameObject OverlappingFreeSnapSpace(PointerEventData eventData) {
-        if (eventData.pointerCurrentRaycast.gameObject.tag == "overlapSpace") {
-            GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
-            try {
-                if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
-                    return blockToSnapTo;
-                }
-            } catch (System.Exception) {
-                Debug.Log("couldn't find draggable component when finding overlap space");
+    
+    private GameObject OverWhiteboard(PointerEventData eventData) {
+        List<RaycastResult> raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+
+        Debug.Log("hit " + raycastResults.Count + " objects: ");
+        for (int i = 0; i < raycastResults.Count; i++) {
+            Debug.Log("found object with tag" + raycastResults[i].gameObject.tag);
+            if (raycastResults[i].gameObject.tag == "whiteboard") {
+                Debug.Log("over whiteboard!");
+                return raycastResults[i].gameObject;
             }
+            Debug.Log(i);
         }
+        Debug.Log("not over whiteboard!");
         return null;
     }
 }

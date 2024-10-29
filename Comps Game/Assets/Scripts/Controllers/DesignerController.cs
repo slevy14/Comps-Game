@@ -226,7 +226,7 @@ public class DesignerController : MonoBehaviour {
                 }
             }
         }
-        Debug.Log("found no overlap space");
+        // Debug.Log("found no overlap space");
         return null;
     }
 
