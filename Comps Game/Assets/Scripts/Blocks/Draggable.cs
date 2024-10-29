@@ -100,7 +100,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // show overlap space if need to
         // GameObject overlapBlock = OverlappingFreeSnapSpace(eventData);
         GameObject overlapBlock = DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform);
-        DesignerController.Instance.ToggleSnappingIndicator(overlapBlock);
+        DesignerController.Instance.ToggleSnappingIndicator(overlapBlock, gameObject.GetComponent<RectTransform>());
     }
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
@@ -172,9 +172,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void SetValueFromSlider() {
         BlockData blockData = this.gameObject.GetComponent<BlockData>();
         if (blockData.values.Count == 0) {
-            blockData.values.Add(transform.GetChild(2).GetComponent<Slider>().value + "");
+            blockData.values.Add(Mathf.RoundToInt(transform.GetChild(2).GetComponent<Slider>().value) + "");
         } else {
-            blockData.values[0] = transform.GetChild(2).GetComponent<Slider>().value + "";
+            blockData.values[0] = Mathf.RoundToInt(transform.GetChild(2).GetComponent<Slider>().value) + "";
         }
     }
 
@@ -316,7 +316,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     prevBlock.GetComponent<Draggable>().SetBlockOffset(false);
                 }
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
-                DesignerController.Instance.ToggleSnappingIndicator(null); // disable the snapping indicator
+                DesignerController.Instance.ToggleSnappingIndicator(null, gameObject.GetComponent<RectTransform>()); // disable the snapping indicator
                 // Debug.Log(this.prevBlock.name);
                 AudioController.Instance.PlaySoundEffect("Block Snap");
                 return true; // snapped 

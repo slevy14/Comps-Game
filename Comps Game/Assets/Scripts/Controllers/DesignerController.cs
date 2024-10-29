@@ -191,9 +191,10 @@ public class DesignerController : MonoBehaviour {
     }
 
     // snapping
-    public void ToggleSnappingIndicator(GameObject overlapBlock) {
+    public void ToggleSnappingIndicator(GameObject overlapBlock, RectTransform blockRectTransform) {
         if ((overlapBlock != null) && !overlapSpaceIndicator.activeSelf) {
             Debug.Log("over overlap space");
+            overlapSpaceIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2 (blockRectTransform.sizeDelta.x, blockRectTransform.sizeDelta.y);
             overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
             overlapSpaceIndicator.SetActive(true);
         } else if ((overlapBlock == null) && overlapSpaceIndicator.activeSelf) {
