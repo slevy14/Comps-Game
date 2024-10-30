@@ -120,11 +120,11 @@ public class LevelController : MonoBehaviour {
     }
 
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
-        Debug.Log("there are " + WarriorListController.Instance.GetCount() + " warriors to add to drawer");
+        // Debug.Log("there are " + WarriorListController.Instance.GetCount() + " warriors to add to drawer");
         for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
         }
-        Debug.Log("added warriors to placeable drawer");
+        // Debug.Log("added warriors to placeable drawer");
     }
 
     public void UpdateWarriorDrawerThumbnail(int index) {

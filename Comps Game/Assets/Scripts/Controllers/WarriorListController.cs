@@ -37,7 +37,7 @@ public class WarriorListController : MonoBehaviour {
         } else {
             FindJSON("level_warriors");
         }
-        Debug.Log("there are " + GetCount() + " warriors to add to drawer");
+        // Debug.Log("there are " + GetCount() + " warriors to add to drawer");
     }
 
     public void FindJSON(string warriorsFile) { // meant to be used for initialization

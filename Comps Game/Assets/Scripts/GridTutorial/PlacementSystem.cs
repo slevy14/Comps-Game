@@ -153,18 +153,18 @@ public class PlacementSystem : MonoBehaviour {
             }
 
             if (isDrag == false) {
-                Debug.Log("twas a click at " + Time.time);
+                // Debug.Log("twas a click at " + Time.time);
                 GameObject thumbnail = ThumbnailClicked();
                 if (thumbnail != null) {
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
                     LevelController.Instance.ShowStatsPanel(thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex, thumbnail.GetComponent<WarriorLevelThumbnail>().isEnemy);
-                    Debug.Log("show stats screen from click thumbnail");
+                    // Debug.Log("show stats screen from click thumbnail");
                 }
                 GameObject warrior = WarriorClicked();
                 if (warrior != null) {
                     // SHOW STATS SCREEN BASED ON WARRIOR INDEX
                     LevelController.Instance.ShowStatsPanel(warrior.GetComponent<WarriorBehavior>().warriorIndex, warrior.GetComponent<WarriorBehavior>().isEnemy);
-                    Debug.Log("show stats screen from click warrior");
+                    // Debug.Log("show stats screen from click warrior");
                 }
             }
             clickTime = 0f;

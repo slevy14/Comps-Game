@@ -73,6 +73,7 @@ public class ProgressionController : MonoBehaviour {
         continueLevelFrom = newLevel;
         currentLevel = newLevel;
         isLevelJustStarted = true;
+        TutorialController.Instance.StartTutorial();
         SaveProgressToJson();
     }
 

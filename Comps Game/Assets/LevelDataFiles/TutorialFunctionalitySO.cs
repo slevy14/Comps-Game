@@ -10,58 +10,83 @@ public class TutorialFunctionalitySO : ScriptableObject {
     [SerializeField] public List<TutorialListItem> tutorialListItems;
 
     [System.Serializable]
-    public enum FunctionOption {
+    // infuriatingly, these are in no specific order. if you try to change them unity will kill you
+    public enum FunctionOptions {
         HighlightWarriorDrawer = 0,
         HighlightBlocksDrawer = 1,
-        HighlihgtEnemyDrawer = 2,
+        HighlightEnemyDrawer = 2,
         LoadFirstWarrior = 3,
         LoadLastWarrior = 4,
         LoadFirstEnemy = 5,
-        ShowArrow = 6
+        ShowArrow = 6,
+        None = 7
     };
 
     [SerializeField]
-    private FunctionOption _selectedFunction;
-    private Dictionary<FunctionOption, System.Action> _functionLookup;
+    private FunctionOptions _selectedFunction;
+    private Dictionary<FunctionOptions, System.Action> _functionLookup;
 
 
-    private void Awake()
-    {
-        _functionLookup = new Dictionary<FunctionOption, System.Action>()
+    void Awake() {
+        InitializeLookup();
+    }
+
+    public void InitializeLookup() {
+        _functionLookup = new Dictionary<FunctionOptions, System.Action>()
         {
-            { FunctionOption.HighlightWarriorDrawer, HighlightWarriorDrawer },
-            { FunctionOption.HighlightBlocksDrawer, HighlightBlocksDrawer },
-            { FunctionOption.HighlihgtEnemyDrawer, HighlightEnemyDrawer }
+            { FunctionOptions.HighlightWarriorDrawer, HighlightWarriorDrawer },
+            { FunctionOptions.HighlightBlocksDrawer, HighlightBlocksDrawer },
+            { FunctionOptions.HighlightEnemyDrawer, HighlightEnemyDrawer },
+            { FunctionOptions.LoadFirstWarrior, LoadFirstWarrior },
+            { FunctionOptions.LoadLastWarrior, LoadLastWarrior },
+            { FunctionOptions.LoadFirstEnemy, LoadFirstEnemy },
+            { FunctionOptions.ShowArrow, ShowArrow },
+            { FunctionOptions.None, None }
         };
     }
 
-    public void SetSelectedFunction(FunctionOption function) {
-        _selectedFunction = function;
+    // public void SetSelectedFunction(FunctionOption function) {
+    //     _selectedFunction = function;
+    // }
+
+    public void RunTutorialFunction(int index) {
+        // _selectedFunction = tutorialListItems[index].functionOption;
+        // ActivateSelectedFunction();
+        Debug.Log("TUTORIAL DIALOG: " + tutorialListItems[index].tutorialDialog);
+        // Debug.Log(_functionLookup);
+        _functionLookup[tutorialListItems[index].functionOption].Invoke();
     }
 
 
-    public void ActivateSelectedFunction()
-    {
+    public void ActivateSelectedFunction() {
         _functionLookup[_selectedFunction].Invoke();
     }
 
 
     private void HighlightWarriorDrawer() {
-        Debug.Log("HighlightWarriorsDrawer");
+        Debug.Log("TUTORIAL FUNC: " + "HighlightWarriorsDrawer");
     }
 
     private void HighlightBlocksDrawer() {
-        Debug.Log("HighlightBlocksDrawer");
+        Debug.Log("TUTORIAL FUNC: " + "HighlightBlocksDrawer");
     }
 
     private void HighlightEnemyDrawer() {
-        Debug.Log("HighlightEnemyDrawer");
+        Debug.Log("TUTORIAL FUNC: " + "HighlightEnemyDrawer");
     }
+
+    private void LoadFirstWarrior() {}
+    private void LoadLastWarrior() {}
+    private void LoadFirstEnemy() {}
+    private void ShowArrow() {}
+
+    // still need to define none for lookup table
+    private void None() { }
 
 }
 
 [System.Serializable]
 public struct TutorialListItem {
     public string tutorialDialog;
-    public TutorialFunctionalitySO.FunctionOption functionOption;
+    public TutorialFunctionalitySO.FunctionOptions functionOption;
 }

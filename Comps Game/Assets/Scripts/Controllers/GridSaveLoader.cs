@@ -84,7 +84,7 @@ public class GridSaveLoader : MonoBehaviour {
     public void LoadGridFromLevelData() {
         // units to preload are always enemies
         foreach (WarriorOnGrid enemy in ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].enemyPlacementsList) {
-            Debug.Log("instantiating enemy from level data");
+            // Debug.Log("instantiating enemy from level data");
             // instantiate into right position
             GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)enemy.pos.x, (int)enemy.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
             // set properties like in WarriorLevelThumbnail

@@ -24,5 +24,4 @@ MonoBehaviour:
   maxBlocks: -1
   actionPoints: -1
   maxWarriorsToPlace: 10000
-  battleTutorialDialog: []
-  editorTutorialDialog: []
+  tutorialFunctionality: {fileID: 11400000, guid: 2681d7a119e7846fcb21e5ebb3ac71b5, type: 2}
