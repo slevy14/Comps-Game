@@ -11,6 +11,7 @@ public class TutorialController : MonoBehaviour {
     public float dialogAdvanceDelay;
     private float currentDialogTime;
     private bool skippedDialog;
+    private bool inTransition;
 
     [Header("Tutorial GameObjects")]
     [SerializeField] private GameObject highlight;
@@ -33,6 +34,7 @@ public class TutorialController : MonoBehaviour {
     public void Awake() {
         CheckSingleton();
         ToggleTutorialUIObjects(false);
+        dialogAdvanceDelay = 1f;
     }
 
     void Update() {
@@ -61,6 +63,10 @@ public class TutorialController : MonoBehaviour {
     }
 
     public bool CanAdvanceDialog() {
+        if (inTransition) {
+            return false;
+        }
+
         if (currentDialogTime >= dialogAdvanceDelay || skippedDialog) {
             currentDialogTime = 0;
             skippedDialog = false;
@@ -105,6 +111,16 @@ public class TutorialController : MonoBehaviour {
     public void DisableHighlight() {
         highlight.GetComponent<RectTransform>().anchoredPosition = new Vector2(960, 540);
         highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
+    }
+
+    public void TutorialChangeSceneWithDelay() {
+        StartCoroutine(SceneChangeDelay());
+    }
+
+    private IEnumerator SceneChangeDelay() {
+        inTransition = true;
+        yield return new WaitForSeconds(2f);
+        inTransition = false;
     }
 
 

@@ -23,7 +23,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
         HighlightBlocksArea = 8,
         HighlightSaveButton = 9,
         HighlightStrength = 10,
-        Highlight
+        Highlight = 11,
+        SwitchToLevelScene = 12,
+        SwitchToCodingEditor = 13,
     };
 
     [SerializeField]
@@ -45,7 +47,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.LoadLastWarrior, LoadLastWarrior },
             { FunctionOptions.LoadFirstEnemy, LoadFirstEnemy },
             { FunctionOptions.ShowArrow, ShowArrow },
-            { FunctionOptions.None, None }
+            { FunctionOptions.None, None },
+            { FunctionOptions.SwitchToLevelScene, SwitchToLevelScene },
+            { FunctionOptions.SwitchToCodingEditor, SwitchToCodeEditor }
         };
     }
 
@@ -86,6 +90,16 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void LoadLastWarrior() {}
     private void LoadFirstEnemy() {}
     private void ShowArrow() {}
+
+    private void SwitchToLevelScene() {
+        SceneController.Instance.LoadSceneByName("LevelScene");
+        TutorialController.Instance.DisableHighlight();
+    }
+
+    private void SwitchToCodeEditor() {
+        SceneController.Instance.LoadSceneByName("CodeEditor");
+        TutorialController.Instance.DisableHighlight();
+    }
 
     // still need to define none for lookup table
     private void None() {

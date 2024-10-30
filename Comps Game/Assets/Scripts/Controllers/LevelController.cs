@@ -94,13 +94,6 @@ public class LevelController : MonoBehaviour {
             SetLevelInfoPanel();
         }
         // LoadSavedGrid();
-
-        if (ProgressionController.Instance.isLevelJustStarted) {
-            Debug.Log("level started! starting tutorial");
-            TutorialController.Instance.StartTutorial();
-        } else {
-            Debug.Log("level did not just start");
-        }
     }
 
     private IEnumerator LoadWarriorFile() {

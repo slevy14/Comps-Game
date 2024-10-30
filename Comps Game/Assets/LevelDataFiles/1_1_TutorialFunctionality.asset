@@ -15,10 +15,14 @@ MonoBehaviour:
   tutorialListItems:
   - tutorialDialog: hi it's me im a bear
     functionOption: 7
-  - tutorialDialog: warrior drawer
+  - tutorialDialog: let's go to the code editor
+    functionOption: 13
+  - tutorialDialog: here's the warrior drawer
     functionOption: 0
-  - tutorialDialog: blocks drawer
+  - tutorialDialog: here's the blocks drawer
     functionOption: 1
-  - tutorialDialog: enemy drawer
+  - tutorialDialog: here's the enemy drawer
     functionOption: 2
+  - tutorialDialog: now let's go back to the level
+    functionOption: 12
   _selectedFunction: 7
