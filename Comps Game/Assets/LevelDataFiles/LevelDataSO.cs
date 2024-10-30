@@ -26,6 +26,5 @@ public class LevelDataSO : ScriptableObject {
     public int maxWarriorsToPlace;
 
     [Header("Tutorial")]
-    public List<string> battleTutorialDialog;
-    public List<string> editorTutorialDialog;
+    public TutorialFunctionalitySO tutorialFunctionality;
 }
