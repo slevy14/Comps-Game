@@ -92,18 +92,16 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void ShowArrow() {}
 
     private void SwitchToLevelScene() {
-        SceneController.Instance.LoadSceneByName("LevelScene");
-        TutorialController.Instance.DisableHighlight();
+        TutorialController.Instance.TutorialChangeSceneWithDelay("LevelScene");
     }
 
     private void SwitchToCodeEditor() {
-        SceneController.Instance.LoadSceneByName("CodeEditor");
-        TutorialController.Instance.DisableHighlight();
+        TutorialController.Instance.TutorialChangeSceneWithDelay("CodeEditor");
     }
 
     // still need to define none for lookup table
     private void None() {
-        TutorialController.Instance.DisableHighlight();
+        TutorialController.Instance.HideHighlight();
     }
 
 }

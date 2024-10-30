@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class TutorialController : MonoBehaviour {
@@ -17,6 +18,7 @@ public class TutorialController : MonoBehaviour {
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject tutorialMask;
     [SerializeField] private GameObject bear;
+    [SerializeField] private TMP_Text talkingTextBox;
 
     // SINGLETON
     public static TutorialController Instance = null;
@@ -42,15 +44,18 @@ public class TutorialController : MonoBehaviour {
             currentDialogTime += Time.deltaTime;
         }
 
-        if (inTutorial && CanAdvanceDialog() && Input.GetMouseButtonDown(0)) {
-            NextStep();
+        if (Input.GetMouseButtonDown(0)) {
+            if (inTutorial && CanAdvanceDialog()) {
+                NextStep();
+            }
         }
     }
 
     private void NextStep() {
         if (IsValidTutorialIndex()) {
-            Debug.Log("running tutorial at index " + currentTutorialIndex + ", advancing to next step of tutorial");
+            // Debug.Log("running tutorial at index " + currentTutorialIndex + ", advancing to next step of tutorial");
             ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.RunTutorialFunction(currentTutorialIndex);
+            talkingTextBox.text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.tutorialListItems[currentTutorialIndex].tutorialDialog;
             currentTutorialIndex++;
         } else {
             EndTutorial();
@@ -64,12 +69,14 @@ public class TutorialController : MonoBehaviour {
 
     public bool CanAdvanceDialog() {
         if (inTransition) {
+            Debug.Log("in transition");
             return false;
         }
 
         if (currentDialogTime >= dialogAdvanceDelay || skippedDialog) {
             currentDialogTime = 0;
             skippedDialog = false;
+            Debug.Log("can advance");
             return true;
         } else {
             SkipDialog();
@@ -79,6 +86,7 @@ public class TutorialController : MonoBehaviour {
 
     private void SkipDialog() {
         // FIXME: skip thru dialog if button pressed before delay time
+        Debug.Log("skipping dialog");
         skippedDialog = true;
     }
 
@@ -97,9 +105,12 @@ public class TutorialController : MonoBehaviour {
     }
 
     private void ToggleTutorialUIObjects(bool value) {
+        Debug.Log("toggling ui " + value);
         bear.SetActive(value);
         tutorialMask.SetActive(value);
-        DisableHighlight();
+        talkingTextBox.transform.parent.gameObject.SetActive(value);
+
+        HideHighlight();
         highlight.SetActive(value);
     }
 
@@ -108,12 +119,14 @@ public class TutorialController : MonoBehaviour {
         highlight.GetComponent<RectTransform>().anchoredPosition = highlightPos;
     }
 
-    public void DisableHighlight() {
+    public void HideHighlight() {
         highlight.GetComponent<RectTransform>().anchoredPosition = new Vector2(960, 540);
         highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
     }
 
-    public void TutorialChangeSceneWithDelay() {
+    public void TutorialChangeSceneWithDelay(string name) {
+        SceneController.Instance.LoadSceneByName(name);
+        HideHighlight();
         StartCoroutine(SceneChangeDelay());
     }
 
