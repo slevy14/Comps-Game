@@ -19,7 +19,11 @@ public class TutorialFunctionalitySO : ScriptableObject {
         LoadLastWarrior = 4,
         LoadFirstEnemy = 5,
         ShowArrow = 6,
-        None = 7
+        None = 7,
+        HighlightBlocksArea = 8,
+        HighlightSaveButton = 9,
+        HighlightStrength = 10,
+        Highlight
     };
 
     [SerializeField]
@@ -65,14 +69,17 @@ public class TutorialFunctionalitySO : ScriptableObject {
 
     private void HighlightWarriorDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightWarriorsDrawer");
+        TutorialController.Instance.MoveHighlight(new Vector2(-843, 178));
     }
 
     private void HighlightBlocksDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightBlocksDrawer");
+        TutorialController.Instance.MoveHighlight(new Vector2(-612, 178));
     }
 
     private void HighlightEnemyDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightEnemyDrawer");
+        TutorialController.Instance.MoveHighlight(new Vector2(-374, 178));
     }
 
     private void LoadFirstWarrior() {}
@@ -81,7 +88,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void ShowArrow() {}
 
     // still need to define none for lookup table
-    private void None() { }
+    private void None() {
+        TutorialController.Instance.DisableHighlight();
+    }
 
 }
 

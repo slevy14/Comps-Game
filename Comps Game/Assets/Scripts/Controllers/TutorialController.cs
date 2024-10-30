@@ -12,6 +12,11 @@ public class TutorialController : MonoBehaviour {
     private float currentDialogTime;
     private bool skippedDialog;
 
+    [Header("Tutorial GameObjects")]
+    [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject tutorialMask;
+    [SerializeField] private GameObject bear;
+
     // SINGLETON
     public static TutorialController Instance = null;
 
@@ -27,6 +32,7 @@ public class TutorialController : MonoBehaviour {
 
     public void Awake() {
         CheckSingleton();
+        ToggleTutorialUIObjects(false);
     }
 
     void Update() {
@@ -34,15 +40,18 @@ public class TutorialController : MonoBehaviour {
             currentDialogTime += Time.deltaTime;
         }
 
-        if (inTutorial && CanAdvanceDialog() && IsValidTutorialIndex() && (Input.GetMouseButtonDown(0))) {
+        if (inTutorial && CanAdvanceDialog() && Input.GetMouseButtonDown(0)) {
+            NextStep();
+        }
+    }
+
+    private void NextStep() {
+        if (IsValidTutorialIndex()) {
             Debug.Log("running tutorial at index " + currentTutorialIndex + ", advancing to next step of tutorial");
             ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.RunTutorialFunction(currentTutorialIndex);
             currentTutorialIndex++;
-        }
-
-        if (inTutorial && !IsValidTutorialIndex()) {
-            Debug.Log("tutorial index " + currentTutorialIndex + " invalid");
-            inTutorial = false;
+        } else {
+            EndTutorial();
         }
     }
 
@@ -70,8 +79,32 @@ public class TutorialController : MonoBehaviour {
     public void StartTutorial() {
         Debug.Log("started tutorial");
         ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.InitializeLookup();
+        ToggleTutorialUIObjects(true);
         currentTutorialIndex = 0;
         inTutorial = true;
+        NextStep();
+    }
+
+    public void EndTutorial() {
+        inTutorial = false;
+        ToggleTutorialUIObjects(false);
+    }
+
+    private void ToggleTutorialUIObjects(bool value) {
+        bear.SetActive(value);
+        tutorialMask.SetActive(value);
+        DisableHighlight();
+        highlight.SetActive(value);
+    }
+
+    public void MoveHighlight(Vector2 highlightPos) {
+        highlight.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
+        highlight.GetComponent<RectTransform>().anchoredPosition = highlightPos;
+    }
+
+    public void DisableHighlight() {
+        highlight.GetComponent<RectTransform>().anchoredPosition = new Vector2(960, 540);
+        highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
     }
 
 
