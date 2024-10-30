@@ -770,8 +770,7 @@ public class DesignerController : MonoBehaviour {
         // float strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
         // defense+maxHealth+1)
         Debug.Log("defense multiplier: " + (1+((float)defense / (float)(defense+maxHealth))));
-        float strength = attackPower*attackRange + healPower*attackRange + projectilePower + speed/10 + maxHealth*(1 + ((float)defense / (float)(defense+maxHealth)));
-        return Mathf.RoundToInt(strength);
+        return HelperController.Instance.CalculateWarriorStrength(attackPower, attackRange, healPower, projectilePower, speed, maxHealth, defense);
     }
 
     public List<BlockDataStruct> ParseBehaviors(GameObject header) {

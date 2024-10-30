@@ -214,11 +214,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
         // (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
         
-        float strength = propertiesDict[BlockData.Property.MELEE_ATTACK_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
-                         + propertiesDict[BlockData.Property.HEAL_POWER]*propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]
-                         + maxHealth*(1+(propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth)))
-                         + propertiesDict[BlockData.Property.MOVE_SPEED]/10;
-        return (int)strength;
+        return HelperController.Instance.CalculateWarriorStrength((int)propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE], (int)propertiesDict[BlockData.Property.HEAL_POWER], (int)propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MOVE_SPEED], (int)maxHealth, (int)propertiesDict[BlockData.Property.DEFENSE]);
     }
 
 
