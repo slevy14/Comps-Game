@@ -1096,9 +1096,13 @@ public class DesignerController : MonoBehaviour {
     public void UpdateStrengthDisplay() {
         int newStrength = CalculateCurrentStrength();
         if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength) {
-            strengthDisplay.color = new Color(241, 104, 104);
+            strengthDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
+            // strengthDisplay.color = Color.blue;
+            Debug.Log("setting color good");
         } else {
-            strengthDisplay.color = new Color(104, 241, 104);
+            strengthDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
+            // strengthDisplay.color = Color.red;
+            Debug.Log("setting color bad");
         }
         strengthDisplay.text = "Strength\n" + newStrength + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
     }
