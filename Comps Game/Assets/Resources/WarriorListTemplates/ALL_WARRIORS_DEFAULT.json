@@ -18,7 +18,7 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "100"
+                        "10"
                     ]
                 },
                 {
@@ -26,31 +26,12 @@
                     "behavior": 0,
                     "property": 6,
                     "values": [
-                        "25"
+                        "10"
                     ]
                 }
             ],
             "moveFunctions": [],
-            "useWeaponFunctions": [
-                {
-                    "blockType": 1,
-                    "behavior": 13,
-                    "property": 0,
-                    "values": [
-                        "0",
-                        "0"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 5,
-                    "property": 0,
-                    "values": [
-                        "-1",
-                        "-1"
-                    ]
-                }
-            ],
+            "useWeaponFunctions": [],
             "useSpecialFunctions": []
         }
     ]

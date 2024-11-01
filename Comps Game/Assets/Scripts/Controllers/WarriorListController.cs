@@ -49,8 +49,8 @@ public class WarriorListController : MonoBehaviour {
             return;
         } else {
             Debug.Log("Enemies file doesn't exist. Pulling from asset files.");
-            string json = System.IO.File.ReadAllText("Assets/LevelDataFiles/ALL_WARRIORS_DEFAULT.json");
-            warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
+            TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT.json");
+            warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json_textAsset.text);
         }
     }
 
