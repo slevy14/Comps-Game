@@ -16,6 +16,7 @@ public class TutorialController : MonoBehaviour {
 
     [Header("Tutorial GameObjects")]
     [SerializeField] private GameObject highlight;
+    [SerializeField] private GameObject drawerHighlight;
     [SerializeField] private GameObject tutorialMask;
     [SerializeField] private GameObject bear;
     [SerializeField] private TMP_Text talkingTextBox;
@@ -109,6 +110,7 @@ public class TutorialController : MonoBehaviour {
         bear.SetActive(value);
         tutorialMask.SetActive(value);
         talkingTextBox.transform.parent.gameObject.SetActive(value);
+        drawerHighlight.SetActive(value);
 
         HideHighlight();
         highlight.SetActive(value);
@@ -122,6 +124,12 @@ public class TutorialController : MonoBehaviour {
     public void HideHighlight() {
         highlight.GetComponent<RectTransform>().anchoredPosition = new Vector2(960, 540);
         highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
+
+        drawerHighlight.SetActive(false);
+    }
+
+    public void ToggleDrawerHighlight(bool value) {
+        drawerHighlight.SetActive(value);
     }
 
     public void TutorialChangeSceneWithDelay(string name) {

@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5445331ea6e5422ea866d2a1fe93170, type: 3}
+  m_Name: 1_2_TutorialFunctionality
+  m_EditorClassIdentifier: 
+  tutorialListItems:
+  - tutorialDialog: 'hi! thank you for asking! hi! thank you for asking! hi! thank
+      you for asking! hi! thank you for asking! hi! thank you for asking! hi! thank
+      you for asking! hi! thank you for asking! hi! thank you for asking! hi! thank
+      you for asking! hi! thank you for asking! hi! thank you for asking! '
+    functionOption: 7
+  - tutorialDialog: let's go to the code editor
+    functionOption: 13
+  - tutorialDialog: here's the warrior drawer
+    functionOption: 0
+  - tutorialDialog: here's the blocks drawer
+    functionOption: 1
+  - tutorialDialog: here's the enemy drawer
+    functionOption: 2
+  - tutorialDialog: now let's go back to the level
+    functionOption: 12
+  _selectedFunction: 7

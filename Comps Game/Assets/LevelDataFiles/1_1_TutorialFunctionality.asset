@@ -15,14 +15,33 @@ MonoBehaviour:
   tutorialListItems:
   - tutorialDialog: hi it's me im a bear
     functionOption: 7
-  - tutorialDialog: let's go to the code editor
+  - tutorialDialog: oh no you're under attack!
+    functionOption: 15
+  - tutorialDialog: you can click on the enemy to show more information
+    functionOption: 15
+  - tutorialDialog: drag your own warriors onto the battlefield to fight for you!
+    functionOption: 16
+  - tutorialDialog: but oh no! this one doesn't do anything yet.
+    functionOption: 16
+  - tutorialDialog: let's go to the code editor and make it strong!
+    functionOption: 16
+  - tutorialDialog: this is the code editor.
     functionOption: 13
-  - tutorialDialog: here's the warrior drawer
-    functionOption: 0
-  - tutorialDialog: here's the blocks drawer
+  - tutorialDialog: click on this tab to display the code blocks
     functionOption: 1
-  - tutorialDialog: here's the enemy drawer
+  - tutorialDialog: this shows you all the code blocks you have at your disposal.
+      drag and drop them onto the whiteboard! they snap together.
+    functionOption: 14
+  - tutorialDialog: properties go under the properties header, behaviors go under
+      use weapon (for now)
+    functionOption: 1
+  - tutorialDialog: click on this tab to see all your warriors and make new ones
+    functionOption: 0
+  - tutorialDialog: click on this tab to see all enemies in the level.
     functionOption: 2
-  - tutorialDialog: now let's go back to the level
-    functionOption: 12
+  - tutorialDialog: click on an enemy in the drawer to see its code
+    functionOption: 2
+  - tutorialDialog: that's all from me, the bear. code your first warrior and send
+      it into battle!
+    functionOption: 7
   _selectedFunction: 7

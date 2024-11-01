@@ -26,6 +26,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
         Highlight = 11,
         SwitchToLevelScene = 12,
         SwitchToCodingEditor = 13,
+        HighlightDrawer = 14,
+        HighlightLevelOneEnemy = 15,
+        HighlightPlayerFirstWarrior = 16
     };
 
     [SerializeField]
@@ -49,7 +52,10 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.ShowArrow, ShowArrow },
             { FunctionOptions.None, None },
             { FunctionOptions.SwitchToLevelScene, SwitchToLevelScene },
-            { FunctionOptions.SwitchToCodingEditor, SwitchToCodeEditor }
+            { FunctionOptions.SwitchToCodingEditor, SwitchToCodeEditor },
+            { FunctionOptions.HighlightDrawer, HighlightDrawer },
+            { FunctionOptions.HighlightLevelOneEnemy, HighlightLevelOneEnemy },
+            { FunctionOptions.HighlightPlayerFirstWarrior, HighlightPlayerFirstWarrior }
         };
     }
 
@@ -73,17 +79,32 @@ public class TutorialFunctionalitySO : ScriptableObject {
 
     private void HighlightWarriorDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightWarriorsDrawer");
-        TutorialController.Instance.MoveHighlight(new Vector2(-843, 178));
+        TutorialController.Instance.MoveHighlight(new Vector2(-612, 178));
     }
 
     private void HighlightBlocksDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightBlocksDrawer");
-        TutorialController.Instance.MoveHighlight(new Vector2(-612, 178));
+        TutorialController.Instance.MoveHighlight(new Vector2(-843, 178));
     }
 
     private void HighlightEnemyDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightEnemyDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-374, 178));
+    }
+
+    private void HighlightDrawer() {
+        Debug.Log("TUTORIAL FUNC: " + "HighlightDrawer");
+        TutorialController.Instance.ToggleDrawerHighlight(true);
+    }
+
+    private void HighlightLevelOneEnemy() {
+        Debug.Log("TUTORIAL FUNC: " + "HighlightLevelOneEnemy");
+        TutorialController.Instance.MoveHighlight(new Vector2(68, 113));
+    }
+
+    private void HighlightPlayerFirstWarrior() {
+        Debug.Log("TUTORIAL FUNC: " + "HighlightPlayerFirstWarrior");
+        TutorialController.Instance.MoveHighlight(new Vector2(-834, -440));
     }
 
     private void LoadFirstWarrior() {}
@@ -92,10 +113,12 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void ShowArrow() {}
 
     private void SwitchToLevelScene() {
+        Debug.Log("TUTORIAL FUNC: " + "SwitchToLevelScene");
         TutorialController.Instance.TutorialChangeSceneWithDelay("LevelScene");
     }
 
     private void SwitchToCodeEditor() {
+        Debug.Log("TUTORIAL FUNC: " + "SwitchToCodeEditor");
         TutorialController.Instance.TutorialChangeSceneWithDelay("CodeEditor");
     }
 
