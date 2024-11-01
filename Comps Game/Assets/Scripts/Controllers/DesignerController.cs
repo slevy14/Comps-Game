@@ -341,6 +341,7 @@ public class DesignerController : MonoBehaviour {
         // reset name display
         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname],";
         // reset dropdown
+        dropdown.gameObject.SetActive(true);
         dropdown.ResetSprite();
         // clear whiteboard
         ClearWhiteboard();
