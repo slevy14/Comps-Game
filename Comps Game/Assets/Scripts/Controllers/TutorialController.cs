@@ -106,7 +106,7 @@ public class TutorialController : MonoBehaviour {
     }
 
     private void ToggleTutorialUIObjects(bool value) {
-        Debug.Log("toggling ui " + value);
+        // Debug.Log("toggling ui " + value);
         bear.SetActive(value);
         tutorialMask.SetActive(value);
         talkingTextBox.transform.parent.gameObject.SetActive(value);

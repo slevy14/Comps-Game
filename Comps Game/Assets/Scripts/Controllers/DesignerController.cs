@@ -292,6 +292,45 @@ public class DesignerController : MonoBehaviour {
 
 
     // WARRIOR CREATION
+    public void PromptCreateNewWarrior() {
+        if (justSaved && CheckSaveErrors(CreateDataForCurrentWarrior()).Count == 0) {
+            CreateNewWarrior();
+            return;
+        }
+
+        ToggleSavePromptMenu(true, false);
+        GameObject saveContinueButton = switchPromptMenu.transform.GetChild(0).gameObject;
+        GameObject dontSaveContinueButton = switchPromptMenu.transform.GetChild(2).gameObject;
+
+        saveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        dontSaveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+
+        saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndCreate();});
+        saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+        saveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Save & Create";
+
+        dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveCreate();});
+        dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+        dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Create Without Saving";
+    }
+
+    public void SaveAndCreate() {
+        if (SaveWarrior()) {
+            CreateNewWarrior();
+        } else {
+            Debug.Log("save error! couldn't create new warrior");
+        }
+    }
+
+    public void NoSaveCreate() {
+        List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        if (errorsList.Count == 0) {
+            CreateNewWarrior();
+        } else {
+            ShowErrorDisplay(errorsList);
+        }
+    }
+
     public void CreateNewWarrior() {
         // save active warrior first, just in case
         SaveWarrior();
@@ -357,7 +396,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
-        Debug.Log("thumbnail is " + thumbnail);
+        // Debug.Log("thumbnail is " + thumbnail);
         thumbnail.GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
@@ -830,11 +869,11 @@ public class DesignerController : MonoBehaviour {
             }
         }
 
-        Debug.Log(attackPower + ", " + attackRange + ", " + healPower + ", " + projectilePower + ", " + maxHealth + ", " + defense + ", " + speed);
+        // Debug.Log(attackPower + ", " + attackRange + ", " + healPower + ", " + projectilePower + ", " + maxHealth + ", " + defense + ", " + speed);
 
         // float strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
         // defense+maxHealth+1)
-        Debug.Log("defense multiplier: " + (1+((float)defense / (float)(defense+maxHealth))));
+        // Debug.Log("defense multiplier: " + (1+((float)defense / (float)(defense+maxHealth))));
         return HelperController.Instance.CalculateWarriorStrength(attackPower, attackRange, healPower, projectilePower, speed, maxHealth, defense);
     }
 
@@ -1163,11 +1202,11 @@ public class DesignerController : MonoBehaviour {
         if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength) {
             strengthDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
             // strengthDisplay.color = Color.blue;
-            Debug.Log("setting color good");
+            // Debug.Log("setting color good");
         } else {
             strengthDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
             // strengthDisplay.color = Color.red;
-            Debug.Log("setting color bad");
+            // Debug.Log("setting color bad");
         }
         strengthDisplay.text = "Strength\n" + newStrength + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
     }

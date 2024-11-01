@@ -7,7 +7,7 @@ public class InputFieldSetter : MonoBehaviour {
 
     void Start() {
         if (this.gameObject.GetComponent<TMP_InputField>()) {
-            Debug.Log("found input field");
+            // Debug.Log("found input field");
             this.gameObject.GetComponent<TMP_InputField>().onValueChanged.AddListener(delegate{this.SetInputFieldValue();});
         }
     }

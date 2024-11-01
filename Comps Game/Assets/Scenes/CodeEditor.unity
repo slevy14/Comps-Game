@@ -5608,7 +5608,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 213865990}
         m_TargetAssemblyTypeName: DesignerController, Assembly-CSharp
-        m_MethodName: CreateNewWarrior
+        m_MethodName: PromptCreateNewWarrior
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -68,15 +68,21 @@ public class GridSaveLoader : MonoBehaviour {
         Debug.Log("grid found");
         // load objects from json to grid
         // foreach object in saved grid:
-        foreach (WarriorOnGrid warriorOnGrid in gridWithObjects.warriorList) {
-            Debug.Log("instantiating warrior from saved grid");
-            // instantiate into right position
-            GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
-            // set properties like in WarriorLevelThumbnail
-            LevelController.Instance.SetWarriorData(warrior, warriorOnGrid.isEnemy, warriorOnGrid.warriorIndex);
-            warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !warriorOnGrid.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController;
-            // add object to grid object dict
-            LevelController.Instance.objectsOnGrid[warrior] = warriorOnGrid.pos;
+        try {
+            foreach (WarriorOnGrid warriorOnGrid in gridWithObjects.warriorList) {
+                Debug.Log("instantiating warrior from saved grid");
+                // instantiate into right position
+                GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
+                // set properties like in WarriorLevelThumbnail
+                LevelController.Instance.SetWarriorData(warrior, warriorOnGrid.isEnemy, warriorOnGrid.warriorIndex);
+                warrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = !warriorOnGrid.isEnemy ? WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController : EnemyListController.Instance.spriteDataList[EnemyListController.Instance.GetWarriorAtIndex(warriorOnGrid.warriorIndex).spriteIndex].animatorController;
+                // add object to grid object dict
+                LevelController.Instance.objectsOnGrid[warrior] = warriorOnGrid.pos;
+            }
+        } catch {
+            // if data error and grid can't be loaded, just reset it
+            ResetGrid();
+            LoadGridFromJson();
         }
 
     }
