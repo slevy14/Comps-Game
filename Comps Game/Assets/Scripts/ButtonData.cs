@@ -27,11 +27,6 @@ public class ButtonData : MonoBehaviour {
         ProgressionController.Instance.StartNewLevel(ProgressionController.Instance.currentLevel);
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
-
-    public void BackToLevel() {
-        SceneController.Instance.LoadSceneByName("LevelScene");
-    }
-
     public void PromptNewGame() {
         // FIXME
 
@@ -46,6 +41,10 @@ public class ButtonData : MonoBehaviour {
     public void NewGame() {
         // set continue level from to 1, current level to 1
         ProgressionController.Instance.StartNewLevel(1);
+        SceneController.Instance.LoadSceneByName("LevelScene");
+    }
+
+    public void BackToLevel() {
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
 

@@ -46,9 +46,10 @@ public class DropdownOptions : MonoBehaviour {
     }
 
     public void ResetSprite() {
+        // this is only ever called for player warriors
         dropdown.value = 0;
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[0].sprite;
-        activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = EnemyListController.Instance.spriteDataList[0].animatorController;
+        activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = WarriorListController.Instance.spriteDataList[0].animatorController;
     }
 
     public void SetSpriteOptions(bool isEnemy) {

@@ -106,7 +106,7 @@ public class DesignerController : MonoBehaviour {
     private void InitializeLevelSwitchButton() {
         switchLevelButtonObject.GetComponent<Button>().onClick.RemoveAllListeners();
         if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
-            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {switchLevelButtonObject.GetComponent<ButtonData>().GoToSandbox();});
+            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {ShowLevelLoadSavePrompt();});
             switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Sandbox";
         } else { // make return to level button
             switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {switchLevelButtonObject.GetComponent<ButtonData>().BackToLevel();});
@@ -153,19 +153,54 @@ public class DesignerController : MonoBehaviour {
     }
 
     // switch save confirm buttons
-    public void ShowSavePrompt(int warriorIndex, int thumbnailIndex, bool isEnemy) {
+    public void ToggleSavePromptMenu(bool value, bool isSwitch) {
+        switchPromptMenu.SetActive(value);
+        if (value == false) {
+            return;
+        }
+
+        GameObject saveContinueButton = switchPromptMenu.transform.GetChild(0).gameObject;
+        GameObject dontSaveContinueButton = switchPromptMenu.transform.GetChild(2).gameObject;
+        saveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        dontSaveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        if (!isSwitch) {
+            saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");});
+            saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+            saveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Save & Continue";
+            dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");});
+            dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+            dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Continue Without Saving";
+        } else {
+            saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndSwitch();});
+            saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+            saveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Save & Switch";
+            dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveSwitch();});
+            dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
+            dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Don't Save";
+        }
+    }
+
+    public void ShowSwitchSavePrompt(int warriorIndex, int thumbnailIndex, bool isEnemy) {
         warriorToLoadIndex = warriorIndex;
         warriorToLoadThumbnailIndex = thumbnailIndex;
         isLoadingWarriorEnemy = isEnemy;
         if (justSaved) {
             NoSaveSwitch();
         } else {
-            switchPromptMenu.SetActive(true);
+            ToggleSavePromptMenu(true, true);
+        }
+    }
+
+    public void ShowLevelLoadSavePrompt() {
+        if (justSaved) {
+            NoSaveContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");
+        } else {
+            ToggleSavePromptMenu(true, false);
         }
     }
 
     public void CancelSwitch() {
-        switchPromptMenu.SetActive(false);
+        ToggleSavePromptMenu(false, false);
     }
 
     public void SaveAndSwitch() {
@@ -178,12 +213,35 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void NoSaveSwitch() {
-        LoadWarriorToWhiteboard(warriorToLoadIndex, warriorToLoadThumbnailIndex, true, isLoadingWarriorEnemy);
+        List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        if (errorsList.Count == 0) {
+            LoadWarriorToWhiteboard(warriorToLoadIndex, warriorToLoadThumbnailIndex, true, isLoadingWarriorEnemy);
+        } else {
+            ShowErrorDisplay(errorsList);
+        }
+    }
+
+    public void SaveAndContinue(string sceneName) {
+        if (SaveWarrior()) {
+            SceneController.Instance.LoadSceneByName(sceneName);
+        } else {
+            Debug.Log("saving error! couldn't load scene");
+        }
+    }
+
+    public void NoSaveContinue(string sceneName) {
+        List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        if (errorsList.Count == 0) {
+            SceneController.Instance.LoadSceneByName(sceneName);
+        } else {
+            ShowErrorDisplay(errorsList);
+        }
     }
 
     public void SaveWarriorWrapper() {
-        AudioController.Instance.PlaySoundEffect("Save");
-        SaveWarrior();
+        if (SaveWarrior()) {
+            AudioController.Instance.PlaySoundEffect("Save");
+        }
     }
 
     // close error popup
@@ -239,6 +297,8 @@ public class DesignerController : MonoBehaviour {
         SaveWarrior();
         // get index
         editingWarriorIndex = WarriorListController.Instance.GetCount();
+        // set team to player
+        isCurrentWarriorEnemy = false;
         // reset name display
         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = "[noname],";
         // reset dropdown
@@ -297,6 +357,7 @@ public class DesignerController : MonoBehaviour {
         WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
         // update sprite
         GameObject thumbnail = container.GetChild(index+1).gameObject;
+        Debug.Log("thumbnail is " + thumbnail);
         thumbnail.GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
         // update list reference
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
@@ -346,21 +407,14 @@ public class DesignerController : MonoBehaviour {
 
     public void InitializeWarrior() {
         justSaved = true;
-        WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingWarriorIndex);
-        _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
-        _WarriorFunctionalityData.warriorName = ParseName();
-        _WarriorFunctionalityData.properties = ParseProperties();
-        _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
-        _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
-        _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
-        // SaveIntoJSON(_WarriorFunctionalityData);
-        UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
+        WarriorFunctionalityData _WarriorFunctionalityData = CreateDataForCurrentWarrior();
+        
+        // this should only be called for player creating new warriors!
+        UpdateWarriorList(_WarriorFunctionalityData, false);
         AddWarriorToDrawer(editingWarriorIndex);
     }
 
-
-    // Saving
-    public bool SaveWarrior() {
+    private WarriorFunctionalityData CreateDataForCurrentWarrior() {
         WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingWarriorIndex);
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
         _WarriorFunctionalityData.warriorName = ParseName();
@@ -368,13 +422,20 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
+        
+        return _WarriorFunctionalityData;
+    }
+
+    // Saving
+    public bool SaveWarrior() {
+        WarriorFunctionalityData _WarriorFunctionalityData = CreateDataForCurrentWarrior();
 
         List<string> errorsList = CheckSaveErrors(_WarriorFunctionalityData);
         if (errorsList.Count == 0) { // if no errors
             justSaved = true;
             // SaveIntoJSON(_WarriorFunctionalityData);
             UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
-            if (!isLoadingWarriorEnemy) {
+            if (!isCurrentWarriorEnemy) {
                 UpdateWarriorDrawerThumbnail(editingWarriorIndex);
                 if (isSandbox) {
                     WarriorListController.Instance.FindJSON("sandbox_warriors"); // reload json file
@@ -389,16 +450,20 @@ public class DesignerController : MonoBehaviour {
         } else {
             justSaved = false;
 
-            TMP_Text errorText = errorPopupMenu.transform.GetChild(1).GetComponent<TMP_Text>(); // text component
+            ShowErrorDisplay(errorsList);
+
+            return false;
+        }
+    }
+
+    public void ShowErrorDisplay(List<string> errorsList) {
+        TMP_Text errorText = errorPopupMenu.transform.GetChild(1).GetComponent<TMP_Text>(); // text component
             string errorString = "Couldn't save due to the following errors:\n\n";
             foreach (string error in errorsList) {
                 errorString += error + "\n";
             }
             errorText.text = errorString;
             errorPopupMenu.SetActive(true);
-
-            return false;
-        }
     }
 
     public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
@@ -499,7 +564,7 @@ public class DesignerController : MonoBehaviour {
         List<string> errorsToOutput = new List<string>();
         // THINGS TO CHECK:
         // must have name
-        if (ParseName() == "noname") {
+        if (ParseName() == "[noname]") {
             errorsToOutput.Add("missing name! who is it??");
         }
         // must have health
@@ -677,7 +742,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public string ParseName() {
-        string name = "noname";
+        string name = "[noname]";
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
