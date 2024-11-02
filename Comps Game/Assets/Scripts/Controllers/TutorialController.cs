@@ -116,6 +116,29 @@ public class TutorialController : MonoBehaviour {
         highlight.SetActive(value);
     }
 
+    public void MoveBear(Vector2 bearPos, bool faceLeft) {
+        // set bear pos
+        Vector2 bearPrevPos = bear.GetComponent<RectTransform>().anchoredPosition;
+        bear.GetComponent<RectTransform>().anchoredPosition = bearPos;
+
+        // set text box position
+        Debug.Log("textbox offset is " + (bearPos - bearPrevPos));
+        Vector2 newTextboxPosition = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition + (bearPos - bearPrevPos);
+
+        if (faceLeft && bear.GetComponent<RectTransform>().eulerAngles.y != 180) {
+            bear.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 180, 0);
+            Debug.Log("new x before shift is " + newTextboxPosition.x);
+            newTextboxPosition.x = newTextboxPosition.x - (-bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x);
+            Debug.Log("facing left, shifting back by " + (bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x));
+            Debug.Log("new x after shift is " + newTextboxPosition.x);
+        } else if (!faceLeft) {
+            bear.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
+        }
+        Debug.Log("new textbox position: " + newTextboxPosition);
+        talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = newTextboxPosition;
+    }
+
+
     public void MoveHighlight(Vector2 highlightPos) {
         highlight.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         highlight.GetComponent<RectTransform>().anchoredPosition = highlightPos;

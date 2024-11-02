@@ -80,20 +80,23 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void HighlightWarriorDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightWarriorsDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-612, 178));
+        TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
     }
 
     private void HighlightBlocksDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightBlocksDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-843, 178));
+        TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
     }
 
     private void HighlightEnemyDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightEnemyDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-374, 178));
+        TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
     }
 
     private void HighlightDrawer() {
-        Debug.Log("TUTORIAL FUNC: " + "HighlightDrawer");
+        Debug.Log("TUTORIAL FUNC: " + "HighlightDrawer (full drawer area)");
         TutorialController.Instance.ToggleDrawerHighlight(true);
     }
 
@@ -105,6 +108,12 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void HighlightPlayerFirstWarrior() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightPlayerFirstWarrior");
         TutorialController.Instance.MoveHighlight(new Vector2(-834, -440));
+        TutorialController.Instance.MoveBear(new Vector2(595, 216), true);
+    }
+
+    private void HighlightWhiteboard() {
+        Debug.Log("TUTORIAL FUNC: " + "HighlightWhiteBoard");
+        TutorialController.Instance.MoveBear(new Vector2(39, -403), false);
     }
 
     private void LoadFirstWarrior() {}
