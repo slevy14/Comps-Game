@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5445331ea6e5422ea866d2a1fe93170, type: 3}
+  m_Name: 1_3_TutorialFunctionality
+  m_EditorClassIdentifier: 
+  tutorialListItems:
+  - tutorialDialog: These skeletons look even stronger! We can't fight them head
+      on.
+    functionOption: 7
+  - tutorialDialog: And we can only use two warriors? This one could be tricky.
+    functionOption: 18
+  - tutorialDialog: Let's go back to the code editor to come up with a solution.
+    functionOption: 7
+  - tutorialDialog: Let's go back to the code editor to come up with a solution.
+    functionOption: 13
+  - tutorialDialog: You unlocked a new property block!
+    functionOption: 18
+  - tutorialDialog: The Attack Range block can be used to change the reach of your
+      melee attack.
+    functionOption: 18
+  - tutorialDialog: Experiment with different range values to hit your enemies from
+      a distance.
+    functionOption: 18
+  - tutorialDialog: Don't be afraid to make mistakes! Experiment with different property
+      settings and behaviors to strike your enemies down!
+    functionOption: 7
+  _selectedFunction: 7

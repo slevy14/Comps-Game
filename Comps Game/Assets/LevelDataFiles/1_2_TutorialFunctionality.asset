@@ -13,19 +13,17 @@ MonoBehaviour:
   m_Name: 1_2_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: 'hi! thank you for asking! hi! thank you for asking! hi! thank
-      you for asking! hi! thank you for asking! hi! thank you for asking! hi! thank
-      you for asking! hi! thank you for asking! hi! thank you for asking! hi! thank
-      you for asking! hi! thank you for asking! hi! thank you for asking! '
+  - tutorialDialog: There's so many of them!
     functionOption: 7
-  - tutorialDialog: let's go to the code editor
+  - tutorialDialog: I bet we can use what we already have.
+    functionOption: 7
+  - tutorialDialog: Try placing multiple of the same warrior. Notice the limit on
+      the right side!
+    functionOption: 16
+  - tutorialDialog: going to the code editor as a test
     functionOption: 13
-  - tutorialDialog: here's the warrior drawer
-    functionOption: 0
-  - tutorialDialog: here's the blocks drawer
-    functionOption: 1
-  - tutorialDialog: here's the enemy drawer
-    functionOption: 2
-  - tutorialDialog: now let's go back to the level
-    functionOption: 12
+  - tutorialDialog: here are the blocks from this level
+    functionOption: 18
+  - tutorialDialog: k bye
+    functionOption: 7
   _selectedFunction: 7

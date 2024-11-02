@@ -20,6 +20,12 @@ public class TutorialController : MonoBehaviour {
     [SerializeField] private GameObject tutorialMask;
     [SerializeField] private GameObject bear;
     [SerializeField] private TMP_Text talkingTextBox;
+    [SerializeField] private GameObject blockShowingParent;
+
+    [Header("Counters & Flags")]
+    private List<GameObject> currentShowingBlocks;
+    [SerializeField] private List<int> unlockedPropertyBlocks;
+    [SerializeField] private List<int> unlockedBehaviorBlocks;
 
     // SINGLETON
     public static TutorialController Instance = null;
@@ -38,6 +44,8 @@ public class TutorialController : MonoBehaviour {
         CheckSingleton();
         ToggleTutorialUIObjects(false);
         dialogAdvanceDelay = 1f;
+        unlockedPropertyBlocks = new();
+        unlockedBehaviorBlocks = new();
     }
 
     void Update() {
@@ -49,6 +57,17 @@ public class TutorialController : MonoBehaviour {
             if (inTutorial && CanAdvanceDialog()) {
                 NextStep();
             }
+        }
+    }
+
+    public void ResetTutorialStates() {
+        // destroy any showing blocks
+        if (blockShowingParent.transform.childCount != 0) {
+            foreach (Transform child in blockShowingParent.transform) {
+                Destroy(child.gameObject);
+            }
+        } else {
+            Debug.Log("no children to erase");
         }
     }
 
@@ -91,6 +110,25 @@ public class TutorialController : MonoBehaviour {
         skippedDialog = true;
     }
 
+    private void GetUnlockedBlockIndices() {
+        // get all property blocks unlocked thus far, not including the new ones in this level
+        for (int i = 1; i < ProgressionController.Instance.currentLevel; i++) {
+            foreach (int index in ProgressionController.Instance.levelDataList[i].availablePropertiesIndices) {
+                if (!unlockedPropertyBlocks.Contains(index)) {
+                    unlockedPropertyBlocks.Add(index);
+                }
+            }
+        }
+        // get all behavior blockes unlocked thus far, not including the new ones in this level
+        for (int i = 1; i < ProgressionController.Instance.currentLevel; i++) {
+            foreach (int index in ProgressionController.Instance.levelDataList[i].availableBehaviorsIndices) {
+                if (!unlockedBehaviorBlocks.Contains(index)) {
+                    unlockedBehaviorBlocks.Add(index);
+                }
+            }
+        }
+    }
+
     public void StartTutorial() {
         Debug.Log("started tutorial");
         ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.InitializeLookup();
@@ -101,6 +139,7 @@ public class TutorialController : MonoBehaviour {
     }
 
     public void EndTutorial() {
+        ResetTutorialStates();
         inTutorial = false;
         ToggleTutorialUIObjects(false);
     }
@@ -111,6 +150,7 @@ public class TutorialController : MonoBehaviour {
         tutorialMask.SetActive(value);
         talkingTextBox.transform.parent.gameObject.SetActive(value);
         drawerHighlight.SetActive(value);
+        blockShowingParent.SetActive(value);
 
         HideHighlight();
         highlight.SetActive(value);
@@ -153,6 +193,20 @@ public class TutorialController : MonoBehaviour {
 
     public void ToggleDrawerHighlight(bool value) {
         drawerHighlight.SetActive(value);
+    }
+
+    public void ShowNewLevelBlocks() {
+        GetUnlockedBlockIndices();
+        foreach (int propertyIndex in ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availablePropertiesIndices) {
+            if (!unlockedPropertyBlocks.Contains(propertyIndex)) {
+                Instantiate(DesignerController.Instance.GetPropertyBlocks()[propertyIndex], Vector3.zero, transform.rotation, blockShowingParent.transform);
+            }
+        }
+        foreach (int behaviorIndex in ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availableBehaviorsIndices) {
+            if (!unlockedBehaviorBlocks.Contains(behaviorIndex)) {
+                Instantiate(DesignerController.Instance.GetBehaviorBlocks()[behaviorIndex], Vector3.zero, transform.rotation, blockShowingParent.transform);
+            }
+        }
     }
 
     public void TutorialChangeSceneWithDelay(string name) {

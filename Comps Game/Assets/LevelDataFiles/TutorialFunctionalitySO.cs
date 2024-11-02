@@ -28,7 +28,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
         SwitchToCodingEditor = 13,
         HighlightDrawer = 14,
         HighlightLevelOneEnemy = 15,
-        HighlightPlayerFirstWarrior = 16
+        HighlightPlayerFirstWarrior = 16,
+        HighlightWhiteboard = 17,
+        ShowcaseBlock = 18,
     };
 
     [SerializeField]
@@ -55,7 +57,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.SwitchToCodingEditor, SwitchToCodeEditor },
             { FunctionOptions.HighlightDrawer, HighlightDrawer },
             { FunctionOptions.HighlightLevelOneEnemy, HighlightLevelOneEnemy },
-            { FunctionOptions.HighlightPlayerFirstWarrior, HighlightPlayerFirstWarrior }
+            { FunctionOptions.HighlightPlayerFirstWarrior, HighlightPlayerFirstWarrior },
+            { FunctionOptions.HighlightWhiteboard, HighlightWhiteboard },
+            { FunctionOptions.ShowcaseBlock, ShowcaseBlock }
         };
     }
 
@@ -68,6 +72,7 @@ public class TutorialFunctionalitySO : ScriptableObject {
         // ActivateSelectedFunction();
         Debug.Log("TUTORIAL DIALOG: " + tutorialListItems[index].tutorialDialog);
         // Debug.Log(_functionLookup);
+        TutorialController.Instance.ResetTutorialStates(); // make sure no blocks are showing, etc.
         _functionLookup[tutorialListItems[index].functionOption].Invoke();
     }
 
@@ -114,6 +119,12 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void HighlightWhiteboard() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightWhiteBoard");
         TutorialController.Instance.MoveBear(new Vector2(39, -403), false);
+    }
+
+    private void ShowcaseBlock() {
+        Debug.Log("TUTORIAL FUNC: " + "ShowcaseBlock");
+        TutorialController.Instance.ShowNewLevelBlocks();
+        TutorialController.Instance.MoveBear(new Vector2(595, 216), true);
     }
 
     private void LoadFirstWarrior() {}

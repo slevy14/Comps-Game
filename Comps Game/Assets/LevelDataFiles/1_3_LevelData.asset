@@ -36,4 +36,4 @@ MonoBehaviour:
   maxBlocks: 4
   actionPoints: 0
   maxWarriorsToPlace: 2
-  tutorialFunctionality: {fileID: 11400000, guid: 66c59885c01bb47d7b5e2e0cec290b4f, type: 2}
+  tutorialFunctionality: {fileID: 11400000, guid: 1d7164a120c294f44a59aa14869c2aa7, type: 2}

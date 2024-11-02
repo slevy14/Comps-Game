@@ -114,6 +114,16 @@ public class DesignerController : MonoBehaviour {
         }
     }
 
+    // getters
+
+    public List<GameObject> GetPropertyBlocks() {
+        return propertyBlocks;
+    }
+
+    public List<GameObject> GetBehaviorBlocks() {
+        return behaviorBlocks;
+    }
+
 
     // for buttons
     public void ShowBlockDrawer() {
