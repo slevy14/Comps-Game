@@ -48,8 +48,8 @@ public class WarriorListController : MonoBehaviour {
             Debug.Log("Warriors File exists!");
             return;
         } else {
-            Debug.Log("Enemies file doesn't exist. Pulling from asset files.");
-            TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT.json");
+            Debug.Log("Warriors file doesn't exist. Pulling from asset files.");
+            TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT");
             warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json_textAsset.text);
         }
     }

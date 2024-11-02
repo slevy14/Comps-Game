@@ -17,7 +17,7 @@ MonoBehaviour:
       on.
     functionOption: 7
   - tutorialDialog: And we can only use two warriors? This one could be tricky.
-    functionOption: 18
+    functionOption: 7
   - tutorialDialog: Let's go back to the code editor to come up with a solution.
     functionOption: 7
   - tutorialDialog: Let's go back to the code editor to come up with a solution.
