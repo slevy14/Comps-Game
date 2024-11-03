@@ -135,8 +135,7 @@ public class TutorialController : MonoBehaviour {
         ToggleTutorialUIObjects(true);
         currentTutorialIndex = 0;
         inTutorial = true;
-        // reset bear pos
-        MoveBear(new Vector2(-675, -405), false);
+        ResetBearAndTextboxPositions();
         NextStep();
     }
 
@@ -156,6 +155,12 @@ public class TutorialController : MonoBehaviour {
 
         HideHighlight();
         highlight.SetActive(value);
+    }
+
+    public void ResetBearAndTextboxPositions() {
+        MoveBear(new Vector2(-675, -405), false);
+        talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-146.86f, -261.00f);
+        Debug.Log(talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition);
     }
 
     public void MoveBear(Vector2 bearPos, bool faceLeft) {
