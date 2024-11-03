@@ -48,6 +48,10 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject switchLevelButtonObject;
     [SerializeField] public GameObject overlapSpaceIndicator;
     [SerializeField] private TMP_Text strengthDisplay;
+    [SerializeField] private GameObject saveButton;
+    [SerializeField] private GameObject deleteButton;
+    [SerializeField] private GameObject textThe;
+
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -345,6 +349,10 @@ public class DesignerController : MonoBehaviour {
         SaveWarrior();
         // get index
         editingWarriorIndex = WarriorListController.Instance.GetCount();
+        // show delete button if making more than one
+        if (WarriorListController.Instance.GetCount() <= 1) {
+            deleteButton.SetActive(true);
+        }
         // set team to player
         isCurrentWarriorEnemy = false;
         // reset name display
@@ -397,6 +405,9 @@ public class DesignerController : MonoBehaviour {
     public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
         for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
+        }
+        if (WarriorListController.Instance.GetCount() <= 1) {
+            deleteButton.SetActive(false);
         }
     }
 
@@ -668,6 +679,19 @@ public class DesignerController : MonoBehaviour {
             dropdown.gameObject.SetActive(true);
         }
         dropdown.UpdateSprite(warriorData.spriteIndex, isLoadingEnemy);
+        if (isLoadingEnemy) {
+            textThe.SetActive(false);
+            saveButton.SetActive(false);
+            deleteButton.SetActive(false);
+            dropdown.gameObject.SetActive(false);
+        } else {
+            textThe.SetActive(true);
+            saveButton.SetActive(true);
+            if (WarriorListController.Instance.GetCount() > 1) {
+                Debug.Log("activating delete button");
+                deleteButton.SetActive(true);
+            }
+        }
 
         // instantiate blocks onto the whiteboard, positioned and parented
         // might be best to do this by just parenting the objects and then running the update position function on each header
@@ -798,7 +822,10 @@ public class DesignerController : MonoBehaviour {
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
                 if (blockData.property == BlockData.Property.NAME && (blockData.values.Count != 0)) {
                     name = blockData.values[0];
-                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0] + ",";
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
+                    if (!isCurrentWarriorEnemy) {
+                        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text += ",";
+                    }
                 }
             }
             current = current.GetComponent<Draggable>().GetNextBlock();
@@ -832,7 +859,10 @@ public class DesignerController : MonoBehaviour {
                 propertiesList.Add(blockDataStruct);
                 // Debug.Log("added property");
                 if (blockData.property == BlockData.Property.NAME) {
-                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0] + "," : "[noname],";
+                    GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0]  : "[noname]";
+                    if (!isCurrentWarriorEnemy) {
+                        GameObject.Find("NamePreview").GetComponent<TMP_Text>().text += ",";
+                    }
                 }
             }
             current = current.GetComponent<Draggable>().GetNextBlock();

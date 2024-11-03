@@ -40,7 +40,6 @@ public class DropdownOptions : MonoBehaviour {
             activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = EnemyListController.Instance.spriteDataList[index].sprite;
             activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = EnemyListController.Instance.spriteDataList[index].animatorController;
             designerController.spriteDataIndex = index;
-            this.gameObject.SetActive(false);
         }
         activeWarrior.transform.GetChild(0).GetComponent<Animator>().speed = 0.4f;
     }
@@ -58,6 +57,13 @@ public class DropdownOptions : MonoBehaviour {
             foreach (SpriteData sprite in WarriorListController.Instance.spriteDataList) {
                 dropdown.options.Add(new TMP_Dropdown.OptionData(sprite.spriteName, sprite.sprite));
             }
+            // dropdown.interactable = true;
+        } else {
+            dropdown.ClearOptions();
+            foreach (SpriteData sprite in EnemyListController.Instance.spriteDataList) {
+                dropdown.options.Add(new TMP_Dropdown.OptionData(sprite.spriteName, sprite.sprite));
+            }
+            // dropdown.interactable = false;
         }
     }
 
