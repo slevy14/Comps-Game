@@ -23,7 +23,7 @@ public class DebugController : MonoBehaviour {
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.BackQuote)) {
+        if (Input.GetKey(KeyCode.BackQuote) && Input.GetKeyDown(KeyCode.D)) {
             ToggleDebugMenu();
         }
     }
