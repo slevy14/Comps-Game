@@ -94,6 +94,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         heading = new Vector2((int)-1, (int)0);
         SetImageFacing();
         this.gameObject.tag = "enemy";
+        healthBar.gameObject.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = new Color(167f/255f, 85/255f, 255/255f);
+        healthBar.gameObject.transform.GetChild(2).GetComponent<TMP_Text>().color = Color.white;
     }
 
     // DRAGGING
