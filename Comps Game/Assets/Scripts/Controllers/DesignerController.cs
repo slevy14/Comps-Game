@@ -105,11 +105,10 @@ public class DesignerController : MonoBehaviour {
 
     private void InitializeLevelSwitchButton() {
         switchLevelButtonObject.GetComponent<Button>().onClick.RemoveAllListeners();
-        if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
             switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {ShowLevelLoadSavePrompt();});
+        if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
             switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Sandbox";
         } else { // make return to level button
-            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {switchLevelButtonObject.GetComponent<ButtonData>().BackToLevel();});
             switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Level";
         }
     }
