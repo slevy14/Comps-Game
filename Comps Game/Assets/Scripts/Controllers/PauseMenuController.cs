@@ -10,6 +10,7 @@ public class PauseMenuController : MonoBehaviour {
     [SerializeField] private GameObject quitButton;
     [SerializeField] private GameObject menuButton;
     [SerializeField] private GameObject backButton;
+    public bool isPaused;
 
 
     // persistent
@@ -40,6 +41,7 @@ public class PauseMenuController : MonoBehaviour {
 
     public void TogglePauseMenuCanvas(bool value) {
         pauseMenuCanvas.SetActive(value);
+        isPaused = value;
     }
 
     public void PromptQuitGame(bool fullQuit) {

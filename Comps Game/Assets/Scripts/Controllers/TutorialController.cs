@@ -53,7 +53,7 @@ public class TutorialController : MonoBehaviour {
             currentDialogTime += Time.deltaTime;
         }
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !PauseMenuController.Instance.isPaused) {
             if (inTutorial && CanAdvanceDialog()) {
                 NextStep();
             }
