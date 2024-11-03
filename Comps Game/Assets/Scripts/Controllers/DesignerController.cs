@@ -739,6 +739,13 @@ public class DesignerController : MonoBehaviour {
         }
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
+        // hide headers if not needed for level
+        if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
+            moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        }
+        if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+            useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        }
         // CONDENSE BEHAVIOR LOADING
         List<GameObject> headers = new List<GameObject> {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
