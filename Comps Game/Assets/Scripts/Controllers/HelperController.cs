@@ -52,4 +52,8 @@ public class HelperController : MonoBehaviour {
         return Mathf.RoundToInt(strength);
     }
 
+    public LevelDataSO GetCurrentLevelData() {
+        return ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel];
+    }
+
 }

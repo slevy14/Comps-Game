@@ -41,6 +41,7 @@ public class ButtonData : MonoBehaviour {
     public void NewGame() {
         // set continue level from to 1, current level to 1
         ProgressionController.Instance.StartNewLevel(1);
+        WarriorListController.Instance.ResetWarriorsJSON("level_warriors");
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
 

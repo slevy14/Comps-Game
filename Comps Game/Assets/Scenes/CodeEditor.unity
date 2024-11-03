@@ -1609,6 +1609,9 @@ MonoBehaviour:
   switchLevelButtonObject: {fileID: 638569439}
   overlapSpaceIndicator: {fileID: 1466132934}
   strengthDisplay: {fileID: 928610912}
+  saveButton: {fileID: 1605662580}
+  deleteButton: {fileID: 463040089}
+  textThe: {fileID: 405060519}
   warriorThumbnailPrefab: {fileID: 2618148630434642962, guid: 51436a1a918a2443ea24f10ea0ebb199, type: 3}
   spriteDataList:
   - spriteName: 

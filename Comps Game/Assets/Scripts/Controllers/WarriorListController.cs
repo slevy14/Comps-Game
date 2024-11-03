@@ -49,9 +49,15 @@ public class WarriorListController : MonoBehaviour {
             return;
         } else {
             Debug.Log("Warriors file doesn't exist. Pulling from asset files.");
-            TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT");
-            warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json_textAsset.text);
+            ResetWarriorsJSON(warriorsFile);
         }
+    }
+
+    public void ResetWarriorsJSON(string warriorsFile) {
+        Debug.Log("Resetting warriors json file to default");
+        TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT");
+        warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json_textAsset.text);
+        UpdateJSON(warriorsFile);
     }
 
     public void UpdateJSON(string warriorsFile) {

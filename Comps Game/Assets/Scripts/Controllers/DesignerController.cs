@@ -109,7 +109,7 @@ public class DesignerController : MonoBehaviour {
 
     private void InitializeLevelSwitchButton() {
         switchLevelButtonObject.GetComponent<Button>().onClick.RemoveAllListeners();
-            switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {ShowLevelLoadSavePrompt();});
+        switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {ShowLevelLoadSavePrompt();});
         if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
             switchLevelButtonObject.transform.GetChild(0).GetComponent<TMP_Text>().text = "To Sandbox";
         } else { // make return to level button
@@ -183,6 +183,7 @@ public class DesignerController : MonoBehaviour {
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");});
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
             dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Continue Without Saving";
+            switchPromptMenu.transform.GetChild(3).GetComponent<TMP_Text>().text = "Would you like to save before you move to the level?";
         } else {
             saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndSwitch();});
             saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
@@ -190,6 +191,7 @@ public class DesignerController : MonoBehaviour {
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveSwitch();});
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
             dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Don't Save";
+            switchPromptMenu.transform.GetChild(3).GetComponent<TMP_Text>().text = "Would you like to save before you switch warriors?";
         }
     }
 
@@ -651,6 +653,11 @@ public class DesignerController : MonoBehaviour {
         loopingAndConditionalErrors.AddRange(CheckLoopingConditionalErrors("Use Special: ", warriorFunctionalityData.useSpecialFunctions));
         foreach (string error in loopingAndConditionalErrors) {
             errorsToOutput.Add(error);
+        }
+
+        // strength must be within bounds of level
+        if (ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
+            errorsToOutput.Add("warrior is too strong!");
         }
 
         return errorsToOutput;
