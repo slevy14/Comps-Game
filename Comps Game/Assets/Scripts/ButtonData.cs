@@ -53,5 +53,4 @@ public class ButtonData : MonoBehaviour {
         ProgressionController.Instance.currentLevel = 0; // 0 is sandbox
         SceneController.Instance.LoadSceneByName("Sandbox");
     }
-
 }

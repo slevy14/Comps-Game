@@ -485,6 +485,8 @@ MonoBehaviour:
   bear: {fileID: 5166038563446814288}
   talkingTextBox: {fileID: 5358840828970048060}
   blockShowingParent: {fileID: 464173254837416107}
+  unlockedPropertyBlocks: 
+  unlockedBehaviorBlocks: 
 --- !u!1 &5166038563446814288
 GameObject:
   m_ObjectHideFlags: 0
@@ -520,7 +522,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -674.0001, y: -404.99997}
+  m_AnchoredPosition: {x: -675, y: -404.99997}
   m_SizeDelta: {x: 365.647, y: 188.549}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1376123999128946873

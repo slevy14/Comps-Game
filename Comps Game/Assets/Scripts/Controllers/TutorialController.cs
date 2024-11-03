@@ -135,6 +135,8 @@ public class TutorialController : MonoBehaviour {
         ToggleTutorialUIObjects(true);
         currentTutorialIndex = 0;
         inTutorial = true;
+        // reset bear pos
+        MoveBear(new Vector2(-675, -405), false);
         NextStep();
     }
 
