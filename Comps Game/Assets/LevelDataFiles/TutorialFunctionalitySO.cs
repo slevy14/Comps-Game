@@ -59,7 +59,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.HighlightLevelOneEnemy, HighlightLevelOneEnemy },
             { FunctionOptions.HighlightPlayerFirstWarrior, HighlightPlayerFirstWarrior },
             { FunctionOptions.HighlightWhiteboard, HighlightWhiteboard },
-            { FunctionOptions.ShowcaseBlock, ShowcaseBlock }
+            { FunctionOptions.ShowcaseBlock, ShowcaseBlock },
+            { FunctionOptions.HighlightStrength, HighlightStrength },
+            { FunctionOptions.HighlightSaveButton, HighlightSaveButton }
         };
     }
 
@@ -131,6 +133,8 @@ public class TutorialFunctionalitySO : ScriptableObject {
     private void LoadLastWarrior() {}
     private void LoadFirstEnemy() {}
     private void ShowArrow() {}
+    private void HighlightStrength() {}
+    private void HighlightSaveButton() {}
 
     private void SwitchToLevelScene() {
         Debug.Log("TUTORIAL FUNC: " + "SwitchToLevelScene");

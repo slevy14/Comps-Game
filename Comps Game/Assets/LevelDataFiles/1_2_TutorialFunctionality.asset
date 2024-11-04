@@ -20,10 +20,4 @@ MonoBehaviour:
   - tutorialDialog: Try placing multiple of the same warrior. Notice the limit on
       the right side!
     functionOption: 16
-  - tutorialDialog: going to the code editor as a test
-    functionOption: 13
-  - tutorialDialog: here are the blocks from this level
-    functionOption: 18
-  - tutorialDialog: k bye
-    functionOption: 7
   _selectedFunction: 7
