@@ -53,4 +53,8 @@ public class ButtonData : MonoBehaviour {
         ProgressionController.Instance.currentLevel = 0; // 0 is sandbox
         SceneController.Instance.LoadSceneByName("Sandbox");
     }
+
+    public void PauseButton() {
+        GameObject.Find("PauseMenuController").GetComponent<PauseMenuController>().Pause();
+    }
 }

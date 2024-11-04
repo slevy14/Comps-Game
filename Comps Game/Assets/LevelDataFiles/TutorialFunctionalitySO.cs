@@ -11,6 +11,7 @@ public class TutorialFunctionalitySO : ScriptableObject {
 
     [System.Serializable]
     // infuriatingly, these are in no specific order. if you try to change them unity will kill you
+    // some of these may be labeled as not in use! to the same point above, unity will kill you if you remove them
     public enum FunctionOptions {
         HighlightWarriorDrawer = 0,
         HighlightBlocksDrawer = 1,
@@ -51,7 +52,7 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.LoadFirstWarrior, LoadFirstWarrior },
             { FunctionOptions.LoadLastWarrior, LoadLastWarrior },
             { FunctionOptions.LoadFirstEnemy, LoadFirstEnemy },
-            { FunctionOptions.ShowArrow, ShowArrow },
+            { FunctionOptions.ShowArrow, ShowArrow }, // NOT IN USE
             { FunctionOptions.None, None },
             { FunctionOptions.SwitchToLevelScene, SwitchToLevelScene },
             { FunctionOptions.SwitchToCodingEditor, SwitchToCodeEditor },
@@ -61,7 +62,9 @@ public class TutorialFunctionalitySO : ScriptableObject {
             { FunctionOptions.HighlightWhiteboard, HighlightWhiteboard },
             { FunctionOptions.ShowcaseBlock, ShowcaseBlock },
             { FunctionOptions.HighlightStrength, HighlightStrength },
-            { FunctionOptions.HighlightSaveButton, HighlightSaveButton }
+            { FunctionOptions.HighlightSaveButton, HighlightSaveButton },
+            { FunctionOptions.HighlightBlocksArea, HighlightBlocksArea }, // NOT IN USE
+            { FunctionOptions.Highlight, Highlight } // NOT IN USE
         };
     }
 
@@ -88,18 +91,21 @@ public class TutorialFunctionalitySO : ScriptableObject {
         Debug.Log("TUTORIAL FUNC: " + "HighlightWarriorsDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-612, 178));
         TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
+        DesignerController.Instance.ShowWarriorDrawer();
     }
 
     private void HighlightBlocksDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightBlocksDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-843, 178));
         TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
+        DesignerController.Instance.ShowBlockDrawer();
     }
 
     private void HighlightEnemyDrawer() {
         Debug.Log("TUTORIAL FUNC: " + "HighlightEnemyDrawer");
         TutorialController.Instance.MoveHighlight(new Vector2(-374, 178));
         TutorialController.Instance.MoveBear(new Vector2(696, -375), true);
+        DesignerController.Instance.ShowEnemiesDrawer();
     }
 
     private void HighlightDrawer() {
@@ -129,10 +135,18 @@ public class TutorialFunctionalitySO : ScriptableObject {
         TutorialController.Instance.MoveBear(new Vector2(595, 216), true);
     }
 
-    private void LoadFirstWarrior() {}
-    private void LoadLastWarrior() {}
-    private void LoadFirstEnemy() {}
-    private void ShowArrow() {}
+    private void LoadFirstWarrior() {
+        Debug.Log("TUTORIAL FUNC: " + "LoadFirstWarrior");
+        DesignerController.Instance.LoadWarriorToWhiteboard(0, 0, true, false);
+    }
+    private void LoadLastWarrior() {
+        Debug.Log("TUTORIAL FUNC: " + "LoadLastWarrior");
+        DesignerController.Instance.LoadWarriorToWhiteboard(WarriorListController.Instance.GetCount()-1, WarriorListController.Instance.GetCount()-1, true, false);
+    }
+    private void LoadFirstEnemy() {
+        Debug.Log("TUTORIAL FUNC: " + "LoadFirstEnemy");
+        DesignerController.Instance.LoadWarriorToWhiteboard(0, 0, true, true);
+    }
     private void HighlightStrength() {}
     private void HighlightSaveButton() {}
 
@@ -146,10 +160,15 @@ public class TutorialFunctionalitySO : ScriptableObject {
         TutorialController.Instance.TutorialChangeSceneWithDelay("CodeEditor");
     }
 
-    // still need to define none for lookup table
     private void None() {
         TutorialController.Instance.HideHighlight();
+        TutorialController.Instance.ResetBearAndTextboxPositions();
     }
+
+    // NOT IN USE:
+    private void Highlight() {}
+    private void HighlightBlocksArea() {}
+    private void ShowArrow() {}
 
 }
 

@@ -34,9 +34,13 @@ public class PauseMenuController : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            TogglePauseMenuCanvas(!pauseMenuCanvas.activeSelf);
-            confirmPromptMenu.SetActive(false);
+            Pause();
         }
+    }
+
+    public void Pause() {
+        TogglePauseMenuCanvas(!pauseMenuCanvas.activeSelf);
+        confirmPromptMenu.SetActive(false);
     }
 
     public void TogglePauseMenuCanvas(bool value) {
