@@ -70,7 +70,7 @@ public class GridSaveLoader : MonoBehaviour {
         // foreach object in saved grid:
         try {
             foreach (WarriorOnGrid warriorOnGrid in gridWithObjects.warriorList) {
-                Debug.Log("instantiating warrior from saved grid");
+                // Debug.Log("instantiating warrior from saved grid");
                 // instantiate into right position
                 GameObject warrior = Instantiate(warriorPrefab, PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)warriorOnGrid.pos.x, (int)warriorOnGrid.pos.y, 0)), this.transform.rotation, GameObject.Find("WarriorsContainer").transform);
                 // set properties like in WarriorLevelThumbnail

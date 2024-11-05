@@ -329,16 +329,16 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raycastResults);
 
-        Debug.Log("hit " + raycastResults.Count + " objects: ");
+        // Debug.Log("hit " + raycastResults.Count + " objects: ");
         for (int i = 0; i < raycastResults.Count; i++) {
-            Debug.Log("found object with tag" + raycastResults[i].gameObject.tag);
+            // Debug.Log("found object with tag" + raycastResults[i].gameObject.tag);
             if (raycastResults[i].gameObject.tag == "whiteboard") {
-                Debug.Log("over whiteboard!");
+                // Debug.Log("over whiteboard!");
                 return raycastResults[i].gameObject;
             }
             Debug.Log(i);
         }
-        Debug.Log("not over whiteboard!");
+        // Debug.Log("not over whiteboard!");
         return null;
     }
 }

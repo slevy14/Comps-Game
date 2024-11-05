@@ -18,7 +18,7 @@ public class PropertySlider : MonoBehaviour, IPointerUpHandler {
     }
 
     public void OnPointerUp(PointerEventData eventData) {
-        Debug.Log("done sliding");
+        // Debug.Log("done sliding");
         if (transform.parent.GetComponent<Draggable>()) {
             transform.parent.GetComponent<Draggable>().SetValueFromSlider();
             DesignerController.Instance.justSaved = false;
