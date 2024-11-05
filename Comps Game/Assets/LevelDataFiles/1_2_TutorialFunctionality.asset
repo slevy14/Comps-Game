@@ -17,7 +17,12 @@ MonoBehaviour:
     functionOption: 7
   - tutorialDialog: I bet we can use what we already have.
     functionOption: 7
+  - tutorialDialog: Or feel free to experiment in the code editor if you want to
+      make another warrior
+    functionOption: 7
   - tutorialDialog: Try placing multiple of the same warrior. Notice the limit on
       the right side!
-    functionOption: 16
+    functionOption: 19
+  - tutorialDialog: 'Tip: You can also adjust the battle speed with this handy slider.'
+    functionOption: 20
   _selectedFunction: 7

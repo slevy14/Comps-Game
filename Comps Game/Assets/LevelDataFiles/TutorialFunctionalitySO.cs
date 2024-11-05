@@ -134,7 +134,7 @@ public class TutorialFunctionalitySO : ScriptableObject {
 
     private void HighlightWhiteboard() {
         // Debug.Log("TUTORIAL FUNC: " + "HighlightWhiteBoard");
-        TutorialController.Instance.MoveBear(new Vector2(39, -403), false);
+        TutorialController.Instance.MoveBear(new Vector2(740, -389), true);
         TutorialController.Instance.ToggleHighlight("whiteboard", true);
     }
 
@@ -161,26 +161,28 @@ public class TutorialFunctionalitySO : ScriptableObject {
         DesignerController.Instance.LoadWarriorToWhiteboard(0, 0, false, true);
     }
     private void HighlightStrength() {
+        TutorialController.Instance.MoveBear(new Vector2(740, -389), true);
         TutorialController.Instance.ToggleHighlight("strength", true);
     }
     private void HighlightSaveButton() {
-
+        TutorialController.Instance.MoveBear(new Vector2(740, -389), true);
         TutorialController.Instance.ToggleHighlight("save", true);
     }
     private void HighlightLevelDataBox() {
-
+        TutorialController.Instance.MoveBear(new Vector2(-383, -154), false);
         TutorialController.Instance.ToggleHighlight("levelData", true);
     }
     private void HighlightBattleSpeedSlider() {
-
+        TutorialController.Instance.MoveBear(new Vector2(-383, -154), false);
         TutorialController.Instance.ToggleHighlight("battleSpeed", true);
     }
     private void HighlightSpriteDropdown() {
-
+        TutorialController.Instance.MoveBear(new Vector2(740, -389), true);
         TutorialController.Instance.ToggleHighlight("spriteDropdown", true);
     }
 
     private void HighlightToLevelButton() {
+        TutorialController.Instance.MoveBear(new Vector2(-308, -193), false);
         TutorialController.Instance.ToggleHighlight("toLevel", true);
     }
 

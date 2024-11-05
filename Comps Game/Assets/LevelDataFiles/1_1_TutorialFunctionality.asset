@@ -56,14 +56,14 @@ MonoBehaviour:
     functionOption: 2
   - tutorialDialog: Click on an enemy in this drawer to see it's properties and behaviors.
       You can't edit them, but they use the same blocks you do!
-    functionOption: 7
+    functionOption: 14
   - tutorialDialog: For now, try adjusting your warrior's properties and assigning
       it behaviors to defeat your enemies.
     functionOption: 1
   - tutorialDialog: Don't forget to save your warriors as you work on them!
     functionOption: 9
   - tutorialDialog: When you're ready, click this button to go back to the level.
-    functionOption: 7
+    functionOption: 22
   - tutorialDialog: You can also press [ESC] to pause the game and return to the
       main menu.
     functionOption: 7

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5445331ea6e5422ea866d2a1fe93170, type: 3}
+  m_Name: 1_5_TutorialFunctionality
+  m_EditorClassIdentifier: 
+  tutorialListItems:
+  - tutorialDialog: They're learning too fast -- it looks like they can heal now!
+    functionOption: 7
+  - tutorialDialog: You have one more new tool to try and stop them. Let's check
+      it out.
+    functionOption: 7
+  - tutorialDialog: You have one more new tool to try and stop them. Let's check
+      it out.
+    functionOption: 13
+  - tutorialDialog: And here it is! The defense property. Use this to block some
+      damage from your enemies.
+    functionOption: 18
+  - tutorialDialog: You've got all you need to take these heartless beasts down out
+      on the battlefield.
+    functionOption: 7
+  - tutorialDialog: Good luck!
+    functionOption: 7
+  _selectedFunction: 7

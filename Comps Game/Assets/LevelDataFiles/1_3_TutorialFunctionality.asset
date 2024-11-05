@@ -17,7 +17,7 @@ MonoBehaviour:
       on.
     functionOption: 7
   - tutorialDialog: And we can only use two warriors? This one could be tricky.
-    functionOption: 7
+    functionOption: 19
   - tutorialDialog: Let's go back to the code editor to come up with a solution.
     functionOption: 7
   - tutorialDialog: Let's go back to the code editor to come up with a solution.
@@ -33,4 +33,6 @@ MonoBehaviour:
   - tutorialDialog: Don't be afraid to make mistakes! Experiment with different property
       settings and behaviors to strike your enemies down!
     functionOption: 7
+  - tutorialDialog: 'Tip: You can also use this menu to change your warrior''s appearance.'
+    functionOption: 21
   _selectedFunction: 7

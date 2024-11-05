@@ -31,9 +31,10 @@ public class TutorialController : MonoBehaviour {
     [SerializeField] private TMP_Text talkingTextBox;
     [SerializeField] private GameObject blockShowingParent;
 
-    [Header("Counters & Flags")]
+    [Header("Other")]
     [SerializeField] private List<int> unlockedPropertyBlocks;
     [SerializeField] private List<int> unlockedBehaviorBlocks;
+    private Vector2 bearTextboxOffset;
 
     // SINGLETON
     public static TutorialController Instance = null;
@@ -54,6 +55,7 @@ public class TutorialController : MonoBehaviour {
         dialogAdvanceDelay = 1f;
         unlockedPropertyBlocks = new();
         unlockedBehaviorBlocks = new();
+        bearTextboxOffset = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition - bear.GetComponent<RectTransform>().anchoredPosition;
     }
 
     void Update() {
@@ -177,20 +179,22 @@ public class TutorialController : MonoBehaviour {
         bear.GetComponent<RectTransform>().anchoredPosition = bearPos;
 
         // set text box position
-        Debug.Log("textbox offset is " + (bearPos - bearPrevPos));
-        Vector2 newTextboxPosition = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition + (bearPos - bearPrevPos);
+        // Debug.Log("textbox offset is " + (bearPos - bearPrevPos));
+        // Vector2 newTextboxPosition = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition + (bearPos - bearPrevPos);
 
         if (faceLeft && bear.GetComponent<RectTransform>().eulerAngles.y != 180) {
             bear.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 180, 0);
-            Debug.Log("new x before shift is " + newTextboxPosition.x);
-            newTextboxPosition.x = newTextboxPosition.x - (-bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x);
-            Debug.Log("facing left, shifting back by " + (bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x));
-            Debug.Log("new x after shift is " + newTextboxPosition.x);
+            // Debug.Log("new x before shift is " + newTextboxPosition.x);
+            // newTextboxPosition.x = newTextboxPosition.x - (-bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x);
+            // Debug.Log("facing left, shifting back by " + (bear.GetComponent<RectTransform>().sizeDelta.x - talkingTextBox.transform.parent.GetComponent<RectTransform>().sizeDelta.x));
+            // Debug.Log("new x after shift is " + newTextboxPosition.x);
+            talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(bearPos.x - bearTextboxOffset.x, bearPos.y + bearTextboxOffset.y);
         } else if (!faceLeft) {
             bear.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 0, 0);
+            talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(bearPos.x + bearTextboxOffset.x, bearPos.y + bearTextboxOffset.y);
         }
-        Debug.Log("new textbox position: " + newTextboxPosition);
-        talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = newTextboxPosition;
+        // Debug.Log("new textbox position: " + newTextboxPosition);
+        // talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = newTextboxPosition;
     }
 
 
