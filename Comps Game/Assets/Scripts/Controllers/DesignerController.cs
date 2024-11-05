@@ -656,7 +656,8 @@ public class DesignerController : MonoBehaviour {
         }
 
         // strength must be within bounds of level
-        if (ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
+        // also only counts for player warriors, not enemy
+        if (!isCurrentWarriorEnemy && ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
             errorsToOutput.Add("warrior is too strong!");
         }
 

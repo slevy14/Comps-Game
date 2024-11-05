@@ -113,7 +113,7 @@
                     "behavior": 0,
                     "property": 6,
                     "values": [
-                        "100"
+                        "40"
                     ]
                 },
                 {
@@ -182,7 +182,7 @@
                     "behavior": 0,
                     "property": 13,
                     "values": [
-                        "40"
+                        "20"
                     ]
                 }
             ],
