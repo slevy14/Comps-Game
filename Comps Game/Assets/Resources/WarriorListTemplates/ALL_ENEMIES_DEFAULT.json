@@ -1,1 +1,213 @@
-{"enemyList":[{"warriorName":"baby skeleton","warriorIndex":0,"spriteIndex":0,"properties":[{"blockType":0,"behavior":0,"property":1,"values":["baby skeleton"]},{"blockType":0,"behavior":0,"property":2,"values":["50"]}],"moveFunctions":[],"useWeaponFunctions":[],"useSpecialFunctions":[]},{"warriorName":"strong skeleton","warriorIndex":1,"spriteIndex":6,"properties":[{"blockType":0,"behavior":0,"property":1,"values":["strong skeleton"]},{"blockType":0,"behavior":0,"property":2,"values":["200"]},{"blockType":0,"behavior":0,"property":6,"values":["300"]}],"moveFunctions":[],"useWeaponFunctions":[{"blockType":1,"behavior":13,"property":0,"values":["0","1"]},{"blockType":1,"behavior":5,"property":0,"values":["-1","-1"]}],"useSpecialFunctions":[]},{"warriorName":"baby reaper","warriorIndex":2,"spriteIndex":2,"properties":[{"blockType":0,"behavior":0,"property":1,"values":["baby reaper"]},{"blockType":0,"behavior":0,"property":2,"values":["50"]}],"moveFunctions":[],"useWeaponFunctions":[],"useSpecialFunctions":[]}]}
+{
+    "enemyList": [
+        {
+            "warriorName": "Baby Skeleton",
+            "warriorIndex": 0,
+            "spriteIndex": 0,
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Baby Skeleton"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Armored Skeleton",
+            "warriorIndex": 1,
+            "spriteIndex": 6,
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Armored Skeleton"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "100"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Reaper",
+            "warriorIndex": 2,
+            "spriteIndex": 2,
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Reaper"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "10"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Zombie Healer",
+            "warriorIndex": 3,
+            "spriteIndex": 7,
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Zombie Healer"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "3"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "40"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        }
+    ]
+}
