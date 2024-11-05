@@ -14,16 +14,24 @@ public class TutorialController : MonoBehaviour {
     private bool skippedDialog;
     private bool inTransition;
 
-    [Header("Tutorial GameObjects")]
+    [Header("Highlights")]
     [SerializeField] private GameObject highlight;
     [SerializeField] private GameObject drawerHighlight;
+    [SerializeField] private GameObject whiteboardHighlight;
+    [SerializeField] private GameObject strengthHighlight;
+    [SerializeField] private GameObject saveHighlight;
+    [SerializeField] private GameObject levelDataHighlight;
+    [SerializeField] private GameObject battleSpeedHighlight;
+    [SerializeField] private GameObject spriteDropdownHighlight;
+    [SerializeField] private GameObject toLevelHighlight;
+
+    [Header("Tutorial GameObjects")]
     [SerializeField] private GameObject tutorialMask;
     [SerializeField] private GameObject bear;
     [SerializeField] private TMP_Text talkingTextBox;
     [SerializeField] private GameObject blockShowingParent;
 
     [Header("Counters & Flags")]
-    private List<GameObject> currentShowingBlocks;
     [SerializeField] private List<int> unlockedPropertyBlocks;
     [SerializeField] private List<int> unlockedBehaviorBlocks;
 
@@ -196,10 +204,43 @@ public class TutorialController : MonoBehaviour {
         highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
 
         drawerHighlight.SetActive(false);
+        whiteboardHighlight.SetActive(false);
+        strengthHighlight.SetActive(false);
+        saveHighlight.SetActive(false);
+        battleSpeedHighlight.SetActive(false);
+        levelDataHighlight.SetActive(false);
+        spriteDropdownHighlight.SetActive(false);
+        toLevelHighlight.SetActive(false);
     }
 
-    public void ToggleDrawerHighlight(bool value) {
-        drawerHighlight.SetActive(value);
+    public void ToggleHighlight(string highlight, bool value) {
+        HideHighlight();
+        switch(highlight) {
+            case "drawer":
+                drawerHighlight.SetActive(value);
+                break;
+            case "whiteboard":
+                whiteboardHighlight.SetActive(value);
+                break;
+            case "save":
+                saveHighlight.SetActive(value);
+                break;
+            case "strength":
+                strengthHighlight.SetActive(value);
+                break;
+            case "battleSpeed":
+                battleSpeedHighlight.SetActive(value);
+                break;
+            case "levelData":
+                levelDataHighlight.SetActive(value);
+                break;
+            case "spriteDropdown":
+                spriteDropdownHighlight.SetActive(value);
+                break;
+            case "toLevel":
+                toLevelHighlight.SetActive(value);
+                break;
+        }
     }
 
     public void ShowNewLevelBlocks() {

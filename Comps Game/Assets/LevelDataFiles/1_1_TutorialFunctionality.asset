@@ -13,35 +13,61 @@ MonoBehaviour:
   m_Name: 1_1_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: hi it's me im a bear
+  - tutorialDialog: '"I''ve been turned into a bear! But there''s no time to dwell
+      on that--- (Click to continue)"'
     functionOption: 7
-  - tutorialDialog: oh no you're under attack!
+  - tutorialDialog: You're under attack!
     functionOption: 15
-  - tutorialDialog: you can click on the enemy to show more information
+  - tutorialDialog: You can click on your enemies to get more information about them.
     functionOption: 15
-  - tutorialDialog: drag your own warriors onto the battlefield to fight for you!
+  - tutorialDialog: Drag your own warriors onto the left half of the battlefield
+      to fight back.
     functionOption: 16
-  - tutorialDialog: but oh no! this one doesn't do anything yet.
+  - tutorialDialog: But this one doesn't do anything yet. Let's go to the code editor
+      and make it strong!
     functionOption: 16
-  - tutorialDialog: let's go to the code editor and make it strong!
-    functionOption: 16
-  - tutorialDialog: this is the code editor.
+  - tutorialDialog: But this one doesn't do anything yet. Let's go to the code editor
+      and make it strong!
     functionOption: 13
-  - tutorialDialog: click on this tab to display the code blocks
+  - tutorialDialog: This is the code editor. Here, you can design and customize your
+      warriors to your heart's content.
+    functionOption: 7
+  - tutorialDialog: Click on the Blocks tab to display all the code blocks you have
+      available.
     functionOption: 1
-  - tutorialDialog: this shows you all the code blocks you have at your disposal.
-      drag and drop them onto the whiteboard! they snap together.
+  - tutorialDialog: Drag and drop them onto the whiteboard! They snap together.
     functionOption: 14
-  - tutorialDialog: properties go under the properties header, behaviors go under
-      use weapon (for now)
-    functionOption: 1
-  - tutorialDialog: click on this tab to see all your warriors and make new ones
+  - tutorialDialog: Properties go under the properties header. Use these to change
+      your character's stats.
+    functionOption: 17
+  - tutorialDialog: Each warrior has a Strength value, calculated from its properties.
+      Make your warriors as strong as you can without going over the limit!
+    functionOption: 10
+  - tutorialDialog: Behaviors go under the Use Weapon header. On your warrior's turn,
+      all behavior blocks under this header will happen in order.
+    functionOption: 17
+  - tutorialDialog: Try using the "Set Melee" and "Do Melee Attack" blocks to setup
+      and attack your enemies!
+    functionOption: 14
+  - tutorialDialog: Click on the Warriors tab to see all your warriors and make new
+      ones.
     functionOption: 0
-  - tutorialDialog: click on this tab to see all enemies in the level.
+  - tutorialDialog: Click on the Enemies tab to see all enemies in the level.
     functionOption: 2
-  - tutorialDialog: click on an enemy in the drawer to see its code
-    functionOption: 2
-  - tutorialDialog: that's all from me, the bear. code your first warrior and send
+  - tutorialDialog: Click on an enemy in this drawer to see it's properties and behaviors.
+      You can't edit them, but they use the same blocks you do!
+    functionOption: 7
+  - tutorialDialog: For now, try adjusting your warrior's properties and assigning
+      it behaviors to defeat your enemies.
+    functionOption: 1
+  - tutorialDialog: Don't forget to save your warriors as you work on them!
+    functionOption: 9
+  - tutorialDialog: When you're ready, click this button to go back to the level.
+    functionOption: 7
+  - tutorialDialog: You can also press [ESC] to pause the game and return to the
+      main menu.
+    functionOption: 7
+  - tutorialDialog: That's all from me, the bear. Code your first warrior and send
       it into battle!
     functionOption: 7
   _selectedFunction: 7
