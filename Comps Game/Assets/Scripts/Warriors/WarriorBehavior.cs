@@ -297,8 +297,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*                                        */
     /*----------------------------------------*/
 
-    // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else
-    // IN PROGRESS: Set Target, While Loop, If, Melee Attack, Fire Projectile
+    // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else, Set Target, While Loop, If, Melee Attack, Fire Projectile
+    // IN PROGRESS: 
     // NOT STARTED: 
 
     // BIG TODO: projectile range???
@@ -504,7 +504,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                 /*--------------------*/
                 /*    MELEE ATTACK    */
-                /*--------------------*/ /*   Current Status: IN PROGRESS
+                /*--------------------*/ /*   Current Status: DONE
                 no dropdowns,
                 use melee range values to attack in facing direction:
                     1: directly in front
@@ -627,25 +627,28 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             if (Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]) > distance) {
                                 distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]);
                                 target = warrior;
-                                Debug.Log(warrior.warriorName + " was further");
+                                // Debug.Log(warrior.warriorName + " was further");
                             } else {
-                                Debug.Log(warrior.warriorName + " was not further");
+                                // Debug.Log(warrior.warriorName + " was not further");
                             }
                         }
-                    } else { // weakest
+                    } else if (behaviorList[i].values[0] == "3") { // weakest
                         // initialize weakest
                         // loop through target team:
                             // calculate strongest (is this just most health? highest attack? combination?)
                             // if weaker, replace object
                         // set target to weakest
                         target = CalculateWeakest(targetTeam);
+                    } else { // random
+                        int randIndex = UnityEngine.Random.Range(0, targetTeam.Count);
+                        target = targetTeam[randIndex];
                     }
                     Debug.Log("set target to " + target.warriorName);
                     break;
 
                 /*------------------*/
                 /*    WHILE LOOP    */
-                /*------------------*/ /*   Current Status: IN PROGRESS
+                /*------------------*/ /*   Current Status: DONE
                 two dropdowns
                     choose condition [0]
                         0: target in range
@@ -678,6 +681,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = FacingTarget() == whileLoopCondition;
                     } else if (behaviorList[i].values[0] == "3") { // self low health
                         conditionsDict[i] = SelfLowHealth() == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "4") { // target is healer
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.HEAL_POWER) == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "5") { // target is melee
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.MELEE_ATTACK_POWER) == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "6") { // target is ranged
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == whileLoopCondition;
                     }
 
                     // if false just jump past
@@ -736,7 +745,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*----------*/
                 /*    IF    */
-                /*----------*/ /*   Current Status: IN PROGRESS
+                /*----------*/ /*   Current Status: DONE
                 two dropdowns
                     choose condition [0]
                         0: target in range
@@ -765,6 +774,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = FacingTarget() == ifCondition;
                     } else if (behaviorList[i].values[0] == "3") { // self low health
                         conditionsDict[i] = SelfLowHealth() == ifCondition;
+                    } else if (behaviorList[i].values[0] == "4") { // target is healer
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.HEAL_POWER) == ifCondition;
+                    } else if (behaviorList[i].values[0] == "5") { // target is melee
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.MELEE_ATTACK_POWER) == ifCondition;
+                    } else if (behaviorList[i].values[0] == "6") { // target is ranged
+                        conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == ifCondition;
                     }
 
                     // if false just jump past
@@ -845,7 +860,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 
                 /*-----------------------*/
                 /*    FIRE PROJECTILE    */
-                /*-----------------------*/ /*   Current Status: IN PROGRESS
+                /*-----------------------*/ /*   Current Status: DONE
                 no dropdowns
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
@@ -929,6 +944,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public bool TargetLowHealth() {
         if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
+            return true;
+        }
+        return false;
+    }
+
+    public bool CheckTargetAttackType(BlockData.Property property) {
+        if (target.propertiesDict[property] > 1) {
             return true;
         }
         return false;

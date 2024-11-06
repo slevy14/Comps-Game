@@ -137,6 +137,12 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Self Low Health
       m_Image: {fileID: 0}
+    - m_Text: Target is Healer
+      m_Image: {fileID: 0}
+    - m_Text: Target is Melee
+      m_Image: {fileID: 0}
+    - m_Text: Target is Ranged
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
