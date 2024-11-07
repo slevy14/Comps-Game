@@ -190,9 +190,11 @@ MonoBehaviour:
     audioClip: {fileID: 8300000, guid: 2e955fe4e06e44e9393cd5ec36d26b0c, type: 3}
   - name: Save
     audioClip: {fileID: 8300000, guid: 723046b511acc4e3494b2bab65820fd2, type: 3}
+  - name: BearTalkSound
+    audioClip: {fileID: 8300000, guid: e1b18cf25a5c845b9891d7519b355933, type: 3}
   BGMList:
   - name: Main Menu BGM
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 8e8ac1ea66914486489bbfd6549c7d29, type: 3}
   - name: Coding BGM
     audioClip: {fileID: 0}
   - name: World 1 BGM

@@ -58,17 +58,19 @@ public class TutorialController : MonoBehaviour {
         bearTextboxOffset = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition - bear.GetComponent<RectTransform>().anchoredPosition;
     }
 
-    void Update() {
-        if (inTutorial) {
-            currentDialogTime += Time.deltaTime;
-        }
+    // void Update() {
+    //     if (inTutorial) {
+    //         currentDialogTime += Time.deltaTime;
+    //     }
 
-        if (Input.GetMouseButtonDown(0) && !PauseMenuController.Instance.isPaused) {
-            if (inTutorial && CanAdvanceDialog()) {
-                NextStep();
-            }
-        }
-    }
+    //     if (Input.GetMouseButtonDown(0) && !PauseMenuController.Instance.isPaused) {
+    //         if (inTutorial && CanAdvanceDialog()) {
+    //             NextStep();
+    //         }
+    //     }
+    // }
+
+
 
     public void ResetTutorialStates() {
         // destroy any showing blocks
@@ -81,12 +83,13 @@ public class TutorialController : MonoBehaviour {
         }
     }
 
-    private void NextStep() {
+    public void NextStep() {
         if (IsValidTutorialIndex()) {
             // Debug.Log("running tutorial at index " + currentTutorialIndex + ", advancing to next step of tutorial");
             ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.RunTutorialFunction(currentTutorialIndex);
             talkingTextBox.text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.tutorialListItems[currentTutorialIndex].tutorialDialog;
             currentTutorialIndex++;
+            Debug.Log("progressing to next text");
         } else {
             EndTutorial();
         }
@@ -103,15 +106,15 @@ public class TutorialController : MonoBehaviour {
             return false;
         }
 
-        if (currentDialogTime >= dialogAdvanceDelay || skippedDialog) {
-            currentDialogTime = 0;
-            skippedDialog = false;
-            Debug.Log("can advance");
-            return true;
-        } else {
-            SkipDialog();
-        }
-        return false;
+        // if (currentDialogTime >= dialogAdvanceDelay || skippedDialog) {
+        //     currentDialogTime = 0;
+        //     skippedDialog = false;
+        //     Debug.Log("can advance");
+        //     return true;
+        // } else {
+        //     SkipDialog();
+        // }
+        return true;
     }
 
     private void SkipDialog() {
