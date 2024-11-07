@@ -272,7 +272,7 @@ public class TutorialController : MonoBehaviour {
 
     private IEnumerator SceneChangeDelay() {
         inTransition = true;
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1.25f);
         inTransition = false;
     }
 
