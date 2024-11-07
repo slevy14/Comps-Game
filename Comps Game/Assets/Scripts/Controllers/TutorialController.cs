@@ -117,11 +117,11 @@ public class TutorialController : MonoBehaviour {
         return true;
     }
 
-    private void SkipDialog() {
-        // FIXME: skip thru dialog if button pressed before delay time
-        Debug.Log("skipping dialog");
-        skippedDialog = true;
-    }
+    // private void SkipDialog() {
+    //     // FIXME: skip thru dialog if button pressed before delay time
+    //     Debug.Log("skipping dialog");
+    //     skippedDialog = true;
+    // }
 
     private void GetUnlockedBlockIndices() {
         // get all property blocks unlocked thus far, not including the new ones in this level

@@ -49,6 +49,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b5a4f459b207d41889ffdefdf224e7ac, type: 2}
   - {fileID: 11400000, guid: 1c08d073f0f694091a096f6336a2a76a, type: 2}
   - {fileID: 11400000, guid: 0d5be2ebde16a46eba83925d580cc22d, type: 2}
+  - {fileID: 11400000, guid: 7f4d05712410a49b397dc4536447c102, type: 2}
+  - {fileID: 11400000, guid: 6101a0aa8b35b4be1a4afc0647461d9a, type: 2}
   continueLevelFrom: 0
   currentLevel: -1
   isLevelJustStarted: 0
