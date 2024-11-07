@@ -13,6 +13,7 @@ TagManager:
   - warrior
   - enemy
   - icon
+  - mainUI
   layers:
   - Default
   - TransparentFX

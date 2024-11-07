@@ -25,6 +25,7 @@ public class LevelController : MonoBehaviour {
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject levelCompleteMenu;
     [SerializeField] private GameObject levelLostMenu;
+    [SerializeField] private GameObject falseStartPrefab;
     
     [Header("Sprites")]
     [SerializeField] private GameObject warriorThumbnailPrefab;
@@ -625,11 +626,34 @@ public class LevelController : MonoBehaviour {
     public void StartBattleWrapper() { // for the button
         if (inBattle) {
             return;
+        } else if (!CheckAllWarriorsValid()) {
+            GameObject falseStart = Instantiate(falseStartPrefab, Vector3.zero, transform.rotation, GameObject.FindGameObjectWithTag("mainUI").transform);
+            falseStart.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            return;
         } else if (battleFinished) {
             ResetGridButton();
         }
+
         AudioController.Instance.PlaySoundEffect("Start Battle");
         StartCoroutine(StartBattle());
+    }
+
+    public bool CheckAllWarriorsValid() {
+        if (ProgressionController.Instance.currentLevel == 0) {
+            return true;
+        }
+
+        if (allWarriorsList.Count != 0) {
+            ClearWarriorLists();
+        }
+        // generate new warrior lists
+        CreateWarriorLists();
+        foreach (WarriorBehavior warrior in allWarriorsList) {
+            if (!warrior.isValidStrengthAndBehaviors) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public IEnumerator StartBattle() {
