@@ -83,6 +83,7 @@ public class DesignerController : MonoBehaviour {
 
     void Awake() {
         CheckSingleton();
+        Debug.Log("successfully in editor");
     }
 
     // INITIALIZING
@@ -102,6 +103,8 @@ public class DesignerController : MonoBehaviour {
         InitializeBlocksDrawer();
 
         InitializeLevelSwitchButton();
+
+        AudioController.Instance.ChangeBGM("Coding BGM");
     }
 
     private void LoadWarriorFile() {
@@ -1277,21 +1280,24 @@ public class DesignerController : MonoBehaviour {
 
     public void UpdateStrengthDisplay() {
         int newStrength = CalculateCurrentStrength();
-        if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength) {
+        if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength || ProgressionController.Instance.currentLevel == 0) {
             strengthDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
-            // strengthDisplay.color = Color.blue;
-            // Debug.Log("setting color good");
         } else {
             strengthDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
             // strengthDisplay.color = Color.red;
             // Debug.Log("setting color bad");
         }
-        strengthDisplay.text = "Strength\n" + newStrength + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+        strengthDisplay.text = "Strength\n" + newStrength + " / ";
+        if (ProgressionController.Instance.currentLevel == 0) { // sandbox
+            strengthDisplay.text += "∞";
+        } else {
+            strengthDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+        }
     }
 
     public void UpdateBehaviorsDisplay() {
         int behaviorCount = CountBehaviors();
-        if (behaviorCount <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks) {
+        if (behaviorCount <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks || ProgressionController.Instance.currentLevel == 0) {
             maxBehaviorsDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
             // strengthDisplay.color = Color.blue;
             // Debug.Log("setting color good");
@@ -1300,7 +1306,12 @@ public class DesignerController : MonoBehaviour {
             // strengthDisplay.color = Color.red;
             // Debug.Log("setting color bad");
         }
-        maxBehaviorsDisplay.text = "Behaviors\n" + behaviorCount + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
+        maxBehaviorsDisplay.text = "Behaviors\n" + behaviorCount + " / ";
+        if (ProgressionController.Instance.currentLevel == 0) { // sandbox
+            maxBehaviorsDisplay.text += "∞";
+        } else {
+            maxBehaviorsDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
+        }
     }
 
     // Deleting

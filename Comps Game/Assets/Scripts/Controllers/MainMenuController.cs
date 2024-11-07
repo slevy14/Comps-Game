@@ -29,6 +29,7 @@ public class MainMenuController : MonoBehaviour {
         } else {
             continueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = $"Continue\nLevel {ProgressionController.Instance.continueLevelFrom}";
         }
+        AudioController.Instance.ChangeBGM("Main Menu BGM");
     }
 
 

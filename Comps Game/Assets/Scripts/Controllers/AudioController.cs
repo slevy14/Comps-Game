@@ -5,14 +5,19 @@ using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour {
 
+    [SerializeField] private AudioSource sfxAudioSource;
+    [SerializeField] private AudioSource bgmAudioSource;
     [SerializeField] public List<AudioDictionaryElement> SFXList;
     [SerializeField] public List<AudioDictionaryElement> BGMList; 
-    [SerializeField] private AudioSource audioSource;
 
     public static AudioController Instance = null; // for persistent
 
-    public void Awake() {
+    void Awake() {
         CheckSingleton();
+    }
+
+    void Start() {
+        StartBGM();
     }
 
     public void CheckSingleton() {
@@ -25,12 +30,46 @@ public class AudioController : MonoBehaviour {
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void PlaySoundEffect(string name) {
-        audioSource.PlayOneShot(FindSoundByName(name));
+    public void StartBGM() {
+        switch (SceneController.Instance.GetCurrentSceneName()) {
+            case "MainMenu":
+                bgmAudioSource.clip = FindBGMByName("Main Menu BGM");
+                break;
+            default:
+                bgmAudioSource.clip = FindBGMByName("Coding BGM");
+                break;
+        }
+        bgmAudioSource.Play();
     }
 
-    public AudioClip FindSoundByName(string name) {
+    public void ChangeBGM(string name) {
+        if (bgmAudioSource.clip != FindBGMByName(name)) {
+            Debug.Log("changing bgm to " + name);
+            bgmAudioSource.clip = FindBGMByName(name);
+            bgmAudioSource.Play();
+        }
+    }
+
+    public void StopBGM() {
+        bgmAudioSource.Stop();
+    }
+
+    public void PlaySoundEffect(string name) {
+        sfxAudioSource.PlayOneShot(FindSFXByName(name));
+    }
+
+    public AudioClip FindSFXByName(string name) {
         foreach (AudioDictionaryElement audioDictionaryElement in SFXList) {
+            if (audioDictionaryElement.name == name) {
+                return audioDictionaryElement.audioClip;
+            }
+        }
+        Debug.Log("found no audio with the name " + name);
+        return null;
+    }
+
+    public AudioClip FindBGMByName(string name) {
+        foreach (AudioDictionaryElement audioDictionaryElement in BGMList) {
             if (audioDictionaryElement.name == name) {
                 return audioDictionaryElement.audioClip;
             }

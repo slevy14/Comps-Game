@@ -224,7 +224,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // check if warrior preexisting on grid is valid strength and behaviors
     public void CheckValidOnGrid() {
-        if (isEnemy) {
+        if (isEnemy || ProgressionController.Instance.currentLevel == 0) {
             isValidStrengthAndBehaviors = true;
             return;
         }
