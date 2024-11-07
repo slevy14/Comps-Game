@@ -150,6 +150,11 @@ public class PlacementSystem : MonoBehaviour {
                 // Debug.Log(endIndex);
                 currentDraggingObject.GetComponent<WarriorBehavior>().EndDrag(endIndex);
                 currentDraggingObject = null;
+
+                // grey out thumbnails if need to
+                if (ProgressionController.Instance.currentLevel != 0) { // not sandbox
+                    LevelController.Instance.SetAllWarriorThumbnailsGrey(GetPlacedWarriorCount() >= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace);
+                }
             }
 
             if (isDrag == false) {
@@ -193,12 +198,7 @@ public class PlacementSystem : MonoBehaviour {
             return false;
         }
 
-        int warriorCount = 0;
-        foreach (KeyValuePair<GameObject, Vector2> warriorObject in LevelController.Instance.objectsOnGrid) {
-            if (warriorObject.Key.tag == "warrior") {
-                warriorCount += 1;
-            }
-        }
+        int warriorCount = GetPlacedWarriorCount();
         Debug.Log("currently " + warriorCount + " warriors");
         if (warriorCount < ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace) {
             Debug.Log("there is space for warrior!");
@@ -207,6 +207,16 @@ public class PlacementSystem : MonoBehaviour {
 
         Debug.Log("Too many warriors! you can only place " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace + " warriors");
         return true;
+    }
+
+    private int GetPlacedWarriorCount() {
+        int warriorCount = 0;
+        foreach (KeyValuePair<GameObject, Vector2> warriorObject in LevelController.Instance.objectsOnGrid) {
+            if (warriorObject.Key.tag == "warrior") {
+                warriorCount += 1;
+            }
+        }
+        return warriorCount;
     }
 
     private GameObject ThumbnailClicked() { // meant to be called only when a click occurs

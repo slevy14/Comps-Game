@@ -144,6 +144,17 @@ public class LevelController : MonoBehaviour {
         thumbnail.GetComponent<WarriorLevelThumbnail>().CheckIfPlaceable();
     }
 
+    public void SetAllWarriorThumbnailsGrey(bool value) {
+        Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
+        foreach (Transform child in container) {
+            if (value) {
+                child.GetComponent<WarriorLevelThumbnail>().SetPlaceable(false);
+            } else {
+                child.GetComponent<WarriorLevelThumbnail>().CheckIfPlaceable();
+            }
+        }
+    }
+
     // Enemies
     public void AddEnemyToDrawer(int index) {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
