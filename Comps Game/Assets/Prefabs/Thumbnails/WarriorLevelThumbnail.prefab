@@ -93,6 +93,8 @@ MonoBehaviour:
   warriorIndex: 0
   warriorPrefab: {fileID: 5776567480984243591, guid: 894a2df4f9ced4f1dbe8ba98a4722262, type: 3}
   isEnemy: 0
+  isPlaceable: 0
+  greyOut: {fileID: 2100000, guid: e60aacdde993943c0aa5c2863d89373f, type: 2}
 --- !u!1 &3252323195197643385
 GameObject:
   m_ObjectHideFlags: 0

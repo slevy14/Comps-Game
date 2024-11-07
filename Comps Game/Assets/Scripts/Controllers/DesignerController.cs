@@ -485,6 +485,7 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
+        _WarriorFunctionalityData.warriorStrength = CalculateCurrentStrength();
         
         return _WarriorFunctionalityData;
     }
@@ -641,9 +642,9 @@ public class DesignerController : MonoBehaviour {
         }
 
         // if in level, not too many blocks
-        if (!isSandbox && !CheckUnderBehaviorLimit(warriorFunctionalityData)) {
-            errorsToOutput.Add("too many behaviors! stay under the limit!");
-        }
+        // if (!isSandbox && !CheckUnderBehaviorLimit(warriorFunctionalityData)) {
+        //     errorsToOutput.Add("too many behaviors! stay under the limit!");
+        // }
         
         // no unclosed loops/conditionals
             // can check this by seeing if there are any ignores left when parsing loops/conditionals
@@ -658,9 +659,9 @@ public class DesignerController : MonoBehaviour {
 
         // strength must be within bounds of level
         // also only counts for player warriors, not enemy
-        if (!isCurrentWarriorEnemy && ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
-            errorsToOutput.Add("warrior is too strong!");
-        }
+        // if (!isCurrentWarriorEnemy && ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
+        //     errorsToOutput.Add("warrior is too strong!");
+        // }
 
         return errorsToOutput;
     }

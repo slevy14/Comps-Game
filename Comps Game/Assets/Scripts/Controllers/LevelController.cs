@@ -128,6 +128,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public void UpdateWarriorDrawerThumbnail(int index) {
+        Debug.Log("updating warrior drawer thumbnail for warrior " + index);
         // get references
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
@@ -138,6 +139,7 @@ public class LevelController : MonoBehaviour {
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
+        thumbnail.GetComponent<WarriorLevelThumbnail>().CheckIfPlaceable();
     }
 
     // Enemies
