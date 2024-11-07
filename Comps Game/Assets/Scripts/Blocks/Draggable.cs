@@ -77,6 +77,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // remove from linked list
             if (prevBlock != null) {
                 prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
+                prevBlock.GetComponent<Draggable>().SetOverlapUseable();
                 DesignerController.Instance.UpdateStrengthDisplay();
                 DesignerController.Instance.UpdateBehaviorsDisplay();
                 // Debug.Log("updated prev block next");
@@ -99,14 +100,20 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void UpdateBlockPositions(GameObject block, Vector3 newPosition) {
-        // if (!isHeader) {
-            // Debug.Log(block.gameObject.name + "should set to: " + newPosition.y);
-            block.transform.position = newPosition;
-            // Debug.Log(block.gameObject.name + " actual y pos: " + block.transform.position.y);
-            if (nextBlock != null) {
-                nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
-            }
-        // }
+        // recursively update positions of each block based on the one before it
+        block.transform.position = newPosition;
+        SetOverlapUseable();
+        if (nextBlock != null) {
+            nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
+        }
+    }
+
+    public void SetOverlapUseable() {
+        if (nextBlock != null) {
+            overlapBox.gameObject.SetActive(false);
+        } else {
+            overlapBox.gameObject.SetActive(true);
+        }
     }
 
     public void DestroyStack(GameObject block) {
