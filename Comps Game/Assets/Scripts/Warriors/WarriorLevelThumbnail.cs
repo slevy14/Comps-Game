@@ -14,7 +14,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
     public bool isEnemy = false;
 
     // placeability
-    public bool isPlaceable;
+    public bool isPlaceable = true;
     public Material greyOut;
 
     private PlacementSystem placementSystem;
@@ -75,6 +75,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
         } else {
             this.gameObject.GetComponent<Image>().material = null;
         }
+        // Debug.Log($"{WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).warriorName} placeable? " + isPlaceable);
     }
 
 }

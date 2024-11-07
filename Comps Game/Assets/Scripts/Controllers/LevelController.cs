@@ -169,6 +169,7 @@ public class LevelController : MonoBehaviour {
         thumbnail.GetComponent<WarriorLevelThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
+        thumbnail.GetComponent<WarriorLevelThumbnail>().CheckIfPlaceable();
 
         // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
@@ -205,6 +206,7 @@ public class LevelController : MonoBehaviour {
         ToggleResetButton(false);
         TogglePauseButton(false);
         AudioController.Instance.PlaySoundEffect("Reset Battle");
+        AudioController.Instance.ChangeBGM("Coding BGM");
     }
 
     public void ResetWholeLevelButton() {

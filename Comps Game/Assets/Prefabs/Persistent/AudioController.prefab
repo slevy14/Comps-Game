@@ -233,7 +233,7 @@ MonoBehaviour:
   - name: Coding BGM
     audioClip: {fileID: 8300000, guid: cdbdcc30af96d45b380911ee1de4e349, type: 3}
   - name: Battle BGM
-    audioClip: {fileID: 0}
+    audioClip: {fileID: 8300000, guid: 923a24015d4df4a858681d1cfb674eaf, type: 3}
 --- !u!1 &8277910876971082653
 GameObject:
   m_ObjectHideFlags: 0
