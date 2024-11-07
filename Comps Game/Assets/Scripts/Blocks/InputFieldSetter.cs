@@ -15,6 +15,7 @@ public class InputFieldSetter : MonoBehaviour {
     public void SetInputFieldValue() {
         if (transform.parent.GetComponent<Draggable>()) {
             transform.parent.GetComponent<Draggable>().SetValueFromInputField();
+            DesignerController.Instance.justSaved = false;
         }
     }
 }

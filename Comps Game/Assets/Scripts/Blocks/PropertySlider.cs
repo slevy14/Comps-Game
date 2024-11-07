@@ -15,6 +15,7 @@ public class PropertySlider : MonoBehaviour, IPointerUpHandler {
 
     public void DynamicUpdateValueText(float value) {
         valueText.text = "" + Mathf.RoundToInt(value);
+        DesignerController.Instance.UpdateStrengthDisplay();
     }
 
     public void OnPointerUp(PointerEventData eventData) {
