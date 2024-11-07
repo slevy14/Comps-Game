@@ -44,7 +44,7 @@ public class AudioController : MonoBehaviour {
 
     public void ChangeBGM(string name) {
         if (bgmAudioSource.clip != FindBGMByName(name) || !bgmAudioSource.isPlaying) {
-            Debug.Log("changing bgm to " + name);
+            // Debug.Log("changing bgm to " + name);
             bgmAudioSource.clip = FindBGMByName(name);
             bgmAudioSource.Play();
         }

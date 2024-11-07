@@ -79,7 +79,7 @@ public class TutorialController : MonoBehaviour {
                 Destroy(child.gameObject);
             }
         } else {
-            Debug.Log("no children to erase");
+            // Debug.Log("no children to erase");
         }
     }
 
@@ -89,7 +89,7 @@ public class TutorialController : MonoBehaviour {
             ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.RunTutorialFunction(currentTutorialIndex);
             talkingTextBox.text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.tutorialListItems[currentTutorialIndex].tutorialDialog;
             currentTutorialIndex++;
-            Debug.Log("progressing to next text");
+            // Debug.Log("progressing to next text");
         } else {
             EndTutorial();
         }
@@ -102,7 +102,7 @@ public class TutorialController : MonoBehaviour {
 
     public bool CanAdvanceDialog() {
         if (inTransition) {
-            Debug.Log("in transition");
+            // Debug.Log("in transition");
             return false;
         }
 
@@ -173,7 +173,7 @@ public class TutorialController : MonoBehaviour {
     public void ResetBearAndTextboxPositions() {
         MoveBear(new Vector2(-675, -405), false);
         talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-146.86f, -261.00f);
-        Debug.Log(talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition);
+        // Debug.Log(talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition);
     }
 
     public void MoveBear(Vector2 bearPos, bool faceLeft) {

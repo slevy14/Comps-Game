@@ -155,11 +155,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             } else { // didn't snap
                 // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
                 AudioController.Instance.PlaySoundEffect("Block Drop");
-                Debug.Log("not snapping");
+                // Debug.Log("not snapping");
             }
 
             transform.SetParent(parentAfterDrag);
-            Debug.Log("set parent to " + parentAfterDrag.name);
+            // Debug.Log("set parent to " + parentAfterDrag.name);
             SetMaskable(true); 
         } else { // is header
             transform.SetParent(parentAfterDrag);
@@ -346,7 +346,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 // Debug.Log("over whiteboard!");
                 return raycastResults[i].gameObject;
             }
-            Debug.Log(i);
+            // Debug.Log(i);
         }
         // Debug.Log("not over whiteboard!");
         return null;

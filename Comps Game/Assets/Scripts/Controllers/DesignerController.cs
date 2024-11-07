@@ -83,7 +83,7 @@ public class DesignerController : MonoBehaviour {
 
     void Awake() {
         CheckSingleton();
-        Debug.Log("successfully in editor");
+        // Debug.Log("successfully in editor");
     }
 
     // INITIALIZING
@@ -271,12 +271,12 @@ public class DesignerController : MonoBehaviour {
     // snapping
     public void ToggleSnappingIndicator(GameObject overlapBlock, RectTransform blockRectTransform) {
         if ((overlapBlock != null) && !overlapSpaceIndicator.activeSelf) {
-            Debug.Log("over overlap space");
+            // Debug.Log("over overlap space");
             overlapSpaceIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2 (blockRectTransform.sizeDelta.x, blockRectTransform.sizeDelta.y);
             overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
             overlapSpaceIndicator.SetActive(true);
         } else if ((overlapBlock == null) && overlapSpaceIndicator.activeSelf) {
-            Debug.Log("no longer over overlap space");
+            // Debug.Log("no longer over overlap space");
             overlapSpaceIndicator.SetActive(false);
         }
     }
@@ -459,7 +459,7 @@ public class DesignerController : MonoBehaviour {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
         // update sprite
-        Debug.Log("warrior index: " + warriorIndex + ", thumbnail index: " + thumbnailIndex);
+        // Debug.Log("warrior index: " + warriorIndex + ", thumbnail index: " + thumbnailIndex);
         GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
         thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
@@ -702,7 +702,7 @@ public class DesignerController : MonoBehaviour {
             textThe.SetActive(true);
             saveButton.SetActive(true);
             if (WarriorListController.Instance.GetCount() > 1) {
-                Debug.Log("activating delete button");
+                // Debug.Log("activating delete button");
                 deleteButton.SetActive(true);
             }
         }

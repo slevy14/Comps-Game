@@ -199,13 +199,13 @@ public class PlacementSystem : MonoBehaviour {
         }
 
         int warriorCount = GetPlacedWarriorCount();
-        Debug.Log("currently " + warriorCount + " warriors");
+        // Debug.Log("currently " + warriorCount + " warriors");
         if (warriorCount < ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace) {
-            Debug.Log("there is space for warrior!");
+            // Debug.Log("there is space for warrior!");
             return false;
         }
 
-        Debug.Log("Too many warriors! you can only place " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace + " warriors");
+        // Debug.Log("Too many warriors! you can only place " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace + " warriors");
         return true;
     }
 

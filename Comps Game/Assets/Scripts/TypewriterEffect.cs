@@ -81,14 +81,14 @@ public class TypewriterEffect : MonoBehaviour {
         readyForNewText = false;
 
         if (typewriterCoroutine != null) {
-            Debug.Log("stopping coroutine from prepare");
+            // Debug.Log("stopping coroutine from prepare");
             StopCoroutine(typewriterCoroutine);
         }
 
         textBox.maxVisibleCharacters = 0;
         currentVisibleCharacterIndex = 0;
 
-        Debug.Log("starting coroutine");
+        // Debug.Log("starting coroutine");
         typewriterCoroutine = StartCoroutine(Typewriter());
     }
 
@@ -131,7 +131,7 @@ public class TypewriterEffect : MonoBehaviour {
 
     void Skip() {
         if (CurrentlySkipping) {
-            Debug.Log("currently skipping, not doing another");
+            // Debug.Log("currently skipping, not doing another");
             return;
         }
 
@@ -144,7 +144,7 @@ public class TypewriterEffect : MonoBehaviour {
         }
 
         //else, quickskip
-        Debug.Log("stopping coroutine from skip");
+        // Debug.Log("stopping coroutine from skip");
         StopCoroutine(typewriterCoroutine);
         textBox.maxVisibleCharacters = textBox.textInfo.characterCount;
         readyForNewText = true;

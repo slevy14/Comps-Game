@@ -130,7 +130,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public void UpdateWarriorDrawerThumbnail(int index) {
-        Debug.Log("updating warrior drawer thumbnail for warrior " + index);
+        // Debug.Log("updating warrior drawer thumbnail for warrior " + index);
         // get references
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
