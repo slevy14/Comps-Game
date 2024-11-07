@@ -78,6 +78,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (prevBlock != null) {
                 prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
                 DesignerController.Instance.UpdateStrengthDisplay();
+                DesignerController.Instance.UpdateBehaviorsDisplay();
                 // Debug.Log("updated prev block next");
                 prevBlock = null;
             }
@@ -135,6 +136,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (!onWhiteboard && !DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform)) {
                 AudioController.Instance.PlaySoundEffect("Delete");
                 DesignerController.Instance.UpdateStrengthDisplay();
+                DesignerController.Instance.UpdateBehaviorsDisplay();
                 DestroyStack(this.gameObject);
             }
 
@@ -316,6 +318,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
                 DesignerController.Instance.ToggleSnappingIndicator(null, gameObject.GetComponent<RectTransform>()); // disable the snapping indicator
                 DesignerController.Instance.UpdateStrengthDisplay();
+                DesignerController.Instance.UpdateBehaviorsDisplay();
                 // Debug.Log(this.prevBlock.name);
                 AudioController.Instance.PlaySoundEffect("Block Snap");
                 return true; // snapped 

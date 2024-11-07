@@ -48,6 +48,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private GameObject switchLevelButtonObject;
     [SerializeField] public GameObject overlapSpaceIndicator;
     [SerializeField] private TMP_Text strengthDisplay;
+    [SerializeField] private TMP_Text maxBehaviorsDisplay;
     [SerializeField] private GameObject saveButton;
     [SerializeField] private GameObject deleteButton;
     [SerializeField] private GameObject textThe;
@@ -825,6 +826,7 @@ public class DesignerController : MonoBehaviour {
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         UpdateStrengthDisplay();
+        UpdateBehaviorsDisplay();
         // save warrior at end to make sure values are properly updated
         SaveWarrior();
     }
@@ -1177,6 +1179,25 @@ public class DesignerController : MonoBehaviour {
         return behaviorsList;
     }
 
+    public int CountBehaviors() {
+        int count = 0;
+        List<GameObject> allHeaders = new() {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
+        foreach (GameObject header in allHeaders) {
+            GameObject current = header.GetComponent<Draggable>().GetNextBlock();
+            while (current != null) {
+                BlockData blockData = current.GetComponent<BlockData>();
+                if (blockData.blockType == BlockData.BlockType.BEHAVIOR) {
+                    if (blockData.behavior == BlockData.BehaviorType.IF || blockData.behavior == BlockData.BehaviorType.ELSE || blockData.behavior == BlockData.BehaviorType.END_IF || blockData.behavior == BlockData.BehaviorType.WHILE_LOOP ||blockData.behavior == BlockData.BehaviorType.FOR_LOOP || blockData.behavior == BlockData.BehaviorType.END_LOOP) {
+                        continue;
+                    }
+                    count++;
+                }
+                current = current.GetComponent<Draggable>().GetNextBlock();
+            }
+        }
+        return count;
+    }
+
     public List<string> CheckLoopingConditionalErrors(string headerName, List<BlockDataStruct> blocks) {
         List<string> errorsList = new List<string>();
 
@@ -1264,6 +1285,20 @@ public class DesignerController : MonoBehaviour {
             // Debug.Log("setting color bad");
         }
         strengthDisplay.text = "Strength\n" + newStrength + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+    }
+
+    public void UpdateBehaviorsDisplay() {
+        int behaviorCount = CountBehaviors();
+        if (behaviorCount <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks) {
+            maxBehaviorsDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
+            // strengthDisplay.color = Color.blue;
+            // Debug.Log("setting color good");
+        } else {
+            maxBehaviorsDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
+            // strengthDisplay.color = Color.red;
+            // Debug.Log("setting color bad");
+        }
+        maxBehaviorsDisplay.text = "Behaviors\n" + behaviorCount + " / " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
     }
 
     // Deleting
