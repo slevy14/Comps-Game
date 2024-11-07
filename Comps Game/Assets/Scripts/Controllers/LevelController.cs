@@ -242,6 +242,7 @@ public class LevelController : MonoBehaviour {
             // explicitly set enemy
             warriorBehavior.SetIsEnemy();
         }
+        warriorBehavior.CheckValidOnGrid();
     }
 
     // LEVEL INFO PANEL
@@ -271,12 +272,19 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
             statsDisplay.text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
             statsDisplay.text += "\n\n" + BehaviorString(warrior);
+
+            statsPanel.transform.GetChild(4).GetComponent<TMP_Text>().text = "Strength: " + warrior.warriorStrength;
+            statsPanel.transform.GetChild(4).GetComponent<TMP_Text>().color = warrior.warriorStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength ? new Color(104f/255f, 241f/255f, 104f/255f) : new Color(241f/255f, 104f/255f, 104f/255f);
+            statsPanel.transform.GetChild(5).GetComponent<TMP_Text>().text = "Behaviors: " + warrior.behaviorCount;
+            statsPanel.transform.GetChild(5).GetComponent<TMP_Text>().color = warrior.behaviorCount <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks ? new Color(104f/255f, 241f/255f, 104f/255f) : new Color(241f/255f, 104f/255f, 104f/255f);
         } else { // enemy
             WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
             statsDisplay.text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
             statsDisplay.text += "\n\n" + BehaviorString(enemy);
+            statsPanel.transform.GetChild(4).GetComponent<TMP_Text>().text = "";
+            statsPanel.transform.GetChild(5).GetComponent<TMP_Text>().text = "";
         }
     }
 

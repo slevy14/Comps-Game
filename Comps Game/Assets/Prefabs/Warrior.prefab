@@ -391,6 +391,9 @@ MonoBehaviour:
   isAlive: 1
   isCurrentTurn: 0
   totalStrength: 0
+  isValidStrengthAndBehaviors: 0
+  defaultMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  greyOutMaterial: {fileID: 2100000, guid: 2031f5e8365a64f7a97938a7ca384809, type: 2}
   tilesToHitRelative: []
   meleePrefab: {fileID: 5954012884242161711, guid: c176829d3e14e4a00a017c8898163da5, type: 3}
   damageSprite: {fileID: 21300000, guid: bccceab7e3a09481d8918df01e851734, type: 3}

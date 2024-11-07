@@ -11,6 +11,7 @@ public class WarriorFunctionalityData {
     public int spriteIndex;
 
     public int warriorStrength;
+    public int behaviorCount;
 
     public List<BlockDataStruct> properties;
     public List<BlockDataStruct> moveFunctions;

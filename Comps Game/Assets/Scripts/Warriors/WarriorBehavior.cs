@@ -29,6 +29,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] public bool isAlive = true;
     [SerializeField] public bool isCurrentTurn;
     [SerializeField] public int totalStrength;
+    [SerializeField] public bool isValidStrengthAndBehaviors;
+    [SerializeField] private Material defaultMaterial;
+    [SerializeField] private Material greyOutMaterial;
 
     [Header("Conditionals/Looping")]
     private int MAX_INFINITY_COUNTER = 10;
@@ -217,6 +220,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
         
         return HelperController.Instance.CalculateWarriorStrength((int)propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE], (int)propertiesDict[BlockData.Property.HEAL_POWER], (int)propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MOVE_SPEED], (int)maxHealth, (int)propertiesDict[BlockData.Property.DEFENSE]);
+    }
+
+    // check if warrior preexisting on grid is valid strength and behaviors
+    public void CheckValidOnGrid() {
+        if (isEnemy) {
+            isValidStrengthAndBehaviors = true;
+            return;
+        }
+
+        if (!HelperController.Instance.ValidateBehaviorCount(warriorIndex) || !HelperController.Instance.ValidateStrength(warriorIndex)) {
+            isValidStrengthAndBehaviors = false;
+            transform.GetChild(0).GetComponent<SpriteRenderer>().material = greyOutMaterial;
+        } else {
+            isValidStrengthAndBehaviors = true;
+        }
     }
 
 

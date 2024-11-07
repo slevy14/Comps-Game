@@ -27,6 +27,7 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
 
     public void OnBeginDrag(PointerEventData eventData) {
         if (LevelController.Instance.inBattle || (!LevelController.Instance.inBattle && LevelController.Instance.battleFinished) || !isPlaceable) {
+            LevelController.Instance.ShowStatsPanel(warriorIndex, isEnemy);
             return;
         }
         Vector3 newPoint = Camera.main.ScreenToWorldPoint(new Vector3(this.transform.position.x, this.transform.position.y, 1));
@@ -58,32 +59,13 @@ public class WarriorLevelThumbnail : MonoBehaviour, IBeginDragHandler, IDragHand
     }
 
     public void CheckIfPlaceable() {
-        if (ProgressionController.Instance.currentLevel == 0) { // sandbox check
+        if (ProgressionController.Instance.currentLevel == 0 || isEnemy) { // sandbox check
             SetPlaceable(true);
             return;
         }
 
         // Debug.Log($"too many blocks for {WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).warriorName}: " + (count > ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks));
-        SetPlaceable(ValidateBehaviorCount() && ValidateStrength());
-    }
-
-    public bool ValidateBehaviorCount() {
-        // validate behavior count
-        int count = 0;
-        List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions};
-        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
-        foreach (List<BlockDataStruct> behaviorList in behaviorLists) {
-            foreach (BlockDataStruct block in behaviorList) {
-                if (behaviorIndices.Contains((int)block.behavior)) {
-                    count += 1;
-                }
-            }
-        }
-        return count <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
-    }
-
-    public bool ValidateStrength() {
-        return WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).warriorStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+        SetPlaceable(HelperController.Instance.ValidateBehaviorCount(warriorIndex) && HelperController.Instance.ValidateStrength(warriorIndex));
     }
 
     public void SetPlaceable(bool value) {

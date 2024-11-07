@@ -52,6 +52,25 @@ public class HelperController : MonoBehaviour {
         return Mathf.RoundToInt(strength);
     }
 
+    public bool ValidateBehaviorCount(int warriorIndex) {
+        // validate behavior count
+        int count = 0;
+        List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions};
+        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
+        foreach (List<BlockDataStruct> behaviorList in behaviorLists) {
+            foreach (BlockDataStruct block in behaviorList) {
+                if (behaviorIndices.Contains((int)block.behavior)) {
+                    count += 1;
+                }
+            }
+        }
+        return count <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
+    }
+
+    public bool ValidateStrength(int warriorIndex) {
+        return WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).warriorStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
+    }
+
     public LevelDataSO GetCurrentLevelData() {
         return ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel];
     }

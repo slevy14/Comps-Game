@@ -486,6 +486,7 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         _WarriorFunctionalityData.warriorStrength = CalculateCurrentStrength();
+        _WarriorFunctionalityData.behaviorCount = CountBehaviors();
         
         return _WarriorFunctionalityData;
     }
