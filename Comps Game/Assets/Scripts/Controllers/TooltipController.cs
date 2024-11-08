@@ -62,7 +62,8 @@ public class TooltipController : MonoBehaviour {
         this.tooltipText = tooltip;
     }
 
-    // if something breaks with this it's probably that the children are wrong
+    // if something breaks with this
+    // it's probably that the children are wrong
     public void ShowTooltip(string blockName, string tooltip) {
         // instantiate tooltip
         currentTooltipObject = Instantiate(tooltipPrefab, Input.mousePosition, transform.rotation, tooltipParentCanvas.transform);
