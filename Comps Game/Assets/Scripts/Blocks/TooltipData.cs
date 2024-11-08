@@ -3,24 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class TooltipController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+public class TooltipData : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler {
+
+    [SerializeField] private string blockName;
     [SerializeField] private string tooltip;
-    [SerializeField] private float tooltipWait = 2f;
     [SerializeField] private GameObject tooltipPrefab;
 
     public void PrintTooltip() {
         Debug.Log(tooltip + " from " + this.gameObject.name);
     }
 
-    public void HideTooltip() {
-        Debug.Log("hiding tooltip from " + this.gameObject.name);
-    }
-
     public void OnPointerEnter(PointerEventData eventData) {
-        // PrintTooltip();
+        TooltipController.Instance.StartTooltipTimer(blockName, tooltip);
+        PrintTooltip();
     }
 
     public void OnPointerExit(PointerEventData eventData) {
+        TooltipController.Instance.StopTooltip();
         // HideTooltip();
     }
 }
