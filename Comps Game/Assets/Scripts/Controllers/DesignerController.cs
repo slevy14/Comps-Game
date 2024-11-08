@@ -1229,12 +1229,12 @@ public class DesignerController : MonoBehaviour {
         foreach (GameObject header in allHeaders) {
             GameObject current = header.GetComponent<Draggable>().GetNextBlock();
             while (current != null) {
+                // Debug.Log("looking at " + current.gameObject.name);
                 BlockData blockData = current.GetComponent<BlockData>();
                 if (blockData.blockType == BlockData.BlockType.BEHAVIOR) {
-                    if (blockData.behavior == BlockData.BehaviorType.IF || blockData.behavior == BlockData.BehaviorType.ELSE || blockData.behavior == BlockData.BehaviorType.END_IF || blockData.behavior == BlockData.BehaviorType.WHILE_LOOP ||blockData.behavior == BlockData.BehaviorType.FOR_LOOP || blockData.behavior == BlockData.BehaviorType.END_LOOP) {
-                        continue;
+                    if (blockData.behavior != BlockData.BehaviorType.IF && blockData.behavior != BlockData.BehaviorType.ELSE && blockData.behavior != BlockData.BehaviorType.END_IF && blockData.behavior != BlockData.BehaviorType.WHILE_LOOP && blockData.behavior != BlockData.BehaviorType.FOR_LOOP && blockData.behavior != BlockData.BehaviorType.END_LOOP) {
+                        count++;
                     }
-                    count++;
                 }
                 current = current.GetComponent<Draggable>().GetNextBlock();
             }
