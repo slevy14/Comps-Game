@@ -31,7 +31,7 @@ public class HelperController : MonoBehaviour {
     } 
 
 
-    public bool IsOverUI() {
+    public List<RaycastResult> OverUI() {
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
         pointerEventData.position = Input.mousePosition;
 
@@ -44,7 +44,14 @@ public class HelperController : MonoBehaviour {
                 i--;
             }
         }
-        return raycastResults.Count > 0;
+        
+        // debug: print all things that are under ui
+        if (raycastResults.Count > 0) foreach (RaycastResult raycastResult in raycastResults) {
+            Debug.Log("Hit " + raycastResult.gameObject.name);
+        } else {
+            Debug.Log("Not over UI! Count is " + raycastResults.Count);
+        }
+        return raycastResults;
     }
 
     public int CalculateWarriorStrength(int attackPower, int attackRange, int healPower, int projectilePower, int speed, int maxHealth, int defense) {

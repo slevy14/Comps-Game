@@ -2148,7 +2148,7 @@ GameObject:
   - component: {fileID: 592989794}
   m_Layer: 2
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6278,6 +6278,7 @@ MonoBehaviour:
   pauseButton: {fileID: 714078087}
   levelCompleteMenu: {fileID: 705226091}
   levelLostMenu: {fileID: 460450221}
+  falseStartPrefab: {fileID: 0}
   warriorThumbnailPrefab: {fileID: 2618148630434642962, guid: 665173e7412c54b8fb2a1a8bf0acd013, type: 3}
   spriteDataList:
   - spriteName: 
@@ -7504,7 +7505,7 @@ GameObject:
   - component: {fileID: 1642890539}
   m_Layer: 2
   m_Name: Background Canvas
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

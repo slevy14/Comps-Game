@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8558000341272821860}
   m_Layer: 5
   m_Name: Background
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 1901679217377755791}
   m_Layer: 5
   m_Name: Slider
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -418,7 +418,7 @@ GameObject:
   - component: {fileID: 8368303794906046541}
   m_Layer: 5
   m_Name: HealthText
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -634,7 +634,7 @@ GameObject:
   - component: {fileID: 2509367888215546578}
   m_Layer: 5
   m_Name: Fill Area
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -672,7 +672,7 @@ GameObject:
   - component: {fileID: 2354151495538879241}
   m_Layer: 5
   m_Name: Fill
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 547245972004651839}
   m_Layer: 5
   m_Name: Canvas
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

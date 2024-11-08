@@ -380,10 +380,11 @@ public class DesignerController : MonoBehaviour {
                 Destroy(child.gameObject);
             }
         }
-        propertiesHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
-        moveHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
-        useWeaponHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
-        useSpecialHeaderObject.GetComponent<Draggable>().SetNextBlock(null);
+        List<Draggable> headerDraggables = new List<Draggable> {propertiesHeaderObject.GetComponent<Draggable>(), moveHeaderObject.GetComponent<Draggable>(), useWeaponHeaderObject.GetComponent<Draggable>(), useSpecialHeaderObject.GetComponent<Draggable>()};
+        foreach (Draggable headerDraggable in headerDraggables) {
+            headerDraggable.SetNextBlock(null);
+            headerDraggable.SetOverlapUseable();
+        }
     }
 
     public void AddWarriorToDrawer(int index) {
@@ -474,10 +475,26 @@ public class DesignerController : MonoBehaviour {
     public void InitializeWarrior() {
         justSaved = true;
         WarriorFunctionalityData _WarriorFunctionalityData = CreateDataForCurrentWarrior();
+
+        // set default header positions and load them to whiteboard
+        _WarriorFunctionalityData.SetHeaderPositions();
+        LoadDefaultHeaderPositions(_WarriorFunctionalityData);
         
         // this should only be called for player creating new warriors!
         UpdateWarriorList(_WarriorFunctionalityData, false);
         AddWarriorToDrawer(editingWarriorIndex);
+    }
+
+    private void LoadDefaultHeaderPositions(WarriorFunctionalityData warriorData) {
+        propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.propertiesHeaderPosition;
+        useWeaponHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.useWeaponHeaderPosition;
+
+        if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
+            moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        }
+        if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+            useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        }
     }
 
     private WarriorFunctionalityData CreateDataForCurrentWarrior() {
@@ -490,6 +507,8 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
         _WarriorFunctionalityData.warriorStrength = CalculateCurrentStrength();
         _WarriorFunctionalityData.behaviorCount = CountBehaviors();
+
+        _WarriorFunctionalityData.SetHeaderPositions(propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition, moveHeaderObject.GetComponent<RectTransform>().anchoredPosition, useWeaponHeaderObject.GetComponent<RectTransform>().anchoredPosition, useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition);
         
         return _WarriorFunctionalityData;
     }
@@ -709,6 +728,7 @@ public class DesignerController : MonoBehaviour {
 
         // instantiate blocks onto the whiteboard, positioned and parented
         // might be best to do this by just parenting the objects and then running the update position function on each header
+        propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.propertiesHeaderPosition;
         GameObject currentBlock = propertiesHeaderObject;
         foreach (BlockDataStruct block in warriorData.properties) {
             // instantiate block parented to whiteboard
@@ -746,10 +766,8 @@ public class DesignerController : MonoBehaviour {
         }
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
-        // hide headers if not needed for level
-        if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
-            moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
-        }
+        
+        
         if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
             useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
         }
@@ -757,6 +775,27 @@ public class DesignerController : MonoBehaviour {
         List<GameObject> headers = new List<GameObject> {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
         for (int i = 0; i < headers.Count; i++) {
+            // place headers
+            // also hide headers if not needed for level
+            switch (i) {
+                case 0:
+                    headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.moveHeaderPosition;
+                    if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
+                        moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+                    }
+                    break;
+                case 1:
+                    headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.useWeaponHeaderPosition;
+                    break;
+                case 2:
+                    headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.useSpecialHeaderPosition;
+                    if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+                        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+                    }
+                    break;
+            }
+
+            // place blocks
             currentBlock = headers[i];
             foreach (BlockDataStruct block in behaviorLists[i]) {
                 // instantiate block parented to whiteboard

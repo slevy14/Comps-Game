@@ -14,6 +14,7 @@ TagManager:
   - enemy
   - icon
   - mainUI
+  - notMainUI
   layers:
   - Default
   - TransparentFX

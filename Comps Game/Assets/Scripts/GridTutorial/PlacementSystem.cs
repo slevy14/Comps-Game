@@ -132,6 +132,7 @@ public class PlacementSystem : MonoBehaviour {
                 int endIndex = 0; // figure out what collision, 0 if none
                 if (IsOverUI() || IsTooManyWarriors()) { // if over drawer or too many placed, index 3
                     endIndex = 3;
+                    Debug.Log($"warrior will be destroyed on release due to either: \nIsOverUI: {IsOverUI()}, IsTooManyWarriors: {IsTooManyWarriors()}");
                 } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
                 } else if (!tilemap.HasTile(gridPosition) || (!isPlayerSide && !LevelController.Instance.isSandbox)) { // if no tile or on wrong side, index 2
@@ -178,19 +179,14 @@ public class PlacementSystem : MonoBehaviour {
     }
 
     private bool IsOverUI() {
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        pointerEventData.position = Input.mousePosition;
-
-        List<RaycastResult> raycastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, raycastResults);
-        for (int i = 0; i < raycastResults.Count; i++) {
-            // Debug.Log(raycastResults[i].gameObject.name);
-            if (raycastResults[i].gameObject.layer != 5) { // ui layer
-                raycastResults.RemoveAt(i);
+        List<RaycastResult> overUI = HelperController.Instance.OverUI();
+        for (int i = 0; i < overUI.Count; i++) {
+            if (overUI[i].gameObject.tag == "notMainUI") {
+                overUI.RemoveAt(i);
                 i--;
             }
         }
-        return raycastResults.Count > 0;
+        return overUI.Count > 0;
     }
 
     private bool IsTooManyWarriors() {
