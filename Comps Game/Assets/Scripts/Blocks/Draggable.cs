@@ -104,7 +104,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         block.transform.position = newPosition;
         SetOverlapUseable();
         if (nextBlock != null) {
-            Debug.Log("next block not null");
+            // Debug.Log("next block not null");
             nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
         }
     }

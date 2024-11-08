@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
-  m_Name: 1_4_LevelData
+  m_Name: 3_LevelData
   m_EditorClassIdentifier: 
-  levelName: The Power Of Love
-  levelNumber: 4
-  availableEnemyIndices: 0100000002000000
+  levelName: They Have Armor Now
+  levelNumber: 3
+  availableEnemyIndices: 01000000
   enemyPlacementsList:
   - pos: {x: 0, y: 2}
     warriorIndex: 1
@@ -28,24 +28,12 @@ MonoBehaviour:
   - pos: {x: 0, y: -3}
     warriorIndex: 1
     isEnemy: 1
-  - pos: {x: 1, y: 1}
-    warriorIndex: 2
-    isEnemy: 1
-  - pos: {x: 1, y: -2}
-    warriorIndex: 2
-    isEnemy: 1
-  - pos: {x: 0, y: 1}
-    warriorIndex: 2
-    isEnemy: 1
-  - pos: {x: 0, y: -2}
-    warriorIndex: 2
-    isEnemy: 1
-  availablePropertiesIndices: 01000000020000000600000005000000040000000d000000
+  availablePropertiesIndices: 01000000020000000600000005000000
   availableBehaviorsIndices: 0d00000005000000
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 250
+  maxTotalStrength: 150
   maxBlocks: 3
   actionPoints: 0
-  maxWarriorsToPlace: 4
-  tutorialFunctionality: {fileID: 11400000, guid: 409010ebfad1a448899062880bac2aed, type: 2}
+  maxWarriorsToPlace: 2
+  tutorialFunctionality: {fileID: 11400000, guid: 1d7164a120c294f44a59aa14869c2aa7, type: 2}

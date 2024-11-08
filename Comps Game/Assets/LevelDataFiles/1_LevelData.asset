@@ -10,30 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
-  m_Name: 1_3_LevelData
+  m_Name: 1_LevelData
   m_EditorClassIdentifier: 
-  levelName: They Have Armor Now
-  levelNumber: 3
-  availableEnemyIndices: 01000000
+  levelName: A Skeleton Approaches
+  levelNumber: 1
+  availableEnemyIndices: 00000000
   enemyPlacementsList:
-  - pos: {x: 0, y: 2}
-    warriorIndex: 1
-    isEnemy: 1
   - pos: {x: 0, y: 0}
-    warriorIndex: 1
+    warriorIndex: 0
     isEnemy: 1
-  - pos: {x: 0, y: -1}
-    warriorIndex: 1
-    isEnemy: 1
-  - pos: {x: 0, y: -3}
-    warriorIndex: 1
-    isEnemy: 1
-  availablePropertiesIndices: 01000000020000000600000005000000
+  availablePropertiesIndices: 010000000200000006000000
   availableBehaviorsIndices: 0d00000005000000
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 150
+  maxTotalStrength: 100
   maxBlocks: 3
   actionPoints: 0
-  maxWarriorsToPlace: 2
-  tutorialFunctionality: {fileID: 11400000, guid: 1d7164a120c294f44a59aa14869c2aa7, type: 2}
+  maxWarriorsToPlace: 1
+  tutorialFunctionality: {fileID: 11400000, guid: 66c59885c01bb47d7b5e2e0cec290b4f, type: 2}

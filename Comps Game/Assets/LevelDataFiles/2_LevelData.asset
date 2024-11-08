@@ -10,13 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
-  m_Name: 1_1_LevelData
+  m_Name: 2_LevelData
   m_EditorClassIdentifier: 
-  levelName: A Skeleton Approaches
-  levelNumber: 1
+  levelName: More Skeletons
+  levelNumber: 2
   availableEnemyIndices: 00000000
   enemyPlacementsList:
   - pos: {x: 0, y: 0}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 0, y: 2}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 0, y: -1}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 0, y: -3}
     warriorIndex: 0
     isEnemy: 1
   availablePropertiesIndices: 010000000200000006000000
@@ -26,5 +35,5 @@ MonoBehaviour:
   maxTotalStrength: 100
   maxBlocks: 3
   actionPoints: 0
-  maxWarriorsToPlace: 1
-  tutorialFunctionality: {fileID: 11400000, guid: 66c59885c01bb47d7b5e2e0cec290b4f, type: 2}
+  maxWarriorsToPlace: 4
+  tutorialFunctionality: {fileID: 11400000, guid: d48f89ed1b1d244e59bbca1a3b11c5df, type: 2}

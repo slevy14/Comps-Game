@@ -92,7 +92,7 @@ public class TooltipController : MonoBehaviour {
     }
 
     public void HideTooltip() {
-        Debug.Log("hiding tooltip!");
+        // Debug.Log("hiding tooltip!");
         // set tooltip active false
         isTooltipActive = false;
         // set is ready true

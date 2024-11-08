@@ -104,6 +104,11 @@ public class DesignerController : MonoBehaviour {
 
         InitializeLevelSwitchButton();
 
+        // disable tutorial replay button if in sandbox
+        if (isSandbox) {
+            GameObject.Find("BearButton").SetActive(false);
+        }
+
         AudioController.Instance.ChangeBGM("Coding BGM");
     }
 

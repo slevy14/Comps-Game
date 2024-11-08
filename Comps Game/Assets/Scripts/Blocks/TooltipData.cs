@@ -14,7 +14,7 @@ public class TooltipData : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerEnter(PointerEventData eventData) {
         TooltipController.Instance.StartTooltipTimer(blockName, tooltip);
-        PrintTooltip();
+        // PrintTooltip();
     }
 
     public void OnPointerExit(PointerEventData eventData) {
