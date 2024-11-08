@@ -44,9 +44,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 13.169
       objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: tooltip
+      value: While the chosen condition is true, loop the following behaviors.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: blockName
+      value: WHILE
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613078255052978055, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -95.2
+      objectReference: {fileID: 0}
     - target: {fileID: 6742880804255094415, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_text
-      value: While
+      value: WHILE
       objectReference: {fileID: 0}
     - target: {fileID: 8449856909284559469, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_Pivot.x

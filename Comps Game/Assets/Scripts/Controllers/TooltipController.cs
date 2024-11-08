@@ -62,7 +62,7 @@ public class TooltipController : MonoBehaviour {
         this.tooltipText = tooltip;
     }
 
-    // FIXME: CHILDREN ARE WRONG!
+    // if something breaks with this it's probably that the children are wrong
     public void ShowTooltip(string blockName, string tooltip) {
         // instantiate tooltip
         currentTooltipObject = Instantiate(tooltipPrefab, Input.mousePosition, transform.rotation, tooltipParentCanvas.transform);
@@ -70,7 +70,7 @@ public class TooltipController : MonoBehaviour {
         // set tooltip name
         currentTooltipObject.transform.GetChild(1).GetComponent<TMP_Text>().text = blockName;
         // set tooltip text
-        currentTooltipObject.transform.GetChild(2).GetComponent<TMP_Text>().text = tooltip;
+        currentTooltipObject.transform.GetChild(3).GetComponent<TMP_Text>().text = tooltip;
         // set isactive true
         isTooltipActive = true;
         // set isready false

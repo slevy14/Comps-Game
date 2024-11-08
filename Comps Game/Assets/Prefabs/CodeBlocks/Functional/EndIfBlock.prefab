@@ -20,6 +20,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: EndIfBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: tooltip
+      value: Ends an IF statement. Must be placed at the end of the conditional behaviors.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: blockName
+      value: END IF
+      objectReference: {fileID: 0}
     - target: {fileID: 6613078255052978055, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0

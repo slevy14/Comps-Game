@@ -553,6 +553,14 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 1774153174863780225, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: tooltip
+      value: Loop the following code a chosen amount of times.
+      objectReference: {fileID: 0}
+    - target: {fileID: 1774153174863780225, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
+      propertyPath: blockName
+      value: FOR
+      objectReference: {fileID: 0}
     - target: {fileID: 2817435691589049168, guid: a0c5ee0facdc649558fc3f97d50e8c49, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

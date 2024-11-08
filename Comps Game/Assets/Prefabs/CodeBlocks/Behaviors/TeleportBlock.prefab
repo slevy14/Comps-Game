@@ -1196,6 +1196,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: tooltip
+      value: Teleport to a chosen position on the map, relative to this warrior's
+        target.
+      objectReference: {fileID: 0}
+    - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: blockName
+      value: Teleport
+      objectReference: {fileID: 0}
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name
       value: TeleportBlock

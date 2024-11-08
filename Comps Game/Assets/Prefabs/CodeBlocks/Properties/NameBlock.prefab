@@ -545,6 +545,14 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: tooltip
+      value: This warrior's name.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: blockName
+      value: Name
+      objectReference: {fileID: 0}
     - target: {fileID: 5939100936248499671, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 22.127

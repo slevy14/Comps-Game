@@ -12,6 +12,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElseBlock
       objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: tooltip
+      value: If the condition from an IF block is not met, execute the behaviors
+        below this block.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5387827062482815164, guid: e916a860a0d8742ce930391f402760ba, type: 3}
+      propertyPath: blockName
+      value: ELSE
+      objectReference: {fileID: 0}
     - target: {fileID: 6613078255052978055, guid: e916a860a0d8742ce930391f402760ba, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -48.6

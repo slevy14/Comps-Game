@@ -16,6 +16,14 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: tooltip
+      value: This warrior's total health.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: blockName
+      value: Health
+      objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
       value: 'Health:

@@ -16,13 +16,21 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: tooltip
+      value: The amount of health your heal attacks do.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: blockName
+      value: Heal Power
+      objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
       value: 'Heal Power:'
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_fontSize
-      value: 22.4
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: property

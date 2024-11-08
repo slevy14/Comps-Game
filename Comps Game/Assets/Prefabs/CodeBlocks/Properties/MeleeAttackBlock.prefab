@@ -16,13 +16,21 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: tooltip
+      value: The damage that your melee attack will do with each hit.
+      objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: blockName
+      value: Melee Attack Power
+      objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
       value: 'Attack Power:'
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_fontSize
-      value: 23.8
+      value: 27.85
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: property

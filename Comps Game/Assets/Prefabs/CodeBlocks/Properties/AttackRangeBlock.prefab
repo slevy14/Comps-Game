@@ -16,6 +16,15 @@ PrefabInstance:
       propertyPath: m_PreferredHeight
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: tooltip
+      value: 'The range of your melee attack:<br>1: 1 square<br>2: 2 squares deep<br>3:
+        3 squares wide<br>4: combination of 2 and 3<br>5: 2x3 blocks in front'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: blockName
+      value: Attack Range
+      objectReference: {fileID: 0}
     - target: {fileID: 5980177803634960199, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

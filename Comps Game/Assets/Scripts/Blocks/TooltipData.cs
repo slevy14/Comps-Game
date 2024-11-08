@@ -7,7 +7,6 @@ public class TooltipData : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [SerializeField] private string blockName;
     [SerializeField] private string tooltip;
-    [SerializeField] private GameObject tooltipPrefab;
 
     public void PrintTooltip() {
         Debug.Log(tooltip + " from " + this.gameObject.name);
@@ -20,6 +19,5 @@ public class TooltipData : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     public void OnPointerExit(PointerEventData eventData) {
         TooltipController.Instance.StopTooltip();
-        // HideTooltip();
     }
 }
