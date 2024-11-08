@@ -94,6 +94,9 @@ public class LevelController : MonoBehaviour {
         if (!isSandbox) {
             SetLevelInfoPanel();
         }
+
+        // set default battle speed
+        battleSpeed = 0.51f;
         // LoadSavedGrid();
         AudioController.Instance.ChangeBGM("Coding BGM");
     }

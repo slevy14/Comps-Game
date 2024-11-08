@@ -24,16 +24,20 @@ public class ProjectileBehavior : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        float multSpeed = speed / (1.01f-LevelController.Instance.battleSpeed);
-        float multRot = rotSpeed / (1.01f-LevelController.Instance.battleSpeed);
+        float multSpeed = speed / (1.01f+LevelController.Instance.battleSpeed);
+        float multRot = rotSpeed / (1.01f+LevelController.Instance.battleSpeed);
         transform.Rotate(new Vector3(0, 0, rotSpeed));
         if (target != null) {
-            this.transform.position += multSpeed * Time.deltaTime * (target.transform.position - this.transform.position).normalized;
+            Debug.Log("mult speed: " + multSpeed);
+            this.transform.position += multSpeed * Time.fixedDeltaTime * (target.transform.position - this.transform.position).normalized;
+            Debug.Log("Projectile moving by " + (multSpeed * Time.fixedDeltaTime * (target.transform.position - this.transform.position).normalized));
 
-            if (Vector3.Distance(this.transform.position, target.transform.position) <= 0.2f) {
+            if (Vector3.Distance(this.transform.position, target.transform.position) <= 0.3f) {
                 target.GetComponent<WarriorBehavior>().DoDamageOrHeal(power, isHeal);
                 Destroy(this.gameObject);
             }
+        } else {
+            Debug.Log("PROJECTILE TARGET NULL THIS IS WHY ITS BREAKING UGH");
         }
     }
 
