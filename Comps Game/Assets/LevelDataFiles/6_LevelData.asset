@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
+  m_Name: 6_LevelData
+  m_EditorClassIdentifier: 
+  levelName: Level 6
+  levelNumber: 6
+  availableEnemyIndices: 0000000004000000
+  enemyPlacementsList: []
+  availablePropertiesIndices: 01000000020000000600000005000000040000000d00000003000000
+  availableBehaviorsIndices: 0d000000050000000200000003000000
+  isMoveHeaderAvailable: 1
+  isUseSpecialHeaderAvailable: 0
+  maxTotalStrength: 250
+  maxBlocks: 3
+  actionPoints: 0
+  maxWarriorsToPlace: 4
+  tutorialFunctionality: {fileID: 11400000, guid: 09f1b11aacb57467d990be3f0a8c3c35, type: 2}
