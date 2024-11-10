@@ -59,7 +59,8 @@ public class BlockData : MonoBehaviour {
         SPECIAL_POWER         = 11,
         SPECIAL_SPEED         = 12,
         HEAL_POWER            = 13,
-        HEAL_SPEED            = 14
+        HEAL_SPEED            = 14,
+        MAGIC_SHIELD          = 15
     }
 
     // tagging as hidden for use in custom editor

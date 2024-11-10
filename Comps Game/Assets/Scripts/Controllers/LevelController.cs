@@ -378,11 +378,58 @@ public class LevelController : MonoBehaviour {
                     float.TryParse(warriorProperties[i].values[0], out newVal);
                     propertiesDict[BlockData.Property.HEAL_SPEED] = newVal.ToString();
                     break;
+                case BlockData.Property.MAGIC_SHIELD:
+                    propertiesDict[BlockData.Property.MAGIC_SHIELD] = warriorProperties[i].ToString();
+                    break;
             }
         }
+        // add each property to the string
         foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
             if (propertiesDict[property] != "") {
-                propertiesString += Enum.GetName(typeof(BlockData.Property), property) + ": " + propertiesDict[property] + "\n";
+                switch (property) {
+                    case BlockData.Property.HEALTH:
+                        propertiesString += "Health: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.DEFENSE:
+                        propertiesString += "Defense: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.MOVE_SPEED:
+                        propertiesString += "Move Speed: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_RANGE:
+                        propertiesString += "Melee Attack Range: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_POWER:
+                        propertiesString += "Melee Attack Power: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.MELEE_ATTACK_SPEED:
+                        propertiesString += "Melee Attack Speed: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.DISTANCED_RANGE:
+                        propertiesString += "Projectile Range: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.RANGED_ATTACK_POWER:
+                        propertiesString += "Ranged Attack Power: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.RANGED_ATTACK_SPEED:
+                        propertiesString += "Projectile Speed: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.SPECIAL_POWER:
+                        propertiesString += "Special Attack Power: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.SPECIAL_SPEED:
+                        propertiesString += "Special Attack Speed: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.HEAL_POWER:
+                        propertiesString += "Heal Power: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.HEAL_SPEED:
+                        propertiesString += "Heal Speed: " + propertiesDict[property] + "\n";
+                        break;
+                    case BlockData.Property.MAGIC_SHIELD:
+                        propertiesString += "Magic Shield!\n";
+                        break;
+                }
             }
         }
         return propertiesString;

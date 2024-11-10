@@ -25,6 +25,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isMeleeTargetAllies;
     [SerializeField] private bool isRangedHeal;
     [SerializeField] private bool isRangedTargetAllies;
+    [SerializeField] private bool magicShield;
     [SerializeField] private float maxHealth;
     [SerializeField] public bool isAlive = true;
     [SerializeField] public bool isCurrentTurn;
@@ -303,6 +304,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.Property.HEAL_SPEED:
                     float.TryParse(propertiesData[i].values[0], out newVal);
                     propertiesDict[BlockData.Property.HEAL_SPEED] = newVal;
+                    break;
+                case BlockData.Property.MAGIC_SHIELD:
+                    magicShield = true;
                     break;
                 
             }
@@ -1062,6 +1066,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 break;
         }
         return adjustedList;
+    }
+
+    public bool GetMagicShield() {
+        return this.magicShield;
     }
 
     public void DoDamageOrHeal(float value, bool isHeal) {
