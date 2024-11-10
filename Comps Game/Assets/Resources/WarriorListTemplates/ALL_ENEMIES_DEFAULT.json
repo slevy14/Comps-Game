@@ -4,6 +4,24 @@
             "warriorName": "Baby Skeleton",
             "warriorIndex": 0,
             "spriteIndex": 0,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
             "properties": [
                 {
                     "blockType": 0,
@@ -30,6 +48,24 @@
             "warriorName": "Armored Skeleton",
             "warriorIndex": 1,
             "spriteIndex": 6,
+            "warriorStrength": 200,
+            "behaviorCount": 2,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -186.0,
+                "y": 895.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -186.0,
+                "y": 441.0
+            },
             "properties": [
                 {
                     "blockType": 0,
@@ -83,6 +119,24 @@
             "warriorName": "Reaper",
             "warriorIndex": 2,
             "spriteIndex": 2,
+            "warriorStrength": 261,
+            "behaviorCount": 2,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -794.180419921875,
+                "y": 206.2783966064453
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
             "properties": [
                 {
                     "blockType": 0,
@@ -152,6 +206,24 @@
             "warriorName": "Zombie Healer",
             "warriorIndex": 3,
             "spriteIndex": 7,
+            "warriorStrength": 110,
+            "behaviorCount": 2,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -181.80914306640626,
+                "y": 721.7835083007813
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
             "properties": [
                 {
                     "blockType": 0,
@@ -207,6 +279,534 @@
                     ]
                 }
             ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Angry Skeleton",
+            "warriorIndex": 4,
+            "spriteIndex": 0,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Angry Skeleton"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Walker",
+            "warriorIndex": 5,
+            "spriteIndex": 7,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Walker"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Skeleton Archer",
+            "warriorIndex": 6,
+            "spriteIndex": 1,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Skeleton Archer"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Dizzy Ghost",
+            "warriorIndex": 7,
+            "spriteIndex": 5,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Dizzy Ghost"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Necromancer's Apprentice",
+            "warriorIndex": 8,
+            "spriteIndex": 3,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Necromancer's Apprentice"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Guard Twin 1",
+            "warriorIndex": 9,
+            "spriteIndex": 6,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Guard Twin 1"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Guard Twin 2",
+            "warriorIndex": 10,
+            "spriteIndex": 6,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Guard Twin 2"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Ecto Healer",
+            "warriorIndex": 11,
+            "spriteIndex": 5,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Ecto Healer"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Necromancer",
+            "warriorIndex": 12,
+            "spriteIndex": 3,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Necromancer"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Giant Skeleton",
+            "warriorIndex": 13,
+            "spriteIndex": 0,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Giant Skeleton"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Soul Hunter",
+            "warriorIndex": 14,
+            "spriteIndex": 2,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Soul Hunter"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "The Lich",
+            "warriorIndex": 15,
+            "spriteIndex": 4,
+            "warriorStrength": 50,
+            "behaviorCount": 0,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 441.0
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "The Lich"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [],
             "useSpecialFunctions": []
         }
     ]
