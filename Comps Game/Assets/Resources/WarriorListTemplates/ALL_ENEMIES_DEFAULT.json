@@ -55,16 +55,16 @@
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -186.0,
-                "y": 895.0
+                "x": -2100.0,
+                "y": -950.0
             },
             "useWeaponHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 441.0
             },
             "useSpecialHeaderPosition": {
-                "x": -186.0,
-                "y": 441.0
+                "x": -2100.0,
+                "y": -950.0
             },
             "properties": [
                 {
@@ -217,8 +217,8 @@
                 "y": -950.0
             },
             "useWeaponHeaderPosition": {
-                "x": -181.80914306640626,
-                "y": 721.7835083007813
+                "x": -250.84027099609376,
+                "y": 891.0206298828125
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -285,8 +285,8 @@
             "warriorName": "Angry Skeleton",
             "warriorIndex": 4,
             "spriteIndex": 0,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 64,
+            "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
@@ -296,8 +296,8 @@
                 "y": -950.0
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -247.49981689453126,
+                "y": 893.2474365234375
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -319,29 +319,81 @@
                     "values": [
                         "50"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "10"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "40"
+                    ]
                 }
             ],
             "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Walker",
             "warriorIndex": 5,
             "spriteIndex": 7,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 87,
+            "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -189.6029052734375,
+                "y": 888.9845581054688
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -186.2626953125,
+                "y": 619.541259765625
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -363,10 +415,62 @@
                     "values": [
                         "50"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "10"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "36"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "1"
+                    ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
