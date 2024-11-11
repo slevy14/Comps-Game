@@ -15,7 +15,43 @@ MonoBehaviour:
   levelName: Level 14
   levelNumber: 14
   availableEnemyIndices: 080000000d000000
-  enemyPlacementsList: []
+  enemyPlacementsList:
+  - pos: {x: 4, y: 4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 3}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 2}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 1}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 0}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -1}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -2}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -3}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -5}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 0, y: 0}
+    warriorIndex: 13
+    isEnemy: 1
+  - pos: {x: 0, y: -1}
+    warriorIndex: 13
+    isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c000000
   isMoveHeaderAvailable: 1

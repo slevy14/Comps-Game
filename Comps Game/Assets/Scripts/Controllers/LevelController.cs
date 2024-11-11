@@ -287,6 +287,7 @@ public class LevelController : MonoBehaviour {
         if (!isEnemy) {
             WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
+            statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
             statsDisplay.text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
             statsDisplay.text += "\n\n" + BehaviorString(warrior);
@@ -300,6 +301,7 @@ public class LevelController : MonoBehaviour {
         } else { // enemy
             WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
+            statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
             statsDisplay.text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
             statsDisplay.text += "\n\n" + BehaviorString(enemy);

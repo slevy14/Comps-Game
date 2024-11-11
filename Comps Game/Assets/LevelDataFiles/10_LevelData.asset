@@ -15,7 +15,55 @@ MonoBehaviour:
   levelName: Level 10
   levelNumber: 10
   availableEnemyIndices: 04000000050000000600000008000000090000000a0000000b000000
-  enemyPlacementsList: []
+  enemyPlacementsList:
+  - pos: {x: 0, y: 4}
+    warriorIndex: 4
+    isEnemy: 1
+  - pos: {x: 0, y: 2}
+    warriorIndex: 4
+    isEnemy: 1
+  - pos: {x: 0, y: -3}
+    warriorIndex: 4
+    isEnemy: 1
+  - pos: {x: 0, y: -5}
+    warriorIndex: 4
+    isEnemy: 1
+  - pos: {x: 3, y: 3}
+    warriorIndex: 5
+    isEnemy: 1
+  - pos: {x: 3, y: -4}
+    warriorIndex: 5
+    isEnemy: 1
+  - pos: {x: 4, y: 3}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 4}
+    warriorIndex: 9
+    isEnemy: 1
+  - pos: {x: 4, y: -5}
+    warriorIndex: 10
+    isEnemy: 1
+  - pos: {x: 3, y: 1}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: 2, y: 0}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: 2, y: -1}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: 3, y: -2}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: 3, y: 0}
+    warriorIndex: 11
+    isEnemy: 1
+  - pos: {x: 3, y: -1}
+    warriorIndex: 11
+    isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f000000
   isMoveHeaderAvailable: 1

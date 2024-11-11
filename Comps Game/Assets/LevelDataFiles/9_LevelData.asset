@@ -15,7 +15,25 @@ MonoBehaviour:
   levelName: Level 9
   levelNumber: 9
   availableEnemyIndices: 060000000700000008000000
-  enemyPlacementsList: []
+  enemyPlacementsList:
+  - pos: {x: 4, y: 4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 3, y: 3}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: -3, y: 2}
+    warriorIndex: 7
+    isEnemy: 1
+  - pos: {x: -3, y: -5}
+    warriorIndex: 7
+    isEnemy: 1
+  - pos: {x: 3, y: -4}
+    warriorIndex: 6
+    isEnemy: 1
+  - pos: {x: 4, y: -5}
+    warriorIndex: 8
+    isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f000000
   isMoveHeaderAvailable: 1

@@ -477,19 +477,19 @@
             "warriorName": "Skeleton Archer",
             "warriorIndex": 6,
             "spriteIndex": 1,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 131,
+            "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -220.7781982421875,
+                "y": 894.36083984375
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -217.43798828125,
+                "y": 644.9588012695313
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -511,29 +511,73 @@
                     "values": [
                         "50"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "71"
+                    ]
                 }
             ],
             "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Dizzy Ghost",
             "warriorIndex": 7,
             "spriteIndex": 5,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 113,
+            "behaviorCount": 4,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -194.0565185546875,
+                "y": 898.814453125
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -191.8297119140625,
+                "y": 608.216552734375
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -553,31 +597,83 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "75"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "85"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "30"
                     ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 3,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "2",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Necromancer's Apprentice",
             "warriorIndex": 8,
             "spriteIndex": 3,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 116,
+            "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -199.62353515625,
+                "y": 886.5670776367188
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -196.2833251953125,
+                "y": 673.9072265625
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -597,31 +693,67 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "62"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "54"
                     ]
                 }
             ],
             "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "3",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Guard Twin 1",
             "warriorIndex": 9,
             "spriteIndex": 6,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 134,
+            "behaviorCount": 6,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -212.984375,
+                "y": 889.9072875976563
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -207.4173583984375,
+                "y": 502.44329833984377
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -643,29 +775,113 @@
                     "values": [
                         "50"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "2"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Guard Twin 2",
             "warriorIndex": 10,
             "spriteIndex": 6,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 134,
+            "behaviorCount": 6,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -118.12884521484375,
+                "y": 887.8711547851563
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -118.12884521484375,
+                "y": 482.5928039550781
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -687,29 +903,113 @@
                     "values": [
                         "50"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "2"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Ecto Healer",
             "warriorIndex": 11,
             "spriteIndex": 5,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 227,
+            "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -143.737060546875,
+                "y": 883.4175415039063
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -157.097900390625,
+                "y": 534.9227294921875
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -729,31 +1029,83 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "79"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "49"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "3"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "10"
                     ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Necromancer",
             "warriorIndex": 12,
             "spriteIndex": 3,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 130,
+            "behaviorCount": 2,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -170.458740234375,
+                "y": 894.5515747070313
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -168.23193359375,
+                "y": 557.1907348632813
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -773,31 +1125,82 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "20"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
                     ]
                 }
             ],
             "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Giant Skeleton",
             "warriorIndex": 13,
             "spriteIndex": 0,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 300,
+            "behaviorCount": 5,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -171.5721435546875,
+                "y": 877.8505859375
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -154.87109375,
+                "y": 459.21136474609377
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -817,31 +1220,118 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "5"
                     ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1",
+                        "5"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "Soul Hunter",
             "warriorIndex": 14,
             "spriteIndex": 2,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 217,
+            "behaviorCount": 4,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -142.6236572265625,
+                "y": 891.2113647460938
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -154.87109375,
+                "y": 523.7886962890625
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -861,31 +1351,110 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "77"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "70"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "2"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
                     ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1",
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 4,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         },
         {
             "warriorName": "The Lich",
             "warriorIndex": 15,
             "spriteIndex": 4,
-            "warriorStrength": 50,
-            "behaviorCount": 0,
+            "warriorStrength": 674,
+            "behaviorCount": 13,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -2100.0,
-                "y": -950.0
+                "x": -172.5001220703125,
+                "y": 896.7783813476563
             },
             "useWeaponHeaderPosition": {
-                "x": -781.9998168945313,
-                "y": 441.0
+                "x": -175.84033203125,
+                "y": 478.1391906738281
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -905,12 +1474,211 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "50"
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "70"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "51"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "30"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 3,
+                    "values": [
+                        "60"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "49"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
                     ]
                 }
             ],
-            "moveFunctions": [],
-            "useWeaponFunctions": [],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "4",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 4,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0",
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 11,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "8"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
             "useSpecialFunctions": []
         }
     ]
