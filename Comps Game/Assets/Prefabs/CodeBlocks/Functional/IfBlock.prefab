@@ -2403,9 +2403,17 @@ PrefabInstance:
       value: IF
       objectReference: {fileID: 0}
     - target: {fileID: 1712510722031063008, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: m_Type
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1712510722031063008, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 1e7e33fb63bc743bfaa9c36f0fbb656e, type: 3}
+      objectReference: {fileID: 21300000, guid: 41a6a99808d9a44df9b7d3ef13379e76, type: 3}
+    - target: {fileID: 1712510722031063008, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name
       value: IfBlock
