@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: 1_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: '"I''ve been turned into a bear! But there''s no time to dwell
-      on that--- (Click to continue)"'
+  - tutorialDialog: I've been turned into a bear! But there's no time to dwell on
+      that--- (Click to continue)
     functionOption: 7
   - tutorialDialog: You're under attack!
     functionOption: 15
