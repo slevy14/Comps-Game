@@ -24,6 +24,10 @@ PrefabInstance:
       propertyPath: blockName
       value: Health
       objectReference: {fileID: 0}
+    - target: {fileID: 5980177803634960199, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
       value: 'Health:
@@ -33,6 +37,10 @@ PrefabInstance:
     - target: {fileID: 8526293785980299094, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: property
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8661466814020160225, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9002237579248771133, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_Pivot.x
