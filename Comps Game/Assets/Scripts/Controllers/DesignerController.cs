@@ -1333,7 +1333,7 @@ public class DesignerController : MonoBehaviour {
         }
         strengthDisplay.text = "Strength\n" + newStrength + " / ";
         if (ProgressionController.Instance.currentLevel == 0) { // sandbox
-            strengthDisplay.text += "∞";
+            strengthDisplay.text += "inf.";
         } else {
             strengthDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
         }
@@ -1352,7 +1352,7 @@ public class DesignerController : MonoBehaviour {
         }
         maxBehaviorsDisplay.text = "Behaviors\n" + behaviorCount + " / ";
         if (ProgressionController.Instance.currentLevel == 0) { // sandbox
-            maxBehaviorsDisplay.text += "∞";
+            maxBehaviorsDisplay.text += "inf.";
         } else {
             maxBehaviorsDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
         }
