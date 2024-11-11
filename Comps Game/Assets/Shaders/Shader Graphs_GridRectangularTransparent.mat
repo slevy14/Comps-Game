@@ -45,9 +45,9 @@ Material:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
     - _ScaleMultiplier: 0.75
-    - _Thickness: 0.05
+    - _Thickness: 0.0313
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.3773585, g: 0.2959249, b: 0.24385902, a: 1}
     - _DefaultScale: {r: 1, g: 1, b: 0, a: 0}
     - _Size: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
