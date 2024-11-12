@@ -26,6 +26,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private bool isRangedHeal;
     [SerializeField] private bool isRangedTargetAllies;
     [SerializeField] private bool magicShield;
+    [SerializeField] private bool hasStamina;
     [SerializeField] private float maxHealth;
     [SerializeField] public bool isAlive = true;
     [SerializeField] public bool isCurrentTurn;
@@ -56,6 +57,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private InputManager inputManager;
     private Slider healthBar;
     private GameObject pointer;
+    [SerializeField] private GameObject staminaIndicator;
 
     [Header("Dragging")]
     private bool isDragging;
@@ -191,6 +193,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     public void MarkCurrentTurn(bool value) {
         isCurrentTurn = value;
         pointer.SetActive(value);
+        ToggleStaminaIndicator(true);
     }
 
     public void SetPropertiesAndBehaviors(List<BlockDataStruct> properties, List<BlockDataStruct> move, List<BlockDataStruct> useWeapon, List<BlockDataStruct> useSpecials) {
@@ -538,6 +541,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 do the actual melee attack*/
                 case BlockData.BehaviorType.MELEE_ATTACK:
                     Debug.Log("melee attack");
+                    // don't attack if no stamina
+                    if (!UseStamina()) {
+                        break;
+                    }
                     List<Vector2> adjustedList = GetMeleeRange();
 
                     // loop through adjusted list:
@@ -887,11 +894,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 do the actual ranged attack */
                 case BlockData.BehaviorType.FIRE_PROJECTILE:
                     Debug.Log("fire projectile");
+                    // don't fire projectile if no stamina
+                    if (!UseStamina()) {
+                        break;
+                    }
                     if (target == null) {
                         break;
                     }
-
-
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
                         this.animator.SetTrigger("RangedAttack");
                         yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
@@ -1070,6 +1079,27 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public bool GetMagicShield() {
         return this.magicShield;
+    }
+
+    public bool UseStamina() {
+        // return true if we use stamina
+        if (hasStamina) {
+            ToggleStaminaIndicator(false);
+            return true;
+        } else {
+            IndicateNoStamina();
+            return false;
+        }
+    }
+
+    public void ToggleStaminaIndicator(bool value) {
+        hasStamina = value;
+        staminaIndicator.GetComponent<Image>().color = value ? Color.white : Color.black;
+    }
+
+    public void IndicateNoStamina() {
+        // FIXME!!!!!
+        Debug.Log("no stamina! cannot attack");
     }
 
     public void DoDamageOrHeal(float value, bool isHeal) {
