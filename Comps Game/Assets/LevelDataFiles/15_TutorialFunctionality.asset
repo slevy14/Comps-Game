@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: 15_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 15 tutorial
+  - tutorialDialog: It's the big boss!! Not quite its final form, but formidible
+      nonetheless.
+    functionOption: 7
+  - tutorialDialog: Use all the behaviors and conditionals you have at your disposal
+      to take him down!
     functionOption: 7
   _selectedFunction: 7

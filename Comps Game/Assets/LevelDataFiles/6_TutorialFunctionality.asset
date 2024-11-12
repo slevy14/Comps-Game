@@ -13,6 +13,28 @@ MonoBehaviour:
   m_Name: 6_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 6 tutorial
+  - tutorialDialog: They think they can run away? Ha!
+    functionOption: 7
+  - tutorialDialog: Our enemies may be out of our immediate attack range, but we
+      can move now!
+    functionOption: 7
+  - tutorialDialog: Notice something different on the whiteboard?
+    functionOption: 13
+  - tutorialDialog: You now have access to the Move header!
+    functionOption: 17
+  - tutorialDialog: Just like the Use Weapon header, any Behavior blocks placed under
+      it will execute in order.
+    functionOption: 17
+  - tutorialDialog: On your warrior's turn, Move happens before Use Weapon. Think
+      carefully about the order of your blocks!
+    functionOption: 17
+  - tutorialDialog: 'Try using it with your new blocks: Step and Run!'
+    functionOption: 18
+  - tutorialDialog: Step moves you one step in the direction you're facing.
+    functionOption: 18
+  - tutorialDialog: Run moves you two steps in the direction you're facing, skipping
+      over the space in between even if there's a warrior there.
+    functionOption: 18
+  - tutorialDialog: Don't let them get away from you that easily!
     functionOption: 7
   _selectedFunction: 7

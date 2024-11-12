@@ -21,8 +21,6 @@ MonoBehaviour:
   - tutorialDialog: ...And by that I mean healers.
     functionOption: 7
   - tutorialDialog: Let's see what new blocks we unlocked.
-    functionOption: 7
-  - tutorialDialog: Let's see what new blocks we unlocked.
     functionOption: 13
   - tutorialDialog: The Speed and Heal Power properties are here to help you out!
     functionOption: 18

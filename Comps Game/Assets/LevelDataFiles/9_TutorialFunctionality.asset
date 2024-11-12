@@ -13,6 +13,15 @@ MonoBehaviour:
   m_Name: 9_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 9 tutorial
+  - tutorialDialog: The ghosts have gone too far! They've made it onto our side of
+      the battlefield somehow.
+    functionOption: 7
+  - tutorialDialog: We've got one more movement behavior we can try to take them
+      down.
+    functionOption: 13
+  - tutorialDialog: You can Turn now! This changes your facing direction -- could
+      be useful for hitting enemies that are running circles around you!
+    functionOption: 18
+  - tutorialDialog: Go get 'em, tiger.
     functionOption: 7
   _selectedFunction: 7

@@ -18,11 +18,10 @@ MonoBehaviour:
   - tutorialDialog: You have one more new tool to try and stop them. Let's check
       it out.
     functionOption: 7
-  - tutorialDialog: You have one more new tool to try and stop them. Let's check
-      it out.
+  - tutorialDialog: And here it is!
     functionOption: 13
-  - tutorialDialog: And here it is! The defense property. Use this to block some
-      damage from your enemies.
+  - tutorialDialog: The defense property. Use this to block some damage from your
+      enemies.
     functionOption: 18
   - tutorialDialog: You've got all you need to take these heartless beasts down out
       on the battlefield.

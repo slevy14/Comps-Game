@@ -13,6 +13,9 @@ MonoBehaviour:
   m_Name: 10_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 10 tutorial
+  - tutorialDialog: They've swarmed. That's less than ideal.
+    functionOption: 7
+  - tutorialDialog: But you GOT THIS! You have all the tools you need to take the
+      evil army down.
     functionOption: 7
   _selectedFunction: 7

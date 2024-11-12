@@ -199,10 +199,10 @@ public class LevelController : MonoBehaviour {
     public void ClearGrid() {
         // clear dict
         objectsOnGrid.Clear();
-        Debug.Log("cleared from dict");
+        // Debug.Log("cleared from dict");
         // destroy objects
         int childCount = warriorsContainer.transform.childCount;
-        Debug.Log("child count" + childCount);
+        // Debug.Log("child count" + childCount);
         // for (int i = 0; i < childCount; i++) {
         //     Debug.Log("destroying object");
         //     Destroy(warriorsContainer.transform.GetChild(0).gameObject);
@@ -213,7 +213,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public void ResetGridButton() {
-        Debug.Log("reset button pressed");
+        // Debug.Log("reset button pressed");
         inBattle = false;
         battleFinished = false;
         LoadSavedGrid();

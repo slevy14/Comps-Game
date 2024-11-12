@@ -26,12 +26,9 @@ MonoBehaviour:
   - tutorialDialog: But this one doesn't do anything yet. Let's go to the code editor
       and make it strong!
     functionOption: 16
-  - tutorialDialog: But this one doesn't do anything yet. Let's go to the code editor
-      and make it strong!
-    functionOption: 13
   - tutorialDialog: This is the code editor. Here, you can design and customize your
       warriors to your heart's content.
-    functionOption: 7
+    functionOption: 13
   - tutorialDialog: Click on the Blocks tab to display all the code blocks you have
       available.
     functionOption: 1

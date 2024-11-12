@@ -13,6 +13,34 @@ MonoBehaviour:
   m_Name: 11_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 11 tutorial
+  - tutorialDialog: Well after all that I'm sure it can only get easier--
+    functionOption: 7
+  - tutorialDialog: Only one warrior, huh?
+    functionOption: 19
+  - tutorialDialog: And if you look at your enemies, they've all got magic shield.
+      Projectiles won't work.
+    functionOption: 7
+  - tutorialDialog: Let's see if we have any new blocks we can use!
+    functionOption: 7
+  - tutorialDialog: It's time for ~Conditionals~!
+    functionOption: 13
+  - tutorialDialog: Your new blocks are IF and ENDIF. They work together! You can
+      use them with the behaviors you already have.
+    functionOption: 18
+  - tutorialDialog: With the IF block, we can choose to follow a set of behaviors
+      if a chosen condition is met.
+    functionOption: 18
+  - tutorialDialog: Any behaviors placed after the IF block will only be executed
+      if the condition is met!
+    functionOption: 18
+  - tutorialDialog: Don't forget to place an ENDIF block at the end of the condition.
+    functionOption: 18
+  - tutorialDialog: But how can we use these to attack every single enemy?
+    functionOption: 7
+  - tutorialDialog: Maybe we can make a warrior that turns to face an enemy if they're
+      not already facing one, and move in that direction.
+    functionOption: 17
+  - tutorialDialog: Remember you can always click me to replay this tutorial if you
+      need help!
     functionOption: 7
   _selectedFunction: 7

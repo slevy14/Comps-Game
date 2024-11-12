@@ -13,6 +13,21 @@ MonoBehaviour:
   m_Name: 12_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 12 tutorial
+  - tutorialDialog: Only one enemy? Something's up.
+    functionOption: 7
+  - tutorialDialog: We've got another trick up our sleeve too.
+    functionOption: 13
+  - tutorialDialog: You unlocked ELSE! A new block that works in conjunction with
+      your IF block.
+    functionOption: 18
+  - tutorialDialog: Instead of only ending your IF block doesn't meet its condition,
+      you can use an ELSE block to execute a different list of behaviors.
+    functionOption: 18
+  - tutorialDialog: Don't forget to still use an ENDIF block at the very end!
+    functionOption: 18
+  - tutorialDialog: 'Tip: If you''re feeling stuck, try placing the following blocks
+      under your move header to see how it works:'
+    functionOption: 7
+  - tutorialDialog: Set Target, IF, Turn, ELSE, Turn, ENDIF.
     functionOption: 7
   _selectedFunction: 7

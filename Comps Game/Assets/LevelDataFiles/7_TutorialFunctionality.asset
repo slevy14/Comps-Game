@@ -13,6 +13,13 @@ MonoBehaviour:
   m_Name: 7_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 7 tutorial
+  - tutorialDialog: Uh oh, looks like they've got some range on you now. Let's take
+      a closer look at our enemies in the editor.
+    functionOption: 7
+  - tutorialDialog: Click on the enemies tab to get more info. They have some behaviors
+      that you can't use yet!
+    functionOption: 13
+  - tutorialDialog: I bet we can take them for ourselves if we win -- do what you
+      gotta do!
     functionOption: 7
   _selectedFunction: 7

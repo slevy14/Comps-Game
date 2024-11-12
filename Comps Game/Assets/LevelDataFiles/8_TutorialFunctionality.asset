@@ -13,6 +13,24 @@ MonoBehaviour:
   m_Name: 8_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 8 tutorial
+  - tutorialDialog: There's so many enemies! Let's turn their tactics against them.
+      To the editor!
+    functionOption: 7
+  - tutorialDialog: 'We can use ranged attacks now too. Here are the new blocks you
+      unlocked:'
+    functionOption: 13
+  - tutorialDialog: Set Target, Ranged Settings, and Fire Projectile are your new
+      behaviors to play around with.
+    functionOption: 18
+  - tutorialDialog: Ranged Settings work just like melee settings -- choose which
+      team your projectiles will heal or attack.
+    functionOption: 18
+  - tutorialDialog: For now, Set Target just lets you choose which enemy/ally your
+      projectile will hit. This block will be even more important later!
+    functionOption: 18
+  - tutorialDialog: Fire Projectile launches a projectile at your chosen target,
+      healing or attacking based on your settings.
+    functionOption: 18
+  - tutorialDialog: Try building a ranged attacker to take your enemies down!
     functionOption: 7
   _selectedFunction: 7

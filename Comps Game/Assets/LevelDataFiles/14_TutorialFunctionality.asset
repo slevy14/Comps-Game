@@ -13,6 +13,10 @@ MonoBehaviour:
   m_Name: 14_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 14 tutorial
+  - tutorialDialog: Ok now they're just messing with us.
+    functionOption: 7
+  - tutorialDialog: One warrior? Again?
+    functionOption: 19
+  - tutorialDialog: Cool, no sweat. You got this.
     functionOption: 7
   _selectedFunction: 7
