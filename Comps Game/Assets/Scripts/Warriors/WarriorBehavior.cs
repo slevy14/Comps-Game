@@ -58,6 +58,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     private Slider healthBar;
     private GameObject pointer;
     [SerializeField] private GameObject staminaIndicator;
+    [SerializeField] private GameObject noStaminaTextbox;
 
     [Header("Dragging")]
     private bool isDragging;
@@ -360,7 +361,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         forCounters.Clear();
         infinityCounters.Clear();
         for (int i = 0; i < behaviorList.Count; i++) {
-            Debug.Log("i is " + i);
+            // Debug.Log("i is " + i);
             // quit if battle over
             if (!isAlive || LevelController.Instance.battleFinished) {
                 break;
@@ -1098,8 +1099,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void IndicateNoStamina() {
-        // FIXME!!!!!
         Debug.Log("no stamina! cannot attack");
+        if (noStaminaTextbox.activeSelf) {
+            noStaminaTextbox.GetComponent<NoStaminaDisplayBehavior>().ShowNoStaminaText();
+        } else {
+            noStaminaTextbox.SetActive(true);
+        }
     }
 
     public void DoDamageOrHeal(float value, bool isHeal) {
