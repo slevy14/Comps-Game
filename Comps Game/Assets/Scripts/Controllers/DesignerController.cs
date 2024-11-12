@@ -772,7 +772,6 @@ public class DesignerController : MonoBehaviour {
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
         
-        
         if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
             useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
         }
@@ -787,6 +786,8 @@ public class DesignerController : MonoBehaviour {
                     headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.moveHeaderPosition;
                     if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
                         moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+                    } else if (moveHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
+                        moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 895);
                     }
                     break;
                 case 1:
@@ -796,6 +797,8 @@ public class DesignerController : MonoBehaviour {
                     headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.useSpecialHeaderPosition;
                     if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
                         useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+                    }  else if (useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
+                        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 441);
                     }
                     break;
             }
