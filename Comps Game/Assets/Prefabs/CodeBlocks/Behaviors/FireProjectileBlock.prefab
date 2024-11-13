@@ -10,12 +10,12 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: tooltip
-      value: Shoots a projectile at the target. Does damage or heals based on your
-        settings.
+      value: Shoots a magic projectile at the target. Does damage or heals based
+        on your settings.
       objectReference: {fileID: 0}
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: blockName
-      value: Fire Projectile
+      value: Do Magic
       objectReference: {fileID: 0}
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name
@@ -35,7 +35,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_text
-      value: Do magic attack
+      value: DO MAGIC
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: m_fontSize
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: behavior

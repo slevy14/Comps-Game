@@ -530,7 +530,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Enemies
       m_Image: {fileID: 0}
-    - m_Text: Allies
+    - m_Text: Warriors
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -2386,11 +2386,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: tooltip
-      value: Choose what the "Fire Projectile" behavior does when activated.
+      value: Choose what the "Do Magic" behavior does when activated.
       objectReference: {fileID: 0}
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: blockName
-      value: Projectile Settings
+      value: Magic Settings
       objectReference: {fileID: 0}
     - target: {fileID: 3183704397426555999, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_Name

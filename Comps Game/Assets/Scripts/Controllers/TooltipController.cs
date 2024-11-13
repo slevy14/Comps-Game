@@ -52,7 +52,16 @@ public class TooltipController : MonoBehaviour {
         if (isTooltipActive) {
             // update tooltip position to mouse position
             // currentTooltipObject.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
-            currentTooltipObject.transform.position = Input.mousePosition;
+            Vector3 tooltipPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y - currentTooltipObject.GetComponent<RectTransform>().rect.height, Input.mousePosition.z);
+            if (currentTooltipObject.GetComponent<RectTransform>().rect.width + Input.mousePosition.x >= 1960) {
+                tooltipPos.x -= currentTooltipObject.GetComponent<RectTransform>().rect.width;
+            }
+            Debug.Log("mouse y:" + Input.mousePosition.y);
+            Debug.Log("to check height: " + ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height));
+            if ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height >= 1120) {
+                tooltipPos.y += currentTooltipObject.GetComponent<RectTransform>().rect.height;
+            }
+            currentTooltipObject.transform.position = tooltipPos;
         }
     }
 

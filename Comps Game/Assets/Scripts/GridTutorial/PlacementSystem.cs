@@ -89,6 +89,10 @@ public class PlacementSystem : MonoBehaviour {
                 // dragging logic
                 if (warrior != null && (!warrior.GetComponent<WarriorBehavior>().isEnemy || ProgressionController.Instance.currentLevel == 0)) {
                     // Debug.Log(hit.collider.gameObject.name);
+                    Debug.Log("all grid positions before drag: ");
+                    foreach (GameObject key in LevelController.Instance.objectsOnGrid.Keys) {
+                        Debug.Log(key.GetComponent<WarriorBehavior>().warriorName + ": " + LevelController.Instance.objectsOnGrid[key]);
+                    }
                     warrior.GetComponent<WarriorBehavior>().StartDrag();
                     // Debug.Log("started drag from placement");
                     if (currentDraggingObject != warrior.gameObject) {
@@ -102,26 +106,7 @@ public class PlacementSystem : MonoBehaviour {
             }
         }
 
-        // if (Input.GetMouseButtonDown(0)) {
-        //     Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
-        //     RaycastHit2D hit = Physics2D.Raycast(ray, ray);
-        //     if (hit.collider != null && hit.collider.gameObject.tag == "warrior") {
-        //         // Debug.Log(hit.collider.gameObject.name);
-        //         hit.collider.gameObject.GetComponent<WarriorBehavior>().StartDrag();
-        //         if (currentDraggingObject != hit.collider.gameObject) {
-        //             currentDraggingObject = hit.collider.gameObject;
-        //         }
-        //     }
-        // }
-
         if (currentDraggingObject != null) {
-            // if (tilemap.HasTile(gridPosition)) {
-            //     currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
-            //     // mouseIndicator.transform.position = mousePosition;
-            // } else {
-            //     currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
-            // }
-
             currentDraggingObject.transform.position = inputManager.GetSelectedMapPosition();
         }
 
@@ -129,12 +114,18 @@ public class PlacementSystem : MonoBehaviour {
             if (currentDraggingObject != null) {
                 currentDraggingObject.transform.position = tilemap.GetCellCenterWorld(gridPosition);
                 Vector2 gridPosVec2 = new Vector2(gridPosition.x, gridPosition.y);
+                Debug.Log("grid pos: " + gridPosVec2);
+                Debug.Log("all grid positions after drag: ");
+                foreach (GameObject key in LevelController.Instance.objectsOnGrid.Keys) {
+                    Debug.Log(key.GetComponent<WarriorBehavior>().warriorName + ": " + LevelController.Instance.objectsOnGrid[key]);
+                }
                 int endIndex = 0; // figure out what collision, 0 if none
                 if (IsOverUI() || IsTooManyWarriors()) { // if over drawer or too many placed, index 3
                     endIndex = 3;
                     Debug.Log($"warrior will be destroyed on release due to either: \nIsOverUI: {IsOverUI()}, IsTooManyWarriors: {IsTooManyWarriors()}");
                 } else if (LevelController.Instance.objectsOnGrid.ContainsValue(gridPosVec2)) { // if object list contains an object at that location, index 1
                     endIndex = 1;
+                    LevelController.Instance.objectsOnGrid[currentDraggingObject] = currentDraggingObject.GetComponent<WarriorBehavior>().initialGridPos;
                 } else if (!tilemap.HasTile(gridPosition) || (!isPlayerSide && !LevelController.Instance.isSandbox)) { // if no tile or on wrong side, index 2
                     endIndex = 2;
                 } else {
@@ -151,6 +142,11 @@ public class PlacementSystem : MonoBehaviour {
                 // Debug.Log(endIndex);
                 currentDraggingObject.GetComponent<WarriorBehavior>().EndDrag(endIndex);
                 currentDraggingObject = null;
+
+                Debug.Log("all grid positions after drag: ");
+                foreach (GameObject key in LevelController.Instance.objectsOnGrid.Keys) {
+                    Debug.Log(key.GetComponent<WarriorBehavior>().warriorName + ": " + LevelController.Instance.objectsOnGrid[key]);
+                }
 
                 // grey out thumbnails if need to
                 if (ProgressionController.Instance.currentLevel != 0) { // not sandbox
@@ -234,14 +230,17 @@ public class PlacementSystem : MonoBehaviour {
     }
 
     private GameObject WarriorClicked() {
+        // Debug.Log("checking if warrior clicked");
         GameObject warrior = null;
         Vector2 ray = new Vector2(Camera.main.ScreenToWorldPoint(Input.mousePosition).x, Camera.main.ScreenToWorldPoint(Input.mousePosition).y);
         RaycastHit2D hit = Physics2D.Raycast(ray, ray);
 
         if (hit.collider != null && (hit.collider.gameObject.tag == "warrior" || hit.collider.gameObject.tag == "enemy")) {
             warrior = hit.collider.gameObject;
+            // Debug.Log("clicked on warrior! " + warrior.GetComponent<WarriorBehavior>().warriorName);
         }
 
+        // if (!warrior) Debug.Log("did not hit warrior");
         return warrior;
     }
 

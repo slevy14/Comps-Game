@@ -35,7 +35,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_text
-      value: Do Melee Attack
+      value: Do Melee
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: behavior

@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 1713565464651604781}
   m_Layer: 5
   m_Name: Stamina Point
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -886,7 +886,7 @@ GameObject:
   - component: {fileID: 6439268274656348700}
   m_Layer: 5
   m_Name: No Stamina Textbox
-  m_TagString: Untagged
+  m_TagString: notMainUI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

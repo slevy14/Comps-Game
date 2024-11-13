@@ -63,6 +63,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [Header("Dragging")]
     private bool isDragging;
     private Vector3 initialPos;
+    public Vector2 initialGridPos;
     public bool isNew = true;
 
     public int warriorIndex;
@@ -116,14 +117,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return;
         }
 
-        if (LevelController.Instance.objectsOnGrid.ContainsKey(this.gameObject)) {
-            LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
-        }
-
         // Debug.Log("started drag");
         isDragging = true;
         // save initial position
         initialPos = transform.position;
+
+        if (LevelController.Instance.objectsOnGrid.ContainsKey(this.gameObject)) {
+            Debug.Log("former position for dragging object: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
+            initialGridPos = LevelController.Instance.objectsOnGrid[this.gameObject];
+            LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
+        }
 
         // visuals
         this.transform.localScale *= 1.5f;

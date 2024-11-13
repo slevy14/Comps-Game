@@ -289,8 +289,8 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
             statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-            statsDisplay.text = warrior.warriorName + "'S STATS: \n" + PropertiesString(warrior);
-            statsDisplay.text += "\n\n" + BehaviorString(warrior);
+            statsDisplay.text = " " + warrior.warriorName + "'S STATS: \n " + PropertiesString(warrior);
+            statsDisplay.text += "\n\n " + BehaviorString(warrior);
 
             if (ProgressionController.Instance.currentLevel != 0) { // update strength and behavior display if not sandbox
                 statsPanel.transform.GetChild(4).GetComponent<TMP_Text>().text = "Strength: " + warrior.warriorStrength;
@@ -303,8 +303,8 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
             statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
-            statsDisplay.text = enemy.warriorName + "'S STATS: \n" + PropertiesString(enemy);
-            statsDisplay.text += "\n\n" + BehaviorString(enemy);
+            statsDisplay.text = " " + enemy.warriorName + "'S STATS: \n " + PropertiesString(enemy);
+            statsDisplay.text += "\n\n " + BehaviorString(enemy);
 
             if (ProgressionController.Instance.currentLevel != 0) { // update strength and behavior display if not sandbox
                 statsPanel.transform.GetChild(4).GetComponent<TMP_Text>().text = "";
@@ -390,46 +390,46 @@ public class LevelController : MonoBehaviour {
             if (propertiesDict[property] != "") {
                 switch (property) {
                     case BlockData.Property.HEALTH:
-                        propertiesString += "Health: " + propertiesDict[property] + "\n";
+                        propertiesString += "Health: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.DEFENSE:
-                        propertiesString += "Defense: " + propertiesDict[property] + "\n";
+                        propertiesString += "Defense: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.MOVE_SPEED:
-                        propertiesString += "Move Speed: " + propertiesDict[property] + "\n";
+                        propertiesString += "Move Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.MELEE_ATTACK_RANGE:
-                        propertiesString += "Melee Attack Range: " + propertiesDict[property] + "\n";
+                        propertiesString += "Melee Attack Range: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.MELEE_ATTACK_POWER:
-                        propertiesString += "Melee Attack Power: " + propertiesDict[property] + "\n";
+                        propertiesString += "Melee Attack Power: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.MELEE_ATTACK_SPEED:
-                        propertiesString += "Melee Attack Speed: " + propertiesDict[property] + "\n";
+                        propertiesString += "Melee Attack Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.DISTANCED_RANGE:
-                        propertiesString += "Projectile Range: " + propertiesDict[property] + "\n";
+                        propertiesString += "Projectile Range: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.RANGED_ATTACK_POWER:
-                        propertiesString += "Ranged Attack Power: " + propertiesDict[property] + "\n";
+                        propertiesString += "Ranged Attack Power: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.RANGED_ATTACK_SPEED:
-                        propertiesString += "Projectile Speed: " + propertiesDict[property] + "\n";
+                        propertiesString += "Projectile Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.SPECIAL_POWER:
-                        propertiesString += "Special Attack Power: " + propertiesDict[property] + "\n";
+                        propertiesString += "Special Attack Power: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.SPECIAL_SPEED:
-                        propertiesString += "Special Attack Speed: " + propertiesDict[property] + "\n";
+                        propertiesString += "Special Attack Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.HEAL_POWER:
-                        propertiesString += "Heal Power: " + propertiesDict[property] + "\n";
+                        propertiesString += "Heal Power: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.HEAL_SPEED:
-                        propertiesString += "Heal Speed: " + propertiesDict[property] + "\n";
+                        propertiesString += "Heal Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.MAGIC_SHIELD:
-                        propertiesString += "Magic Shield!\n";
+                        propertiesString += "Magic Shield!\n ";
                         break;
                 }
             }
@@ -446,11 +446,17 @@ public class LevelController : MonoBehaviour {
         foreach (List<BlockDataStruct> warriorBehaviorList in warriorBehaviorLists) {
             // check which header we're using
             if (warriorBehaviorList == warriorData.moveFunctions) {
-                behaviorString += "Move: \n";
+                if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
+                    continue;
+                }
+                behaviorString += "Move: \n ";
             } else if (warriorBehaviorList == warriorData.useWeaponFunctions) {
-                behaviorString += "UseWeapon: \n";
+                behaviorString += "UseWeapon: \n ";
             } else if (warriorBehaviorList == warriorData.useSpecialFunctions) {
-                behaviorString += "UseSpecial: \n";
+                if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+                    continue;
+                }
+                behaviorString += "UseSpecial: \n ";
             }
             indentLevel += 1;
 
@@ -463,7 +469,7 @@ public class LevelController : MonoBehaviour {
                         } else {
                             behaviorString += "left";
                         }
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.STEP:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "STEP ";
@@ -476,7 +482,7 @@ public class LevelController : MonoBehaviour {
                         } else if (warriorBehaviorList[i].values[0] == "3") {
                             behaviorString += "right";
                         }
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.RUN:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "RUN ";
@@ -489,7 +495,7 @@ public class LevelController : MonoBehaviour {
                         } else if (warriorBehaviorList[i].values[0] == "3") {
                             behaviorString += "right";
                         }
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.TELEPORT:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "TELEPORT ";
@@ -498,11 +504,11 @@ public class LevelController : MonoBehaviour {
                         } else if (warriorBehaviorList[i].values[0] == "1") {
                             behaviorString += "flank target";
                         }
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.MELEE_ATTACK:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "DO MELEE";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.SET_TARGET:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "SET TARGET ";
@@ -522,7 +528,7 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "ally";
                         }
 
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.WHILE_LOOP:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "WHILE ";
@@ -544,18 +550,18 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "false";
                         }
 
-                        behaviorString += ":\n";
+                        behaviorString += ":\n ";
                         indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.FOR_LOOP:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FOR " + warriorBehaviorList[i].values[0] + " TIMES:";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.END_LOOP:
                         indentLevel -= 1;
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END LOOP";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.IF:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "IF ";
@@ -577,19 +583,19 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "false";
                         }
 
-                        behaviorString += ":\n";
+                        behaviorString += ":\n ";
                         indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.ELSE:
                         indentLevel -= 1;
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "ELSE";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         indentLevel += 1;
                         break;
                     case BlockData.BehaviorType.END_IF:
                         indentLevel -= 1;
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END IF";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.MELEE_SETTINGS:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "MELEE WILL ";
@@ -605,7 +611,7 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "allies";
                         }
 
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.RANGED_SETTINGS:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "PROJECTILES WILL ";
@@ -621,17 +627,17 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "allies";
                         }
 
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FIRE PROJECTILE";
-                        behaviorString += "\n";
+                        behaviorString += "\n ";
                         break;
                 }
             }
             // reset indent
             indentLevel = 0;
-            behaviorString += "\n";
+            behaviorString += "\n ";
         }
 
         return behaviorString;

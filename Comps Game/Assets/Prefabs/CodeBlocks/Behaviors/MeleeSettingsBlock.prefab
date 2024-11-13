@@ -530,7 +530,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Enemies
       m_Image: {fileID: 0}
-    - m_Text: Allies
+    - m_Text: Warriors
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
