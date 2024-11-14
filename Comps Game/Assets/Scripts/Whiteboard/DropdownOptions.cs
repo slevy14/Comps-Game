@@ -22,12 +22,14 @@ public class DropdownOptions : MonoBehaviour {
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[selectedIndex].sprite;
         activeWarrior.transform.GetChild(0).GetComponent<Animator>().runtimeAnimatorController = WarriorListController.Instance.spriteDataList[selectedIndex].animatorController;
         designerController.spriteDataIndex = selectedIndex;
+        DesignerController.Instance.justSaved = false;
     }
 
     public void UpdateSprite(int index) {
         activeWarrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[index].sprite;
         dropdown.value = index;
         designerController.spriteDataIndex = index;
+        DesignerController.Instance.justSaved = false;
     }
 
     public void UpdateSprite(int index, bool isEnemy) {
@@ -42,6 +44,7 @@ public class DropdownOptions : MonoBehaviour {
             designerController.spriteDataIndex = index;
         }
         activeWarrior.transform.GetChild(0).GetComponent<Animator>().speed = 0.4f;
+        DesignerController.Instance.justSaved = false;
     }
 
     public void ResetSprite() {

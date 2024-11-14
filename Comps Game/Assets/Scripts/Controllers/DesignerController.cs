@@ -784,7 +784,7 @@ public class DesignerController : MonoBehaviour {
             switch (i) {
                 case 0:
                     headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.moveHeaderPosition;
-                    if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
+                    if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable || (isLoadingEnemy && warriorData.moveFunctions.Count == 0)) {
                         moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
                     } else if (moveHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
                         moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 895);
@@ -795,7 +795,7 @@ public class DesignerController : MonoBehaviour {
                     break;
                 case 2:
                     headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.useSpecialHeaderPosition;
-                    if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+                    if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable || (isLoadingEnemy && warriorData.useSpecialFunctions.Count == 0)) {
                         useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
                     }  else if (useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
                         useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 441);

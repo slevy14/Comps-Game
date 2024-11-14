@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 4837952441460035111}
   - component: {fileID: 2336164519398937748}
   - component: {fileID: 7402788314681066118}
+  - component: {fileID: 3161744861944619334}
   m_Layer: 5
   m_Name: TeamDropdown
   m_TagString: Untagged
@@ -536,6 +537,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &3161744861944619334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2259732383426117225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93db8332123af4dd1972a742d81f73f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2474444407899325714
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,6 +858,7 @@ GameObject:
   - component: {fileID: 6575336732998679228}
   - component: {fileID: 6646472898278191222}
   - component: {fileID: 3960902026567191632}
+  - component: {fileID: 7541499837738854703}
   m_Layer: 5
   m_Name: AttributeDropdown
   m_TagString: Untagged
@@ -970,6 +984,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_AlphaFadeSpeed: 0.15
+--- !u!114 &7541499837738854703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4533923292180831602}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93db8332123af4dd1972a742d81f73f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4555797224507724517
 GameObject:
   m_ObjectHideFlags: 0
