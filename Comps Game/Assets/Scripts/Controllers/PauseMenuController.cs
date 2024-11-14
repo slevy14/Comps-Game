@@ -60,8 +60,8 @@ public class PauseMenuController : MonoBehaviour {
     }
 
     public void BackToMenu() {
-        SceneController.Instance.LoadSceneByName("MainMenu");
         TutorialController.Instance.EndTutorial();
+        SceneController.Instance.LoadSceneByName("MainMenu");
         TogglePauseMenuCanvas(false);
     }
 
