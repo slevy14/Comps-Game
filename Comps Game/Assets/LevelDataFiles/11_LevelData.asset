@@ -38,8 +38,8 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f0000000a0000000c000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 250
-  maxBlocks: 3
+  maxTotalStrength: 1000
+  maxBlocks: 100
   actionPoints: 0
-  maxWarriorsToPlace: 4
+  maxWarriorsToPlace: 1
   tutorialFunctionality: {fileID: 11400000, guid: f5e62ae51fc354d529edce43580fec7e, type: 2}
