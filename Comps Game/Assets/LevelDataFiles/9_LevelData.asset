@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 9_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 9
+  levelName: Invasion
   levelNumber: 9
   availableEnemyIndices: 060000000700000008000000
   enemyPlacementsList:
@@ -38,8 +38,8 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 1000
-  maxBlocks: 100
+  maxTotalStrength: 250
+  maxBlocks: 4
   actionPoints: 0
   maxWarriorsToPlace: 4
   tutorialFunctionality: {fileID: 11400000, guid: 8270f0f8c8c794f109af2523a666e2b9, type: 2}

@@ -4778,7 +4778,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1248803311}
   m_HandleRect: {fileID: 1248803310}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -5208,18 +5208,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1187519519}
     m_Modifications:
-    - target: {fileID: 751692264061027510, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 751692264061027510, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 751692264061027510, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3049253953612291320, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
       propertyPath: m_Name
       value: WarriorPanel
@@ -5311,6 +5299,34 @@ PrefabInstance:
     - target: {fileID: 4811654888801100538, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1300486757}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ClearGridButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: LevelController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8025662907717541055, guid: 33e7d8e54c73e4431a7d32ee5c65d1e1, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

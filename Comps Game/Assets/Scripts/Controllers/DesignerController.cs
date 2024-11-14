@@ -191,7 +191,7 @@ public class DesignerController : MonoBehaviour {
             saveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Save & Continue";
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {NoSaveContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");});
             dontSaveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
-            dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Continue Without Saving";
+            dontSaveContinueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Don't Save";
             switchPromptMenu.transform.GetChild(3).GetComponent<TMP_Text>().text = "Would you like to save before you move to the level?";
         } else {
             saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndSwitch();});
@@ -594,9 +594,9 @@ public class DesignerController : MonoBehaviour {
         foreach (int index in propertyIndices) {
             Instantiate(propertyBlocks[index], propertyBlocksContainer);
         }
-        if (propertyBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-            Instantiate(spacer, propertyBlocksContainer);
-        }
+        // if (propertyBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+        //     Instantiate(spacer, propertyBlocksContainer);
+        // }
 
         GameObject behaviorsSectionHeader = Instantiate(sectionHeader, behaviorBlocksContainer);
         behaviorsSectionHeader.GetComponent<TMP_Text>().text = "BEHAVIORS:";
@@ -604,9 +604,9 @@ public class DesignerController : MonoBehaviour {
         foreach (int index in behaviorIndices) {
             Instantiate(behaviorBlocks[index], behaviorBlocksContainer);
         }
-        if (behaviorBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-            Instantiate(spacer, behaviorBlocksContainer);
-        }
+        // if (behaviorBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+        //     Instantiate(spacer, behaviorBlocksContainer);
+        // }
 
         if (functionalIndices.Count != 0 ) { // early levels don't have functional, hide from player
             GameObject functionalSectionHeader = Instantiate(sectionHeader, functionalBlocksContainer);
@@ -615,9 +615,9 @@ public class DesignerController : MonoBehaviour {
             foreach (int index in functionalIndices) {
                 Instantiate(behaviorBlocks[index], functionalBlocksContainer);
             }
-            if (functionalBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-                Instantiate(spacer, functionalBlocksContainer);
-            }
+            // if (functionalBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
+            //     Instantiate(spacer, functionalBlocksContainer);
+            // }
         }
 
     }

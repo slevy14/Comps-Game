@@ -150,7 +150,7 @@ public class PlacementSystem : MonoBehaviour {
 
                 // grey out thumbnails if need to
                 if (ProgressionController.Instance.currentLevel != 0) { // not sandbox
-                    LevelController.Instance.SetAllWarriorThumbnailsGrey(GetPlacedWarriorCount() >= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace);
+                    LevelController.Instance.SetAllWarriorThumbnailsGrey(GetPlacedWarriorCount() >= HelperController.Instance.GetCurrentLevelData().maxWarriorsToPlace);
                 }
             }
 
@@ -201,7 +201,7 @@ public class PlacementSystem : MonoBehaviour {
         return true;
     }
 
-    private int GetPlacedWarriorCount() {
+    public int GetPlacedWarriorCount() {
         int warriorCount = 0;
         foreach (KeyValuePair<GameObject, Vector2> warriorObject in LevelController.Instance.objectsOnGrid) {
             if (warriorObject.Key.tag == "warrior") {

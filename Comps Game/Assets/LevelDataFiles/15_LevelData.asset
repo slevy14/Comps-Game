@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 15_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 15
+  levelName: War, Act III
   levelNumber: 15
   availableEnemyIndices: 080000000d0000000e0000000f000000
   enemyPlacementsList:
@@ -47,8 +47,8 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 1000
-  maxBlocks: 100
+  maxTotalStrength: 300
+  maxBlocks: 10
   actionPoints: 0
   maxWarriorsToPlace: 6
   tutorialFunctionality: {fileID: 11400000, guid: 79d5872eb187b4c64bef7a93734dcedd, type: 2}

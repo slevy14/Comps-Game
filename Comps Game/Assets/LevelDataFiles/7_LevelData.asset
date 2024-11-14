@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 7_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 7
+  levelName: Pew Pew
   levelNumber: 7
   availableEnemyIndices: 040000000500000006000000
   enemyPlacementsList:
@@ -25,7 +25,7 @@ MonoBehaviour:
   - pos: {x: 1, y: 1}
     warriorIndex: 6
     isEnemy: 1
-  - pos: {x: 1, y: -1}
+  - pos: {x: 1, y: -2}
     warriorIndex: 6
     isEnemy: 1
   - pos: {x: 4, y: -3}
@@ -38,8 +38,8 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d000000050000000200000003000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 1000
-  maxBlocks: 100
+  maxTotalStrength: 250
+  maxBlocks: 3
   actionPoints: 0
   maxWarriorsToPlace: 8
   tutorialFunctionality: {fileID: 11400000, guid: 51ad6bb2d56e2425dabeb23a98c9fd9b, type: 2}

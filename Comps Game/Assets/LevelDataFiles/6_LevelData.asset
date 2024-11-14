@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 6_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 6
+  levelName: You Better Move
   levelNumber: 6
   availableEnemyIndices: 0000000004000000
   enemyPlacementsList:
@@ -38,8 +38,8 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d000000050000000200000003000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 1000
-  maxBlocks: 100
+  maxTotalStrength: 250
+  maxBlocks: 3
   actionPoints: 0
   maxWarriorsToPlace: 6
   tutorialFunctionality: {fileID: 11400000, guid: 09f1b11aacb57467d990be3f0a8c3c35, type: 2}

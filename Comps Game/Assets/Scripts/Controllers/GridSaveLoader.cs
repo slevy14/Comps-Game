@@ -51,6 +51,10 @@ public class GridSaveLoader : MonoBehaviour {
             } else {
                 LoadGridFromJson();
             }
+            // grey out thumbnails if need to
+            if (ProgressionController.Instance.currentLevel != 0) { // not sandbox
+                LevelController.Instance.SetAllWarriorThumbnailsGrey(PlacementSystem.Instance.GetPlacedWarriorCount() >= HelperController.Instance.GetCurrentLevelData().maxWarriorsToPlace);
+            }
         }
     }
 

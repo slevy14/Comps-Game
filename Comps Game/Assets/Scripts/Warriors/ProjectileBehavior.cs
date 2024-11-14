@@ -33,7 +33,7 @@ public class ProjectileBehavior : MonoBehaviour {
             Debug.Log("Projectile moving by " + (multSpeed * Time.fixedDeltaTime * (target.transform.position - this.transform.position).normalized));
 
             if (Vector3.Distance(this.transform.position, target.transform.position) <= 0.3f) {
-                if (!target.GetComponent<WarriorBehavior>().GetMagicShield()) {
+                if (!target.GetComponent<WarriorBehavior>().GetMagicShield() || isHeal) {
                     target.GetComponent<WarriorBehavior>().DoDamageOrHeal(power, isHeal);
                 }
                 Destroy(this.gameObject);

@@ -531,7 +531,7 @@ MonoBehaviour:
     m_Options:
     - m_Text: Enemy
       m_Image: {fileID: 0}
-    - m_Text: Ally
+    - m_Text: Warrior
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -986,6 +986,10 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Random
       m_Image: {fileID: 0}
+    - m_Text: Healthiest
+      m_Image: {fileID: 0}
+    - m_Text: Frailest
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1313,9 +1317,9 @@ MonoBehaviour:
   m_fontSize: 14
   m_fontSizeBase: 14
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 14
   m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
@@ -1738,12 +1742,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
+  m_fontSize: 13.6
   m_fontSizeBase: 14
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 10
+  m_fontSizeMax: 14
   m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512

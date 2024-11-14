@@ -499,6 +499,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
                             heading = target.heading;
+                            SetImageFacing();
                         } else {
                             Debug.Log("either tile full or would teleport off map");
                         }
@@ -514,7 +515,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // try set this position to new position
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
-                            heading = RotateLeft(target.heading);
+                            heading = RotateRight(target.heading);
+                            SetImageFacing();
                             break;
                         }
                         // else if right flank free
@@ -524,7 +526,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // try set this position to new position
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
-                            heading = RotateRight(target.heading);
+                            heading = RotateLeft(target.heading);
+                            SetImageFacing();
                             break;
                         }
                     }
@@ -672,9 +675,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // if weaker, replace object
                         // set target to weakest
                         target = CalculateWeakest(targetTeam);
-                    } else { // random
+                    } else if (behaviorList[i].values[0] == "4") { // random
                         int randIndex = UnityEngine.Random.Range(0, targetTeam.Count);
                         target = targetTeam[randIndex];
+                    } else if (behaviorList[i].values[0] == "5") { // healthiest
+                        target = CalculateHealthiest(targetTeam);
+                    } else if (behaviorList[i].values[0] == "6") { // frailest
+                        target = CalculateFrailest(targetTeam);
                     }
                     Debug.Log("set target to " + target.warriorName);
                     break;
@@ -720,6 +727,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.MELEE_ATTACK_POWER) == whileLoopCondition;
                     } else if (behaviorList[i].values[0] == "6") { // target is ranged
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "7") { // target has shield
+                        conditionsDict[i] = target.GetMagicShield() == whileLoopCondition;
                     }
 
                     // if false just jump past
@@ -813,6 +822,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.MELEE_ATTACK_POWER) == ifCondition;
                     } else if (behaviorList[i].values[0] == "6") { // target is ranged
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == ifCondition;
+                    } else if (behaviorList[i].values[0] == "7") { // target has shield
+                        conditionsDict[i] = target.GetMagicShield() == ifCondition;
                     }
 
                     // if false just jump past
@@ -1002,12 +1013,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public WarriorBehavior CalculateStrongest(List<WarriorBehavior> warriorList) {
-        // right now just gets warrior with highest health
-        // possibility of introducing some kind of formula to factor in ""strength"" value associated with warrior?
-        // incorporate attack, defense, etc.
+        // returns the warrior with highest strength
         WarriorBehavior strongest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
-            if (warrior.propertiesDict[BlockData.Property.HEALTH] > strongest.propertiesDict[BlockData.Property.HEALTH]) {
+            if (warrior.totalStrength > strongest.totalStrength) {
                 strongest = warrior;
             }
         }
@@ -1015,16 +1024,36 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public WarriorBehavior CalculateWeakest(List<WarriorBehavior> warriorList) {
-        // right now just gets warrior with lowest health
-        // possibility of introducing some kind of formula to factor in ""strength"" value associated with warrior?
-        // incorporate attack, defense, etc.
-        WarriorBehavior strongest = warriorList[0];
+        // returns the warrior with the lowest strength
+        WarriorBehavior weakest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
-            if (warrior.propertiesDict[BlockData.Property.HEALTH] < strongest.propertiesDict[BlockData.Property.HEALTH]) {
-                strongest = warrior;
+            if (warrior.totalStrength < weakest.totalStrength) {
+                weakest = warrior;
             }
         }
-        return strongest;
+        return weakest;
+    }
+
+    public WarriorBehavior CalculateHealthiest(List<WarriorBehavior> warriorList) {
+        // returns the warrior with the highest health;
+        WarriorBehavior healthiest = warriorList[0];
+        foreach (WarriorBehavior warrior in warriorList) {
+            if (warrior.propertiesDict[BlockData.Property.HEALTH] > healthiest.propertiesDict[BlockData.Property.HEALTH]) {
+                healthiest = warrior;
+            }
+        }
+        return healthiest;
+    }
+
+    public WarriorBehavior CalculateFrailest(List<WarriorBehavior> warriorList) {
+        // returns the warrior with the lowest health
+        WarriorBehavior frailest = warriorList[0];
+        foreach (WarriorBehavior warrior in warriorList) {
+            if (warrior.propertiesDict[BlockData.Property.HEALTH] < frailest.propertiesDict[BlockData.Property.HEALTH]) {
+                frailest = warrior;
+            }
+        }
+        return frailest;
     }
 
     public void SetImageFacing() {
@@ -1035,7 +1064,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             visualTransform.rotation = Quaternion.Euler(0, 0, 0);
         } else if (heading == new Vector2((int)0, (int)1)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, 90);
-        }else if (heading == new Vector2((int)1, (int)0)) {
+        } else if (heading == new Vector2((int)1, (int)0)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, -90);
         }
     }

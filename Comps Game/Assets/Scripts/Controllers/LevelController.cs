@@ -212,6 +212,19 @@ public class LevelController : MonoBehaviour {
         }
     }
 
+    public void ClearGridButton() {
+        if (inBattle) {
+            return;
+        }
+        foreach (Transform child in warriorsContainer.transform) {
+            if (child.GetComponent<WarriorBehavior>().isEnemy && ProgressionController.Instance.currentLevel != 0) { // if enemy and not in sandbox
+                continue;
+            }
+            objectsOnGrid.Remove(child.gameObject);
+            Destroy(child.gameObject);
+        }
+    }
+
     public void ResetGridButton() {
         // Debug.Log("reset button pressed");
         inBattle = false;
@@ -289,7 +302,7 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
             statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = warrior.warriorName;
-            statsDisplay.text = " " + warrior.warriorName + "'S STATS: \n " + PropertiesString(warrior);
+            statsDisplay.text = " STATS: \n " + PropertiesString(warrior);
             statsDisplay.text += "\n\n " + BehaviorString(warrior);
 
             if (ProgressionController.Instance.currentLevel != 0) { // update strength and behavior display if not sandbox
@@ -303,7 +316,7 @@ public class LevelController : MonoBehaviour {
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
             statsPanel.transform.GetChild(1).GetComponent<Image>().preserveAspect = true;
             statsPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = enemy.warriorName;
-            statsDisplay.text = " " + enemy.warriorName + "'S STATS: \n " + PropertiesString(enemy);
+            statsDisplay.text = " STATS: \n " + PropertiesString(enemy);
             statsDisplay.text += "\n\n " + BehaviorString(enemy);
 
             if (ProgressionController.Instance.currentLevel != 0) { // update strength and behavior display if not sandbox
@@ -411,10 +424,10 @@ public class LevelController : MonoBehaviour {
                         propertiesString += "Projectile Range: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.RANGED_ATTACK_POWER:
-                        propertiesString += "Ranged Attack Power: " + propertiesDict[property] + "\n ";
+                        propertiesString += "Magic Attack Power: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.RANGED_ATTACK_SPEED:
-                        propertiesString += "Projectile Speed: " + propertiesDict[property] + "\n ";
+                        propertiesString += "Magic Speed: " + propertiesDict[property] + "\n ";
                         break;
                     case BlockData.Property.SPECIAL_POWER:
                         propertiesString += "Special Attack Power: " + propertiesDict[property] + "\n ";
@@ -464,10 +477,10 @@ public class LevelController : MonoBehaviour {
                 switch (warriorBehaviorList[i].behavior) {
                     case BlockData.BehaviorType.TURN:
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "TURN ";
-                        if (warriorBehaviorList[i].values[0] == "0") {
+                        if (warriorBehaviorList[i].values[0] == "0") { // left
                             behaviorString += "left";
-                        } else {
-                            behaviorString += "left";
+                        } else { // right
+                            behaviorString += "right";
                         }
                         behaviorString += "\n ";
                         break;
@@ -520,12 +533,18 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "farthest ";
                         } else if (warriorBehaviorList[i].values[0] == "3") {
                             behaviorString += "weakest ";
+                        } else if (warriorBehaviorList[i].values[0] == "4") {
+                            behaviorString += "random ";
+                        } else if (warriorBehaviorList[i].values[0] == "5") {
+                            behaviorString += "healthiest ";
+                        } else if (warriorBehaviorList[i].values[0] == "6") {
+                            behaviorString += "frailest ";
                         }
 
                         if (warriorBehaviorList[i].values[1] == "0") {
                             behaviorString += "enemy";
                         } else if (warriorBehaviorList[i].values[1] == "1") {
-                            behaviorString += "ally";
+                            behaviorString += "warrior";
                         }
 
                         behaviorString += "\n ";
@@ -540,6 +559,14 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "facing target ";
                         } else if (warriorBehaviorList[i].values[0] == "3") {
                             behaviorString += "self low health ";
+                        } else if (warriorBehaviorList[i].values[0] == "4") {
+                            behaviorString += "target is healer ";
+                        } else if (warriorBehaviorList[i].values[0] == "5") {
+                            behaviorString += "target is melee ";
+                        } else if (warriorBehaviorList[i].values[0] == "6") {
+                            behaviorString += "target is magic ";
+                        } else if (warriorBehaviorList[i].values[0] == "7") {
+                            behaviorString += "target has shield ";
                         }
 
                         behaviorString += "IS ";
@@ -573,6 +600,14 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "facing target ";
                         } else if (warriorBehaviorList[i].values[0] == "3") {
                             behaviorString += "self low health ";
+                        } else if (warriorBehaviorList[i].values[0] == "4") {
+                            behaviorString += "target is healer ";
+                        } else if (warriorBehaviorList[i].values[0] == "5") {
+                            behaviorString += "target is melee ";
+                        } else if (warriorBehaviorList[i].values[0] == "6") {
+                            behaviorString += "target is magic ";
+                        } else if (warriorBehaviorList[i].values[0] == "7") {
+                            behaviorString += "target has shield ";
                         }
 
                         behaviorString += "IS ";
@@ -608,13 +643,13 @@ public class LevelController : MonoBehaviour {
                         if (warriorBehaviorList[i].values[1] == "0") {
                             behaviorString += "enemies";
                         } else if (warriorBehaviorList[i].values[1] == "1") {
-                            behaviorString += "allies";
+                            behaviorString += "warriors";
                         }
 
                         behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.RANGED_SETTINGS:
-                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "PROJECTILES WILL ";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "MAGIC WILL ";
                         if (warriorBehaviorList[i].values[0] == "0") {
                             behaviorString += "attack ";
                         } else if (warriorBehaviorList[i].values[0] == "1") {
@@ -624,13 +659,13 @@ public class LevelController : MonoBehaviour {
                         if (warriorBehaviorList[i].values[1] == "0") {
                             behaviorString += "enemies";
                         } else if (warriorBehaviorList[i].values[1] == "1") {
-                            behaviorString += "allies";
+                            behaviorString += "warriors";
                         }
 
                         behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
-                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FIRE PROJECTILE";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "DO MAGIC";
                         behaviorString += "\n ";
                         break;
                 }

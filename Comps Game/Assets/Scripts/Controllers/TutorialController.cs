@@ -258,6 +258,7 @@ public class TutorialController : MonoBehaviour {
                 Instantiate(DesignerController.Instance.GetBehaviorBlocks()[behaviorIndex], Vector3.zero, transform.rotation, blockShowingParent.transform);
             }
         }
+        HideHighlight();
     }
 
     public void TutorialChangeSceneWithDelay(string name) {

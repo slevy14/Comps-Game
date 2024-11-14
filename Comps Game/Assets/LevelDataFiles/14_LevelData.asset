@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 14_LevelData
   m_EditorClassIdentifier: 
-  levelName: Level 14
+  levelName: Hercules
   levelNumber: 14
   availableEnemyIndices: 080000000d000000
   enemyPlacementsList:
@@ -46,18 +46,18 @@ MonoBehaviour:
   - pos: {x: 4, y: -5}
     warriorIndex: 8
     isEnemy: 1
-  - pos: {x: 0, y: 0}
+  - pos: {x: 0, y: 1}
     warriorIndex: 13
     isEnemy: 1
-  - pos: {x: 0, y: -1}
+  - pos: {x: 0, y: -2}
     warriorIndex: 13
     isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 1000
-  maxBlocks: 100
+  maxTotalStrength: 400
+  maxBlocks: 10
   actionPoints: 0
   maxWarriorsToPlace: 1
   tutorialFunctionality: {fileID: 11400000, guid: 0c684020d7c514dcea20d14f425c83db, type: 2}
