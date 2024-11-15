@@ -56,8 +56,8 @@ public class TooltipController : MonoBehaviour {
             if (currentTooltipObject.GetComponent<RectTransform>().rect.width + Input.mousePosition.x >= 1960) {
                 tooltipPos.x -= currentTooltipObject.GetComponent<RectTransform>().rect.width;
             }
-            Debug.Log("mouse y:" + Input.mousePosition.y);
-            Debug.Log("to check height: " + ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height));
+            // Debug.Log("mouse y:" + Input.mousePosition.y);
+            // Debug.Log("to check height: " + ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height));
             if ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height >= 1120) {
                 tooltipPos.y += currentTooltipObject.GetComponent<RectTransform>().rect.height;
             }

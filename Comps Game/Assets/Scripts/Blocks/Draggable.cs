@@ -66,27 +66,33 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
     public void OnBeginDrag(PointerEventData eventData) {
-        // if (!isHeader) {
-            // Debug.Log("begindrag called");
-            parentAfterDrag = transform.parent;
-            onWhiteboard = false;
-            transform.SetParent(transform.root);
-            transform.SetAsLastSibling();
-            SetMaskable(false);
+        // check if actually over object, not including overlap box
+        List<RaycastResult> uiUnderMouseRaycasts = HelperController.Instance.OverUI();
+        List<GameObject> uiUnderMouseObjects = new();
+        foreach (RaycastResult raycastResult in uiUnderMouseRaycasts) {
+            uiUnderMouseObjects.Add(raycastResult.gameObject);
+        }
+        if (!uiUnderMouseObjects.Contains(this.gameObject)) {
+            Debug.Log("shouldn't drag!");
+            eventData.pointerDrag = null;
+            return;
+        }
+    
+        onWhiteboard = false;
+        transform.SetParent(transform.root);
+        transform.SetAsLastSibling();
+        SetMaskable(false);
 
-            // remove from linked list
-            if (prevBlock != null) {
-                prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
-                prevBlock.GetComponent<Draggable>().SetOverlapUseable();
-                DesignerController.Instance.UpdateStrengthDisplay();
-                DesignerController.Instance.UpdateBehaviorsDisplay();
-                // Debug.Log("updated prev block next");
-                prevBlock = null;
-            }
-            // SetBlockRaycasts(false);
-        // } else {
-            initialPos = transform.position;
-        // }
+        if (prevBlock != null) {
+            prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
+            prevBlock.GetComponent<Draggable>().SetOverlapUseable();
+            DesignerController.Instance.UpdateStrengthDisplay();
+            DesignerController.Instance.UpdateBehaviorsDisplay();
+            // Debug.Log("updated prev block next");
+            prevBlock = null;
+        }
+        initialPos = transform.position;
+
         AudioController.Instance.PlaySoundEffect("Block Pickup");
     }
 
