@@ -8,8 +8,8 @@ public class ProjectileBehavior : MonoBehaviour {
     public Vector3 distanceVector;
     public float speed;
     public float rotSpeed;
-    private float power;
-    private bool isHeal;
+    public float power;
+    public bool isHeal;
 
     void Awake() {
         speed = 12f;
@@ -21,6 +21,7 @@ public class ProjectileBehavior : MonoBehaviour {
         distanceVector = newTarget.transform.position - this.transform.position;
         this.power = power;
         this.isHeal = isHeal;
+        LevelController.Instance.activeProjectile = this.gameObject;
     }
 
     void FixedUpdate() {
@@ -36,10 +37,9 @@ public class ProjectileBehavior : MonoBehaviour {
                 if (!target.GetComponent<WarriorBehavior>().GetMagicShield() || isHeal) {
                     target.GetComponent<WarriorBehavior>().DoDamageOrHeal(power, isHeal);
                 }
+                LevelController.Instance.activeProjectile = null;
                 Destroy(this.gameObject);
             }
-        } else {
-            Debug.Log("PROJECTILE TARGET NULL THIS IS WHY ITS BREAKING UGH");
         }
     }
 

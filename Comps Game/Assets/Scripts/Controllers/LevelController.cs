@@ -48,6 +48,7 @@ public class LevelController : MonoBehaviour {
     [Header("Battle")]
     [SerializeField] public float battleSpeed;
     [SerializeField] private int maxTurns = 50;
+    public GameObject activeProjectile;
     public bool battleFinished = false;
     public bool inBattle = false;
     public bool isPaused = false;

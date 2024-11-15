@@ -377,6 +377,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             while (LevelController.Instance.isPaused) {
                 yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             }
+            // hold if active projectile
+            while (LevelController.Instance.activeProjectile != null) {
+                yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
+            }
 
             // switch behavior
             switch (behaviorList[i].behavior) {
@@ -918,25 +922,24 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
                         this.animator.SetTrigger("RangedAttack");
-                        yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
                     } else {
                         this.animator.SetTrigger("Attack");
-                        yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
                     }
+                    yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
 
                     // instantiate projectile
                     Vector3 projectileInitialPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0));
                     projectileInitialPlacement.z = -1; // keep on top
                     GameObject projectile = Instantiate(projectilePrefab, projectileInitialPlacement, transform.rotation, this.transform);
+                    ProjectileBehavior projectileBehavior = projectile.GetComponent<ProjectileBehavior>();
                     // set projectile target to current target
                     if (isRangedHeal) {
-                        projectile.GetComponent<ProjectileBehavior>().InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);
+                        projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);
                         projectile.GetComponent<SpriteRenderer>().sprite = projectileHealSprite;
                     } else {
                         Debug.Log(target.gameObject.name);
-                        projectile.GetComponent<ProjectileBehavior>().InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
+                        projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
                     }
-                    // yield return projectile.GetComponent<ProjectileBehavior>().StartCoroutine(Move());
                     // doing damage handled on projectile object
                     AudioController.Instance.PlaySoundEffect("Fire Projectile");
                     break;
