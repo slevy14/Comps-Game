@@ -1058,14 +1058,17 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public void SetImageFacing() {
         Transform visualTransform = transform.GetChild(0);
+        Debug.Log("setting image facing from heading " + heading);
         if (heading == new Vector2((int)-1, (int)0)) {
             visualTransform.rotation = Quaternion.Euler(0, 180, 0);
         } else if (heading == new Vector2((int)1, (int)0)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, 0);
         } else if (heading == new Vector2((int)0, (int)1)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, 90);
-        } else if (heading == new Vector2((int)1, (int)0)) {
+        } else if (heading == new Vector2((int)0, (int)-1)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, -90);
+        } else {
+            Debug.Log("ERROR: heading didn't match for set image facing");
         }
     }
 
