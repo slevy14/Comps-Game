@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4430504191392860623, guid: 803858895fe7e4850af7167b392f2b08, type: 3}
       propertyPath: m_Name
-      value: EndLoopBlock
+      value: EndForLoopBlock
       objectReference: {fileID: 0}
     - target: {fileID: 5002566199855450447, guid: 803858895fe7e4850af7167b392f2b08, type: 3}
       propertyPath: m_text
-      value: END LOOP
+      value: END FOR
       objectReference: {fileID: 0}
     - target: {fileID: 5925119742462924668, guid: 803858895fe7e4850af7167b392f2b08, type: 3}
       propertyPath: tooltip
