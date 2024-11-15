@@ -24,13 +24,21 @@ PrefabInstance:
       propertyPath: blockName
       value: Melee Attack Power
       objectReference: {fileID: 0}
+    - target: {fileID: 5939100936248499671, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 63.5112
+      objectReference: {fileID: 0}
+    - target: {fileID: 5939100936248499671, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 42.294617
+      objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_text
-      value: 'Attack Power:'
+      value: 'Melee Attack Power:'
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: m_fontSize
-      value: 27.85
+      value: 20.05
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: property
