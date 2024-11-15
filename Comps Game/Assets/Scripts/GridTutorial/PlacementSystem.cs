@@ -128,6 +128,7 @@ public class PlacementSystem : MonoBehaviour {
                     LevelController.Instance.objectsOnGrid[currentDraggingObject] = currentDraggingObject.GetComponent<WarriorBehavior>().initialGridPos;
                 } else if (!tilemap.HasTile(gridPosition) || (!isPlayerSide && !LevelController.Instance.isSandbox)) { // if no tile or on wrong side, index 2
                     endIndex = 2;
+                    LevelController.Instance.objectsOnGrid[currentDraggingObject] = currentDraggingObject.GetComponent<WarriorBehavior>().initialGridPos;
                 } else {
                     LevelController.Instance.objectsOnGrid[currentDraggingObject] = gridPosVec2;
                 }
