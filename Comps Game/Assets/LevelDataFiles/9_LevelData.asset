@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Invasion
   levelNumber: 9
-  availableEnemyIndices: 060000000700000008000000
+  availableEnemyIndices: 060000001000000008000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
     warriorIndex: 8
@@ -23,10 +23,10 @@ MonoBehaviour:
     warriorIndex: 6
     isEnemy: 1
   - pos: {x: -3, y: 2}
-    warriorIndex: 7
+    warriorIndex: 16
     isEnemy: 1
   - pos: {x: -3, y: -5}
-    warriorIndex: 7
+    warriorIndex: 16
     isEnemy: 1
   - pos: {x: 3, y: -4}
     warriorIndex: 6
@@ -38,7 +38,7 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 250
+  maxTotalStrength: 300
   maxBlocks: 4
   actionPoints: 0
   maxWarriorsToPlace: 4

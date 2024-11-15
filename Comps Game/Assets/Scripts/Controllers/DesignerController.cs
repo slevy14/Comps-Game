@@ -97,7 +97,7 @@ public class DesignerController : MonoBehaviour {
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
         LoadWarriorFile();
         LoadWarriorDrawer();
-        LoadWarriorToWhiteboard(editingWarriorIndex, editingWarriorIndex, true, false);
+        LoadWarriorToWhiteboard(GetLastEditedWarrior(), GetLastEditedWarrior(), true, false);
         LoadEnemyDrawer();
 
         InitializeBlocksDrawer();
@@ -114,6 +114,13 @@ public class DesignerController : MonoBehaviour {
 
     private void LoadWarriorFile() {
         WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
+    }
+
+    private int GetLastEditedWarrior() {
+        if (ProgressionController.Instance.lastEditedWarrior <= WarriorListController.Instance.GetCount()) {
+            return ProgressionController.Instance.lastEditedWarrior;
+        }
+        return 0;
     }
 
     private void InitializeLevelSwitchButton() {
@@ -877,6 +884,9 @@ public class DesignerController : MonoBehaviour {
         }
 
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
+        if (!isCurrentWarriorEnemy) {
+            ProgressionController.Instance.SetLastEditedWarrior(editingWarriorIndex);
+        }
         UpdateStrengthDisplay();
         UpdateBehaviorsDisplay();
         // save warrior at end to make sure values are properly updated

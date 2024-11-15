@@ -802,9 +802,9 @@ public class LevelController : MonoBehaviour {
                 if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].UseWeapon());
                 }
-                if (!battleFinished) {
-                    yield return StartCoroutine(allWarriorsList[i].UseSpecial());
-                }
+                // if (!battleFinished) {
+                //     yield return StartCoroutine(allWarriorsList[i].UseSpecial());
+                // }
 
                 allWarriorsList[i].MarkCurrentTurn(false);
 

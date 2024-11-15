@@ -34,6 +34,9 @@ MonoBehaviour:
   - pos: {x: 2, y: -5}
     warriorIndex: 4
     isEnemy: 1
+  - pos: {x: 4, y: 0}
+    warriorIndex: 6
+    isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d00000003000000
   availableBehaviorsIndices: 0d000000050000000200000003000000
   isMoveHeaderAvailable: 1

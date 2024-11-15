@@ -15,6 +15,9 @@ public class ProgressionController : MonoBehaviour {
     [SerializeField] public bool isLevelJustStarted;
     [SerializeField] public bool madeListEdits; // true if deleted warrior, etc. need to reset grid
 
+    [Header("Recent Warrior")]
+    [SerializeField] public int lastEditedWarrior;
+
 
     public static ProgressionController Instance = null; // for persistent
 
@@ -79,6 +82,10 @@ public class ProgressionController : MonoBehaviour {
     public void SetLevelStarted() {
         isLevelJustStarted = false;
         TutorialController.Instance.StartTutorial();
+    }
+
+    public void SetLastEditedWarrior(int index) {
+        this.lastEditedWarrior = index;
     }
 }
 

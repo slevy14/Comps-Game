@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: tooltip
-      value: The amount of health your heal attacks do.
+      value: The amount of health restored by your magic and melee heals.
       objectReference: {fileID: 0}
     - target: {fileID: 5650646980919009739, guid: 78da4e49cfb7b4ed48889fa03f1a8a29, type: 3}
       propertyPath: blockName
