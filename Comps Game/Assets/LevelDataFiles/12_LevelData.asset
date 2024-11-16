@@ -23,7 +23,7 @@ MonoBehaviour:
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f0000000a0000000b0000000c000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 100
+  maxTotalStrength: 150
   maxBlocks: 7
   actionPoints: 0
   maxWarriorsToPlace: 1
