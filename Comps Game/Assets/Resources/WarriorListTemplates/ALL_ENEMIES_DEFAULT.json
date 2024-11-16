@@ -703,7 +703,7 @@
                     "behavior": 6,
                     "property": 0,
                     "values": [
-                        "3",
+                        "6",
                         "0"
                     ]
                 },
@@ -1182,7 +1182,7 @@
             "warriorStrength": 250,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -1847,6 +1847,197 @@
                 {
                     "blockType": 1,
                     "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Thick Bone Archer",
+            "warriorIndex": 18,
+            "spriteIndex": 1,
+            "warriorStrength": 100,
+            "behaviorCount": 3,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -217.43798828125,
+                "y": 644.9588012695313
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Thick Bone Archer"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Angry Armored Skeleton",
+            "warriorIndex": 19,
+            "spriteIndex": 6,
+            "warriorStrength": 64,
+            "behaviorCount": 2,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -247.49981689453126,
+                "y": 893.2474365234375
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Angry Armored Skeleton"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "10"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "40"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
                     "property": 0,
                     "values": [
                         "-1",

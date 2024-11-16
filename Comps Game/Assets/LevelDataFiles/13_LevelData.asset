@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Zip Zap Zop
   levelNumber: 13
-  availableEnemyIndices: 060000000e000000
+  availableEnemyIndices: 120000000e000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
-    warriorIndex: 6
+    warriorIndex: 18
     isEnemy: 1
   - pos: {x: 4, y: -5}
-    warriorIndex: 6
+    warriorIndex: 18
     isEnemy: 1
   - pos: {x: 1, y: 3}
     warriorIndex: 14

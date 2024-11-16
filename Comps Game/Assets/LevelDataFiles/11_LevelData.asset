@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: What If?
   levelNumber: 11
-  availableEnemyIndices: 040000000c000000
+  availableEnemyIndices: 0b0000000c000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
     warriorIndex: 12
@@ -29,10 +29,10 @@ MonoBehaviour:
     warriorIndex: 0
     isEnemy: 1
   - pos: {x: 3, y: -5}
-    warriorIndex: 0
+    warriorIndex: 11
     isEnemy: 1
   - pos: {x: 1, y: -1}
-    warriorIndex: 0
+    warriorIndex: 11
     isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f0000000a0000000c000000
