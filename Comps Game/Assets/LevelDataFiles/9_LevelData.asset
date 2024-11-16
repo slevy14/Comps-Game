@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Invasion
   levelNumber: 9
-  availableEnemyIndices: 060000001000000008000000
+  availableEnemyIndices: 110000001000000008000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
     warriorIndex: 8
     isEnemy: 1
   - pos: {x: 3, y: 3}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: -3, y: 2}
     warriorIndex: 16
@@ -29,7 +29,7 @@ MonoBehaviour:
     warriorIndex: 16
     isEnemy: 1
   - pos: {x: 3, y: -4}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: 4, y: -5}
     warriorIndex: 8

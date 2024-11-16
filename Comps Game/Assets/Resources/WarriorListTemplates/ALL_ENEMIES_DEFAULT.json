@@ -51,7 +51,7 @@
             "warriorStrength": 200,
             "behaviorCount": 2,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -122,7 +122,7 @@
             "warriorStrength": 261,
             "behaviorCount": 2,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -284,9 +284,9 @@
         {
             "warriorName": "Angry Skeleton",
             "warriorIndex": 4,
-            "spriteIndex": 0,
+            "spriteIndex": 6,
             "warriorStrength": 64,
-            "behaviorCount": 3,
+            "behaviorCount": 2,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
@@ -353,16 +353,7 @@
                     "property": 0,
                     "values": [
                         "0",
-                        "1"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 5,
-                    "property": 0,
-                    "values": [
-                        "-1",
-                        "-1"
+                        "0"
                     ]
                 },
                 {
@@ -381,7 +372,7 @@
             "warriorName": "Walker",
             "warriorIndex": 5,
             "spriteIndex": 7,
-            "warriorStrength": 87,
+            "warriorStrength": 93,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
@@ -421,7 +412,7 @@
                     "behavior": 0,
                     "property": 4,
                     "values": [
-                        "10"
+                        "70"
                     ]
                 },
                 {
@@ -477,15 +468,15 @@
             "warriorName": "Skeleton Archer",
             "warriorIndex": 6,
             "spriteIndex": 1,
-            "warriorStrength": 131,
+            "warriorStrength": 100,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -220.7781982421875,
-                "y": 894.36083984375
+                "x": -2100.0,
+                "y": -950.0
             },
             "useWeaponHeaderPosition": {
                 "x": -217.43798828125,
@@ -525,7 +516,7 @@
                     "behavior": 0,
                     "property": 9,
                     "values": [
-                        "71"
+                        "40"
                     ]
                 }
             ],
@@ -565,10 +556,10 @@
             "warriorName": "Dizzy Ghost",
             "warriorIndex": 7,
             "spriteIndex": 5,
-            "warriorStrength": 113,
+            "warriorStrength": 93,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -597,7 +588,7 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "75"
+                        "65"
                     ]
                 },
                 {
@@ -613,7 +604,7 @@
                     "behavior": 0,
                     "property": 9,
                     "values": [
-                        "30"
+                        "20"
                     ]
                 }
             ],
@@ -664,12 +655,12 @@
             "warriorStrength": 116,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -199.62353515625,
-                "y": 886.5670776367188
+                "x": -2100.0,
+                "y": -950.0
             },
             "useWeaponHeaderPosition": {
                 "x": -196.2833251953125,
@@ -823,7 +814,7 @@
                     "behavior": 1,
                     "property": 0,
                     "values": [
-                        "1"
+                        "0"
                     ]
                 },
                 {
@@ -839,7 +830,7 @@
                     "behavior": 1,
                     "property": 0,
                     "values": [
-                        "0"
+                        "1"
                     ]
                 }
             ],
@@ -951,7 +942,7 @@
                     "behavior": 1,
                     "property": 0,
                     "values": [
-                        "0"
+                        "1"
                     ]
                 },
                 {
@@ -967,7 +958,7 @@
                     "behavior": 1,
                     "property": 0,
                     "values": [
-                        "1"
+                        "0"
                     ]
                 }
             ],
@@ -1100,8 +1091,8 @@
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -170.458740234375,
-                "y": 894.5515747070313
+                "x": -2100.0,
+                "y": -950.0
             },
             "useWeaponHeaderPosition": {
                 "x": -168.23193359375,
@@ -1188,10 +1179,10 @@
             "warriorName": "Giant Skeleton",
             "warriorIndex": 13,
             "spriteIndex": 0,
-            "warriorStrength": 300,
-            "behaviorCount": 5,
+            "warriorStrength": 250,
+            "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -1236,7 +1227,7 @@
                     "behavior": 0,
                     "property": 6,
                     "values": [
-                        "40"
+                        "30"
                     ]
                 },
                 {
@@ -1265,20 +1256,12 @@
                     "values": [
                         "0",
                         "1",
-                        "5"
+                        "4"
                     ]
                 },
                 {
                     "blockType": 1,
                     "behavior": 1,
-                    "property": 0,
-                    "values": [
-                        "0"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 2,
                     "property": 0,
                     "values": [
                         "0"
@@ -1322,7 +1305,7 @@
             "warriorStrength": 217,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -781.9998168945313,
+                "x": -782.0,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -1666,6 +1649,198 @@
                     "property": 0,
                     "values": [
                         "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Dizzy Reaper",
+            "warriorIndex": 16,
+            "spriteIndex": 2,
+            "warriorStrength": 83,
+            "behaviorCount": 4,
+            "propertiesHeaderPosition": {
+                "x": -782.0,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -194.0565185546875,
+                "y": 898.814453125
+            },
+            "useWeaponHeaderPosition": {
+                "x": -191.8297119140625,
+                "y": 608.216552734375
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Dizzy Reaper"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "55"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "85"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "20"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 3,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "2",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Bone Archer Minion",
+            "warriorIndex": 17,
+            "spriteIndex": 1,
+            "warriorStrength": 85,
+            "behaviorCount": 3,
+            "propertiesHeaderPosition": {
+                "x": -782.0,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "useWeaponHeaderPosition": {
+                "x": -217.43798828125,
+                "y": 644.9588012695313
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Bone Archer Minion"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "50"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "25"
+                    ]
+                }
+            ],
+            "moveFunctions": [],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "0",
                         "1"
                     ]
                 },

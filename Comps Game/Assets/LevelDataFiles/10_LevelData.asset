@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: War, Act II
   levelNumber: 10
-  availableEnemyIndices: 04000000050000000600000008000000090000000a0000000b000000
+  availableEnemyIndices: 04000000050000001100000008000000090000000a0000000b000000
   enemyPlacementsList:
   - pos: {x: 0, y: 4}
     warriorIndex: 4
@@ -47,16 +47,16 @@ MonoBehaviour:
     warriorIndex: 10
     isEnemy: 1
   - pos: {x: 3, y: 1}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: 2, y: 0}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: 2, y: -1}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: 3, y: -2}
-    warriorIndex: 6
+    warriorIndex: 17
     isEnemy: 1
   - pos: {x: 3, y: 0}
     warriorIndex: 11

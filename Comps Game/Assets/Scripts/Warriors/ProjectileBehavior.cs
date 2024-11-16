@@ -25,7 +25,7 @@ public class ProjectileBehavior : MonoBehaviour {
     }
 
     void FixedUpdate() {
-        float multSpeed = speed / (1.01f+LevelController.Instance.battleSpeed);
+        float multSpeed = speed / (0.5f + LevelController.Instance.battleSpeed);
         float multRot = rotSpeed / (1.01f+LevelController.Instance.battleSpeed);
         transform.Rotate(new Vector3(0, 0, rotSpeed));
         if (target != null) {
