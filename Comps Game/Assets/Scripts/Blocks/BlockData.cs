@@ -38,7 +38,9 @@ public class BlockData : MonoBehaviour {
         END_IF            = 12,
         MELEE_SETTINGS    = 13,
         RANGED_SETTINGS   = 14,
-        FIRE_PROJECTILE   = 15
+        FIRE_PROJECTILE   = 15,
+        FOREACH_LOOP      = 16,
+        RECHARGE_STAMINA  = 17
     }
 
     // ALL PROPERTIES MUST BE MANUALLY INDEXED

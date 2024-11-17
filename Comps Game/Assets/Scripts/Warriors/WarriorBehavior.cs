@@ -327,8 +327,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*----------------------------------------*/
 
     // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else, Set Target, While Loop, If, Melee Attack, Fire Projectile
-    // IN PROGRESS: 
-    // NOT STARTED: 
+    // IN PROGRESS: Recharge Stamina
+    // NOT STARTED: Foreach
 
     // BIG TODO: projectile range???
 
@@ -494,6 +494,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     Vector2 teleportPos = new();
                     if (behaviorList[i].values[0] == "0") { // behind
                         if (target == null) {
+                            IndicateNoTarget();
                             break;
                         }
                         // get target position minus heading
@@ -502,13 +503,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         if (!LevelController.Instance.objectsOnGrid.ContainsValue(teleportPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0))) {
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
-                            heading = target.heading;
-                            SetImageFacing();
+
+                            // auto turn (no longer used):
+                            // heading = target.heading;
+                            // SetImageFacing();
                         } else {
                             Debug.Log("either tile full or would teleport off map");
                         }
                     } else if (behaviorList[i].values[0] == "1") { // flank
                         if (target == null) {
+                            IndicateNoTarget();
                             break;
                         }
                         // if left flank free:
@@ -519,8 +523,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // try set this position to new position
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
-                            heading = RotateRight(target.heading);
-                            SetImageFacing();
+                            // auto turn (no longer used):
+                            // heading = RotateRight(target.heading);
+                            // SetImageFacing();
                             break;
                         }
                         // else if right flank free
@@ -530,8 +535,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // try set this position to new position
                             this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
                             LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
-                            heading = RotateLeft(target.heading);
-                            SetImageFacing();
+                            // auto turn (no longer used):
+                            // heading = RotateLeft(target.heading);
+                            // SetImageFacing();
                             break;
                         }
                     }
@@ -732,7 +738,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else if (behaviorList[i].values[0] == "6") { // target is ranged
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == whileLoopCondition;
                     } else if (behaviorList[i].values[0] == "7") { // target has shield
-                        conditionsDict[i] = target.GetMagicShield() == whileLoopCondition;
+                        conditionsDict[i] = CheckMagicShield() == whileLoopCondition;
                     }
 
                     // if false just jump past
@@ -827,7 +833,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else if (behaviorList[i].values[0] == "6") { // target is ranged
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == ifCondition;
                     } else if (behaviorList[i].values[0] == "7") { // target has shield
-                        conditionsDict[i] = target.GetMagicShield() == ifCondition;
+                        conditionsDict[i] = CheckMagicShield() == ifCondition;
                     }
 
                     // if false just jump past
@@ -918,6 +924,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         break;
                     }
                     if (target == null) {
+                        IndicateNoTarget();
                         break;
                     }
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
@@ -943,6 +950,27 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // doing damage handled on projectile object
                     AudioController.Instance.PlaySoundEffect("Fire Projectile");
                     break;
+                
+                    /*---------------*/
+                    /*    FOREACH    */
+                    /*---------------*/ /*   Current Status: NOT STARTED
+                    one dropdown
+                        choose which team to look at
+                            0: enemies
+                            1: allies
+                    loop through all warriors of the given team */
+                    case BlockData.BehaviorType.FOREACH_LOOP:
+                        break;
+
+                    /*------------------------*/
+                    /*    RECHARGE STAMINA    */
+                    /*------------------------*/ /*   Current Status: IN PROGRESS
+                    no dropdowns
+                    recharge stamina to full */
+                    case BlockData.BehaviorType.RECHARGE_STAMINA:
+                        ToggleStaminaIndicator(true);
+                        // FIXME: add sound effect
+                        break;
             }
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && isCurrentTurn) {
                 Die();
@@ -959,6 +987,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool TargetInRange() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
         List<Vector2> meleeRange = GetMeleeRange();
 
         foreach (Vector2 tile in meleeRange) {
@@ -974,6 +1007,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool FacingTarget() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
         if (target == this) { // edge case
             return true;
         }
@@ -995,6 +1033,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool TargetLowHealth() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
         if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
             return true;
         }
@@ -1002,10 +1045,24 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool CheckTargetAttackType(BlockData.Property property) {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
         if (target.propertiesDict[property] > 1) {
             return true;
         }
         return false;
+    }
+
+    public bool CheckMagicShield() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
+        return target.GetMagicShield();
     }
 
     public bool SelfLowHealth() {
@@ -1071,7 +1128,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         } else if (heading == new Vector2((int)0, (int)-1)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, -90);
         } else {
-            Debug.Log("ERROR: heading didn't match for set image facing");
+            Debug.Log("ERROR: heading didn't match for set image facing: " + heading);
         }
     }
 
@@ -1140,6 +1197,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         Debug.Log("no stamina! cannot attack");
         if (noStaminaTextbox.activeSelf) {
             noStaminaTextbox.GetComponent<NoStaminaDisplayBehavior>().ShowNoStaminaText();
+        } else {
+            noStaminaTextbox.SetActive(true);
+        }
+    }
+
+    public void IndicateNoTarget() {
+        Debug.Log("no target! cannot do target thing");
+        if (noStaminaTextbox.activeSelf) {
+            noStaminaTextbox.GetComponent<NoStaminaDisplayBehavior>().ShowNoTargetText();
         } else {
             noStaminaTextbox.SetActive(true);
         }

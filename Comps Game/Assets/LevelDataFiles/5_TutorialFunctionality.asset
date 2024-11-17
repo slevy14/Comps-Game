@@ -26,6 +26,6 @@ MonoBehaviour:
   - tutorialDialog: You've got all you need to take these heartless beasts down out
       on the battlefield.
     functionOption: 7
-  - tutorialDialog: Good luck!
+  - tutorialDialog: Design as many new warriors as you'd like -- there's no limit!
     functionOption: 7
   _selectedFunction: 7

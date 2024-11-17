@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class NoStaminaDisplayBehavior : MonoBehaviour {
@@ -34,6 +35,15 @@ public class NoStaminaDisplayBehavior : MonoBehaviour {
     public void ShowNoStaminaText() {
         Debug.Log("anchored pos: " + this.gameObject.GetComponent<RectTransform>().anchoredPosition);
         this.gameObject.GetComponent<RectTransform>().anchoredPosition = initialPosition;
+        this.transform.GetChild(0).GetComponent<TMP_Text>().text = "No Stamina!";
+        Debug.Log("anchored pos: " + this.gameObject.GetComponent<RectTransform>().anchoredPosition);
+        timer = 0;
+    }
+
+    public void ShowNoTargetText() {
+        Debug.Log("anchored pos: " + this.gameObject.GetComponent<RectTransform>().anchoredPosition);
+        this.gameObject.GetComponent<RectTransform>().anchoredPosition = initialPosition;
+        this.transform.GetChild(0).GetComponent<TMP_Text>().text = "No Target!";
         Debug.Log("anchored pos: " + this.gameObject.GetComponent<RectTransform>().anchoredPosition);
         timer = 0;
     }

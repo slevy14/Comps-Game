@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
+  m_Name: 18_LevelData
+  m_EditorClassIdentifier: 
+  levelName: Finale, Act I
+  levelNumber: 18
+  availableEnemyIndices: 120000000e000000
+  enemyPlacementsList:
+  - pos: {x: 2, y: 4}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 0, y: 2}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 1, y: 0}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 1, y: -1}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 0, y: -3}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 2, y: -5}
+    warriorIndex: 0
+    isEnemy: 1
+  - pos: {x: 3, y: 3}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 3, y: 0}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 3, y: -1}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 3, y: -4}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 4, y: 4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 1}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -2}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: -5}
+    warriorIndex: 8
+    isEnemy: 1
+  availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
+  availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c0000000700000009000000110000000800000010000000
+  isMoveHeaderAvailable: 1
+  isUseSpecialHeaderAvailable: 0
+  maxTotalStrength: 1000
+  maxBlocks: 1000
+  actionPoints: 0
+  maxWarriorsToPlace: 1000
+  tutorialFunctionality: {fileID: 11400000, guid: 98ba4d8b66f7c4cef902aa3cfaf41394, type: 2}

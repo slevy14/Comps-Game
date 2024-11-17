@@ -13,13 +13,6 @@ MonoBehaviour:
   m_Name: 13_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Let's keep experimenting! Fighting bad dudes is fun.
-    functionOption: 7
-  - tutorialDialog: They've got magic? We've got magic.
-    functionOption: 13
-  - tutorialDialog: Teleportation, baby! Zap yourself behind enemy lines, but be
-      careful of where you might end up!
-    functionOption: 18
-  - tutorialDialog: I am so tired.
+  - tutorialDialog: OLD TUTORIAL!
     functionOption: 7
   _selectedFunction: 7

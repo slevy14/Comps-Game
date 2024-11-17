@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
-  m_Name: 13_LevelData
+  m_Name: 19_LevelData
   m_EditorClassIdentifier: 
-  levelName: OLD Zip Zap Zop
-  levelNumber: 13
+  levelName: Finale, Act II
+  levelNumber: 19
   availableEnemyIndices: 120000000e000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
@@ -32,11 +32,11 @@ MonoBehaviour:
     warriorIndex: 14
     isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
-  availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f0000000a0000000b0000000c000000
+  availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c0000000700000009000000110000000800000010000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 150
-  maxBlocks: 7
+  maxTotalStrength: 1000
+  maxBlocks: 1000
   actionPoints: 0
-  maxWarriorsToPlace: 5
-  tutorialFunctionality: {fileID: 11400000, guid: 6afa4639e1a804865a671f377ebc2c24, type: 2}
+  maxWarriorsToPlace: 1000
+  tutorialFunctionality: {fileID: 11400000, guid: 98ba4d8b66f7c4cef902aa3cfaf41394, type: 2}

@@ -34,6 +34,8 @@ MonoBehaviour:
     functionOption: 1
   - tutorialDialog: Drag and drop them onto the whiteboard! They snap together.
     functionOption: 14
+  - tutorialDialog: 'Tip: Hover over a block for more information about what it does.'
+    functionOption: 14
   - tutorialDialog: Properties go under the properties header. Use these to change
       your character's stats.
     functionOption: 17
@@ -66,5 +68,7 @@ MonoBehaviour:
     functionOption: 7
   - tutorialDialog: That's all from me, the bear. Code your first warrior and send
       it into battle!
+    functionOption: 7
+  - tutorialDialog: 'Tip: Click me in the corner to replay this level''s tutorial!'
     functionOption: 7
   _selectedFunction: 7

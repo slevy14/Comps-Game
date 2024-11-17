@@ -33,4 +33,6 @@ MonoBehaviour:
   - tutorialDialog: Remember to look at your enemy's properties and behaviors if
       you're feeling stuck!
     functionOption: 7
+  - tutorialDialog: 'Tip: You can also use this menu to change your warrior''s appearance.'
+    functionOption: 21
   _selectedFunction: 7

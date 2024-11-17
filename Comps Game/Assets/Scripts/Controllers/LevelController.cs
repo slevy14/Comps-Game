@@ -669,6 +669,19 @@ public class LevelController : MonoBehaviour {
                         behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "DO MAGIC";
                         behaviorString += "\n ";
                         break;
+                    case BlockData.BehaviorType.FOREACH_LOOP:
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "FOR EACH";
+                        if (warriorBehaviorList[i].values[0] == "0") {
+                            behaviorString += "enemy ";
+                        } else if (warriorBehaviorList[i].values[0] == "1") {
+                            behaviorString += "warrior ";
+                        }
+                        behaviorString += "\n ";
+                        break;
+                    case BlockData.BehaviorType.RECHARGE_STAMINA:
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "RECHARGE STAMINA";
+                        behaviorString += "\n ";
+                        break;
                 }
             }
             // reset indent

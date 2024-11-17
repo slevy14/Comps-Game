@@ -22,8 +22,8 @@ MonoBehaviour:
     functionOption: 13
   - tutorialDialog: You unlocked a new property block!
     functionOption: 7
-  - tutorialDialog: The Attack Range block can be used to change the reach of your
-      melee attack.
+  - tutorialDialog: The Melee Attack Range block can be used to change the reach
+      of your melee attack.
     functionOption: 18
   - tutorialDialog: Experiment with different range values to hit your enemies from
       a distance.
@@ -31,6 +31,7 @@ MonoBehaviour:
   - tutorialDialog: Don't be afraid to make mistakes! Experiment with different property
       settings and behaviors to strike your enemies down!
     functionOption: 7
-  - tutorialDialog: 'Tip: You can also use this menu to change your warrior''s appearance.'
-    functionOption: 21
+  - tutorialDialog: 'Tip: Your warrior can only do one attack per turn -- notice
+      the stamina indicator in battle! Don''t try to use too many "Do Melee" blocks!'
+    functionOption: 7
   _selectedFunction: 7
