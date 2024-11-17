@@ -33,7 +33,7 @@ MonoBehaviour:
   isMoveHeaderAvailable: 0
   isUseSpecialHeaderAvailable: 0
   maxTotalStrength: 100
-  maxBlocks: 3
+  maxBlocks: 2
   actionPoints: 0
   maxWarriorsToPlace: 4
   tutorialFunctionality: {fileID: 11400000, guid: d48f89ed1b1d244e59bbca1a3b11c5df, type: 2}

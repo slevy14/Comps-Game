@@ -88,12 +88,6 @@ public class DesignerController : MonoBehaviour {
 
     // INITIALIZING
     void Start() {
-        // if (warriorListController == null) {
-        //     warriorListController = WarriorListController.Instance;
-        // }
-        // if (enemyListController == null) {
-        //     enemyListController = EnemyListController.Instance;
-        // }
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
         LoadWarriorFile();
         LoadWarriorDrawer();
@@ -504,9 +498,13 @@ public class DesignerController : MonoBehaviour {
         if (!HelperController.Instance.GetCurrentLevelData().isMoveHeaderAvailable) {
             moveHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
         }
-        if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
-            useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
-        }
+        // special header cut for scope! always load it to default far away
+        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+
+        // if special was in use at all, we would load positions like this:
+        // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+        //     useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        // }
     }
 
     private WarriorFunctionalityData CreateDataForCurrentWarrior() {
@@ -779,9 +777,13 @@ public class DesignerController : MonoBehaviour {
         propertiesHeaderObject.GetComponent<Draggable>().UpdateBlockPositions(propertiesHeaderObject, propertiesHeaderObject.transform.position);
 
         
-        if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
-            useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
-        }
+        // special header cut for scope! always load it to default far away
+        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+
+        // if special was in use at all, we would load positions like this:
+        // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+        //     useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+        // }
         // CONDENSE BEHAVIOR LOADING
         List<GameObject> headers = new List<GameObject> {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
@@ -802,11 +804,16 @@ public class DesignerController : MonoBehaviour {
                     break;
                 case 2:
                     headers[i].GetComponent<RectTransform>().anchoredPosition = warriorData.useSpecialHeaderPosition;
-                    if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable || (isLoadingEnemy && warriorData.useSpecialFunctions.Count == 0)) {
-                        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
-                    }  else if (useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
-                        useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 441);
-                    }
+
+                    // special header cut for scope! always load it to default far away
+                    useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+
+                    // if special was in use at all, we would load positions like this:
+                    // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable || (isLoadingEnemy && warriorData.useSpecialFunctions.Count == 0)) {
+                    //     useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
+                    // }  else if (useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition == new Vector2(-2100, -950)) {
+                    //     useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-186, 441);
+                    // }
                     break;
             }
 
