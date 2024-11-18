@@ -146,6 +146,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Target has Shield
       m_Image: {fileID: 0}
+    - m_Text: In Target Range
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -819,7 +821,7 @@ MonoBehaviour:
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
-  m_fontSizeMin: 11
+  m_fontSizeMin: 10
   m_fontSizeMax: 14
   m_fontStyle: 16
   m_HorizontalAlignment: 1

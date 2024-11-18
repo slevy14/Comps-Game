@@ -739,6 +739,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == whileLoopCondition;
                     } else if (behaviorList[i].values[0] == "7") { // target has shield
                         conditionsDict[i] = CheckMagicShield() == whileLoopCondition;
+                    } else if (behaviorList[i].values[0] == "8") { // in target melee range
+                        conditionsDict[i] = CheckInTargetRange() == whileLoopCondition;
                     }
 
                     // if false just jump past
@@ -834,6 +836,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = CheckTargetAttackType(BlockData.Property.RANGED_ATTACK_POWER) == ifCondition;
                     } else if (behaviorList[i].values[0] == "7") { // target has shield
                         conditionsDict[i] = CheckMagicShield() == ifCondition;
+                    } else if (behaviorList[i].values[0] == "8") { // in target melee range
+                        conditionsDict[i] = CheckInTargetRange() == ifCondition;
                     }
 
                     // if false just jump past
@@ -1006,6 +1010,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return false;
     }
 
+    public bool WarriorInRange(WarriorBehavior warrior) {
+        List<Vector2> meleeRange = GetMeleeRange();
+
+        foreach (Vector2 tile in meleeRange) {
+            Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
+            if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
+                GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
+                if (hitWarrior.GetComponent<WarriorBehavior>() == warrior) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public bool FacingTarget() {
         if (target == null) {
             IndicateNoTarget();
@@ -1063,6 +1082,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
 
         return target.GetMagicShield();
+    }
+
+    public bool CheckInTargetRange() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
+        // run the in range function on the enemy with this warrior as the object
+        return WarriorInRange(this);
     }
 
     public bool SelfLowHealth() {

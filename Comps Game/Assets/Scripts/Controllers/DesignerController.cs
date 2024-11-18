@@ -1293,7 +1293,7 @@ public class DesignerController : MonoBehaviour {
                     }
                     break;
                 case BlockData.BehaviorType.ELSE:
-                    if (block.values[0] == "-1") {
+                    if (block.values[0] == "-1" || block.values[1] == "-1") { // handle missing if and endif
                         errorsList.Add("mismatched ELSE statement!");
                     }
                     break;
