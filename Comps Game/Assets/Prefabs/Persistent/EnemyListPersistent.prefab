@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 826793071219400192}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -60,8 +60,8 @@ MonoBehaviour:
     sprite: {fileID: 390912729, guid: 5ecf987debac34173b9ec98fe6eae9c1, type: 3}
     animatorController: {fileID: 22100000, guid: 51cbab462dc86475d8c67c286a64e3a7, type: 2}
   - spriteName: Lich
-    sprite: {fileID: -2073480682, guid: 10badc0965f3f40b79b0de055b73c867, type: 3}
-    animatorController: {fileID: 22100000, guid: d6197d6207b6843d294bb241410ea13e, type: 2}
+    sprite: {fileID: -2073480682, guid: 4f0fa25f7c6d545f9802d8647f8d785a, type: 3}
+    animatorController: {fileID: 22100000, guid: 5e6ad1d7d296d4ab1a648acaaf858aca, type: 2}
   - spriteName: Ghost
     sprite: {fileID: -929304319, guid: 4c12c34753fdc4c5fb416e9976718609, type: 3}
     animatorController: {fileID: 22100000, guid: 41bd13e3a40c64a42b9d7732ef65b477, type: 2}
@@ -71,3 +71,6 @@ MonoBehaviour:
   - spriteName: Zombie
     sprite: {fileID: 1233623321, guid: 9192d39b75c9d4b03b3f846e07f1feca, type: 3}
     animatorController: {fileID: 22100000, guid: 528593224b8b84bf8a7e6f3eeae44d24, type: 2}
+  - spriteName: MaximumLich
+    sprite: {fileID: -2073480682, guid: 10badc0965f3f40b79b0de055b73c867, type: 3}
+    animatorController: {fileID: 22100000, guid: d6197d6207b6843d294bb241410ea13e, type: 2}

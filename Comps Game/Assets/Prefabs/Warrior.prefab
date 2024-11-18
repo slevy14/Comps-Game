@@ -615,6 +615,7 @@ MonoBehaviour:
   animator: {fileID: 7813883477709150906}
   staminaIndicator: {fileID: 1379355986243895102}
   noStaminaTextbox: {fileID: 6577194358395292071}
+  initialGridPos: {x: 0, y: 0}
   isNew: 1
   warriorIndex: 0
   isEnemy: 0
