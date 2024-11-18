@@ -568,6 +568,8 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "target is magic ";
                         } else if (warriorBehaviorList[i].values[0] == "7") {
                             behaviorString += "target has shield ";
+                        } else if (warriorBehaviorList[i].values[0] == "7") {
+                            behaviorString += "in target range ";
                         }
 
                         behaviorString += "IS ";
@@ -609,6 +611,8 @@ public class LevelController : MonoBehaviour {
                             behaviorString += "target is magic ";
                         } else if (warriorBehaviorList[i].values[0] == "7") {
                             behaviorString += "target has shield ";
+                        } else if (warriorBehaviorList[i].values[0] == "7") {
+                            behaviorString += "in target range ";
                         }
 
                         behaviorString += "IS ";
