@@ -13,6 +13,18 @@ MonoBehaviour:
   m_Name: 18_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 18 tutorial
+  - tutorialDialog: Looks like we're getting pretty close to the final showdown.
+      We've got one final trick up our sleeves!
+    functionOption: 7
+  - tutorialDialog: Let's take a look at another kind of loop you can use.
+    functionOption: 13
+  - tutorialDialog: The FOR LOOP!
+    functionOption: 18
+  - tutorialDialog: The FOR LOOP is useful when we know exactly how many times we
+      want to loop.
+    functionOption: 18
+  - tutorialDialog: Don't forget to end your loop with an END FOR block!
+    functionOption: 18
+  - tutorialDialog: Try using a for loop to take down lots of enemies at once.
     functionOption: 7
   _selectedFunction: 7

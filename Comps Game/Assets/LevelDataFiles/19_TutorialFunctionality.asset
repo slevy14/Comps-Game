@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 19_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 19 tutorial
+  - tutorialDialog: You've made it to the front gate!
+    functionOption: 7
+  - tutorialDialog: Quick, take out the Lich's minions while you still can!
     functionOption: 7
   _selectedFunction: 7

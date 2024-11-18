@@ -26,5 +26,5 @@ MonoBehaviour:
   maxTotalStrength: 1000
   maxBlocks: 1000
   actionPoints: 0
-  maxWarriorsToPlace: 1000
+  maxWarriorsToPlace: 1
   tutorialFunctionality: {fileID: 11400000, guid: fe89579f90ca848c3ab4d8c330fdd70b, type: 2}

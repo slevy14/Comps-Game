@@ -13,6 +13,19 @@ MonoBehaviour:
   m_Name: 13_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: OLD TUTORIAL!
+  - tutorialDialog: They want to dance? Let's dance.
+    functionOption: 7
+  - tutorialDialog: Check out these ghosts' stats. They'll easily take your warriors
+      out in one hit.
+    functionOption: 7
+  - tutorialDialog: But maybe we can sneak in to deal damage first, then retreat
+      once we're in their range.
+    functionOption: 7
+  - tutorialDialog: Let's take a look at the whiteboard again.
+    functionOption: 13
+  - tutorialDialog: Remember -- the Move function is used first, followed by Use
+      Weapon.
+    functionOption: 17
+  - tutorialDialog: But what happens if we put a movement block under Use Weapon...?
     functionOption: 7
   _selectedFunction: 7

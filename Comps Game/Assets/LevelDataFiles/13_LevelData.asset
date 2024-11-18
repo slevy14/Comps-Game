@@ -12,31 +12,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 13_LevelData
   m_EditorClassIdentifier: 
-  levelName: OLD Zip Zap Zop
+  levelName: Tango
   levelNumber: 13
-  availableEnemyIndices: 120000000e000000
+  availableEnemyIndices: 15000000
   enemyPlacementsList:
-  - pos: {x: 4, y: 4}
-    warriorIndex: 18
+  - pos: {x: 0, y: 4}
+    warriorIndex: 21
     isEnemy: 1
-  - pos: {x: 4, y: -5}
-    warriorIndex: 18
+  - pos: {x: 0, y: 3}
+    warriorIndex: 21
     isEnemy: 1
-  - pos: {x: 1, y: 3}
-    warriorIndex: 14
+  - pos: {x: 0, y: 2}
+    warriorIndex: 21
     isEnemy: 1
-  - pos: {x: 3, y: 0}
-    warriorIndex: 14
+  - pos: {x: 0, y: 1}
+    warriorIndex: 21
     isEnemy: 1
-  - pos: {x: 3, y: -4}
-    warriorIndex: 14
+  - pos: {x: 0, y: 0}
+    warriorIndex: 21
+    isEnemy: 1
+  - pos: {x: 0, y: -1}
+    warriorIndex: 21
+    isEnemy: 1
+  - pos: {x: 0, y: -2}
+    warriorIndex: 21
+    isEnemy: 1
+  - pos: {x: 0, y: -3}
+    warriorIndex: 21
+    isEnemy: 1
+  - pos: {x: 0, y: -4}
+    warriorIndex: 21
+    isEnemy: 1
+  - pos: {x: 0, y: -5}
+    warriorIndex: 21
     isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d00000005000000010000000200000003000000060000000e0000000f0000000a0000000b0000000c000000
   isMoveHeaderAvailable: 1
   isUseSpecialHeaderAvailable: 0
-  maxTotalStrength: 150
-  maxBlocks: 7
+  maxTotalStrength: 1000
+  maxBlocks: 1000
   actionPoints: 0
-  maxWarriorsToPlace: 5
+  maxWarriorsToPlace: 4
   tutorialFunctionality: {fileID: 11400000, guid: 6afa4639e1a804865a671f377ebc2c24, type: 2}

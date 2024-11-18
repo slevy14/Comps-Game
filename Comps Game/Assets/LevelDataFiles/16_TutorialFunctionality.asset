@@ -13,6 +13,32 @@ MonoBehaviour:
   m_Name: 16_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 16 tutorial
+  - tutorialDialog: You took down the lich! But I'm sure it'll be back stronger.
+    functionOption: 7
+  - tutorialDialog: For now, how are we supposed to take this skeleton down with
+      only one weak warrior?
+    functionOption: 19
+  - tutorialDialog: Get ready to be thrown for a LOOP!
+    functionOption: 13
+  - tutorialDialog: Introducing the WHILE LOOP!
+    functionOption: 18
+  - tutorialDialog: Similar to the IF statement, the WHILE loop checks if a chosen
+      condition is met.
+    functionOption: 18
+  - tutorialDialog: The code within the loop will then repeat until the condition
+      the condition is no longer satisfied.
+    functionOption: 18
+  - tutorialDialog: In other coding languages, it's possible to get stuck in an infinite
+      loop.
+    functionOption: 18
+  - tutorialDialog: Here, the loop will simply end if it gets stuck.
+    functionOption: 18
+  - tutorialDialog: Don't forget to use END WHILE to close your loop as well.
+    functionOption: 18
+  - tutorialDialog: The last new behavior is RECHARGE STAMINA. You can use this to
+      attack multiple times in one turn!
+    functionOption: 18
+  - tutorialDialog: The enemy is strong, but I wonder if we can use a loop strike
+      them down before they even get the chance to hit us...
     functionOption: 7
   _selectedFunction: 7

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: 20_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Level 20 tutorial
+  - tutorialDialog: It's now or never.
+    functionOption: 7
+  - tutorialDialog: Use everything you've got to take the Maximum Lich down!!!
     functionOption: 7
   _selectedFunction: 7

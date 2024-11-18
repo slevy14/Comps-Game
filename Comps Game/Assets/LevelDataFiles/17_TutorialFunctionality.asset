@@ -13,13 +13,15 @@ MonoBehaviour:
   m_Name: 17_TutorialFunctionality
   m_EditorClassIdentifier: 
   tutorialListItems:
-  - tutorialDialog: Let's keep experimenting! Fighting bad dudes is fun.
+  - tutorialDialog: Oh no! Your enemies can teleport now!
     functionOption: 7
-  - tutorialDialog: They've got magic? We've got magic.
+  - tutorialDialog: But so can we. Let's see how it works.
     functionOption: 13
-  - tutorialDialog: Teleportation, baby! Zap yourself behind enemy lines, but be
-      careful of where you might end up!
+  - tutorialDialog: The Teleport behavior lets you magically warp near an enemy.
     functionOption: 18
-  - tutorialDialog: I am so tired.
+  - tutorialDialog: But be careful -- you don't know which way you'll be facing!
+    functionOption: 18
+  - tutorialDialog: You'll need to use a WHILE LOOP to turn until you're facing the
+      enemy.
     functionOption: 7
   _selectedFunction: 7
