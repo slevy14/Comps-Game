@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Finale, Act I
   levelNumber: 18
-  availableEnemyIndices: 120000000e000000
+  availableEnemyIndices: 000000000800000011000000
   enemyPlacementsList:
   - pos: {x: 2, y: 4}
     warriorIndex: 0

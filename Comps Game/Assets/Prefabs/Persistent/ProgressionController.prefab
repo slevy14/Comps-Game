@@ -61,7 +61,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bf7b54f4ad377432ab19160ce35a6dad, type: 2}
   - {fileID: 11400000, guid: 95b1b85c4187448438bae78e3ae7b7e7, type: 2}
   - {fileID: 11400000, guid: dbcdcb1f2c50645c0bdc5d57dc152456, type: 2}
+  - {fileID: 11400000, guid: 738a7b1c1223d442cbb42c06c0d61d22, type: 2}
+  - {fileID: 11400000, guid: 3569b2bec68fb40dcbc99eab49cb29fc, type: 2}
+  - {fileID: 11400000, guid: 896c22c497a704d6d93785f50a76ea37, type: 2}
+  - {fileID: 11400000, guid: e8d7f02307f9d41d68a94939996df04f, type: 2}
+  - {fileID: 11400000, guid: 279bdc7f89f584c6088e889fb6e24b3e, type: 2}
   continueLevelFrom: 0
   currentLevel: -1
   isLevelJustStarted: 0
   madeListEdits: 0
+  lastEditedWarrior: 0

@@ -14,22 +14,58 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Finale, Act III
   levelNumber: 20
-  availableEnemyIndices: 120000000e000000
+  availableEnemyIndices: 07000000080000000c0000000e000000110000001200000014000000
   enemyPlacementsList:
+  - pos: {x: -5, y: 4}
+    warriorIndex: 14
+    isEnemy: 1
+  - pos: {x: -5, y: -5}
+    warriorIndex: 14
+    isEnemy: 1
+  - pos: {x: 0, y: 3}
+    warriorIndex: 7
+    isEnemy: 1
+  - pos: {x: 0, y: 0}
+    warriorIndex: 20
+    isEnemy: 1
+  - pos: {x: 0, y: -4}
+    warriorIndex: 7
+    isEnemy: 1
+  - pos: {x: 2, y: 2}
+    warriorIndex: 19
+    isEnemy: 1
+  - pos: {x: 2, y: -3}
+    warriorIndex: 19
+    isEnemy: 1
+  - pos: {x: 3, y: 4}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 3, y: 1}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 3, y: -2}
+    warriorIndex: 17
+    isEnemy: 1
+  - pos: {x: 3, y: -5}
+    warriorIndex: 8
+    isEnemy: 1
   - pos: {x: 4, y: 4}
+    warriorIndex: 12
+    isEnemy: 1
+  - pos: {x: 4, y: 3}
+    warriorIndex: 8
+    isEnemy: 1
+  - pos: {x: 4, y: 0}
     warriorIndex: 18
+    isEnemy: 1
+  - pos: {x: 4, y: -1}
+    warriorIndex: 18
+    isEnemy: 1
+  - pos: {x: 4, y: -4}
+    warriorIndex: 8
     isEnemy: 1
   - pos: {x: 4, y: -5}
-    warriorIndex: 18
-    isEnemy: 1
-  - pos: {x: 1, y: 3}
-    warriorIndex: 14
-    isEnemy: 1
-  - pos: {x: 3, y: 0}
-    warriorIndex: 14
-    isEnemy: 1
-  - pos: {x: 3, y: -4}
-    warriorIndex: 14
+    warriorIndex: 12
     isEnemy: 1
   availablePropertiesIndices: 01000000020000000600000005000000040000000d0000000300000009000000
   availableBehaviorsIndices: 0d0000000500000001000000020000000300000006000000040000000e0000000f0000000a0000000b0000000c0000000700000009000000110000000800000010000000

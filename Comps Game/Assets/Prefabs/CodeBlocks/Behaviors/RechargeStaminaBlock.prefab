@@ -35,7 +35,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: m_text
-      value: Do Melee
+      value: Recharge Stamina
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: m_fontSize
+      value: 28.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 6070347804972039391, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
+      propertyPath: m_fontSizeMax
+      value: 28.44
       objectReference: {fileID: 0}
     - target: {fileID: 8526293785980299094, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: behavior
