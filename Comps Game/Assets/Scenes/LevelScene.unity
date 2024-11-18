@@ -690,18 +690,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: TutorialCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 5358840828970048060, guid: 1cd25999f115a487cb3d7cf039480c82, type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 8a5ba5cbf6b054d2b83085db101b9e40, type: 2}
-    - target: {fileID: 5358840828970048060, guid: 1cd25999f115a487cb3d7cf039480c82, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 3383052921565194535, guid: 8a5ba5cbf6b054d2b83085db101b9e40, type: 2}
-    - target: {fileID: 5358840828970048060, guid: 1cd25999f115a487cb3d7cf039480c82, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6148030624227210790, guid: 1cd25999f115a487cb3d7cf039480c82, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
