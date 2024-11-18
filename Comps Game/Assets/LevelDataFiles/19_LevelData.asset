@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 19_LevelData
   m_EditorClassIdentifier: 
-  levelName: Finale, Act II
+  levelName: Almost There
   levelNumber: 19
   availableEnemyIndices: 0600000008000000090000000a0000000c0000000d0000000e000000
   enemyPlacementsList:

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 18_LevelData
   m_EditorClassIdentifier: 
-  levelName: Finale, Act I
+  levelName: And For What?
   levelNumber: 18
   availableEnemyIndices: 000000000800000011000000
   enemyPlacementsList:
