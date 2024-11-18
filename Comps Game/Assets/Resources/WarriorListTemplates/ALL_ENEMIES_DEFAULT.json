@@ -51,7 +51,7 @@
             "warriorStrength": 200,
             "behaviorCount": 2,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -122,7 +122,7 @@
             "warriorStrength": 261,
             "behaviorCount": 2,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -471,7 +471,7 @@
             "warriorStrength": 100,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -559,7 +559,7 @@
             "warriorStrength": 93,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -655,7 +655,7 @@
             "warriorStrength": 116,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -1303,9 +1303,9 @@
             "warriorIndex": 14,
             "spriteIndex": 2,
             "warriorStrength": 217,
-            "behaviorCount": 4,
+            "behaviorCount": 5,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -1313,8 +1313,8 @@
                 "y": 891.2113647460938
             },
             "useWeaponHeaderPosition": {
-                "x": -154.87109375,
-                "y": 523.7886962890625
+                "x": -331.93841552734377,
+                "y": 335.13775634765627
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -1396,6 +1396,32 @@
                     "property": 0,
                     "values": [
                         "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 7,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0",
+                        "7"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 9,
+                    "property": 0,
+                    "values": [
+                        "4"
                     ]
                 }
             ],
@@ -1775,7 +1801,7 @@
             "warriorStrength": 85,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -2038,6 +2064,249 @@
                 {
                     "blockType": 1,
                     "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                }
+            ],
+            "useSpecialFunctions": []
+        },
+        {
+            "warriorName": "Maximum Lich",
+            "warriorIndex": 20,
+            "spriteIndex": 4,
+            "warriorStrength": 674,
+            "behaviorCount": 13,
+            "propertiesHeaderPosition": {
+                "x": -781.9998168945313,
+                "y": 895.0
+            },
+            "moveHeaderPosition": {
+                "x": -172.5001220703125,
+                "y": 896.7783813476563
+            },
+            "useWeaponHeaderPosition": {
+                "x": -175.84033203125,
+                "y": 478.1391906738281
+            },
+            "useSpecialHeaderPosition": {
+                "x": -2100.0,
+                "y": -950.0
+            },
+            "properties": [
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 1,
+                    "values": [
+                        "Maximum Lich"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 2,
+                    "values": [
+                        "100"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "70"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 5,
+                    "values": [
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 13,
+                    "values": [
+                        "51"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 4,
+                    "values": [
+                        "30"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 3,
+                    "values": [
+                        "60"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 9,
+                    "values": [
+                        "49"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
+                }
+            ],
+            "moveFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "4",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 4,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 1,
+                    "property": 0,
+                    "values": [
+                        "0"
+                    ]
+                }
+            ],
+            "useWeaponFunctions": [
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0",
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 5,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 11,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "8"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
                     "property": 0,
                     "values": [
                         "-1",
