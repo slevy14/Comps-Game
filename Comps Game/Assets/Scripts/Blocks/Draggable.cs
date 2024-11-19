@@ -64,6 +64,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         // TMP_Text namePreview = GameObject.Find("NamePreview").GetComponent<TMP_Text>();
     }
 
+    void Start() {
+        if (DesignerController.Instance.isCurrentWarriorEnemy) {
+            Debug.Log("current warrior enemy! instantiating block with maskable " + false);
+            SetInteractable(false);
+        }
+    }
+
 
     public void OnBeginDrag(PointerEventData eventData) {
         // check if actually over object, not including overlap box
@@ -73,7 +80,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             uiUnderMouseObjects.Add(raycastResult.gameObject);
         }
         if (!uiUnderMouseObjects.Contains(this.gameObject)) {
-            Debug.Log("shouldn't drag!");
+            Debug.Log("shouldn't drag! grabbing overlap space");
+            eventData.pointerDrag = null;
+            return;
+        }
+        if (DesignerController.Instance.isCurrentWarriorEnemy) {
+            Debug.Log("shouldn't drag! is enemy");
             eventData.pointerDrag = null;
             return;
         }
@@ -285,6 +297,54 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             // TEXT CASE
             if (child.GetComponent<TMP_Text>()) {
                 child.GetComponent<TMP_Text>().maskable = value;
+                continue;
+            }
+
+        }
+    }
+
+    public void SetInteractable(bool value) {
+        image.raycastTarget = value;
+        overlapBox.raycastTarget = value;
+
+        // loop through rest of children and handle cases
+        int childCount = this.gameObject.transform.childCount;
+        // POSSIBLE CASES: dropdown, slider, input field, text
+        for (int i = 2; i < childCount; i++) {
+            GameObject child = this.transform.GetChild(i).gameObject;
+            // DROPDOWN CASE
+            if (child.GetComponent<TMP_Dropdown>()) {
+                child.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+                child.transform.GetChild(1).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.GetComponent<TMP_Dropdown>().interactable = value;
+                continue;
+            }
+            // INPUT FIELD CASE
+            if (child.GetComponent<TMP_InputField>()) {
+                child.GetComponent<Image>().raycastTarget = value;
+                GameObject textArea = child.transform.GetChild(0).gameObject;
+                int count = textArea.transform.childCount;
+                for (int j = 0; j < count; j++) {
+                    if (textArea.transform.GetChild(i).gameObject.tag == "disableCast") {
+                        textArea.transform.GetChild(i).gameObject.GetComponent<TMP_Text>().raycastTarget = value;
+                    } else { // caret
+                        textArea.transform.GetChild(i).gameObject.GetComponent<TMP_SelectionCaret>().raycastTarget = value;
+                    }
+                }
+                child.GetComponent<TMP_InputField>().interactable = value;
+                continue;
+            }
+            // SLIDER CASE
+            if (child.GetComponent<Slider>()) {
+                child.GetComponent<Slider>().interactable = value;
+                child.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(1).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                child.transform.GetChild(2).gameObject.transform.GetChild(0).gameObject.GetComponent<Image>().raycastTarget = value;
+                continue;
+            }
+            // TEXT CASE
+            if (child.GetComponent<TMP_Text>()) {
                 continue;
             }
 

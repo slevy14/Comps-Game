@@ -21,7 +21,7 @@ public class DesignerController : MonoBehaviour {
     [SerializeField] private int warriorToLoadIndex;
     [SerializeField] private int warriorToLoadThumbnailIndex;
     [SerializeField] private bool isLoadingWarriorEnemy = false;
-    [SerializeField] private bool isCurrentWarriorEnemy = false;
+    [SerializeField] public bool isCurrentWarriorEnemy = false;
     [SerializeField] public bool justSaved;
     [SerializeField] private int editingWarriorIndex;
     [SerializeField] private int editingThumbnailIndex;

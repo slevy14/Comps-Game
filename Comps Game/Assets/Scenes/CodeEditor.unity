@@ -204,7 +204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2220272819054488383, guid: 1dd8f26c387874ce3bf3f1b201240b2d, type: 3}
       propertyPath: m_fontSize
-      value: 18.4
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 2220272819054488383, guid: 1dd8f26c387874ce3bf3f1b201240b2d, type: 3}
       propertyPath: m_fontAsset
@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 788245013}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.54627997
+  m_Size: 0.5462534
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1565,7 +1565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4880021281590333297, guid: 3d58117ca5e434a7ba3361d371426524, type: 3}
       propertyPath: m_fontSize
-      value: 22.95
+      value: 25.95
       objectReference: {fileID: 0}
     - target: {fileID: 4880021281590333297, guid: 3d58117ca5e434a7ba3361d371426524, type: 3}
       propertyPath: m_fontAsset
@@ -5078,7 +5078,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7424461482481181307, guid: 410dad441e3f3414fabe15e80a3da0b4, type: 3}
       propertyPath: m_fontSize
-      value: 25
+      value: 25.5
       objectReference: {fileID: 0}
     - target: {fileID: 7424461482481181307, guid: 410dad441e3f3414fabe15e80a3da0b4, type: 3}
       propertyPath: m_fontAsset
@@ -7302,7 +7302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6341105279878197175, guid: 8d8314ceac9a44ec9bfd8f8e3dec6808, type: 3}
       propertyPath: m_fontSize
-      value: 23.75
+      value: 20.05
       objectReference: {fileID: 0}
     - target: {fileID: 6341105279878197175, guid: 8d8314ceac9a44ec9bfd8f8e3dec6808, type: 3}
       propertyPath: m_fontAsset
@@ -9480,7 +9480,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2220272819054488383, guid: 363dc0a8459074ef4ab773f61b02eedb, type: 3}
       propertyPath: m_fontSize
-      value: 30
+      value: 26.4
       objectReference: {fileID: 0}
     - target: {fileID: 2220272819054488383, guid: 363dc0a8459074ef4ab773f61b02eedb, type: 3}
       propertyPath: m_fontAsset
@@ -10047,8 +10047,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 158451983}
   m_HandleRect: {fileID: 158451982}
   m_Direction: 2
-  m_Value: 0.9999999
-  m_Size: 0.44779482
+  m_Value: 1
+  m_Size: 0.44779485
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -13356,7 +13356,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8592159250551715421, guid: 85eafde7e53d04dacb8d00a303cb8b55, type: 3}
       propertyPath: m_fontSize
-      value: 28.7
+      value: 28.1
       objectReference: {fileID: 0}
     - target: {fileID: 8592159250551715421, guid: 85eafde7e53d04dacb8d00a303cb8b55, type: 3}
       propertyPath: m_fontAsset
