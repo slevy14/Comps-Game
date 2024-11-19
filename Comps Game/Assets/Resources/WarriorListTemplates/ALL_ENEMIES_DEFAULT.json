@@ -2320,8 +2320,8 @@
             "warriorName": "Dancing Ghost",
             "warriorIndex": 21,
             "spriteIndex": 5,
-            "warriorStrength": 93,
-            "behaviorCount": 4,
+            "warriorStrength": 588,
+            "behaviorCount": 5,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
@@ -2331,8 +2331,8 @@
                 "y": 898.814453125
             },
             "useWeaponHeaderPosition": {
-                "x": -191.8297119140625,
-                "y": 608.216552734375
+                "x": -202.094482421875,
+                "y": 492.62738037109377
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -2352,7 +2352,7 @@
                     "behavior": 0,
                     "property": 2,
                     "values": [
-                        "65"
+                        "80"
                     ]
                 },
                 {
@@ -2366,47 +2366,109 @@
                 {
                     "blockType": 0,
                     "behavior": 0,
-                    "property": 9,
+                    "property": 5,
                     "values": [
-                        "20"
+                        "5"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 6,
+                    "values": [
+                        "100"
                     ]
                 }
             ],
             "moveFunctions": [
                 {
                     "blockType": 1,
-                    "behavior": 1,
+                    "behavior": 6,
                     "property": 0,
                     "values": [
-                        "1"
+                        "0",
+                        "0"
                     ]
                 },
                 {
                     "blockType": 1,
-                    "behavior": 3,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "1",
+                        "4"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 2,
                     "property": 0,
                     "values": [
                         "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "1"
                     ]
                 }
             ],
             "useWeaponFunctions": [
                 {
                     "blockType": 1,
-                    "behavior": 6,
+                    "behavior": 10,
                     "property": 0,
                     "values": [
-                        "2",
+                        "0",
+                        "0",
+                        "3"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 13,
+                    "property": 0,
+                    "values": [
+                        "0",
                         "1"
                     ]
                 },
                 {
                     "blockType": 1,
-                    "behavior": 15,
+                    "behavior": 5,
                     "property": 0,
                     "values": [
                         "-1",
                         "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 11,
+                    "property": 0,
+                    "values": [
+                        "0",
+                        "5"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 2,
+                    "property": 0,
+                    "values": [
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 12,
+                    "property": 0,
+                    "values": [
+                        "0"
                     ]
                 }
             ],
