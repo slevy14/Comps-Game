@@ -3990,6 +3990,7 @@ MonoBehaviour:
   enemyWarriorsList: []
   battleSpeed: 1
   maxTurns: 50
+  activeProjectile: {fileID: 0}
   battleFinished: 0
   inBattle: 0
   isPaused: 0
@@ -5531,8 +5532,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 176855102665959526, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 176855102665959526, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 176855102665959526, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0.000030518
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1986814860624680136, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
       propertyPath: m_SizeDelta.x
@@ -5549,6 +5558,22 @@ PrefabInstance:
     - target: {fileID: 4033979608506037613, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -60.766586
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474076712985432378, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4474076712985432378, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652225566445437058, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 600.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 6652225566445437058, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.00099468
       objectReference: {fileID: 0}
     - target: {fileID: 6868630429287795305, guid: 2cf19c396a66b4e1b9bbc5b8f781a62a, type: 3}
       propertyPath: m_Name

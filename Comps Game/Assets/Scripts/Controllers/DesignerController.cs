@@ -634,8 +634,8 @@ public class DesignerController : MonoBehaviour {
     }
 
     public List<int> SplitBehaviorsAndFunctional(List<int> combinedList, bool isBehaviors) {
-        List<int> functionalIndices = new List<int> {7, 8, 9, 10, 11, 12};
-        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
+        List<int> functionalIndices = new List<int> {7, 8, 9, 10, 11, 12, 16};
+        List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15, 17};
 
         List<int> splitList = new();
 

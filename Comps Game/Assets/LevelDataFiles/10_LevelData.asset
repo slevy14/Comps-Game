@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 10_LevelData
   m_EditorClassIdentifier: 
-  levelName: War, Act II
+  levelName: The Second War
   levelNumber: 10
   availableEnemyIndices: 04000000050000001100000008000000090000000a0000000b000000
   enemyPlacementsList:

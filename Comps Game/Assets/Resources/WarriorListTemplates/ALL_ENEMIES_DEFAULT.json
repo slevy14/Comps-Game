@@ -1302,7 +1302,7 @@
             "warriorName": "Soul Hunter",
             "warriorIndex": 14,
             "spriteIndex": 2,
-            "warriorStrength": 217,
+            "warriorStrength": 147,
             "behaviorCount": 5,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
@@ -1342,7 +1342,7 @@
                     "behavior": 0,
                     "property": 6,
                     "values": [
-                        "70"
+                        "35"
                     ]
                 },
                 {
@@ -1404,7 +1404,7 @@
                     "property": 0,
                     "values": [
                         "0",
-                        "0",
+                        "1",
                         "7"
                     ]
                 },
@@ -1886,7 +1886,7 @@
             "warriorName": "Thick Bone Archer",
             "warriorIndex": 18,
             "spriteIndex": 1,
-            "warriorStrength": 100,
+            "warriorStrength": 80,
             "behaviorCount": 3,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
@@ -1934,7 +1934,7 @@
                     "behavior": 0,
                     "property": 9,
                     "values": [
-                        "40"
+                        "20"
                     ]
                 },
                 {
@@ -2077,8 +2077,8 @@
             "warriorName": "Maximum Lich",
             "warriorIndex": 20,
             "spriteIndex": 8,
-            "warriorStrength": 674,
-            "behaviorCount": 13,
+            "warriorStrength": 463,
+            "behaviorCount": 14,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
                 "y": 895.0
@@ -2088,8 +2088,8 @@
                 "y": 896.7783813476563
             },
             "useWeaponHeaderPosition": {
-                "x": -175.84033203125,
-                "y": 478.1391906738281
+                "x": -195.49948120117188,
+                "y": 411.82049560546877
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
@@ -2117,7 +2117,7 @@
                     "behavior": 0,
                     "property": 6,
                     "values": [
-                        "70"
+                        "40"
                     ]
                 },
                 {
@@ -2133,7 +2133,7 @@
                     "behavior": 0,
                     "property": 13,
                     "values": [
-                        "51"
+                        "25"
                     ]
                 },
                 {
@@ -2149,7 +2149,7 @@
                     "behavior": 0,
                     "property": 3,
                     "values": [
-                        "60"
+                        "100"
                     ]
                 },
                 {
@@ -2157,7 +2157,7 @@
                     "behavior": 0,
                     "property": 9,
                     "values": [
-                        "49"
+                        "50"
                     ]
                 },
                 {
@@ -2189,10 +2189,12 @@
                 },
                 {
                     "blockType": 1,
-                    "behavior": 1,
+                    "behavior": 7,
                     "property": 0,
                     "values": [
-                        "0"
+                        "2",
+                        "1",
+                        "5"
                     ]
                 },
                 {
@@ -2201,29 +2203,18 @@
                     "property": 0,
                     "values": [
                         "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 9,
+                    "property": 0,
+                    "values": [
+                        "2"
                     ]
                 }
             ],
             "useWeaponFunctions": [
-                {
-                    "blockType": 1,
-                    "behavior": 6,
-                    "property": 0,
-                    "values": [
-                        "0",
-                        "1"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 10,
-                    "property": 0,
-                    "values": [
-                        "0",
-                        "0",
-                        "4"
-                    ]
-                },
                 {
                     "blockType": 1,
                     "behavior": 13,
@@ -2244,25 +2235,31 @@
                 },
                 {
                     "blockType": 1,
-                    "behavior": 11,
+                    "behavior": 17,
                     "property": 0,
-                    "values": [
-                        "1",
-                        "8"
-                    ]
+                    "values": []
                 },
                 {
                     "blockType": 1,
-                    "behavior": 14,
+                    "behavior": 8,
                     "property": 0,
                     "values": [
-                        "1",
-                        "0"
+                        "3",
+                        "9"
                     ]
                 },
                 {
                     "blockType": 1,
                     "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "4",
+                        "1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
                     "property": 0,
                     "values": [
                         "0",
@@ -2276,6 +2273,80 @@
                     "values": [
                         "-1",
                         "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 17,
+                    "property": 0,
+                    "values": []
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 9,
+                    "property": 0,
+                    "values": [
+                        "3"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 10,
+                    "property": 0,
+                    "values": [
+                        "3",
+                        "0",
+                        "17"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 14,
+                    "property": 0,
+                    "values": [
+                        "1",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 8,
+                    "property": 0,
+                    "values": [
+                        "3",
+                        "16"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 6,
+                    "property": 0,
+                    "values": [
+                        "4",
+                        "0"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 15,
+                    "property": 0,
+                    "values": [
+                        "-1",
+                        "-1"
+                    ]
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 17,
+                    "property": 0,
+                    "values": []
+                },
+                {
+                    "blockType": 1,
+                    "behavior": 9,
+                    "property": 0,
+                    "values": [
+                        "11"
                     ]
                 },
                 {
@@ -2283,34 +2354,7 @@
                     "behavior": 12,
                     "property": 0,
                     "values": [
-                        "1"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 14,
-                    "property": 0,
-                    "values": [
-                        "0",
-                        "1"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 6,
-                    "property": 0,
-                    "values": [
-                        "1",
-                        "1"
-                    ]
-                },
-                {
-                    "blockType": 1,
-                    "behavior": 15,
-                    "property": 0,
-                    "values": [
-                        "-1",
-                        "-1"
+                        "9"
                     ]
                 }
             ],
@@ -2378,6 +2422,14 @@
                     "values": [
                         "100"
                     ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 15,
+                    "values": [
+                        "1"
+                    ]
                 }
             ],
             "moveFunctions": [
@@ -2387,7 +2439,7 @@
                     "property": 0,
                     "values": [
                         "0",
-                        "0"
+                        "1"
                     ]
                 },
                 {
