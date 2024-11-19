@@ -467,10 +467,12 @@ public class LevelController : MonoBehaviour {
             } else if (warriorBehaviorList == warriorData.useWeaponFunctions) {
                 behaviorString += "UseWeapon: \n ";
             } else if (warriorBehaviorList == warriorData.useSpecialFunctions) {
-                if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
-                    continue;
-                }
-                behaviorString += "UseSpecial: \n ";
+                // scrapped! just continue no matter what
+                // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
+                //     continue;
+                // }
+                // behaviorString += "UseSpecial: \n ";
+                continue;
             }
             indentLevel += 1;
 

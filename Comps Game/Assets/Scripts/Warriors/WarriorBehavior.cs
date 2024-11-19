@@ -997,7 +997,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
 
         List<Vector2> meleeRange = GetMeleeRange();
-
         foreach (Vector2 tile in meleeRange) {
             Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
             if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
@@ -1010,18 +1009,47 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return false;
     }
 
-    public bool WarriorInRange(WarriorBehavior warrior) {
+    public bool InTargetRange() {
+        if (target == null) {
+            IndicateNoTarget();
+            return false;
+        }
+
+        try {
+            List<Vector2> targetMeleeRange = target.GetMeleeRange();
+            foreach (Vector2 tile in targetMeleeRange) {
+                Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + tile.y));
+                if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
+                    GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
+                    if (hitWarrior.GetComponent<WarriorBehavior>() == this) {
+                        return true;
+                    }
+                }
+            }
+        } catch {
+            Debug.Log("target was destroyed during check for in target range!");
+            IndicateNoTarget();
+            return false;
+        }
+        return false;
+    }
+
+    public bool WarriorInRange(GameObject warriorGameObject) {
+        Debug.Log("warrior is at " + LevelController.Instance.objectsOnGrid[warriorGameObject]);
         List<Vector2> meleeRange = GetMeleeRange();
 
         foreach (Vector2 tile in meleeRange) {
             Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
+            Debug.Log("checking tile " + tileToCheck);
             if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
                 GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
-                if (hitWarrior.GetComponent<WarriorBehavior>() == warrior) {
+                if (hitWarrior == warriorGameObject) {
+                    Debug.Log("warrior in range of target");
                     return true;
                 }
             }
         }
+        Debug.Log("warrior not in range of target");
         return false;
     }
 
@@ -1091,7 +1119,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
 
         // run the in range function on the enemy with this warrior as the object
-        return WarriorInRange(this);
+        // return WarriorInRange(this.gameObject);
+        return InTargetRange();
     }
 
     public bool SelfLowHealth() {
