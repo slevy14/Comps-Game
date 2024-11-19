@@ -66,7 +66,12 @@ public class GridSaveLoader : MonoBehaviour {
 
     public void LoadGridFromJson() {
         // load json file
-        if (System.IO.File.Exists(filepath)) Debug.Log("warriors level file exists");
+        if (!System.IO.File.Exists(filepath)) {
+            // if doesn't exist, just reset grid
+            // if data error and grid can't be loaded, just reset it
+            ResetGrid();
+            LoadGridFromJson();
+        }
         string json = System.IO.File.ReadAllText(filepath);
         GridWithObjects gridWithObjects = JsonUtility.FromJson<GridWithObjects>(json);
         Debug.Log("grid found");
