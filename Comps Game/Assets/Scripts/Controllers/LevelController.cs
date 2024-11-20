@@ -224,6 +224,8 @@ public class LevelController : MonoBehaviour {
             objectsOnGrid.Remove(child.gameObject);
             Destroy(child.gameObject);
         }
+        // ungrey warriors
+        SetAllWarriorThumbnailsGrey(false);
     }
 
     public void ResetGridButton() {
