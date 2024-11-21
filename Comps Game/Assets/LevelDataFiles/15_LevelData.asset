@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84f986e6421da4f129b480d309fbcaca, type: 3}
   m_Name: 15_LevelData
   m_EditorClassIdentifier: 
-  levelName: War, Act III
+  levelName: The Lich Approaches
   levelNumber: 15
-  availableEnemyIndices: 080000000d0000000e0000000f000000
+  availableEnemyIndices: 080000000d0000000f000000
   enemyPlacementsList:
   - pos: {x: 4, y: 4}
     warriorIndex: 8
@@ -33,12 +33,6 @@ MonoBehaviour:
     isEnemy: 1
   - pos: {x: 0, y: -5}
     warriorIndex: 13
-    isEnemy: 1
-  - pos: {x: 2, y: 3}
-    warriorIndex: 14
-    isEnemy: 1
-  - pos: {x: 2, y: -4}
-    warriorIndex: 14
     isEnemy: 1
   - pos: {x: 2, y: -1}
     warriorIndex: 15
