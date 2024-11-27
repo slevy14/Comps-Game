@@ -1215,7 +1215,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: tooltip
-      value: Move 1 step in the direction this warrior is facing.
+      value: Move 1 step in the chosen direction, relative to where this warrior
+        is facing
       objectReference: {fileID: 0}
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: blockName

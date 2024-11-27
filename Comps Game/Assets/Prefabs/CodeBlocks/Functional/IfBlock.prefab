@@ -2426,7 +2426,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: tooltip
-      value: If the chosen codition is met, execute the behaviors below it.
+      value: If the chosen condition is met, execute the behaviors below it.
       objectReference: {fileID: 0}
     - target: {fileID: -4365998642960227604, guid: bf5e61912441e4f5698adeb91a512b35, type: 3}
       propertyPath: blockName

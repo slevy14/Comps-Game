@@ -1226,7 +1226,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 788245013}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.5462534
+  m_Size: 0.5461522
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5114,6 +5114,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430423202}
     m_Modifications:
+    - target: {fileID: 1170773568891518575, guid: 6e4e36285c82744968ca17c8de3f4fae, type: 3}
+      propertyPath: tooltip
+      value: Ends a FOR loop. Must be placed at the end of the behaviors you wish
+        to loop.
+      objectReference: {fileID: 0}
     - target: {fileID: 3439035322715798718, guid: 6e4e36285c82744968ca17c8de3f4fae, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6131,8 +6136,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 751866527}
   m_HandleRect: {fileID: 751866526}
   m_Direction: 2
-  m_Value: 0.9575
-  m_Size: 0.51526904
+  m_Value: 0.95749986
+  m_Size: 0.515269
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -10048,7 +10053,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 158451982}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.44779485
+  m_Size: 0.44779482
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11477,6 +11482,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 430423202}
     m_Modifications:
+    - target: {fileID: 1170773568891518575, guid: cd1523181758c4dcebb3497da8017644, type: 3}
+      propertyPath: tooltip
+      value: Ends a WHILE loop. Must be placed at the end of the behaviors you wish
+        to loop.
+      objectReference: {fileID: 0}
     - target: {fileID: 3439035322715798718, guid: cd1523181758c4dcebb3497da8017644, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

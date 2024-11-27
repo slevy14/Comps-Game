@@ -326,8 +326,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     /*                                        */
     /*----------------------------------------*/
 
-    // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else, Set Target, While Loop, If, Melee Attack, Fire Projectile
-    // IN PROGRESS: Recharge Stamina
+    // DONE: Turn, Step, Run, Teleport, For Loop, End Loop, Melee Settings, Ranged Settings, End If, Else, Set Target, While Loop, If, Melee Attack, Fire Projectile, Recharge Stamina
+    // IN PROGRESS: 
     // NOT STARTED: Foreach
 
     // BIG TODO: projectile range???
@@ -606,6 +606,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         1: strongest
                         2: farthest
                         3: weakest
+                        4: random
+                        5: healthiest
+                        6: frailest
                 pick a warrior to target with various attacks */
                 case BlockData.BehaviorType.SET_TARGET:
                     Debug.Log("target");
@@ -705,6 +708,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         1: target low health
                         2: facing target
                         3: self low health
+                        4: target is healer
+                        5: target is melee
+                        6: target is ranged
+                        7: target has shield
+                        8: in target range
+
 
                     set boolean [1]
                         0: true
@@ -806,6 +815,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         1: target low health
                         2: facing target
                         3: self low health
+                        4: target is healer
+                        5: target is melee
+                        6: target is ranged
+                        7: target has shield
+                        8: in target range
 
                     set boolean [1]
                         0: true
@@ -968,7 +982,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
                     /*------------------------*/
                     /*    RECHARGE STAMINA    */
-                    /*------------------------*/ /*   Current Status: IN PROGRESS
+                    /*------------------------*/ /*   Current Status: Done
                     no dropdowns
                     recharge stamina to full */
                     case BlockData.BehaviorType.RECHARGE_STAMINA:
