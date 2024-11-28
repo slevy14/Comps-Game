@@ -20,5 +20,7 @@ As I conducted my playtests, I surveyed participants to gather quantitative data
 ## Poster
 Putting this here just because I think it looks pretty. Check it out if you're curious, and picture me standing next to it and giving a 10-minute spiel about what my project is.
 
+![image](https://github.com/slevy14/Comps-Game/blob/8c7d3c0fe2ebafa8551258d5b6519c0bff0eb8e9/Poster/Comps_Poster_png.png)
+
 # Final Thoughts
 This project was a lot of work, but honestly a great opportunity to put together a passion project. A lot about Magicode changed from its initial concept, and so many design ideas were scrapped for scope. I would love to come back to this eventually and take it even further -- implementing many of those ideas, touching up graphics, reworking levels, adding story sequences -- but for now, I rest. A million thank yous to everyone who supported me along the way, whether that was through early playtesting, giving feedback, or simply putting up with a very stressed version of me while I worked on this. Enjoy Magicode!
