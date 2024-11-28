@@ -12,7 +12,7 @@ This project was built in Unity v2022.3.50f1. If you're interested in taking a l
 The $\LaTeX$ files and PDF of my final paper detailing this projects design and evaluation can also be found in this repository.
 
 ## Game Design Document
-A PDF of my game design document is downloadable here, though a more updated version can be found in this google doc [FIXME]. The google doc also contains additional linked files to level and enemy planning documentation.
+A PDF of my game design document is downloadable here, though a more updated version can be found in [this google doc](https://docs.google.com/document/d/1_b5wEkVmGLtPf5fN-9Ceo-iA9WFXOGoxdkHT31a4ILE/edit?usp=sharing). The google doc also contains additional linked files to level and enemy planning documentation.
 
 ## Evaluation Data
 As I conducted my playtests, I surveyed participants to gather quantitative data on their coding ability before and after playing the game, as well as qualitative data about their experience playing it. Though more concisely summarized in my paper, the surveys and raw data responses can be found here [FIXME].
