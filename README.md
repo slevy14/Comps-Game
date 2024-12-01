@@ -3,7 +3,7 @@
 
 # Repository Contents
 ## Playable Release
-Head to [Releases](https://github.com/slevy14/Comps-Game/releases) to download the most recent MacOS and Windows builds of the game, or check out my page on itch.io [FIXME]. To play the game, simply download the correct application for your machine, extract the zip file, and run the .app/.exe file.
+Head to [Releases](https://github.com/slevy14/Comps-Game/releases) to download the most recent MacOS and Windows builds of the game, or check out my page on [itch.io](https://leafguy.itch.io/magicode). To play the game, simply download the correct application for your machine, extract the zip file, and run the .app/.exe file.
 
 ## Source Code & Unity Install
 This project was built in Unity v2022.3.50f1. If you're interested in taking a look behind the scenes, the folder entitled "Comps Game" contains all of the source code needed to build the game in Unity. Make sure to download the correct version from Unity Hub or [Unity's website](https://unity.com/releases/editor/whats-new/2022.3.50#installs). From there, all thats left is to either download or clone this repository and open the folder in Unity.
@@ -15,7 +15,7 @@ The $\LaTeX$ files and PDF of my final paper detailing this projects design and 
 A PDF of my game design document is downloadable here, though a more updated version can be found in [this google doc](https://docs.google.com/document/d/1_b5wEkVmGLtPf5fN-9Ceo-iA9WFXOGoxdkHT31a4ILE/edit?usp=sharing). The google doc also contains additional linked files to level and enemy planning documentation.
 
 ## Evaluation Data
-As I conducted my playtests, I surveyed participants to gather quantitative data on their coding ability before and after playing the game, as well as qualitative data about their experience playing it. Though more concisely summarized in my paper, the surveys and raw data responses can be found here [FIXME].
+As I conducted my playtests, I surveyed participants to gather quantitative data on their coding ability before and after playing the game, as well as qualitative data about their experience playing it. Though more concisely summarized in my paper, the surveys and raw data responses can be found [here](https://docs.google.com/spreadsheets/d/1F7b50xaFvfE2F1knakdCm4rHaRKITp1pA6s78goNYoM/edit?resourcekey=&gid=77043153#gid=77043153).
 
 ## Poster
 Putting this here just because I think it looks pretty. Check it out if you're curious, and picture me standing next to it and giving a 10-minute spiel about what my project is.
