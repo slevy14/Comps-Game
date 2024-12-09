@@ -12650,7 +12650,7 @@ MonoBehaviour:
   isTooltipActive: 0
   isReadyForTooltip: 1
   tooltipTimer: 0
-  tooltipWait: 2
+  tooltipWait: 1.3
   isTimerGoing: 0
 --- !u!4 &1839806505
 Transform:

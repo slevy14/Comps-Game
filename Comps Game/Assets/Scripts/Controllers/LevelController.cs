@@ -47,12 +47,12 @@ public class LevelController : MonoBehaviour {
 
     [Header("Battle")]
     [SerializeField] public float battleSpeed;
-    [SerializeField] private int maxTurns = 50;
+    [SerializeField] private int maxTurns = 65;
     public GameObject activeProjectile;
+    public bool activeDeathDelay;
     public bool battleFinished = false;
     public bool inBattle = false;
     public bool isPaused = false;
-    // private bool canResetFromPaused = false;
 
 
     // SINGLETON
@@ -793,6 +793,7 @@ public class LevelController : MonoBehaviour {
     public IEnumerator StartBattle() {
         inBattle = true;
         battleFinished = false;
+        activeDeathDelay = false;
         // reset warrior lists if they're full
         if (allWarriorsList.Count != 0) {
             ClearWarriorLists();

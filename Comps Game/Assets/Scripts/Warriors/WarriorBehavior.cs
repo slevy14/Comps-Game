@@ -36,7 +36,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     [SerializeField] private Material greyOutMaterial;
 
     [Header("Conditionals/Looping")]
-    private int MAX_INFINITY_COUNTER = 10;
+    private int MAX_INFINITY_COUNTER = 15;
     [SerializeField] private Dictionary<int, int> infinityCounters; // prevent infinite looping
     [SerializeField] private Dictionary<int, bool> conditionsDict;
     [SerializeField] private Dictionary<int, int> forCounters;
@@ -379,6 +379,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             }
             // hold if active projectile
             while (LevelController.Instance.activeProjectile != null) {
+                yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
+            }
+
+            // hold if warrior in death delay
+            while (LevelController.Instance.activeDeathDelay) {
                 yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             }
 
@@ -1363,7 +1368,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
             // this.gameObject.SetActive(false);
             // delay death in case it's active turn
+            LevelController.Instance.activeDeathDelay = true;
             StartCoroutine(DeathDelay());
+            LevelController.Instance.activeDeathDelay = false;
         }
     }
 

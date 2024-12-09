@@ -30,6 +30,8 @@ MonoBehaviour:
   - tutorialDialog: With the IF block, we can choose to follow a set of behaviors
       if a chosen condition is met.
     functionOption: 18
+  - tutorialDialog: All conditions ask about a target -- make sure to set one first!
+    functionOption: 18
   - tutorialDialog: Any behaviors placed after the IF block will only be executed
       if the condition is met!
     functionOption: 18
