@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6363365879371345214}
   - component: {fileID: 5079638684566996907}
   - component: {fileID: 1512286176513661918}
+  - component: {fileID: 1995147198101406764}
   m_Layer: 5
   m_Name: MoveHeader
   m_TagString: Untagged
@@ -115,6 +116,21 @@ MonoBehaviour:
   behavior: 0
   property: 0
   values: []
+--- !u!114 &1995147198101406764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3791470388768564765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e7f01faaa6d40bf8c93289b66984e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockName: Move Header
+  tooltip: For Behaviors Only! All behaviors snapped to this header will run in order
+    BEFORE the Use Weapon header on this warrior's turn.
 --- !u!1 &5948158123386482939
 GameObject:
   m_ObjectHideFlags: 0

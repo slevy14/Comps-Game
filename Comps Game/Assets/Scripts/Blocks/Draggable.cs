@@ -110,6 +110,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData) {
         UpdateBlockPositions(this.gameObject, Input.mousePosition);
+        // make blocks able to be overlapped
+        DesignerController.Instance.EnableOverlapSpaces();
 
         // show overlap space if need to
         if (!isHeader) {
@@ -134,6 +136,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         } else {
             overlapBox.gameObject.SetActive(true);
         }
+    }
+
+    // overload for direct value setting
+    public void SetOverlapUseable(bool value) {
+        overlapBox.gameObject.SetActive(value);
     }
 
     public void DestroyStack(GameObject block) {
@@ -189,6 +196,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 UpdateBlockPositions(this.gameObject, initialPos);
             }
         }
+        DesignerController.Instance.DisableOverlapSpaces();
         DesignerController.Instance.justSaved = false;
     }
 

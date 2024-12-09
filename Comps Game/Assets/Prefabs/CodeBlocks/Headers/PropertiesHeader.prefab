@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5094620802789118100}
   - component: {fileID: 1836024983809966186}
   - component: {fileID: 3687985919516220930}
+  - component: {fileID: 5181599285672798756}
   m_Layer: 5
   m_Name: PropertiesHeader
   m_TagString: Untagged
@@ -115,6 +116,21 @@ MonoBehaviour:
   behavior: 0
   property: 0
   values: []
+--- !u!114 &5181599285672798756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 207711881534945002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26e7f01faaa6d40bf8c93289b66984e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blockName: Properties Header
+  tooltip: For Properties Only! Set your warrior's stats by snapping property blocks
+    to this header.
 --- !u!1 &5824013338243686651
 GameObject:
   m_ObjectHideFlags: 0

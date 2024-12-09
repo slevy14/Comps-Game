@@ -1179,7 +1179,7 @@
             "warriorName": "Giant Skeleton",
             "warriorIndex": 13,
             "spriteIndex": 0,
-            "warriorStrength": 250,
+            "warriorStrength": 300,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
                 "x": -781.9998168945313,
@@ -1236,6 +1236,14 @@
                     "property": 5,
                     "values": [
                         "5"
+                    ]
+                },
+                {
+                    "blockType": 0,
+                    "behavior": 0,
+                    "property": 3,
+                    "values": [
+                        "100"
                     ]
                 }
             ],

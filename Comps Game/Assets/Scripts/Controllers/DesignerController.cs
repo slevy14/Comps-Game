@@ -896,9 +896,31 @@ public class DesignerController : MonoBehaviour {
         }
         UpdateStrengthDisplay();
         UpdateBehaviorsDisplay();
+
+        DisableOverlapSpaces();
         // save warrior at end to make sure values are properly updated
         SaveWarrior();
     }
+
+    public void DisableOverlapSpaces() {
+        // loop through all blocks on whiteboard, disable overlap
+        foreach (Transform child in whiteboard.transform) {
+            if (child.GetComponent<Draggable>()) {
+                child.GetComponent<Draggable>().SetOverlapUseable(false);
+            }
+        }
+    }
+
+    public void EnableOverlapSpaces() {
+        // loop through all blocks on whiteboard
+        // enable overlap if they can be overlapped
+        foreach (Transform child in whiteboard.transform) {
+            if (child.GetComponent<Draggable>()) {
+                child.GetComponent<Draggable>().SetOverlapUseable();
+            }
+        }
+    }
+
 
     public string ParseName() {
         string name = "[noname]";

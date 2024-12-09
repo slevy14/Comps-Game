@@ -26,7 +26,7 @@ MonoBehaviour:
       condition is met.
     functionOption: 18
   - tutorialDialog: The code within the loop will then repeat until the condition
-      the condition is no longer satisfied.
+      is no longer satisfied.
     functionOption: 18
   - tutorialDialog: In other coding languages, it's possible to get stuck in an infinite
       loop.
