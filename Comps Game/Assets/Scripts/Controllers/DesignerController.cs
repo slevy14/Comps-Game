@@ -16,8 +16,6 @@ public class DesignerController : MonoBehaviour {
     [Space(20)]
 
     [Header("SAVE/LOAD")]
-    // [SerializeField] private WarriorListController warriorListController;
-    // [SerializeField] private EnemyListController enemyListController;
     [SerializeField] private int warriorToLoadIndex;
     [SerializeField] private int warriorToLoadThumbnailIndex;
     [SerializeField] private bool isLoadingWarriorEnemy = false;
@@ -83,11 +81,11 @@ public class DesignerController : MonoBehaviour {
 
     void Awake() {
         CheckSingleton();
-        // Debug.Log("successfully in editor");
     }
 
     // INITIALIZING
     void Start() {
+        // load first enemy, initialize drawers, initialize buttons
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
         LoadWarriorFile();
         LoadWarriorDrawer();
@@ -103,14 +101,17 @@ public class DesignerController : MonoBehaviour {
             GameObject.Find("BearButton").SetActive(false);
         }
 
+        // play sound
         AudioController.Instance.ChangeBGM("Coding BGM");
     }
 
     private void LoadWarriorFile() {
+        // load warriors file based on level
         WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
     }
 
     private int GetLastEditedWarrior() {
+        // get most recently edited warrior, as saved to progression controlelr
         if (ProgressionController.Instance.lastEditedWarrior <= WarriorListController.Instance.GetCount()) {
             return ProgressionController.Instance.lastEditedWarrior;
         }
@@ -118,6 +119,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     private void InitializeLevelSwitchButton() {
+        // set level switcher to show text based on which level
         switchLevelButtonObject.GetComponent<Button>().onClick.RemoveAllListeners();
         switchLevelButtonObject.GetComponent<Button>().onClick.AddListener(delegate {ShowLevelLoadSavePrompt();});
         if (ProgressionController.Instance.currentLevel == 0) { // make sandbox button if sandbox
@@ -139,6 +141,8 @@ public class DesignerController : MonoBehaviour {
 
 
     // for buttons
+    // these all deactivate themselves when clicked
+    // and activate the others
     public void ShowBlockDrawer() {
         if (!blockDrawer.activeSelf) {
             blockDrawer.SetActive(true);
@@ -177,15 +181,18 @@ public class DesignerController : MonoBehaviour {
 
     // switch save confirm buttons
     public void ToggleSavePromptMenu(bool value, bool isSwitch) {
+        // show prompt menu
         switchPromptMenu.SetActive(value);
         if (value == false) {
             return;
         }
 
+        // reset data on buttons
         GameObject saveContinueButton = switchPromptMenu.transform.GetChild(0).gameObject;
         GameObject dontSaveContinueButton = switchPromptMenu.transform.GetChild(2).gameObject;
         saveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
         dontSaveContinueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        // change how buttons function based on movement to level or switching between warriors
         if (!isSwitch) {
             saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {SaveAndContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");});
             saveContinueButton.GetComponent<Button>().onClick.AddListener(delegate {CancelSwitch();});
@@ -206,25 +213,29 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void ShowSwitchSavePrompt(int warriorIndex, int thumbnailIndex, bool isEnemy) {
+        // get data for warrior to load
         warriorToLoadIndex = warriorIndex;
         warriorToLoadThumbnailIndex = thumbnailIndex;
         isLoadingWarriorEnemy = isEnemy;
+        // auto switch if just saved
         if (justSaved) {
             NoSaveSwitch();
-        } else {
+        } else { // otherwise prompt save
             ToggleSavePromptMenu(true, true);
         }
     }
 
     public void ShowLevelLoadSavePrompt() {
+        // continue to level if just saved
         if (justSaved) {
             NoSaveContinue(ProgressionController.Instance.currentLevel == 0 ? "Sandbox" : "LevelScene");
-        } else {
+        } else { // otherwise prompt save
             ToggleSavePromptMenu(true, false);
         }
     }
 
     public void CancelSwitch() {
+        // hide menu on cancel
         ToggleSavePromptMenu(false, false);
     }
 
@@ -238,33 +249,40 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void NoSaveSwitch() {
+        // error check before switching
         List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        // if no errors, load warrior
         if (errorsList.Count == 0) {
             LoadWarriorToWhiteboard(warriorToLoadIndex, warriorToLoadThumbnailIndex, true, isLoadingWarriorEnemy);
-        } else {
+        } else { // otherwise show errors
             ShowErrorDisplay(errorsList);
         }
     }
 
     public void SaveAndContinue(string sceneName) {
+        // attempt to save and load scene
         if (SaveWarrior()) {
             SceneController.Instance.LoadSceneByName(sceneName);
-        } else {
+        } else { // if save unsuccessful, will stay here
             Debug.Log("saving error! couldn't load scene");
         }
     }
 
     public void NoSaveContinue(string sceneName) {
+        // error check before continuing
         List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        // if no errors, load scene
         if (errorsList.Count == 0) {
             SceneController.Instance.LoadSceneByName(sceneName);
-        } else {
+        } else { // otherwise show errors
             ShowErrorDisplay(errorsList);
         }
     }
 
+    // wrapper for button to save
     public void SaveWarriorWrapper() {
         if (SaveWarrior()) {
+            // play sound on successful save
             AudioController.Instance.PlaySoundEffect("Save");
         }
     }
@@ -276,13 +294,13 @@ public class DesignerController : MonoBehaviour {
 
     // snapping
     public void ToggleSnappingIndicator(GameObject overlapBlock, RectTransform blockRectTransform) {
+        // show overlap indicator if over overlap space
         if ((overlapBlock != null) && !overlapSpaceIndicator.activeSelf) {
-            // Debug.Log("over overlap space");
+            // move indicator to correct position and show
             overlapSpaceIndicator.GetComponent<RectTransform>().sizeDelta = new Vector2 (blockRectTransform.sizeDelta.x + 20, blockRectTransform.sizeDelta.y + 20);
             overlapSpaceIndicator.transform.position = overlapBlock.transform.position - overlapBlock.GetComponent<Draggable>().blockOffset;
             overlapSpaceIndicator.SetActive(true);
-        } else if ((overlapBlock == null) && overlapSpaceIndicator.activeSelf) {
-            // Debug.Log("no longer over overlap space");
+        } else if ((overlapBlock == null) && overlapSpaceIndicator.activeSelf) { // hide overlap indicator if can't snap
             overlapSpaceIndicator.SetActive(false);
         }
     }
@@ -290,39 +308,31 @@ public class DesignerController : MonoBehaviour {
     // return the block that a currently dragged block should snap to
     // returns false if not snapping
     public GameObject FindBlockToSnapTo(PointerEventData eventData, Transform parent) {
-        // PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
-        // pointerEventData.position = Input.mousePosition;
-
+        // loop through all objects under mouse
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raycastResults);
-        // if (raycastResults.Count == 0) {
-        //     Debug.Log("no raycasts");
-        // } else {
-        //     Debug.Log("found " + raycastResults.Count + " raycasts");
-        // }
-
         for (int i = 0; i < raycastResults.Count; i++) {
             Transform overlapParent = raycastResults[i].gameObject.transform.parent;
             if (overlapParent != parent && raycastResults[i].gameObject.tag == "overlapSpace" && overlapParent.gameObject.GetComponent<Draggable>()) {
-                // Debug.Log("in first if");
                 if (overlapParent.GetComponent<Draggable>().GetNextBlock() == null) {
-                    // Debug.Log("found one!");
+                    // return found overlap space if it can be snapped to
                     return overlapParent.gameObject;
                 }
             }
         }
-        // Debug.Log("found no overlap space");
-        return null;
+        return null; // else return null
     }
 
 
     // WARRIOR CREATION
     public void PromptCreateNewWarrior() {
+        // skip save prompt if just saved and no errors
         if (justSaved && CheckSaveErrors(CreateDataForCurrentWarrior()).Count == 0) {
             CreateNewWarrior();
             return;
         }
 
+        // shown save prompt, update buttons to hold matchinf functions
         ToggleSavePromptMenu(true, false);
         GameObject saveContinueButton = switchPromptMenu.transform.GetChild(0).gameObject;
         GameObject dontSaveContinueButton = switchPromptMenu.transform.GetChild(2).gameObject;
@@ -340,18 +350,21 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void SaveAndCreate() {
+        // on successful save, create new warrior
         if (SaveWarrior()) {
             CreateNewWarrior();
-        } else {
+        } else { // otherwise don't create (errors shown in save warrior step)
             Debug.Log("save error! couldn't create new warrior");
         }
     }
 
     public void NoSaveCreate() {
+        // check for errors
         List<string> errorsList = CheckSaveErrors(CreateDataForCurrentWarrior());
+        // if no errors, create new warrior
         if (errorsList.Count == 0) {
             CreateNewWarrior();
-        } else {
+        } else { // otherwise show errors
             ShowErrorDisplay(errorsList);
         }
     }
@@ -379,6 +392,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void ClearWhiteboard() {
+        // destroy all non-header blocks on whiteboard
         GameObject whiteboard = GameObject.FindGameObjectWithTag("whiteboard");
         List<GameObject> allBlocks = new List<GameObject>();
         foreach (Transform child in whiteboard.transform) {
@@ -386,6 +400,7 @@ public class DesignerController : MonoBehaviour {
                 Destroy(child.gameObject);
             }
         }
+        // reset next blocks on headers
         List<Draggable> headerDraggables = new List<Draggable> {propertiesHeaderObject.GetComponent<Draggable>(), moveHeaderObject.GetComponent<Draggable>(), useWeaponHeaderObject.GetComponent<Draggable>(), useSpecialHeaderObject.GetComponent<Draggable>()};
         foreach (Draggable headerDraggable in headerDraggables) {
             headerDraggable.SetNextBlock(null);
@@ -394,6 +409,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void AddWarriorToDrawer(int index) {
+        // add new thumbnail to drawer for new warrior
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0);
         GameObject warriorThumbnail = Instantiate(warriorThumbnailPrefab, container);
         warriorThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = false;
@@ -409,6 +425,9 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void DebugGetThumbnailData() {
+        // DEBUG
+        // NOT IN USE
+        // get data of all thumbnails in warrior drawer
         for (int i = 1; i < WarriorListController.Instance.GetCount() + 1; i++) {
             GameObject thumbnail = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(i).gameObject;
             Debug.Log("index " + i + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + thumbnail.GetComponent<Image>().sprite);
@@ -419,6 +438,7 @@ public class DesignerController : MonoBehaviour {
         for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
         }
+        // if more than one warrior total, show delete button
         if (WarriorListController.Instance.GetCount() <= 1) {
             deleteButton.SetActive(false);
         }
@@ -436,17 +456,15 @@ public class DesignerController : MonoBehaviour {
         thumbnail.GetComponent<WarriorEditorThumbnail>().warriorIndex = index;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = warrior.warriorName;
-
-        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
 
     public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
+        // if in the sandbox, load all enemies
         if (isSandbox) {
-            Debug.Log("in sandbox, there are " + EnemyListController.Instance.GetCount() + " enemies");
             for (int i=0; i < EnemyListController.Instance.GetCount(); i++) {
                 AddEnemyToDrawer(i, i);
             }
-        } else { // only load specific ones for level
+        } else { // otherwise only load specific enemies for current level
             int level = ProgressionController.Instance.currentLevel;
             for (int i = 0; i < ProgressionController.Instance.levelDataList[level].availableEnemyIndices.Count; i++) {
                 AddEnemyToDrawer(ProgressionController.Instance.levelDataList[level].availableEnemyIndices[i], i);
@@ -455,6 +473,7 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void AddEnemyToDrawer(int warriorIndex, int thumbnailIndex) {
+        // add a new thumbanil to drawer for new enemy
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
         enemyThumbnail.GetComponent<WarriorEditorThumbnail>().isEnemy = true;
@@ -466,7 +485,6 @@ public class DesignerController : MonoBehaviour {
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData enemy = EnemyListController.Instance.GetWarriorAtIndex(warriorIndex);
         // update sprite
-        // Debug.Log("warrior index: " + warriorIndex + ", thumbnail index: " + thumbnailIndex);
         GameObject thumbnail = container.GetChild(thumbnailIndex).gameObject;
         thumbnail.GetComponent<Image>().sprite = EnemyListController.Instance.spriteDataList[enemy.spriteIndex].sprite;
         // update list reference
@@ -474,11 +492,10 @@ public class DesignerController : MonoBehaviour {
         thumbnail.GetComponent<WarriorEditorThumbnail>().thumbnailIndex = thumbnailIndex;
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
-
-        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
 
     public void InitializeWarrior() {
+        // create new data for new warrior
         justSaved = true;
         WarriorFunctionalityData _WarriorFunctionalityData = CreateDataForCurrentWarrior();
 
@@ -486,12 +503,14 @@ public class DesignerController : MonoBehaviour {
         _WarriorFunctionalityData.SetHeaderPositions();
         LoadDefaultHeaderPositions(_WarriorFunctionalityData);
         
-        // this should only be called for player creating new warriors!
+        // this should only be called for player creating new warriors! (not enemies)
+        // add new warrior to list and drawer
         UpdateWarriorList(_WarriorFunctionalityData, false);
         AddWarriorToDrawer(editingWarriorIndex);
     }
 
     private void LoadDefaultHeaderPositions(WarriorFunctionalityData warriorData) {
+        // position header objects where they need to go
         propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.propertiesHeaderPosition;
         useWeaponHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.useWeaponHeaderPosition;
 
@@ -508,30 +527,39 @@ public class DesignerController : MonoBehaviour {
     }
 
     private WarriorFunctionalityData CreateDataForCurrentWarrior() {
+        // create new warrior functionality data object
         WarriorFunctionalityData _WarriorFunctionalityData = new WarriorFunctionalityData(editingWarriorIndex);
+        // store sprite data
         _WarriorFunctionalityData.spriteIndex = spriteDataIndex;
+        // store name data
         _WarriorFunctionalityData.warriorName = ParseName();
+        // store properties into list
         _WarriorFunctionalityData.properties = ParseProperties();
+        // store behaviors into lists
         _WarriorFunctionalityData.moveFunctions = ParseBehaviors(moveHeaderObject);
         _WarriorFunctionalityData.useWeaponFunctions = ParseBehaviors(useWeaponHeaderObject);
         _WarriorFunctionalityData.useSpecialFunctions = ParseBehaviors(useSpecialHeaderObject);
+        // calculate strength and behaviors
         _WarriorFunctionalityData.warriorStrength = CalculateCurrentStrength();
         _WarriorFunctionalityData.behaviorCount = CountBehaviors();
-
+        // store header positions
         _WarriorFunctionalityData.SetHeaderPositions(propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition, moveHeaderObject.GetComponent<RectTransform>().anchoredPosition, useWeaponHeaderObject.GetComponent<RectTransform>().anchoredPosition, useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition);
-        
+        // return warrior data
         return _WarriorFunctionalityData;
     }
 
     // Saving
     public bool SaveWarrior() {
+        // create new data for current warrior
         WarriorFunctionalityData _WarriorFunctionalityData = CreateDataForCurrentWarrior();
 
+        // check for errors
         List<string> errorsList = CheckSaveErrors(_WarriorFunctionalityData);
         if (errorsList.Count == 0) { // if no errors
             justSaved = true;
-            // SaveIntoJSON(_WarriorFunctionalityData);
+            // update warrior list and save into json
             UpdateWarriorList(_WarriorFunctionalityData, isCurrentWarriorEnemy);
+            // update thumbnails and reload json files for enemies and warriors
             if (!isCurrentWarriorEnemy) {
                 UpdateWarriorDrawerThumbnail(editingWarriorIndex);
                 if (isSandbox) {
@@ -544,26 +572,27 @@ public class DesignerController : MonoBehaviour {
                 EnemyListController.Instance.FindJSON();
             }
             return true;
-        } else {
+        } else { // there are errors, don't save and show errors
             justSaved = false;
-
             ShowErrorDisplay(errorsList);
-
             return false;
         }
     }
 
     public void ShowErrorDisplay(List<string> errorsList) {
+        // add all found errors in string to popup screen
         TMP_Text errorText = errorPopupMenu.transform.GetChild(1).GetComponent<TMP_Text>(); // text component
-            string errorString = "Couldn't save due to the following errors:\n\n";
-            foreach (string error in errorsList) {
-                errorString += error + "\n";
-            }
-            errorText.text = errorString;
-            errorPopupMenu.SetActive(true);
+        string errorString = "Couldn't save due to the following errors:\n\n";
+        foreach (string error in errorsList) {
+            errorString += error + "\n";
+        }
+        errorText.text = errorString;
+        // show error popup
+        errorPopupMenu.SetActive(true);
     }
 
     public void UpdateWarriorList(WarriorFunctionalityData warriorFunctionalityData, bool isEnemy) {
+        // add warrior data to warrior or enemy list
         if (!isEnemy) {
             WarriorListController.Instance.AddWarrior(warriorFunctionalityData.warriorIndex, warriorFunctionalityData);
         } else {
@@ -578,6 +607,7 @@ public class DesignerController : MonoBehaviour {
             return;
         }
 
+        // get references to blocks containers in drawer, reset
         Transform propertyBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         ClearAllChildren(propertyBlocksContainer);
         Transform behaviorBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(1);
@@ -585,12 +615,14 @@ public class DesignerController : MonoBehaviour {
         Transform functionalBlocksContainer = blockDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(2);
         ClearAllChildren(functionalBlocksContainer);
 
+        // get list of level properties
         List<int> propertyIndices = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availablePropertiesIndices;
+        // get list of level behaviors
         // need to process behaviors differently because functional and behaviors combined
         List<int> behaviorIndices = SplitBehaviorsAndFunctional(ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availableBehaviorsIndices, true);
         List<int> functionalIndices = SplitBehaviorsAndFunctional(ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availableBehaviorsIndices, false);
 
-        // ADD ALL BLOCKS
+        // Add all available blocks to containers
         // add headers and spacers for each set of blocks
         // add additional spacers after set if needed
         GameObject propertiesSectionHeader = Instantiate(sectionHeader, propertyBlocksContainer);
@@ -599,9 +631,6 @@ public class DesignerController : MonoBehaviour {
         foreach (int index in propertyIndices) {
             Instantiate(propertyBlocks[index], propertyBlocksContainer);
         }
-        // if (propertyBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-        //     Instantiate(spacer, propertyBlocksContainer);
-        // }
 
         GameObject behaviorsSectionHeader = Instantiate(sectionHeader, behaviorBlocksContainer);
         behaviorsSectionHeader.GetComponent<TMP_Text>().text = "BEHAVIORS:";
@@ -609,37 +638,36 @@ public class DesignerController : MonoBehaviour {
         foreach (int index in behaviorIndices) {
             Instantiate(behaviorBlocks[index], behaviorBlocksContainer);
         }
-        // if (behaviorBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-        //     Instantiate(spacer, behaviorBlocksContainer);
-        // }
 
-        if (functionalIndices.Count != 0 ) { // early levels don't have functional, hide from player
+         // early levels don't have functional, hide from player
+        if (functionalIndices.Count != 0 ) {
             GameObject functionalSectionHeader = Instantiate(sectionHeader, functionalBlocksContainer);
             functionalSectionHeader.GetComponent<TMP_Text>().text = "FUNCTIONAL:";
             Instantiate(spacer, functionalBlocksContainer);
             foreach (int index in functionalIndices) {
                 Instantiate(behaviorBlocks[index], functionalBlocksContainer);
             }
-            // if (functionalBlocksContainer.childCount % 2 != 0) { // if odd, add another spacer
-            //     Instantiate(spacer, functionalBlocksContainer);
-            // }
         }
 
     }
 
     public void ClearAllChildren(Transform parent) {
+        // helper function to destory all children from parent
         foreach (Transform child in parent.transform) {
             Destroy(child.gameObject);
         }
     }
 
     public List<int> SplitBehaviorsAndFunctional(List<int> combinedList, bool isBehaviors) {
-        List<int> functionalIndices = new List<int> {7, 8, 9, 10, 11, 12, 16};
+
+        // split a behavior list into behavior and functional blocks by indices
+        List<int> functionalIndices = new List<int> {7, 8, 9, 10, 11, 12, 16, 18};
         List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15, 17};
 
         List<int> splitList = new();
 
-        if (isBehaviors) {
+        // add all from chosen list to split list
+        if (isBehaviors) { // behaviors
             for (int i = 0; i < combinedList.Count; i++) {
                 if (behaviorIndices.Contains(combinedList[i])) {
                     splitList.Add(combinedList[i]);
@@ -657,7 +685,9 @@ public class DesignerController : MonoBehaviour {
 
     // Error Checking
     public List<string> CheckSaveErrors(WarriorFunctionalityData warriorFunctionalityData) {
-        // return true if no errors
+        // return list of strings, each entry representing an error
+        // if no errors, count is 0
+
         List<string> errorsToOutput = new List<string>();
         // THINGS TO CHECK:
         // must have name
@@ -669,15 +699,10 @@ public class DesignerController : MonoBehaviour {
             errorsToOutput.Add("no health! warrior will die immediately :(");
         }
 
-        // No missing targets
+        // no missing targets
         if (!CheckTargetAssigned(warriorFunctionalityData)) {
             errorsToOutput.Add("missing target! don't forget to assign a target!");
         }
-
-        // if in level, not too many blocks
-        // if (!isSandbox && !CheckUnderBehaviorLimit(warriorFunctionalityData)) {
-        //     errorsToOutput.Add("too many behaviors! stay under the limit!");
-        // }
         
         // no unclosed loops/conditionals
             // can check this by seeing if there are any ignores left when parsing loops/conditionals
@@ -690,56 +715,57 @@ public class DesignerController : MonoBehaviour {
             errorsToOutput.Add(error);
         }
 
-        // strength must be within bounds of level
-        // also only counts for player warriors, not enemy
-        // if (!isCurrentWarriorEnemy && ProgressionController.Instance.currentLevel != 0 && CalculateCurrentStrength() > HelperController.Instance.GetCurrentLevelData().maxTotalStrength) { // also not sandbox
-        //     errorsToOutput.Add("warrior is too strong!");
-        // }
-
         return errorsToOutput;
     }
 
     // Loading
-    public void LoadWarriorToWhiteboard(int indexToLoad, int thumbnailIndex, bool noSave, bool isLoadingEnemy) { 
+    public void LoadWarriorToWhiteboard(int indexToLoad, int thumbnailIndex, bool noSave, bool isLoadingEnemy) {
+        // might need to save first
         if (!noSave) {
-            // save previous warrior and clear whiteboard
+            // save previous warrior
             SaveWarrior();
         }
+
+        // reset whiteboard
         ClearWhiteboard();
         // update index and load sprite
         editingWarriorIndex = indexToLoad;
         editingThumbnailIndex = thumbnailIndex;
+
         // get data for warrior from list and load sprite
         WarriorFunctionalityData warriorData = new WarriorFunctionalityData();
-
-        if (!isLoadingEnemy) {
+        if (!isLoadingEnemy) { // WARRIOR
             warriorData = WarriorListController.Instance.GetWarriorAtIndex(indexToLoad);
         } else { // ENEMY
             warriorData = EnemyListController.Instance.GetWarriorAtIndex(indexToLoad);
         }
 
+        // update sprite selector dropdown based on newly loaded warrior
         if (!dropdown.gameObject.activeSelf) {
             dropdown.gameObject.SetActive(true);
         }
         dropdown.UpdateSprite(warriorData.spriteIndex, isLoadingEnemy);
         if (isLoadingEnemy) {
+            // hide editing options (save, dropdown) for enemies
             textThe.SetActive(false);
             saveButton.SetActive(false);
             deleteButton.SetActive(false);
             dropdown.gameObject.SetActive(false);
         } else {
+            // show editing options for warriors
             textThe.SetActive(true);
             saveButton.SetActive(true);
             if (WarriorListController.Instance.GetCount() > 1) {
-                // Debug.Log("activating delete button");
                 deleteButton.SetActive(true);
             }
         }
 
         // instantiate blocks onto the whiteboard, positioned and parented
-        // might be best to do this by just parenting the objects and then running the update position function on each header
+        // parent the objects and then run the update position function on each header
+        // PROPERTIES
         propertiesHeaderObject.GetComponent<RectTransform>().anchoredPosition = warriorData.propertiesHeaderPosition;
         GameObject currentBlock = propertiesHeaderObject;
+        // loop through all property block data
         foreach (BlockDataStruct block in warriorData.properties) {
             // instantiate block parented to whiteboard
             GameObject newBlock = Instantiate(propertyBlocks[(int)block.property], this.transform.position, this.transform.rotation, whiteboard.transform);
@@ -764,11 +790,8 @@ public class DesignerController : MonoBehaviour {
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
             bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_FOR || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-            // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                // Debug.Log("need to shift back");
                 newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
-                // SetBlockOffset(true);
             }
             
             // update current block
@@ -784,7 +807,9 @@ public class DesignerController : MonoBehaviour {
         // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
         //     useSpecialHeaderObject.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2100, -950);
         // }
+
         // CONDENSE BEHAVIOR LOADING
+        // loop through all behavior headers
         List<GameObject> headers = new List<GameObject> {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
         for (int i = 0; i < headers.Count; i++) {
@@ -819,6 +844,7 @@ public class DesignerController : MonoBehaviour {
 
             // place blocks
             currentBlock = headers[i];
+            // loop through all blocks in each behavior list
             foreach (BlockDataStruct block in behaviorLists[i]) {
                 // instantiate block parented to whiteboard
                 GameObject newBlock = Instantiate(behaviorBlocks[(int)block.behavior], this.transform.position, this.transform.rotation, whiteboard.transform);
@@ -827,9 +853,8 @@ public class DesignerController : MonoBehaviour {
                 // update block data
                 newBlock.GetComponent<BlockData>().SetBlockDataValues(block.values);
                 newBlock.GetComponent<Draggable>().SetMaskable(true);
-
                 switch (block.behavior) {
-                    // no dropdowns
+                    // no dropdowns:
                     case BlockData.BehaviorType.MELEE_ATTACK:
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
                     case BlockData.BehaviorType.ELSE:
@@ -837,7 +862,7 @@ public class DesignerController : MonoBehaviour {
                     case BlockData.BehaviorType.END_LOOP:
                     case BlockData.BehaviorType.END_FOR:
                         break;
-                    // one dropdown
+                    // one dropdown:
                     case BlockData.BehaviorType.TURN:
                     case BlockData.BehaviorType.STEP:
                     case BlockData.BehaviorType.RUN:
@@ -848,7 +873,7 @@ public class DesignerController : MonoBehaviour {
                             Debug.Log("couldn't set value, likely an old warrior!");
                         }
                         break;
-                    // two dropdowns
+                    // two dropdowns:
                     case BlockData.BehaviorType.SET_TARGET:
                     case BlockData.BehaviorType.MELEE_SETTINGS:
                     case BlockData.BehaviorType.RANGED_SETTINGS:
@@ -861,8 +886,8 @@ public class DesignerController : MonoBehaviour {
                             Debug.Log("couldn't set value, likely an old warrior!");
                         }
                         break;
-                    // three dropdowns
-                    // input field
+                    // three dropdowns (NONE CURRENTLY):
+                    // input field:
                     case BlockData.BehaviorType.FOR_LOOP:
                         try {
                             newBlock.GetComponent<Draggable>().SetInputFieldValue(block.values[0]);
@@ -878,26 +903,26 @@ public class DesignerController : MonoBehaviour {
                 // check if current block needs to adjust next block placement;
                 BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
                 bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_FOR || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
-                // Debug.Log(shiftOffsetBack);
                 if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
-                    // Debug.Log("need to shift back");
                     newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<Draggable>().SetBlockOffset(true);
-                    // SetBlockOffset(true);
                 }
 
-                // update current block
+                // iterate to next block
                 currentBlock = newBlock;
             }
             headers[i].GetComponent<Draggable>().UpdateBlockPositions(headers[i], headers[i].transform.position);
         }
 
+        // if editing a warrior, set as last edited
         isCurrentWarriorEnemy = isLoadingWarriorEnemy;
         if (!isCurrentWarriorEnemy) {
             ProgressionController.Instance.SetLastEditedWarrior(editingWarriorIndex);
         }
+        // update strenght and behaviors
         UpdateStrengthDisplay();
         UpdateBehaviorsDisplay();
 
+        // prevent unnecessary overlapping collisions
         DisableOverlapSpaces();
         // save warrior at end to make sure values are properly updated
         SaveWarrior();
@@ -924,25 +949,32 @@ public class DesignerController : MonoBehaviour {
 
 
     public string ParseName() {
+        // set default name
         string name = "[noname]";
+        // loop through all blocks under properties header
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
                 if (blockData.property == BlockData.Property.NAME && (blockData.values.Count != 0)) {
+                    // if name block found, update display to show name
                     name = blockData.values[0];
                     GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = blockData.values[0];
                     if (!isCurrentWarriorEnemy) {
+                        // if not enemy, add comma for class title
                         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text += ",";
                     }
                 }
             }
+            // continue iterating
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
         return name;
     }
 
     public bool CheckForHealth() {
+        // loop through all blocks under properties header
+        // return true if health property found
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
@@ -959,23 +991,27 @@ public class DesignerController : MonoBehaviour {
     }
 
     public List<BlockDataStruct> ParseProperties() {
+        // loop through all blocks under properties header
         List<BlockDataStruct> propertiesList = new List<BlockDataStruct>();
         GameObject current = propertiesHeaderObject.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.PROPERTY) {
+                // convert block data to stuct, add to list
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 propertiesList.Add(blockDataStruct);
-                // Debug.Log("added property");
                 if (blockData.property == BlockData.Property.NAME) {
+                    // update name if name property found / needed
                     GameObject.Find("NamePreview").GetComponent<TMP_Text>().text = (blockData.values.Count != 0) ? blockData.values[0]  : "[noname]";
                     if (!isCurrentWarriorEnemy) {
                         GameObject.Find("NamePreview").GetComponent<TMP_Text>().text += ",";
                     }
                 }
             }
+            // continue iterating
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
+        // return list of all properties data
         return propertiesList;
     }
 
@@ -984,6 +1020,8 @@ public class DesignerController : MonoBehaviour {
 
         // FORMULA:
         // strength = attack*(range/2) + heal*(range/2) + projectilePower + maxHealth*(defense/(defense+maxHealth+1)) + speed/10
+
+        // set default values
         int attackPower = 0;
         int attackRange = 1;
         int healPower = 0;
@@ -992,6 +1030,7 @@ public class DesignerController : MonoBehaviour {
         int defense = 0;
         int speed = 0;
 
+        // loop through properties to get actual values
         foreach (BlockDataStruct block in propertiesList) {
             switch (block.property) {
                 case BlockData.Property.MELEE_ATTACK_POWER:
@@ -1017,23 +1056,21 @@ public class DesignerController : MonoBehaviour {
                     break;
             }
         }
-
-        // Debug.Log(attackPower + ", " + attackRange + ", " + healPower + ", " + projectilePower + ", " + maxHealth + ", " + defense + ", " + speed);
-
-        // float strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
-        // defense+maxHealth+1)
-        // Debug.Log("defense multiplier: " + (1+((float)defense / (float)(defense+maxHealth))));
+        // calculate strength using actual and default values
         return HelperController.Instance.CalculateWarriorStrength(attackPower, attackRange, healPower, projectilePower, speed, maxHealth, defense);
     }
 
     public List<BlockDataStruct> ParseBehaviors(GameObject header) {
+        // loop through all behavior blocks under header
         List<BlockDataStruct> behaviorsList = new List<BlockDataStruct>();
         GameObject current = header.GetComponent<Draggable>().GetNextBlock();
         while (current != null) {
+            // get current block data
             BlockData blockData = current.GetComponent<BlockData>();
             if (blockData.blockType == BlockData.BlockType.BEHAVIOR || blockData.blockType == BlockData.BlockType.FUNCTION) {
+                // set default behavior values into matching value slots for each block type
                 switch (blockData.behavior) {
-                    // no dropdowns
+                    // no dropdowns:
                     case BlockData.BehaviorType.MELEE_ATTACK:
                     case BlockData.BehaviorType.FIRE_PROJECTILE:
                     case BlockData.BehaviorType.ELSE:
@@ -1063,7 +1100,7 @@ public class DesignerController : MonoBehaviour {
                             blockData.values[0] = (-1).ToString();
                         }
                         break;
-                    // one dropdown, store value as string
+                    // one dropdown, store value as string:
                     case BlockData.BehaviorType.TURN:
                     case BlockData.BehaviorType.STEP:
                     case BlockData.BehaviorType.RUN:
@@ -1075,7 +1112,7 @@ public class DesignerController : MonoBehaviour {
                             blockData.values[0] = current.transform.GetChild(2).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
                         }
                         break;
-                    // two dropdowns
+                    // two dropdowns:
                     case BlockData.BehaviorType.SET_TARGET:
                     case BlockData.BehaviorType.MELEE_SETTINGS:
                     case BlockData.BehaviorType.RANGED_SETTINGS:
@@ -1090,8 +1127,8 @@ public class DesignerController : MonoBehaviour {
                             blockData.values[1] = current.transform.GetChild(3).gameObject.GetComponent<TMP_Dropdown>().value.ToString();
                         }
                         break;
-                    // three dropdowns
-                    // input field
+                    // three dropdowns: (NONE CURRENTLY)
+                    // input field:
                     case BlockData.BehaviorType.FOR_LOOP:
                         if (blockData.values.Count != 1) {
                             blockData.values.Clear();
@@ -1104,10 +1141,11 @@ public class DesignerController : MonoBehaviour {
                         }
                         break;
                 }
+                // convert block data to struct, add to list of all behavior structs
                 BlockDataStruct blockDataStruct = blockData.ConvertToStruct();
                 behaviorsList.Add(blockDataStruct);
-                // Debug.Log("added use special function");
             }
+            // continue iterating
             current = current.GetComponent<Draggable>().GetNextBlock();
         }
 
@@ -1245,7 +1283,6 @@ public class DesignerController : MonoBehaviour {
                             elseIndex = j;
                             behaviorsList[i].values[2] = elseIndex.ToString();
                             behaviorsList[j].values[0] = i.ToString();
-                            // Debug.Log("on else, set if to " + i);
                         }
                     }
 
@@ -1260,7 +1297,6 @@ public class DesignerController : MonoBehaviour {
                                 behaviorsList[elseIndex].values[1] = j.ToString();
                             }
                             // assign jump point to if for error checking
-
                             behaviorsList[j].values[0] = i.ToString();
                             break;
                         }
@@ -1269,10 +1305,12 @@ public class DesignerController : MonoBehaviour {
             }
         }
 
+        // return final list of behaviors with set values
         return behaviorsList;
     }
 
     public int CountBehaviors() {
+        // loop through all headers, count all behaviors in their lists that are not functional blocks
         int count = 0;
         List<GameObject> allHeaders = new() {moveHeaderObject, useWeaponHeaderObject, useSpecialHeaderObject};
         foreach (GameObject header in allHeaders) {
@@ -1292,8 +1330,10 @@ public class DesignerController : MonoBehaviour {
     }
 
     public List<string> CheckLoopingConditionalErrors(string headerName, List<BlockDataStruct> blocks) {
+        // create list of errors
         List<string> errorsList = new List<string>();
 
+        // loop through all block data, found error if any values hold -1 (mismatched)
         foreach (BlockDataStruct block in blocks) {
             switch(block.behavior) {
                 case BlockData.BehaviorType.WHILE_LOOP:
@@ -1358,6 +1398,8 @@ public class DesignerController : MonoBehaviour {
     }
 
     public bool CheckUnderBehaviorLimit(WarriorFunctionalityData warriorFunctionalityData) {
+        // DEPRECATED
+        // old behavior counting method
         int count = 0;
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {warriorFunctionalityData.moveFunctions, warriorFunctionalityData.useWeaponFunctions, warriorFunctionalityData.useSpecialFunctions};
         List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
@@ -1372,16 +1414,19 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void UpdateStrengthDisplay() {
+        // calculate strength
         int newStrength = CalculateCurrentStrength();
+        // show strength in green or red if it's valid or not, respectively
+        // always valid in sandbox
         if (newStrength <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength || ProgressionController.Instance.currentLevel == 0) {
             strengthDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
         } else {
             strengthDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
-            // strengthDisplay.color = Color.red;
-            // Debug.Log("setting color bad");
         }
+
+        // update display text
         strengthDisplay.text = "Strength\n" + newStrength + " / ";
-        if (ProgressionController.Instance.currentLevel == 0) { // sandbox
+        if (ProgressionController.Instance.currentLevel == 0) { // sandbox, infinite allowed
             strengthDisplay.text += "inf.";
         } else {
             strengthDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxTotalStrength;
@@ -1389,18 +1434,19 @@ public class DesignerController : MonoBehaviour {
     }
 
     public void UpdateBehaviorsDisplay() {
+        // count behaviors
         int behaviorCount = CountBehaviors();
+        // show count in green or red if it's valid or not, respectively
+        // always valid in sandbox
         if (behaviorCount <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks || ProgressionController.Instance.currentLevel == 0) {
             maxBehaviorsDisplay.color = new Color(104f/255f, 241f/255f, 104f/255f);
-            // strengthDisplay.color = Color.blue;
-            // Debug.Log("setting color good");
         } else {
             maxBehaviorsDisplay.color = new Color(241f/255f, 104f/255f, 104f/255f);
-            // strengthDisplay.color = Color.red;
-            // Debug.Log("setting color bad");
         }
+
+        // update display text
         maxBehaviorsDisplay.text = "Behaviors\n" + behaviorCount + " / ";
-        if (ProgressionController.Instance.currentLevel == 0) { // sandbox
+        if (ProgressionController.Instance.currentLevel == 0) { // sandbox, infinite allowed
             maxBehaviorsDisplay.text += "inf.";
         } else {
             maxBehaviorsDisplay.text += ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
@@ -1422,12 +1468,11 @@ public class DesignerController : MonoBehaviour {
         // hide object with permanent delete button
         deleteMenu.SetActive(false);
 
+        // play sound
         AudioController.Instance.PlaySoundEffect("Delete");
 
+        // delete, but delay to prevent reloading errors
         StartCoroutine(RemoveWarriorsDelay());
-
-        // // ALTERNATIVELY
-        // SceneController.Instance.LoadSceneByName("CodeEditor");
     }
 
     private IEnumerator RemoveWarriorsDelay() {
@@ -1445,13 +1490,12 @@ public class DesignerController : MonoBehaviour {
         if (WarriorListController.Instance.GetCount() == 0) {
             WarriorListController.Instance.AddWarrior(0, new WarriorFunctionalityData());
         }
-        // editingIndex = editingIndex != 0 ? editingIndex -1 : 0;
         LoadWarriorDrawer();
         LoadWarriorToWhiteboard(editingWarriorIndex-1, editingWarriorIndex-1, true, false);
-        DebugGetThumbnailData();
 
+        // reload json file
         if (isSandbox) {
-            WarriorListController.Instance.FindJSON("sandbox_warriors"); // reload json file
+            WarriorListController.Instance.FindJSON("sandbox_warriors");
         } else {
             WarriorListController.Instance.UpdateJSON("level_warriors");
         }

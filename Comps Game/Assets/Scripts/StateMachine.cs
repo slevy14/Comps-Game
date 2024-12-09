@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class StateMachine : MonoBehaviour {
 
+    // NOT IN USE
+    // keeping script to prevent unity conflicts
+
     public enum GameState {
         CODING,
         PREPARING_BATTLE,

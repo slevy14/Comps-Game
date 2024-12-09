@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class TutorialController : MonoBehaviour {
 
+    // placed on tutorial controller object
+    // holds references to all objects related to the tutorials
+
     public int currentTutorialIndex = 0;
     public bool inTutorial = false;
 
@@ -58,19 +61,6 @@ public class TutorialController : MonoBehaviour {
         bearTextboxOffset = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition - bear.GetComponent<RectTransform>().anchoredPosition;
     }
 
-    // void Update() {
-    //     if (inTutorial) {
-    //         currentDialogTime += Time.deltaTime;
-    //     }
-
-    //     if (Input.GetMouseButtonDown(0) && !PauseMenuController.Instance.isPaused) {
-    //         if (inTutorial && CanAdvanceDialog()) {
-    //             NextStep();
-    //         }
-    //     }
-    // }
-
-
 
     public void ResetTutorialStates() {
         // destroy any showing blocks
@@ -78,50 +68,33 @@ public class TutorialController : MonoBehaviour {
             foreach (Transform child in blockShowingParent.transform) {
                 Destroy(child.gameObject);
             }
-        } else {
-            // Debug.Log("no children to erase");
         }
     }
 
     public void NextStep() {
+        // if tutorial should keep going, run next function
         if (IsValidTutorialIndex()) {
-            // Debug.Log("running tutorial at index " + currentTutorialIndex + ", advancing to next step of tutorial");
             ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.RunTutorialFunction(currentTutorialIndex);
             talkingTextBox.text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.tutorialListItems[currentTutorialIndex].tutorialDialog;
             currentTutorialIndex++;
-            // Debug.Log("progressing to next text");
-        } else {
+        } else { // otherwise, end tutorial
             EndTutorial();
         }
     }
 
     private bool IsValidTutorialIndex() {
+        // check that tutorial should keep going
         int count = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.tutorialListItems.Count;
         return currentTutorialIndex < count;
     }
 
     public bool CanAdvanceDialog() {
+        // dialog can be advanced if not in transition
         if (inTransition) {
-            // Debug.Log("in transition");
             return false;
         }
-
-        // if (currentDialogTime >= dialogAdvanceDelay || skippedDialog) {
-        //     currentDialogTime = 0;
-        //     skippedDialog = false;
-        //     Debug.Log("can advance");
-        //     return true;
-        // } else {
-        //     SkipDialog();
-        // }
         return true;
     }
-
-    // private void SkipDialog() {
-    //     // FIXME: skip thru dialog if button pressed before delay time
-    //     Debug.Log("skipping dialog");
-    //     skippedDialog = true;
-    // }
 
     private void GetUnlockedBlockIndices() {
         // get all property blocks unlocked thus far, not including the new ones in this level
@@ -132,7 +105,7 @@ public class TutorialController : MonoBehaviour {
                 }
             }
         }
-        // get all behavior blockes unlocked thus far, not including the new ones in this level
+        // get all behavior blocks unlocked thus far, not including the new ones in this level
         for (int i = 1; i < ProgressionController.Instance.currentLevel; i++) {
             foreach (int index in ProgressionController.Instance.levelDataList[i].availableBehaviorsIndices) {
                 if (!unlockedBehaviorBlocks.Contains(index)) {
@@ -143,7 +116,7 @@ public class TutorialController : MonoBehaviour {
     }
 
     public void StartTutorial() {
-        Debug.Log("started tutorial");
+        // initialize data to start new level tutorial
         ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].tutorialFunctionality.InitializeLookup();
         ToggleTutorialUIObjects(true);
         currentTutorialIndex = 0;
@@ -153,13 +126,14 @@ public class TutorialController : MonoBehaviour {
     }
 
     public void EndTutorial() {
+        // reset all tutorial data, hide anything shown
         ResetTutorialStates();
         inTutorial = false;
         ToggleTutorialUIObjects(false);
     }
 
     private void ToggleTutorialUIObjects(bool value) {
-        // Debug.Log("toggling ui " + value);
+        // activate or deactivate all highlights, bear, etc.
         bear.SetActive(value);
         tutorialMask.SetActive(value);
         talkingTextBox.transform.parent.gameObject.SetActive(value);
@@ -173,7 +147,6 @@ public class TutorialController : MonoBehaviour {
     public void ResetBearAndTextboxPositions() {
         MoveBear(new Vector2(-675, -405), false);
         talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(-146.86f, -261.00f);
-        // Debug.Log(talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition);
     }
 
     public void MoveBear(Vector2 bearPos, bool faceLeft) {
@@ -181,9 +154,7 @@ public class TutorialController : MonoBehaviour {
         bear.GetComponent<RectTransform>().anchoredPosition = bearPos;
 
         // set text box position
-        // Debug.Log("textbox offset is " + (bearPos - bearPrevPos));
-        // Vector2 newTextboxPosition = talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition + (bearPos - bearPrevPos);
-
+        // flip bear and text box if needed
         if (faceLeft) {
             bear.GetComponent<RectTransform>().eulerAngles = new Vector3(0, 180, 0);
             talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(bearPos.x - bearTextboxOffset.x, bearPos.y + bearTextboxOffset.y);
@@ -192,17 +163,17 @@ public class TutorialController : MonoBehaviour {
             talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector2(bearPos.x + bearTextboxOffset.x, bearPos.y + bearTextboxOffset.y);
         }
         Debug.Log("moved bear and textbox");
-        // Debug.Log("new textbox position: " + newTextboxPosition);
-        // talkingTextBox.transform.parent.GetComponent<RectTransform>().anchoredPosition = newTextboxPosition;
     }
 
 
     public void MoveHighlight(Vector2 highlightPos) {
+        // move highlight to position
         highlight.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
         highlight.GetComponent<RectTransform>().anchoredPosition = highlightPos;
     }
 
     public void HideHighlight() {
+        // disable all highlights
         highlight.GetComponent<RectTransform>().anchoredPosition = new Vector2(960, 540);
         highlight.GetComponent<RectTransform>().localScale = new Vector3(0.001f, 0.001f, 0.001f);
 
@@ -217,7 +188,9 @@ public class TutorialController : MonoBehaviour {
     }
 
     public void ToggleHighlight(string highlight, bool value) {
+        // hide previous highlights
         HideHighlight();
+        // show chosen highlight
         switch(highlight) {
             case "drawer":
                 drawerHighlight.SetActive(value);
@@ -247,6 +220,7 @@ public class TutorialController : MonoBehaviour {
     }
 
     public void ShowNewLevelBlocks() {
+        // loop through all behavior and property blocks not previously seen and show them to the player
         GetUnlockedBlockIndices();
         foreach (int propertyIndex in ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].availablePropertiesIndices) {
             if (!unlockedPropertyBlocks.Contains(propertyIndex)) {
@@ -261,6 +235,7 @@ public class TutorialController : MonoBehaviour {
         HideHighlight();
     }
 
+    // change scene with a delay to prevent skipping through text prematurely
     public void TutorialChangeSceneWithDelay(string name) {
         SceneController.Instance.LoadSceneByName(name);
         HideHighlight();

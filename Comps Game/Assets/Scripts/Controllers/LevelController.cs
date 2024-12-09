@@ -8,8 +8,10 @@ using UnityEngine.UI;
 
 public class LevelController : MonoBehaviour {
 
+    // placed on level controller object
+    // handles main battle loop
+
     [Header("SAVE/LOAD")]
-    // [SerializeField] private WarriorListController warriorListController; 
     [SerializeField] public bool isSandbox;
 
     [Header("REFERENCES")]
@@ -66,52 +68,53 @@ public class LevelController : MonoBehaviour {
             return;
         }
     }
-    //     // Make this object stay around when switching scenes
-    //     DontDestroyOnLoad(this.gameObject);
-    // }
 
     void Awake() {
         CheckSingleton();
+
+        // initialize
         objectsOnGrid = new Dictionary<GameObject, Vector2>();
         HideStatsPanel();
         ToggleResetButton(false);
         TogglePauseButton(false);
-        // levelCompleteMenu.SetActive(false);
     }
 
     void Start() {
-
+        // check if in sandbox
         isSandbox = ProgressionController.Instance.currentLevel == 0 ? true : false;
+
+        // load data from files
         StartCoroutine(LoadWarriorFileWrapper());
         LoadWarriorDrawer();
         GridSaveLoader.Instance.InitializeGrid();
-
         if (isSandbox) {
             LoadEnemyDrawer();
         } else {
             enemiesDrawer.SetActive(false);
         }
-
         if (!isSandbox) {
             SetLevelInfoPanel();
         }
 
         // set default battle speed
         battleSpeed = 0.51f;
-        // LoadSavedGrid();
+        // play sound
         AudioController.Instance.ChangeBGM("Coding BGM");
     }
 
     private IEnumerator LoadWarriorFile() {
+        // load correct warrior file
         WarriorListController.Instance.FindJSON(isSandbox ? "sandbox_warriors" : "level_warriors");
         yield return null;
     }
 
     private IEnumerator LoadWarriorFileWrapper() {
+        // wait until file loaded
         yield return StartCoroutine(LoadWarriorFile());
     }
 
     void Update() {
+        // continually check to end battle, if conditions are game over
         if (inBattle && (enemyWarriorsList.Count <= 0 || yourWarriorsList.Count <= 0)) {
             EndBattle();
         }
@@ -120,21 +123,20 @@ public class LevelController : MonoBehaviour {
     // DRAWERS
     // Warriors
     public void AddWarriorToDrawer(int index) {
+        // add thumbnail to drawer
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         Instantiate(warriorThumbnailPrefab, container);
         UpdateWarriorDrawerThumbnail(index);
     }
 
-    public void LoadWarriorDrawer() { // loop through all warriors when scene is loaded
-        // Debug.Log("there are " + WarriorListController.Instance.GetCount() + " warriors to add to drawer");
+    public void LoadWarriorDrawer() {
+        // loop through all warriors when scene is loaded
         for (int i=0; i < WarriorListController.Instance.GetCount(); i++) {
             AddWarriorToDrawer(i);
         }
-        // Debug.Log("added warriors to placeable drawer");
     }
 
     public void UpdateWarriorDrawerThumbnail(int index) {
-        // Debug.Log("updating warrior drawer thumbnail for warrior " + index);
         // get references
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(index);
@@ -149,6 +151,8 @@ public class LevelController : MonoBehaviour {
     }
 
     public void SetAllWarriorThumbnailsGrey(bool value) {
+        // loop through all thumbnails
+        // grey out if can't be placed
         Transform container = warriorDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         foreach (Transform child in container) {
             if (value) {
@@ -161,13 +165,15 @@ public class LevelController : MonoBehaviour {
 
     // Enemies
     public void AddEnemyToDrawer(int index) {
+        // add thumbnail to drawer
         Transform container = enemiesDrawer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0);
         GameObject enemyThumbnail = Instantiate(warriorThumbnailPrefab, container);
         enemyThumbnail.GetComponent<WarriorLevelThumbnail>().SetIsEnemy(true);
         UpdateEnemyDrawerThumbnail(index);
     }
 
-    public void LoadEnemyDrawer() { // loop through all warriors when scene is loaded
+    public void LoadEnemyDrawer() {
+        // loop through all enemies when scene is loaded
         for (int i=0; i < EnemyListController.Instance.GetCount(); i++) {
             AddEnemyToDrawer(i);
         }
@@ -185,8 +191,6 @@ public class LevelController : MonoBehaviour {
         // update name
         thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = enemy.warriorName;
         thumbnail.GetComponent<WarriorLevelThumbnail>().CheckIfPlaceable();
-
-        // Debug.Log("index " + index + ": setting " + thumbnail.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text + " to sprite " + warrior.spriteIndex);
     }
 
     // SAVE / LOAD GRID
@@ -200,23 +204,19 @@ public class LevelController : MonoBehaviour {
     public void ClearGrid() {
         // clear dict
         objectsOnGrid.Clear();
-        // Debug.Log("cleared from dict");
         // destroy objects
         int childCount = warriorsContainer.transform.childCount;
-        // Debug.Log("child count" + childCount);
-        // for (int i = 0; i < childCount; i++) {
-        //     Debug.Log("destroying object");
-        //     Destroy(warriorsContainer.transform.GetChild(0).gameObject);
-        // }
         foreach (Transform child in warriorsContainer.transform) {
             Destroy(child.gameObject);
         }
     }
 
     public void ClearGridButton() {
+        // only clear if not in battle
         if (inBattle) {
             return;
         }
+        // loop through warriors and remove
         foreach (Transform child in warriorsContainer.transform) {
             if (child.GetComponent<WarriorBehavior>().isEnemy && ProgressionController.Instance.currentLevel != 0) { // if enemy and not in sandbox
                 continue;
@@ -224,12 +224,12 @@ public class LevelController : MonoBehaviour {
             objectsOnGrid.Remove(child.gameObject);
             Destroy(child.gameObject);
         }
-        // ungrey warriors
+        // ungrey warrior thumbnails
         SetAllWarriorThumbnailsGrey(false);
     }
 
     public void ResetGridButton() {
-        // Debug.Log("reset button pressed");
+        // reset the full level data
         inBattle = false;
         battleFinished = false;
         LoadSavedGrid();
@@ -240,10 +240,13 @@ public class LevelController : MonoBehaviour {
     }
 
     public void ResetWholeLevelButton() {
+        // just reload the level
         SceneController.Instance.LoadSceneByName(SceneController.Instance.GetCurrentSceneName());
     }
 
     public void PauseBattle() {
+        // only pause battle if not currently paused
+        // this stops the battle from continuing, but continues animation and interaction
         if (inBattle && !isPaused) {
             isPaused = true;
             pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Resume";
@@ -253,12 +256,17 @@ public class LevelController : MonoBehaviour {
             pauseButton.transform.GetChild(0).GetComponent<TMP_Text>().text = "Pause";
             ToggleResetButton(false);
         }
+        // play sound
         AudioController.Instance.PlaySoundEffect("Pause Battle");
     }
 
     // Loading Warriors
     public void SetWarriorData(GameObject warrior, bool isEnemy, int warriorIndex) {
+        // get warrior data
         WarriorBehavior warriorBehavior = warrior.GetComponent<WarriorBehavior>();
+
+        // set data from all block lists
+        // do same thing for enemy and warrior, just from correct list object
         if (!isEnemy) {
             warrior.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = WarriorListController.Instance.spriteDataList[WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).spriteIndex].sprite;
             warriorBehavior.SetPropertiesAndBehaviors(WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).properties,
@@ -280,8 +288,8 @@ public class LevelController : MonoBehaviour {
     }
 
     // LEVEL INFO PANEL
-
     public void SetLevelInfoPanel() {
+        // set text on level info panel
         levelInfoPanel.transform.GetChild(0).GetComponent<TMP_Text>().text = "Level " + ProgressionController.Instance.currentLevel + ":";
         levelInfoPanel.transform.GetChild(1).GetComponent<TMP_Text>().text = ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].levelName;
         levelInfoPanel.transform.GetChild(2).GetComponent<TMP_Text>().text = "Max Warriors: " + ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxWarriorsToPlace;
@@ -290,16 +298,14 @@ public class LevelController : MonoBehaviour {
 
     // STATS PANEL
     public void ShowStatsPanel(int warriorIndex, bool isEnemy) {
+        // show panel if not active
         if (!statsPanel.activeSelf) {
             statsPanel.SetActive(true);
         }
-
-        // old object before scroll
-        // TMP_Text statsDisplay = statsPanel.transform.GetChild(2).GetComponent<TMP_Text>();
-
-        // new object
         TMP_Text statsDisplay = GameObject.Find("StatsDisplayScroll").GetComponent<TMP_Text>();
 
+        // same thing for enemy and warrior, just different lists
+        // show text versions of properties and behavior code
         if (!isEnemy) {
             WarriorFunctionalityData warrior = WarriorListController.Instance.GetWarriorAtIndex(warriorIndex);
             statsPanel.transform.GetChild(1).GetComponent<Image>().sprite = WarriorListController.Instance.spriteDataList[warrior.spriteIndex].sprite;
@@ -329,18 +335,21 @@ public class LevelController : MonoBehaviour {
         }
     }
 
-    // PRINTING THE CODE
-    // this could also maybe be done by storing the relevant string within the block when saving and then printing them all here
-    // but that's for a refactor later if time
 
+    // PRINTING THE CODE
+    // // this could also maybe be done by storing the relevant string within the block when saving and then printing them all here
+    // // but that's for a refactor later if time
     private string PropertiesString(WarriorFunctionalityData warriorData) {
+        // initialize string to hold all property info
         string propertiesString = "";
+
+        // loop through all properties and create a dictionary
         List<BlockDataStruct> warriorProperties = warriorData.properties;
         Dictionary<BlockData.Property, string> propertiesDict = new Dictionary<BlockData.Property, string>();
         foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
-            // Debug.Log(property);
             propertiesDict[property] = "";
         }
+        // loop through properties from list and convert to string as dict values
         for (int i = 0; i < warriorProperties.Count; i++) {
             float newVal = 0;
             switch (warriorProperties[i].property) {
@@ -454,10 +463,11 @@ public class LevelController : MonoBehaviour {
     }
 
     private string BehaviorString(WarriorFunctionalityData warriorData) {
-        // FIXME: add ability to print behaviors as string to the stats screen
+        // initialize string to hold all behavior info
         string behaviorString = "";
         string indent = "    ";
         int indentLevel = 0;
+        // loop behaviors for each header
         List<List<BlockDataStruct>> warriorBehaviorLists = new List<List<BlockDataStruct>> {warriorData.moveFunctions, warriorData.useWeaponFunctions, warriorData.useSpecialFunctions};
         foreach (List<BlockDataStruct> warriorBehaviorList in warriorBehaviorLists) {
             // check which header we're using
@@ -469,15 +479,13 @@ public class LevelController : MonoBehaviour {
             } else if (warriorBehaviorList == warriorData.useWeaponFunctions) {
                 behaviorString += "UseWeapon: \n ";
             } else if (warriorBehaviorList == warriorData.useSpecialFunctions) {
-                // scrapped! just continue no matter what
-                // if (!HelperController.Instance.GetCurrentLevelData().isUseSpecialHeaderAvailable) {
-                //     continue;
-                // }
-                // behaviorString += "UseSpecial: \n ";
                 continue;
             }
             indentLevel += 1;
 
+            // loop through all behaviors in list
+            // add to behavior string based on block ID and value
+            // indent text as needed to fit under conditionals and loops
             for (int i = 0; i < warriorBehaviorList.Count; i++) {
                 switch (warriorBehaviorList[i].behavior) {
                     case BlockData.BehaviorType.TURN:
@@ -705,6 +713,8 @@ public class LevelController : MonoBehaviour {
         return behaviorString;
     }
 
+    // BUTTON AND PANEL VISIBILITY
+
     public void HideStatsPanel() {
         statsPanel.SetActive(false);
     }
@@ -751,37 +761,43 @@ public class LevelController : MonoBehaviour {
         
     */
 
+    // update battle speed from slider
+    // new method
+    public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
+        battleSpeed = 1.01f - newBattleSpeed;
+    }
+    // old method (deprecated)
     public void TryParseBattleSpeed(string newBattleSpeedString) {
         float.TryParse(newBattleSpeedString, out battleSpeed);
     }
 
-    public void ParseBattleSpeedSlider(System.Single newBattleSpeed) {
-        battleSpeed = 1.01f - newBattleSpeed;
-
-        // Too loud and repeating lol. prob don't need if we have click effect
-        // AudioController.Instance.PlaySoundEffect("Slider Adjust");
-    }
-
-    public void StartBattleWrapper() { // for the button
+    // START BATTLE
+    // for the button
+    public void StartBattleWrapper() {
+        // can only start battle if not in battle
         if (inBattle) {
             return;
-        } else if (!CheckAllWarriorsValid()) {
+        } else if (!CheckAllWarriorsValid()) { // can't start if warriors on grid break restrictions
             GameObject falseStart = Instantiate(falseStartPrefab, Vector3.zero, transform.rotation, GameObject.FindGameObjectWithTag("mainUI").transform);
             falseStart.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
             return;
-        } else if (battleFinished) {
+        } else if (battleFinished) { // reset grid if clicked after battle
             ResetGridButton();
         }
 
+        // play sound
         AudioController.Instance.PlaySoundEffect("Start Battle");
+        // start battle
         StartCoroutine(StartBattle());
     }
 
     public bool CheckAllWarriorsValid() {
+        // if in sandbox, always valid
         if (ProgressionController.Instance.currentLevel == 0) {
             return true;
         }
 
+        // reset warrior lists
         if (allWarriorsList.Count != 0) {
             ClearWarriorLists();
         }
@@ -789,6 +805,7 @@ public class LevelController : MonoBehaviour {
         CreateWarriorLists();
         foreach (WarriorBehavior warrior in allWarriorsList) {
             if (!warrior.isValidStrengthAndBehaviors) {
+                // if any warriors invalid, false
                 return false;
             }
         }
@@ -796,6 +813,7 @@ public class LevelController : MonoBehaviour {
     }
 
     public IEnumerator StartBattle() {
+        // reset flags
         inBattle = true;
         battleFinished = false;
         activeDeathDelay = false;
@@ -813,36 +831,38 @@ public class LevelController : MonoBehaviour {
         // play battle audio
         AudioController.Instance.ChangeBGM("Battle BGM");
 
+        // while game hasn't been won, lost, or timed out, keep looping through
         int turnCounter = 0;
-        // while game hasn't been won or lost, keep looping through
         while (yourWarriorsList.Count > 0 && enemyWarriorsList.Count > 0 && turnCounter < maxTurns) {
-        // for (int j = 0; j < 5; j++) { // temp set times for battle to run
-            for (int i =0; i < allWarriorsList.Count; i++) { // doing this as a for loop so things can be deleted if they need to
+            for (int i = 0; i < allWarriorsList.Count; i++) {
+                // move to next warrior if current warrior dead
                 if (!allWarriorsList[i].isAlive) {
                     continue;
                 }
-                Debug.Log(allWarriorsList[i].warriorName + " at position " + i + " is up!");
+                // start warrior turn
                 allWarriorsList[i].MarkCurrentTurn(true);
+                Debug.Log(allWarriorsList[i].warriorName + " at position " + i + " is up!");
 
+                // if battle still going, move and use weapon for current warrior
                 if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].Move());
                 }
                 if (!battleFinished) {
                     yield return StartCoroutine(allWarriorsList[i].UseWeapon());
                 }
+                // use special (deprecated)
                 // if (!battleFinished) {
                 //     yield return StartCoroutine(allWarriorsList[i].UseSpecial());
                 // }
 
+                // reset warrior turn
                 allWarriorsList[i].MarkCurrentTurn(false);
-
-                // if (yourWarriorsList.Count <= 0 && enemyWarriorsList.Count <= 0) {
-                //     battleFinished = true;
-                // }
             }
+            // end battle if finished
             if (battleFinished) {
                 break;
             }
+            // continue to next turn after all warriors go
             turnCounter += 1;
         }
         EndBattle();
@@ -856,6 +876,7 @@ public class LevelController : MonoBehaviour {
         foreach (GameObject icon in icons) {
             Destroy(icon);
         }
+        // show correct end result
         if (enemyWarriorsList.Count <= 0) {
             Debug.Log("you win!");
             StartCoroutine(ShowEndResults(true, false));
@@ -866,14 +887,17 @@ public class LevelController : MonoBehaviour {
             Debug.Log("battle timed out");
             StartCoroutine(ShowEndResults(false, true));
         }
-        // ToggleResetButton(true);
+        // disable flags
         TogglePauseButton(false);
-        AudioController.Instance.StopBGM();
         inBattle = false;
+        // stop sound
+        AudioController.Instance.StopBGM();
     }
 
     private IEnumerator ShowEndResults(bool battleWon, bool timedOut) {
+        // show results faster for sandbox
         yield return new WaitForSeconds(ProgressionController.Instance.currentLevel == 0 ? 0.2f : 0.7f);
+        // play sound and show menu based on end result
         if (battleWon) {
             levelCompleteMenu.SetActive(true);
             AudioController.Instance.PlaySoundEffect("Level Win");
@@ -892,34 +916,25 @@ public class LevelController : MonoBehaviour {
     }
 
     public void CreateWarriorLists() {
+        // loop through all warriors, add to respective lists
         foreach (KeyValuePair<GameObject, Vector2> warriorObject in objectsOnGrid) {
             if (warriorObject.Key.tag == "warrior") { // add to ally list if ally
                 yourWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
-                // Debug.Log("found ally: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             if (warriorObject.Key.tag == "enemy") { // add to enemy list if enemy
                 enemyWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
-                // Debug.Log("found enemy: " + warriorObject.Key.gameObject.GetComponent<WarriorBehavior>().warriorName);
             }
             // add to overall list too
             allWarriorsList.Add(warriorObject.Key.gameObject.GetComponent<WarriorBehavior>());
         }
         // sort allWarriorsList by speed
         allWarriorsList.Sort((x, y) => y.GetProperty(BlockData.Property.MOVE_SPEED).CompareTo(x.GetProperty(BlockData.Property.MOVE_SPEED)));
-        Debug.Log("warriors sorted by Speed: ");
-        int count = 0;
-        foreach (WarriorBehavior warrior in allWarriorsList) {
-            Debug.Log(count + " " + warrior.warriorName + ": " + warrior.GetProperty(BlockData.Property.MOVE_SPEED));
-            count++;
-        }
     }
 
     public void ClearWarriorLists() {
+        // empty warrior and enemy lists
         yourWarriorsList.Clear();
         enemyWarriorsList.Clear();
         allWarriorsList.Clear();
     }
-
-
-
 }

@@ -22,7 +22,7 @@ public class TypewriterEffect : MonoBehaviour {
 
     [Header("Typewriter Settings")]
     [SerializeField] private float charactersPerSecond = 20;
-    [SerializeField] private float punctuationDelay = 0.5f;
+    [SerializeField] private float punctuationDelay = 0.3f;
 
     // Skipping Functionality
     public bool CurrentlySkipping {get; private set;}
@@ -42,6 +42,7 @@ public class TypewriterEffect : MonoBehaviour {
     private void Awake() {
         textBox = GetComponent<TMP_Text>();
 
+        // define delays
         _simpleDelay = new WaitForSeconds(1 / charactersPerSecond);
         _punctuationDelay = new WaitForSeconds(punctuationDelay);
         _skipDelay = new WaitForSeconds(1 / (charactersPerSecond * skipSpeedup));
@@ -57,48 +58,54 @@ public class TypewriterEffect : MonoBehaviour {
     }
 
     private void Update() {
+        // on click, check to skip or advance
         if (Input.GetMouseButtonDown(0)) {
+            // if still chars to show, skip
             if (textBox.maxVisibleCharacters <= textBox.textInfo.characterCount - 1) {
                 Debug.Log("called skip");
                 Skip();
-            } else { 
+            } else { // else, advance to next step of tutorial
                 if (TutorialController.Instance.inTutorial && !PauseMenuController.Instance.isPaused && TutorialController.Instance.CanAdvanceDialog() && readyForNewText) {
                     textBox.maxVisibleCharacters = 0;
                     TutorialController.Instance.NextStep();
-                    // Debug.Log("advanced");
                 }
             }
         }
     }
 
     public void PrepareForNewText(UnityEngine.Object obj) {
-
+        // don't reset if shouldn't
         if (!readyForNewText) {
             return;
         }
 
+        // reset status
         CurrentlySkipping = false;
         readyForNewText = false;
 
+        // prevent coroutine conflicts
         if (typewriterCoroutine != null) {
-            // Debug.Log("stopping coroutine from prepare");
             StopCoroutine(typewriterCoroutine);
         }
 
+        // continue resetting status
         textBox.maxVisibleCharacters = 0;
         currentVisibleCharacterIndex = 0;
 
-        // Debug.Log("starting coroutine");
+        // restart typewriter effect
         typewriterCoroutine = StartCoroutine(Typewriter());
     }
 
     private IEnumerator Typewriter() {
         TMP_TextInfo textInfo = textBox.textInfo;
 
+        // loop while still more chars:
         while (currentVisibleCharacterIndex < textInfo.characterCount + 1) {
 
+            // find most current char index
             var lastCharacterIndex = textInfo.characterCount - 1;
 
+            // quit if whole text revealed
             if (currentVisibleCharacterIndex == lastCharacterIndex) {
                 textBox.maxVisibleCharacters++;
                 yield return _textboxFullEventDelay;
@@ -110,41 +117,43 @@ public class TypewriterEffect : MonoBehaviour {
 
             char character = textInfo.characterInfo[currentVisibleCharacterIndex].character;
 
+            // display character
             textBox.maxVisibleCharacters++;
 
+            // wait for delay time, either skip, punctuation, or regular
             if ((!CurrentlySkipping) && (character == '?' || character == '.' || character == ',' || character == ':' || character == ';' || character == '!' || character == '-') ) {
                 yield return _punctuationDelay;
             } else {
                 yield return CurrentlySkipping ? _skipDelay : _simpleDelay;
             }
 
-            // play sound few
+            // play sound effect
             if (currentVisibleCharacterIndex % 3 == 0 && !CurrentlySkipping) {
                 AudioController.Instance.PlaySoundEffect("BearTalkSound");
             }
 
             CharacterRevealed?.Invoke(character);
             currentVisibleCharacterIndex++;
-            // Debug.Log("progressing coroutine");
         }
     }
 
     void Skip() {
+        // don't skip if already skipping
         if (CurrentlySkipping) {
-            // Debug.Log("currently skipping, not doing another");
             return;
         }
 
         CurrentlySkipping = true;
 
+        // regular skip, speed up text
         if (!quickSkip) {
             StartCoroutine(SkipSpeedupReset());
             AudioController.Instance.PlaySoundEffect("BearTalkSound");
             return;
         }
 
-        //else, quickskip
-        // Debug.Log("stopping coroutine from skip");
+        // else, quickskip
+        // just jump to end
         StopCoroutine(typewriterCoroutine);
         textBox.maxVisibleCharacters = textBox.textInfo.characterCount;
         readyForNewText = true;
@@ -152,6 +161,7 @@ public class TypewriterEffect : MonoBehaviour {
     }
 
     private IEnumerator SkipSpeedupReset() {
+        // don't let skip happen until this is finished
         yield return new WaitUntil(() => textBox.maxVisibleCharacters == textBox.textInfo.characterCount - 1);
         CurrentlySkipping = false;
     }

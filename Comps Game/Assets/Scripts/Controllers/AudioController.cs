@@ -5,6 +5,8 @@ using UnityEngine.Audio;
 
 public class AudioController : MonoBehaviour {
 
+    // placed on audio controller object
+
     [SerializeField] private AudioSource sfxAudioSource;
     [SerializeField] private AudioSource bgmAudioSource;
     [SerializeField] public List<AudioDictionaryElement> SFXList;
@@ -17,6 +19,7 @@ public class AudioController : MonoBehaviour {
     }
 
     void Start() {
+        // start background music for scene
         StartBGM();
     }
 
@@ -31,6 +34,8 @@ public class AudioController : MonoBehaviour {
     }
 
     public void StartBGM() {
+        // FOR DEBUG
+        // this will always be main menu when launching the game
         switch (SceneController.Instance.GetCurrentSceneName()) {
             case "MainMenu":
                 bgmAudioSource.clip = FindBGMByName("Main Menu BGM");
@@ -42,9 +47,10 @@ public class AudioController : MonoBehaviour {
         bgmAudioSource.Play();
     }
 
+    // PLAY MUSIC:
+
     public void ChangeBGM(string name) {
         if (bgmAudioSource.clip != FindBGMByName(name) || !bgmAudioSource.isPlaying) {
-            // Debug.Log("changing bgm to " + name);
             bgmAudioSource.clip = FindBGMByName(name);
             bgmAudioSource.Play();
         }
@@ -57,6 +63,8 @@ public class AudioController : MonoBehaviour {
     public void PlaySoundEffect(string name) {
         sfxAudioSource.PlayOneShot(FindSFXByName(name));
     }
+
+    // GET MUSIC:
 
     public AudioClip FindSFXByName(string name) {
         foreach (AudioDictionaryElement audioDictionaryElement in SFXList) {
@@ -79,6 +87,8 @@ public class AudioController : MonoBehaviour {
     }
 
 }
+
+// separate struct for pseudo-serializable dictionary
 
 [System.Serializable]
 public struct AudioDictionaryElement {

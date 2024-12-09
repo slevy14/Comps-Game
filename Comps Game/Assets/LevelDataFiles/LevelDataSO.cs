@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Scriptable Objects/LevelData")]
 public class LevelDataSO : ScriptableObject {
 
+    // SCRIPTABLE OBJECT
+    // Hold all level data
+
     [Header("Title")]
     public string levelName;
     public int levelNumber;

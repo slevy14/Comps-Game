@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyListController : MonoBehaviour {
 
+    // placed on persistent enemy list object
+
     [SerializeField] private EnemyListWrapper enemyListWrapper; //serializing for debug
     [SerializeField] public List<SpriteData> spriteDataList;
 
@@ -27,12 +29,13 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void FindJSON() { // meant to be used for initialization
+        // if saved enemy file exists, load it into object data
         string filepath = Application.persistentDataPath + $"/ALL_ENEMIES.json";
         if (System.IO.File.Exists(filepath)) {
             string json = System.IO.File.ReadAllText(filepath);
             enemyListWrapper = JsonUtility.FromJson<EnemyListWrapper>(json);
             Debug.Log("Enemies File exists!");
-        } else {
+        } else { // otherwise, create local file from asset enemy data
             Debug.Log("Enemies file doesn't exist. Pulling from asset files.");
             TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_ENEMIES_DEFAULT");
             enemyListWrapper = JsonUtility.FromJson<EnemyListWrapper>(json_textAsset.text);
@@ -40,6 +43,7 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void UpdateJSON() {
+        // save all enemies to json file
         string filePath = Application.persistentDataPath + $"/ALL_ENEMIES.json";
         string warriorsJSON = JsonUtility.ToJson(enemyListWrapper);
         System.IO.File.WriteAllText(filePath, warriorsJSON);
@@ -47,23 +51,23 @@ public class EnemyListController : MonoBehaviour {
     }
 
     public void AddWarrior(int index, WarriorFunctionalityData warriorData) {
+        // add current warrior data to list
         if (index >= enemyListWrapper.enemyList.Count) {
+            // editing a new warrior, create new entry
             enemyListWrapper.enemyList.Add(warriorData);
         } else { // editing an existing warrior
             enemyListWrapper.enemyList[index] = warriorData;
         }
+        // save to json
         UpdateJSON();
     }
 
     public void RemoveWarrior(int index) {
-        Debug.Log("count is " + enemyListWrapper.enemyList.Count + ", removing " + enemyListWrapper.enemyList[index].warriorName);
+        // remove enemy from list
         enemyListWrapper.enemyList.RemoveAt(index);
+        // update saved indices
         for (int i = 0; i < enemyListWrapper.enemyList.Count; i++) {
             enemyListWrapper.enemyList[i].warriorIndex = i;
-        }
-        Debug.Log("deleted! remaining warriors are:");
-        for (int i = 0; i < enemyListWrapper.enemyList.Count; i++) {
-            Debug.Log(enemyListWrapper.enemyList[i].warriorName);
         }
     }
 

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PauseMenuController : MonoBehaviour {
 
+    // persistent object allowing the pause menu to be displayed
 
     [SerializeField] private GameObject pauseMenuCanvas;
     [SerializeField] private GameObject confirmPromptMenu;
@@ -33,6 +34,7 @@ public class PauseMenuController : MonoBehaviour {
 
 
     void Update() {
+        // pause with the escape key
         if (Input.GetKeyDown(KeyCode.Escape)) {
             Pause();
         }
@@ -49,6 +51,7 @@ public class PauseMenuController : MonoBehaviour {
     }
 
     public void PromptQuitGame(bool fullQuit) {
+        // if full game quit, show additional prompt menu
         confirmPromptMenu.SetActive(true);
         Debug.Log("showing prompt quit menu");
         quitButton.SetActive(fullQuit);

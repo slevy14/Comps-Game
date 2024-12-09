@@ -12,10 +12,8 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private Image image;
     private TMP_Text text;
     private Image overlapBox;
-    // private GameObject inputField;
-    // private GameObject dropdownOne;
-    // private GameObject dropdownTwo;
 
+    // references to prev and next block used as doubly linked list
     // serialized for debug
     [SerializeField] private GameObject prevBlock;
     [SerializeField] private GameObject nextBlock;
@@ -31,18 +29,13 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField] private TMP_Text namePreview;
 
     void Awake() {
+        // set object references
         image = this.gameObject.GetComponent<Image>();
         text = this.transform.GetChild(0).GetComponent<TMP_Text>();
         overlapBox = this.transform.GetChild(1).GetComponent<Image>();
         SetBlockOffset(false);
-        // Debug.Log("offset: " + blockOffset.y);
-        // Debug.Log("awakened");
 
-        // when this script is instantiated,
-        // duplicate behavior of begin drag
-
-        // transform.SetParent(transform.root);
-        // Debug.Log("root");
+        // if this isn't a header, update parenting and data setters
         if (!isHeader) {
             parentAfterDrag = transform.parent;
             onWhiteboard = false;
@@ -57,16 +50,11 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
             }
         }
-        // transform.SetAsLastSibling();
-        // image.raycastTarget = false;
-
-        // come back to this -- not good practice to find by name!
-        // TMP_Text namePreview = GameObject.Find("NamePreview").GetComponent<TMP_Text>();
     }
 
     void Start() {
+        // prevent enemies from being edited
         if (DesignerController.Instance.isCurrentWarriorEnemy) {
-            Debug.Log("current warrior enemy! instantiating block with maskable " + false);
             SetInteractable(false);
         }
     }
@@ -79,37 +67,43 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         foreach (RaycastResult raycastResult in uiUnderMouseRaycasts) {
             uiUnderMouseObjects.Add(raycastResult.gameObject);
         }
+        // don't drag if grabbing overlap space
         if (!uiUnderMouseObjects.Contains(this.gameObject)) {
             Debug.Log("shouldn't drag! grabbing overlap space");
             eventData.pointerDrag = null;
             return;
         }
+        // don't drag if currently looking at enemy
         if (DesignerController.Instance.isCurrentWarriorEnemy) {
             Debug.Log("shouldn't drag! is enemy");
             eventData.pointerDrag = null;
             return;
         }
     
+        // remove from whiteboard
         onWhiteboard = false;
         transform.SetParent(transform.root);
         transform.SetAsLastSibling();
         SetMaskable(false);
 
+        // remove this object from linked list if connected to another block
         if (prevBlock != null) {
             prevBlock.GetComponent<Draggable>().SetNextBlock(null); // reset next block on previous
             prevBlock.GetComponent<Draggable>().SetOverlapUseable();
             DesignerController.Instance.UpdateStrengthDisplay();
             DesignerController.Instance.UpdateBehaviorsDisplay();
-            // Debug.Log("updated prev block next");
             prevBlock = null;
         }
         initialPos = transform.position;
 
+        // play sound
         AudioController.Instance.PlaySoundEffect("Block Pickup");
     }
 
     public void OnDrag(PointerEventData eventData) {
+        // move this block and attached stack to the mouse
         UpdateBlockPositions(this.gameObject, Input.mousePosition);
+
         // make blocks able to be overlapped
         DesignerController.Instance.EnableOverlapSpaces();
 
@@ -125,12 +119,12 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         block.transform.position = newPosition;
         SetOverlapUseable();
         if (nextBlock != null) {
-            // Debug.Log("next block not null");
             nextBlock.GetComponent<Draggable>().UpdateBlockPositions(nextBlock, newPosition - blockOffset);
         }
     }
 
     public void SetOverlapUseable() {
+        // overlap space useable if doesn't have anything next
         if (nextBlock != null) {
             overlapBox.gameObject.SetActive(false);
         } else {
@@ -144,29 +138,24 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void DestroyStack(GameObject block) {
-        // Debug.Log("Destroying " + this.gameObject.name + " from destroy stack");
+        // destroy this block and all blocks after it recursively
         if (this.nextBlock != null) {
             this.nextBlock.GetComponent<Draggable>().DestroyStack(nextBlock);
         }
-        // Debug.Log("destroying " + this.gameObject.name);
         Destroy(block);
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        // if (MouseOverWhiteboard()) {
-        //     onWhiteboard = true;
-        // }
-        // Debug.Log("ended drag over " + eventData.pointerCurrentRaycast.gameObject.name);
-
+        // check if this block is on whiteboard
         GameObject whiteboard = OverWhiteboard(eventData);
         if (whiteboard != null) {
             onWhiteboard = true;
             parentAfterDrag = whiteboard.transform;
         }
 
+        // if not header, try to place
         if (!isHeader) {
-            // Debug.Log("enddrag called");
-
+            // if not on whiteboard, delete this block stack and update warrior data
             if (!onWhiteboard && !DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform)) {
                 AudioController.Instance.PlaySoundEffect("Delete");
                 DesignerController.Instance.UpdateStrengthDisplay();
@@ -180,25 +169,28 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (SnapToBlock(eventData)) { // attempt to snap
                 parentAfterDrag = whiteboard.transform;
             } else { // didn't snap
-                // prevBlock.GetComponent<Draggable>().nextBlock = null; // reset next block on previous
                 AudioController.Instance.PlaySoundEffect("Block Drop");
-                // Debug.Log("not snapping");
             }
 
+            // parent this block to the whiteboard if it can
             transform.SetParent(parentAfterDrag);
-            // Debug.Log("set parent to " + parentAfterDrag.name);
             SetMaskable(true); 
-        } else { // is header
+        } else { // is header, return to whiteboard
             transform.SetParent(parentAfterDrag);
             SetMaskable(true);
             if (!onWhiteboard) {
-                // Debug.Log("header no longer on whiteboard");
                 UpdateBlockPositions(this.gameObject, initialPos);
             }
         }
+
+        // prevent overlap spaces from interfering with drag and drop
         DesignerController.Instance.DisableOverlapSpaces();
+        // value changed! need to save manually now
         DesignerController.Instance.justSaved = false;
     }
+
+    // SET VALUES TO AND FROM INPUTS
+    // update values on both the warrior data and the block
 
     public void SetValueFromSlider() {
         BlockData blockData = this.gameObject.GetComponent<BlockData>();
@@ -238,13 +230,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.GetChild(childIndex).gameObject.GetComponent<TMP_Dropdown>().value = int.Parse(val);
     }
 
+    // GET AND SET BLOCKS IN DOUBLY LINKED LIST
+
     public void SetNextBlock(GameObject nextBlock) {
         this.nextBlock = nextBlock;
-        // if (nextBlock != null) {
-        //     Debug.Log(this.gameObject.name + " has next " + nextBlock.name);
-        // } else {
-        //     Debug.Log("next block set to null");
-        // }
     }
 
     public void SetPrevBlock(GameObject prevBlock) {
@@ -259,7 +248,10 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         return this.prevBlock;
     }
 
+    // CHANGE BLOCK INTERACTIBILITY
+
     public void SetMaskable(bool value) {
+        // disable components of blocks from interfering with drag and drop
         image.maskable = value;
         image.raycastTarget = value;
         text.maskable = value;
@@ -311,8 +303,9 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
     }
 
-    public void SetInteractable(bool value) {
-        image.raycastTarget = true;
+    public void SetInteractable(bool value) { // mostly used for enemies
+        // disable components of blocks from being interacted with at all
+        image.raycastTarget = true; // leave this true to allow tooltips 
         overlapBox.raycastTarget = value;
 
         // loop through rest of children and handle cases
@@ -376,22 +369,24 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     // boolean, returns false if didn't snap
     private bool SnapToBlock(PointerEventData eventData) {
+        // find a block to snap to
         GameObject blockToSnapTo = DesignerController.Instance.FindBlockToSnapTo(eventData, this.transform);
 
+        // if found a block to snap to (and this block is not a header), snap!
         if (blockToSnapTo != null && !isHeader) {
-            // GameObject blockToSnapTo = eventData.pointerCurrentRaycast.gameObject.transform.parent.gameObject;
+            // confirm that previous block does not have a next
             if (blockToSnapTo.GetComponent<Draggable>().GetNextBlock() == null) {
-                // Debug.Log("snapping!");
                 onWhiteboard = true; // make sure still set to true to snap
 
+                // update linked list references
                 if (this.prevBlock != null) {
-                    // Debug.Log("setting " + this.prevBlock.name + " next to null");
                     this.prevBlock.GetComponent<Draggable>().SetNextBlock(null);
                 }
 
                 this.prevBlock = blockToSnapTo;
                 prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
 
+                // snap to correct position, based on offsets
                 BlockData.BehaviorType thisBlockBehavior = gameObject.GetComponent<BlockData>().behavior;
                 if (thisBlockBehavior == BlockData.BehaviorType.END_LOOP || thisBlockBehavior == BlockData.BehaviorType.END_FOR || thisBlockBehavior == BlockData.BehaviorType.END_IF || thisBlockBehavior == BlockData.BehaviorType.ELSE) {
                     prevBlock.GetComponent<Draggable>().SetBlockOffset(true);
@@ -400,10 +395,14 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 }
                 UpdateBlockPositions(this.gameObject, prevBlock.transform.position - prevBlock.GetComponent<Draggable>().blockOffset);
                 DesignerController.Instance.ToggleSnappingIndicator(null, gameObject.GetComponent<RectTransform>()); // disable the snapping indicator
+
+                // update strength and behavior counts
                 DesignerController.Instance.UpdateStrengthDisplay();
                 DesignerController.Instance.UpdateBehaviorsDisplay();
-                // Debug.Log(this.prevBlock.name);
+                
+                // play sound
                 AudioController.Instance.PlaySoundEffect("Block Snap");
+
                 return true; // snapped 
             }
         }
@@ -412,19 +411,18 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     
     private GameObject OverWhiteboard(PointerEventData eventData) {
+        // check over whiteboard
+        // loop through all objects under mouse
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(eventData, raycastResults);
-
-        // Debug.Log("hit " + raycastResults.Count + " objects: ");
         for (int i = 0; i < raycastResults.Count; i++) {
-            // Debug.Log("found object with tag" + raycastResults[i].gameObject.tag);
             if (raycastResults[i].gameObject.tag == "whiteboard") {
-                // Debug.Log("over whiteboard!");
+                // return whiteboard object if over it
                 return raycastResults[i].gameObject;
             }
-            // Debug.Log(i);
         }
-        // Debug.Log("not over whiteboard!");
+
+        // not over whiteboard
         return null;
     }
 }

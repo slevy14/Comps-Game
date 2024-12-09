@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MainMenuController : MonoBehaviour {
 
+    // used in the main menu for updating buttons
+
     [SerializeField] private GameObject continueButton;
 
     public static MainMenuController Instance = null; // for persistent
@@ -26,9 +28,11 @@ public class MainMenuController : MonoBehaviour {
         // hide continue button if nothing to continue from
         if (ProgressionController.Instance.continueLevelFrom == -1) {
             continueButton.SetActive(false);
-        } else {
+        } else { // otherwise update text to show continue from level
             continueButton.transform.GetChild(0).GetComponent<TMP_Text>().text = $"Continue\nLevel {ProgressionController.Instance.continueLevelFrom}";
         }
+
+        // start music
         AudioController.Instance.ChangeBGM("Main Menu BGM");
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 // SOME HELPER FUNCTIONS USEFUL TO ALL!
-// this could (and probably should) just be a static class
+// this could just be a static class
 // but by making it a monobehaviour object, we can still use update for checks
 public class HelperController : MonoBehaviour {
 
@@ -25,6 +25,7 @@ public class HelperController : MonoBehaviour {
     }
 
     void Update() {
+        // play click sound effect any time mouse is clicked
         if (Input.GetMouseButtonDown(0)) {
             AudioController.Instance.PlaySoundEffect("Click");
         }
@@ -32,13 +33,15 @@ public class HelperController : MonoBehaviour {
 
 
     public List<RaycastResult> OverUI() {
+        // get pointer position
         PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
         pointerEventData.position = Input.mousePosition;
 
+        // loop through all objects below the mouse
         List<RaycastResult> raycastResults = new List<RaycastResult>();
         EventSystem.current.RaycastAll(pointerEventData, raycastResults);
         for (int i = 0; i < raycastResults.Count; i++) {
-            // Debug.Log(raycastResults[i].gameObject.name);
+            // if an object is not on the UI layer, remove it
             if (raycastResults[i].gameObject.layer != 5) { // ui layer
                 raycastResults.RemoveAt(i);
                 i--;
@@ -51,16 +54,19 @@ public class HelperController : MonoBehaviour {
         } else {
             Debug.Log("Not over UI! Count is " + raycastResults.Count);
         }
+
+        // return all objects remaining in the list
         return raycastResults;
     }
 
     public int CalculateWarriorStrength(int attackPower, int attackRange, int healPower, int projectilePower, int speed, int maxHealth, int defense) {
+        // perform strength calculation, reutn it rounded to an int
         float strength = attackPower*attackRange + healPower*attackRange + projectilePower + speed/10 + maxHealth*(1 + ((float)defense / (float)(defense+maxHealth)));
         return Mathf.RoundToInt(strength);
     }
 
     public bool ValidateBehaviorCount(int warriorIndex) {
-        // validate behavior count
+        // count all behaviors that are not functional blocks
         int count = 0;
         List<List<BlockDataStruct>> behaviorLists = new List<List<BlockDataStruct>> {WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).moveFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useWeaponFunctions, WarriorListController.Instance.GetWarriorAtIndex(warriorIndex).useSpecialFunctions};
         List<int> behaviorIndices = new List<int> {1, 2, 3, 4, 5, 6, 13, 14, 15};
@@ -71,6 +77,7 @@ public class HelperController : MonoBehaviour {
                 }
             }
         }
+        // return true if count is below max
         return count <= ProgressionController.Instance.levelDataList[ProgressionController.Instance.currentLevel].maxBlocks;
     }
 

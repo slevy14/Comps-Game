@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class WarriorListController : MonoBehaviour {
 
+    // placed on persistent warrior list object
+
     [SerializeField] private WarriorListWrapper warriorListWrapper; //serializing for debug
     [SerializeField] public List<SpriteData> spriteDataList;
 
@@ -41,19 +43,22 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void FindJSON(string warriorsFile) { // meant to be used for initialization
+        // if saved warrior file exists, load it into object data
         string filepath = Application.persistentDataPath + $"/{warriorsFile}.json";
         if (System.IO.File.Exists(filepath)) {
             string json = System.IO.File.ReadAllText(filepath);
             warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json);
             Debug.Log("Warriors File exists!");
             return;
-        } else {
+        } else { // otherwise, create new warrior list from default asset file
             Debug.Log("Warriors file doesn't exist. Pulling from asset files.");
             ResetWarriorsJSON(warriorsFile);
         }
     }
 
     public void ResetWarriorsJSON(string warriorsFile) {
+        // completely reset warrior list file
+        // used for new game
         Debug.Log("Resetting warriors json file to default");
         TextAsset json_textAsset = Resources.Load<TextAsset>("WarriorListTemplates/ALL_WARRIORS_DEFAULT");
         warriorListWrapper = JsonUtility.FromJson<WarriorListWrapper>(json_textAsset.text);
@@ -61,6 +66,7 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void UpdateJSON(string warriorsFile) {
+        // save all warriors to json file
         string filePath = Application.persistentDataPath + $"/{warriorsFile}.json";
         string warriorsJSON = JsonUtility.ToJson(warriorListWrapper);
         System.IO.File.WriteAllText(filePath, warriorsJSON);
@@ -68,12 +74,15 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void AddWarrior(int index, WarriorFunctionalityData warriorData) {
+        // add current warrior data to list
         if (index >= warriorListWrapper.warriorList.Count) {
+            // editing a new warrior, create new entry
             warriorListWrapper.warriorList.Add(warriorData);
         } else { // editing an existing warrior
             warriorListWrapper.warriorList[index] = warriorData;
         }
 
+        // save to sandbox or level json, depending on which level we are in
         if (ProgressionController.Instance.currentLevel == 0) {
             UpdateJSON("sandbox_warriors");
         } else {
@@ -82,14 +91,11 @@ public class WarriorListController : MonoBehaviour {
     }
 
     public void RemoveWarrior(int index) {
-        Debug.Log("count is " + warriorListWrapper.warriorList.Count + ", removing " + warriorListWrapper.warriorList[index].warriorName);
+        // remove warrior from list
         warriorListWrapper.warriorList.RemoveAt(index);
+        // update saved indices
         for (int i = 0; i < warriorListWrapper.warriorList.Count; i++) {
             warriorListWrapper.warriorList[i].warriorIndex = i;
-        }
-        Debug.Log("deleted! remaining warriors are:");
-        for (int i = 0; i < warriorListWrapper.warriorList.Count; i++) {
-            Debug.Log(warriorListWrapper.warriorList[i].warriorName);
         }
     }
 

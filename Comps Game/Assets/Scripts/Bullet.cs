@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+    // NOT IN USE!!
+    // leftover from old tower defense code!
+    // leaving here to not break unity references
+
+
+
+
+
+
     [Header("References")]
     [SerializeField] private Rigidbody2D rb;
 

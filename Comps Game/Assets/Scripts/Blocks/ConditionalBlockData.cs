@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConditionalBlockData : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+public class ConditionalBlockData : MonoBehaviour {
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // NOT IN USE
+    // originally, was going to be a separate class for conditional blocks
+    // but instead all blocks use BlockData
+
+    // clearly there's nothing to see here
+    // carry on with your day
+
 }

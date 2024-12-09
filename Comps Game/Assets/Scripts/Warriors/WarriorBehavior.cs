@@ -11,6 +11,9 @@ using UnityEngine.UI;
 
 public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
+    // placed on the warrior prefab!
+    // holds the actual interpreter for code blocks
+
     // codeable properties
     [Header("Properties")]
     [SerializeField] public string warriorName;
@@ -78,26 +81,32 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     // setup
     void Awake() {
+        // initialize dictionaries
         propertiesDict = new Dictionary<BlockData.Property, float>();
         conditionsDict = new();
         forCounters = new();
 
         infinityCounters = new();
 
+        // get reference to input manager
         inputManager = GameObject.Find("InputManager").GetComponent<InputManager>();
 
-        // first child is visual
+        // get reference to children on this object
         sprite = transform.GetChild(0).GetComponent<Sprite>();
         healthBar = transform.GetChild(1).transform.GetChild(0).GetComponent<Slider>();
         pointer = transform.GetChild(2).gameObject;
         SetImageFacing();
 
+        // set default vectors
         heading = new Vector2((int)1, (int)0);
         tilesToHitRelative = new List<Vector2>{new Vector2((int)1, (int)0), new Vector2((int)2, (int)0), new Vector2((int)1, (int)1), new Vector2((int)1, (int)-1), new Vector2((int)2, (int)1), new Vector2((int)2, (int)-1)};
+        
+        // set default animator speed
         animator.speed = 2.01f - LevelController.Instance.battleSpeed;
     }
 
     public void SetIsEnemy() {
+        // set enemy visuals
         isEnemy = true;
         heading = new Vector2((int)-1, (int)0);
         SetImageFacing();
@@ -107,35 +116,38 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     // DRAGGING
-    // ondrag needed to start drag from ui
     public void OnDrag(PointerEventData eventData) {
-        // transform.position = inputManager.GetSelectedMapPosition();
+        // needed to start drag from ui
+        // doesn't do anything otherwise
     }
 
     public void StartDrag() {
+        // if already dragging, return
         if (isDragging) {
             return;
         }
 
-        // Debug.Log("started drag");
+        // start drag
         isDragging = true;
         // save initial position
         initialPos = transform.position;
 
+        // remove this object from grid when picked up
         if (LevelController.Instance.objectsOnGrid.ContainsKey(this.gameObject)) {
             Debug.Log("former position for dragging object: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
             initialGridPos = LevelController.Instance.objectsOnGrid[this.gameObject];
             LevelController.Instance.objectsOnGrid.Remove(this.gameObject);
         }
 
-        // visuals
+        // rescale to look picked up
         this.transform.localScale *= 1.5f;
 
-        // audio
+        // play sound
         AudioController.Instance.PlaySoundEffect("Warrior Pickup");
     }
 
     public void EndDrag(int endIndex) { // index for switch
+        // determine what to do after drag (destroy if need to)
         isDragging = false;
         switch (endIndex) {
             case 0: // end over empty grid tile
@@ -151,21 +163,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             default:
                 break;
         }
+
+        // save grid with warrior on it
         GridSaveLoader.Instance.SaveGridToJSON();
-        // visuals
+
+        // rescale visuals to place
         this.transform.localScale /= 1.5f;
 
-        // audio
+        // play sound
         AudioController.Instance.PlaySoundEffect("Warrior Drop");
     }
 
+    // Highlight and Un-highlight on mouseover
+
     void OnMouseEnter() {
         transform.GetChild(0).GetComponent<SpriteOutline>().enabled = true;
-        // if (!isEnemy) {
-        //     transform.GetChild(0).GetComponent<SpriteOutline>().SetColor(new Color(104, 104, 241));
-        // } else {
-        //     transform.GetChild(0).GetComponent<SpriteOutline>().SetColor(new Color(241, 104, 104));
-        // }
     }
 
     void OnMouseExit() {
@@ -176,11 +188,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     
     // Update is called once per frame
     void Update() {
-        // // DRAG
-        // if (isDragging) { // this allows dragging from worldspace
-        //     transform.position = inputManager.GetSelectedMapPosition();
-        // }
-        animator.speed = 3.01f - LevelController.Instance.battleSpeed;
+        // update battle speed as changed mid-battle
+        animator.speed = 2.01f - LevelController.Instance.battleSpeed;
         
     }
 
@@ -188,19 +197,19 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         // set the value for each property to 0
         // name and none are spectial properties that will be set to 0 but those values don't mean anything
         foreach (BlockData.Property property in Enum.GetValues(typeof(BlockData.Property))) {
-            // Debug.Log(property);
             propertiesDict[property] = 0;
         }
-        // Debug.Log(this.propertiesDict);
     }
 
     public void MarkCurrentTurn(bool value) {
+        // activate or deactivate turn
         isCurrentTurn = value;
         pointer.SetActive(value);
         ToggleStaminaIndicator(true);
     }
 
     public void SetPropertiesAndBehaviors(List<BlockDataStruct> properties, List<BlockDataStruct> move, List<BlockDataStruct> useWeapon, List<BlockDataStruct> useSpecials) {
+        // intialize data on this object from stored data lists
         InitializeProperties();
         propertiesData = properties;
         SetProperties();
@@ -209,12 +218,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         useWeaponData = useWeapon;
         useSpecialData = useSpecials;
 
+        // set health visual
         UpdateHealthDisplay();
-
+        // recalculate strength for this object
         totalStrength = CalculateTotalStrength();
     }
 
     public void UpdateHealthDisplay() {
+        // update health bar, used when taking damage or healing
         healthBar.transform.GetChild(2).GetComponent<TMP_Text>().text = Mathf.CeilToInt(propertiesDict[BlockData.Property.HEALTH]) + " / " + maxHealth;
     }
 
@@ -223,15 +234,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public int CalculateTotalStrength() {
-        // FORMULA:
-        // strength = attackPower*attackRange + healPower*attackRange + projectilePower + maxHealth*(1+ (defense) / (defense+maxHealth+1)) + speed/10;
-        // (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth))
-        
         return HelperController.Instance.CalculateWarriorStrength((int)propertiesDict[BlockData.Property.MELEE_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE], (int)propertiesDict[BlockData.Property.HEAL_POWER], (int)propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], (int)propertiesDict[BlockData.Property.MOVE_SPEED], (int)maxHealth, (int)propertiesDict[BlockData.Property.DEFENSE]);
     }
 
-    // check if warrior preexisting on grid is valid strength and behaviors
     public void CheckValidOnGrid() {
+        // check if warrior preexisting on grid is valid strength and behaviors
+        // automatically true if in sandbox or enemy
         if (isEnemy || ProgressionController.Instance.currentLevel == 0) {
             isValidStrengthAndBehaviors = true;
             return;
@@ -245,11 +253,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
     }
 
-
-    // FUNCTIONS FROM WHITEBOARD HEADERS
     private void SetProperties() {
+        // loop through all stored property blocks
         for (int i = 0; i < propertiesData.Count; i++) {
             float newVal = 0;
+            // for each property, parse its value as a string
+            // store data to properties dict
+            // store data to additional vars as needed
             switch (propertiesData[i].property) {
                 case BlockData.Property.NAME:
                     // explicitly set name variable
@@ -330,14 +340,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     // IN PROGRESS: 
     // NOT STARTED: Foreach
 
-    // BIG TODO: projectile range???
+    // // Possible future refactor: add projectile range
 
     // Major Functions
     public IEnumerator Move() {
-        // reset target each time bc it's coded in
+        // reset target each time because it's coded in
         // this will prevent targeting errors after destroying a warrior
         target = null;
         Debug.Log("MOVE FUNCTIONS:");
+        // run all move functions first
         if (gameObject.activeSelf) {
             yield return StartCoroutine(RunBehaviorFunctions(moveData));
         }
@@ -345,11 +356,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public IEnumerator UseWeapon() {
         Debug.Log("USE WEAPON FUNCTIONS:");
+        // run all use weapon functions second
         if (gameObject.activeSelf) {
             yield return StartCoroutine(RunBehaviorFunctions(useWeaponData));
         }
     }
 
+    // Not in use -- for a future update (additional header that would have different functionality)
     public IEnumerator UseSpecial() {
         Debug.Log("USE SPECIAL FUNCTIONS:");
         if (gameObject.activeSelf) {
@@ -357,14 +370,15 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         }
     }
 
-    // Parser:
-    // loop through all behavior, run code for each as needed
+    // Interpreter:
+    // loop through all behaviors, run code for each as needed
     public IEnumerator RunBehaviorFunctions(List<BlockDataStruct> behaviorList) {
-        conditionsDict.Clear();
-        forCounters.Clear();
-        infinityCounters.Clear();
+        // reset counters
+        conditionsDict.Clear(); // any stored conditions to check
+        forCounters.Clear(); // any for loops that may have been started
+        infinityCounters.Clear(); // any counters for infinite while loops that may have been started
+        // loop through all functions in behavior list
         for (int i = 0; i < behaviorList.Count; i++) {
-            // Debug.Log("i is " + i);
             // quit if battle over
             if (!isAlive || LevelController.Instance.battleFinished) {
                 break;
@@ -387,7 +401,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 yield return new WaitForSeconds(LevelController.Instance.battleSpeed);
             }
 
-            // switch behavior
+            // switch on behavior
             switch (behaviorList[i].behavior) {
                 /*------------*/
                 /*    TURN    */
@@ -399,20 +413,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 rotate either left or right, set heading. affects what "forward" movement looks like */
                 case BlockData.BehaviorType.TURN:
                     Debug.Log("turn");
-                    Debug.Log("heading before turn: " + heading);
-                    // List<Vector2> possibleHeadings = new List<Vector2> {new Vector2(1, 0), new Vector2(0, -1), new Vector2(-1, 0), new Vector2(0, 1)};
-                    // int headingIndex = possibleHeadings.IndexOf(heading);
                     Vector2 newHeading = heading;
+                    // change heading based on value
                     if (behaviorList[i].values[0] == "0") { // TURN LEFT
                         newHeading = RotateLeft(heading);
-                        Debug.Log("after left rotation, " + newHeading);
                     } else { // TURN RIGHT
                         newHeading = RotateRight(heading);
-                        Debug.Log("after right rotation, " + newHeading);
                     }
                     this.heading = newHeading;
+                    // update visual to match new heading
                     SetImageFacing();
-                    // Debug.Log("heading after turn: " + heading);
                     break;
 
                 /*------------*/
@@ -428,11 +438,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.STEP:
                     Debug.Log("step");
                     Vector2 stepPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
-                    // Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
+                    // use heading to determine relative movement step
                     if (behaviorList[i].values[0] == "0") { // FORWARD
-                        // do something with heading
                         stepPos += heading;
-                        // Debug.Log("newPos forward: " + stepPos);
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
                         stepPos -= heading;
                     } else if (behaviorList[i].values[0] == "2") { // LEFT
@@ -440,17 +448,20 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     } else { // RIGHT
                         stepPos += RotateRight(heading);
                     }
+                    // move if able to
                     if (!LevelController.Instance.objectsOnGrid.ContainsValue(stepPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0))) {
                         this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)stepPos.x, (int)stepPos.y, 0));
                         LevelController.Instance.objectsOnGrid[this.gameObject] = stepPos;
-                    } else {
+                    } else { // otherwise, don't move
                         Debug.Log("either tile full or would move off map");
                     }
+                    // play sound
+                    AudioController.Instance.PlaySoundEffect("Footsteps");
                     break;
 
                 /*-----------*/
                 /*    RUN    */
-                /*-----------*/ /*   Current Status: Done
+                /*-----------*/ /*   Current Status: DONE
                 one dropdown
                     choose direction [0]
                         0: forward
@@ -461,12 +472,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.RUN:
                     Debug.Log("run");
                     Vector2 runPos = new Vector2((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y);
-                    Debug.Log("current pos: " + LevelController.Instance.objectsOnGrid[this.gameObject]);
+                    // use heading to determine relative movement step
                     if (behaviorList[i].values[0] == "0") { // FORWARD
-                        // do something with heading
                         runPos += heading;
                         runPos += heading;
-                        Debug.Log("newPos forward: " + runPos);
                     } else if (behaviorList[i].values[0] == "1") { // BACKWARD
                         runPos -= heading;
                         runPos -= heading;
@@ -477,12 +486,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         runPos += RotateRight(heading);
                         runPos += RotateRight(heading);
                     }
+                    // move if able to
                     if (!LevelController.Instance.objectsOnGrid.ContainsValue(runPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)runPos.x, (int)runPos.y, 0))) {
                         this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)runPos.x, (int)runPos.y, 0));
                         LevelController.Instance.objectsOnGrid[this.gameObject] = runPos;
-                    } else {
+                    } else { // otherwise, don't move
                         Debug.Log("either tile full or would move off map");
                     }
+                    // play sound
                     AudioController.Instance.PlaySoundEffect("Footsteps");
                     break;
 
@@ -496,6 +507,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 sneak behind enemies */
                 case BlockData.BehaviorType.TELEPORT:
                     Debug.Log("teleport");
+                    // break if no target
                     if (target == null) {
                         IndicateNoTarget();
                         break;
@@ -510,11 +522,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             if (!LevelController.Instance.objectsOnGrid.ContainsValue(teleportPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0))) {
                                 this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
                                 LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
-
-                                // auto turn (no longer used):
-                                // heading = target.heading;
-                                // SetImageFacing();
-                            } else {
+                            } else { // otherwise, don't move
                                 Debug.Log("either tile full or would teleport off map");
                             }
                         } catch {
@@ -525,16 +533,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         // break if target stops existing at an inconvenient time
                         try {
                             // if left flank free:
-                            // rotate left and add to target position to check flank
+                            // add to target position to check flank
                             Vector2 leftFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateLeft(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateLeft(target.heading).y));
                             if (!LevelController.Instance.objectsOnGrid.ContainsValue(leftFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0))) {
                                 // get target position plus rotated left heading
                                 // try set this position to new position
                                 this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
                                 LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
-                                // auto turn (no longer used):
-                                // heading = RotateRight(target.heading);
-                                // SetImageFacing();
                                 break;
                             }
                             // else if right flank free
@@ -544,9 +549,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                                 // try set this position to new position
                                 this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
                                 LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
-                                // auto turn (no longer used):
-                                // heading = RotateLeft(target.heading);
-                                // SetImageFacing();
                                 break;
                             }
                         } catch {
@@ -554,6 +556,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             break;
                         }
                     }
+                    // play sound
                     AudioController.Instance.PlaySoundEffect("Teleport");
                     break;
 
@@ -575,15 +578,18 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     if (!UseStamina()) {
                         break;
                     }
+
+                    // get list of relative range to hit
                     List<Vector2> adjustedList = GetMeleeRange();
 
-                    // loop through adjusted list:
-                        // deal damage to square
-
+                    // play attack animation
                     this.animator.SetTrigger("Attack");
                     yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
 
+                    // loop through adjusted list:
+                        // deal damage or heal to square if enemy or ally is there
                     foreach (Vector2 tile in adjustedList) {
+                        // show attack visuals
                         Vector2 tileToAttack = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                         Vector3 meleeIconPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)tileToAttack.x, (int)tileToAttack.y, 0));
                         meleeIconPlacement.z = -1; // keep on top
@@ -591,6 +597,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         if (isMeleeHeal) {
                             icon.GetComponent<SpriteRenderer>().sprite = healSprite;
                         }
+                        // if tile has something to hit, hit warrior in tile
                         if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToAttack)) {
                             WarriorBehavior hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToAttack).Key.GetComponent<WarriorBehavior>();
                             if (hitWarrior.isEnemy == this.isMeleeTargetAllies) {
@@ -603,6 +610,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             }
                         }
                     }
+                    // play sound
                     AudioController.Instance.PlaySoundEffect("Melee Attack");
                     break;
 
@@ -627,7 +635,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     Debug.Log("target");
 
                     // assign to target value of this warrior
-
                     List<WarriorBehavior> targetTeam = new();
                     if (behaviorList[i].values[1] == "0") { // enemy target
                         targetTeam = LevelController.Instance.enemyWarriorsList;
@@ -640,8 +647,10 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         break;
                     }
 
+                    // set default target to first in list
                     target = targetTeam[0];
                     float distance = -1;
+                    // store distance between this warrior and its target
                     if (target != this) {
                         distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[target.gameObject]);
                     }
@@ -661,9 +670,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             if (Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]) < distance) {
                                 distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]);
                                 target = warrior;
-                                Debug.Log(warrior.warriorName + " was closer");
-                            } else {
-                                Debug.Log(warrior.warriorName + " was not closer");
                             }
                         }
                     } else if (behaviorList[i].values[0] == "1") { // strongest
@@ -673,7 +679,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             // if stronger, replace object
                         // set target to strongest
                         target = CalculateStrongest(targetTeam);
-
                     } else if (behaviorList[i].values[0] == "2") { // farthest
                         // initialize farthest manhattan distance
                         if (distance == -1) {
@@ -689,9 +694,6 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             if (Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]) > distance) {
                                 distance = Vector2.Distance(LevelController.Instance.objectsOnGrid[this.gameObject], LevelController.Instance.objectsOnGrid[warrior.gameObject]);
                                 target = warrior;
-                                // Debug.Log(warrior.warriorName + " was further");
-                            } else {
-                                // Debug.Log(warrior.warriorName + " was not further");
                             }
                         }
                     } else if (behaviorList[i].values[0] == "3") { // weakest
@@ -702,11 +704,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         // set target to weakest
                         target = CalculateWeakest(targetTeam);
                     } else if (behaviorList[i].values[0] == "4") { // random
+                        // pick a random warrior from target team
                         int randIndex = UnityEngine.Random.Range(0, targetTeam.Count);
                         target = targetTeam[randIndex];
                     } else if (behaviorList[i].values[0] == "5") { // healthiest
+                        // loop through target team
+                            // find warrior with most health
                         target = CalculateHealthiest(targetTeam);
                     } else if (behaviorList[i].values[0] == "6") { // frailest
+                        // loop through target team
+                            // find warrior with least health
                         target = CalculateFrailest(targetTeam);
                     }
                     Debug.Log("set target to " + target.warriorName);
@@ -736,10 +743,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 basic while looping */
                 case BlockData.BehaviorType.WHILE_LOOP:
                     Debug.Log("while loop");
+                    // add this loop to the infinity counters dict
                     if (!infinityCounters.ContainsKey(i)) {
                         infinityCounters[i] = MAX_INFINITY_COUNTER;
                     }
-                    // check condition
+                    // check if condition matches expected result ("0"==true, "1"==false)
                     // add index and result to conditions dict
                     bool whileLoopCondition = behaviorList[i].values[1] == "0" ? true : false;
 
@@ -765,13 +773,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         conditionsDict[i] = CheckInTargetRange() == whileLoopCondition;
                     }
 
-                    // if false just jump past
+                    // if false or loop is infinite, just jump past
                     if (conditionsDict[i] == false || infinityCounters[i] <= 0) {
                         infinityCounters[i] = MAX_INFINITY_COUNTER;
                         Debug.Log("resetting infinity counter for index: " + i);
                         i = int.Parse(behaviorList[i].values[2]) - 1;
                         continue;
                     }
+                    // otherwise tick down infinity counter
                     infinityCounters[i]--;
                     Debug.Log("ticking down infinity counter at " + i + " is " + infinityCounters[i]);
                     break;
@@ -787,14 +796,17 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 loop x times */
                 case BlockData.BehaviorType.FOR_LOOP:
                     Debug.Log("for loop");
+                    // add this loop to the for counters dict
                     if (!forCounters.ContainsKey(i)) {
                         forCounters[i] = int.Parse(behaviorList[i].values[0]);
                     }
 
+                    // if looped enough times, jump to end of for loop
                     if (forCounters[i] <= 0) {
                         i = int.Parse(behaviorList[i].values[1]) - 1;
                         continue;
                     }
+                    // otherwise, tick down counter
                     forCounters[i]--;
                     Debug.Log("ticking down for counter at " + i + " to " + forCounters[i]);
                     break;
@@ -807,14 +819,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     JUMP INDEX [0]
                 end a while loop*/
                 case BlockData.BehaviorType.END_LOOP:
-                    // if conditions dict at jump index false, jump back
-                    // else continue
-                    // if (conditionsDict[int.Parse(behaviorList[i].values[0])])
-
-                    // OR
-                    // just jump back to the beginning because the loop jumps past this
                     Debug.Log("end loop");
 
+                    // jump back to beginning of loop
                     i = int.Parse(behaviorList[i].values[0])-1;
 
                     break;
@@ -825,18 +832,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 no dropdowns
 
                     JUMP INDEX [0]
-                end either a for loop*/
+                end a for loop*/
                 case BlockData.BehaviorType.END_FOR:
-                    // if conditions dict at jump index false, jump back
-                    // else continue
-                    // if (conditionsDict[int.Parse(behaviorList[i].values[0])])
-
-                    // OR
-                    // just jump back to the beginning because the loop jumps past this
                     Debug.Log("end for");
 
+                    // jump back to beginning of loop
                     i = int.Parse(behaviorList[i].values[0])-1;
-
                     break;
                 
                 /*----------*/
@@ -863,7 +864,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 case BlockData.BehaviorType.IF:
                     Debug.Log("if");
 
-                    // check condition
+                    // check if condition matches expected result ("0"==true, "1"==false)
                     // add index and result to conditions dict
                     bool ifCondition = behaviorList[i].values[1] == "0" ? true : false;
 
@@ -905,9 +906,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 basic else case */
                 case BlockData.BehaviorType.ELSE:
                     Debug.Log("else");
-                    Debug.Log("checking to see if condition from IF at index " + behaviorList[i].values[0] + " is true");
+                    // if matching IF condition is true, skip the ELSE
                     if (conditionsDict[int.Parse(behaviorList[i].values[0])] == true) { // skip else, jump to endif
-                        Debug.Log("try jump to " + (int.Parse(behaviorList[i].values[1]) - 1));
                         i = int.Parse(behaviorList[i].values[1]) - 1;
                         continue;
                     }
@@ -939,7 +939,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 */
                 case BlockData.BehaviorType.MELEE_SETTINGS:
                     Debug.Log("melee settings");
-                    
+                    // update melee settings variables
                     isMeleeHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isMeleeTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
@@ -958,7 +958,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 */
                 case BlockData.BehaviorType.RANGED_SETTINGS:
                     Debug.Log("ranged settings");
-
+                    // update magic settings variables
                     isRangedHeal = behaviorList[i].values[0] == "0" ? false : true;
                     isRangedTargetAllies = behaviorList[i].values[1] == "0" ? false : true;
                     break;
@@ -974,11 +974,13 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     if (!UseStamina()) {
                         break;
                     }
+                    // don't fire projectile if no target
                     if (target == null) {
                         IndicateNoTarget();
                         break;
                     }
                     
+                    // play animation, ranged if it exists, regular if not
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
                         this.animator.SetTrigger("RangedAttack");
                     } else {
@@ -1002,6 +1004,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                             projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
                         }
                         // doing damage handled on projectile object
+
+                        // play sound
                         AudioController.Instance.PlaySoundEffect("Fire Projectile");
                     } catch {
                         IndicateNoTarget();
@@ -1026,17 +1030,20 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 no dropdowns
                 recharge stamina to full */
                 case BlockData.BehaviorType.RECHARGE_STAMINA:
+                    // re-enable stamina indicator
                     ToggleStaminaIndicator(true);
-                    // FIXME: add sound effect
                     break;
             }
+            // if no health now, this warrior is dead
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && isCurrentTurn) {
                 Die();
             }
         }
     }
 
-    // Helper Functions
+    // HELPER FUNCTIONS
+
+    // rotate heading vector left or right
     public Vector2 RotateLeft(Vector2 vector) {
         return new Vector2((int)-vector.y, (int)vector.x);
     } 
@@ -1044,19 +1051,24 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         return new Vector2((int)(- vector.y * (-1)), (int)(vector.x * (-1)));
     }
 
+    // check that target is in melee range
     public bool TargetInRange() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
+        // return false if missing target at odd time
         try {
+            // loop through melee range
             List<Vector2> meleeRange = GetMeleeRange();
             foreach (Vector2 tile in meleeRange) {
                 Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
                 if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
                     GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
                     if (hitWarrior.GetComponent<WarriorBehavior>() == target) {
+                        // target found
                         return true;
                     }
                 }
@@ -1066,22 +1078,26 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             IndicateNoTarget();
             return false;
         }
-        return false;
+        return false; // target not in range
     }
 
     public bool InTargetRange() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
+        // return false if missing target at odd time
         try {
+            // loop through target's melee range
             List<Vector2> targetMeleeRange = target.GetMeleeRange();
             foreach (Vector2 tile in targetMeleeRange) {
                 Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + tile.y));
                 if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
                     GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
                     if (hitWarrior.GetComponent<WarriorBehavior>() == this) {
+                        // found this warrior in range
                         return true;
                     }
                 }
@@ -1091,9 +1107,11 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             IndicateNoTarget();
             return false;
         }
-        return false;
+        return false; // not in target's range
     }
 
+    // DEPRECATED
+    // checks if warrior passed in is within melee range of this warrior
     public bool WarriorInRange(GameObject warriorGameObject) {
         Debug.Log("warrior is at " + LevelController.Instance.objectsOnGrid[warriorGameObject]);
         List<Vector2> meleeRange = GetMeleeRange();
@@ -1120,6 +1138,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public bool FacingTarget() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
@@ -1129,79 +1148,89 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return true;
         }
 
-        // Debug.Log("checking if facing " +target.warriorName);
+        // return false if no target at odd time
         try {
+            // get target location
             Vector2 targetPos = LevelController.Instance.objectsOnGrid[target.gameObject];
+            // calculate angle between this heading and target heading
             Vector2 hereToTarget = new Vector2((int)(targetPos.x - LevelController.Instance.objectsOnGrid[this.gameObject].x), (int)(targetPos.y - LevelController.Instance.objectsOnGrid[this.gameObject].y));
+            // if within 45 degree vision cone, then facing
             if (Vector2.Angle(heading, hereToTarget) <= 45) {
-                Debug.Log ("distance vec: " + hereToTarget + ", current heading: " + heading);
-                Debug.Log("facing " + target.warriorName + ", angle " + Vector2.Angle(heading, hereToTarget));
                 return true;
             }
         } catch {
             Debug.Log("couldn't find target in dictionary, likely");
+            return false;
         }
-        
-        return false;
+        return false; // not facing
     }
 
     public bool TargetLowHealth() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
+        // return false if no target at odd time
         try {
+            // true if target less than 1/3 health
             if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
                 return true;
             }
         } catch {
             Debug.Log("target was destroyed during check for in target range!");
             IndicateNoTarget();
-            return false;
+            return false; // no target
         }
-        return false;
+        return false; // not low health
     }
 
     public bool CheckTargetAttackType(BlockData.Property property) {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
+        // return false if no target at odd time
         try {
+            // true if target has this property as an attached block (not just default 0 val)
             if (target.propertiesDict[property] > 1) {
                 return true;
             }
         } catch {
             Debug.Log("target was destroyed during check for in target range!");
             IndicateNoTarget();
-            return false;
+            return false; // no target
         }
-        return false;
+        return false; // target attack type doesn't match
     }
 
     public bool CheckMagicShield() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
+        // return magic shield value
         return target.GetMagicShield();
     }
 
     public bool CheckInTargetRange() {
+        // return if no target
         if (target == null) {
             IndicateNoTarget();
             return false;
         }
 
         // run the in range function on the enemy with this warrior as the object
-        // return WarriorInRange(this.gameObject);
         return InTargetRange();
     }
 
     public bool SelfLowHealth() {
+        // return true if self at less than 1/3 health, false otherwise
         if (propertiesDict[BlockData.Property.HEALTH] / maxHealth < 0.34) {
             return true;
         }
@@ -1210,6 +1239,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public WarriorBehavior CalculateStrongest(List<WarriorBehavior> warriorList) {
         // returns the warrior with highest strength
+        // loop through all warriors to find
         WarriorBehavior strongest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
             if (warrior.totalStrength > strongest.totalStrength) {
@@ -1221,6 +1251,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public WarriorBehavior CalculateWeakest(List<WarriorBehavior> warriorList) {
         // returns the warrior with the lowest strength
+        // loop through all warriors to find
         WarriorBehavior weakest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
             if (warrior.totalStrength < weakest.totalStrength) {
@@ -1232,6 +1263,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public WarriorBehavior CalculateHealthiest(List<WarriorBehavior> warriorList) {
         // returns the warrior with the highest health;
+        // loop through all warriors to find
         WarriorBehavior healthiest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
             if (warrior.propertiesDict[BlockData.Property.HEALTH] > healthiest.propertiesDict[BlockData.Property.HEALTH]) {
@@ -1243,6 +1275,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
 
     public WarriorBehavior CalculateFrailest(List<WarriorBehavior> warriorList) {
         // returns the warrior with the lowest health
+        // loop through all warriors to find
         WarriorBehavior frailest = warriorList[0];
         foreach (WarriorBehavior warrior in warriorList) {
             if (warrior.propertiesDict[BlockData.Property.HEALTH] < frailest.propertiesDict[BlockData.Property.HEALTH]) {
@@ -1253,8 +1286,8 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void SetImageFacing() {
+        // set visual facing based on header
         Transform visualTransform = transform.GetChild(0);
-        Debug.Log("setting image facing from heading " + heading);
         if (heading == new Vector2((int)-1, (int)0)) {
             visualTransform.rotation = Quaternion.Euler(0, 180, 0);
         } else if (heading == new Vector2((int)1, (int)0)) {
@@ -1264,14 +1297,16 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         } else if (heading == new Vector2((int)0, (int)-1)) {
             visualTransform.rotation = Quaternion.Euler(0, 0, -90);
         } else {
+            // handle case where the heading doesn't match for some reason
             Debug.Log("ERROR: heading didn't match for set image facing: " + heading);
         }
     }
 
     public List<Vector2> GetMeleeRange() {
+        // create list of tiles in range
         List<Vector2> rotatedList = new List<Vector2>(tilesToHitRelative);
         while (rotatedList[0] != heading) {
-            Debug.Log("need to rotate range");
+            // rotate range tiles to be relative to heading
             for (int j = 0; j < rotatedList.Count; j++) {
                 rotatedList[j] = RotateRight(rotatedList[j]);
             }
@@ -1279,6 +1314,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         Debug.Log("range is facing the correct way!");
 
         // find the actual range
+        // create list of tiles in range based on set value, chosen from list of all possible range tiles
         List<Vector2> adjustedList = new List<Vector2>();
         switch(propertiesDict[BlockData.Property.MELEE_ATTACK_RANGE]) {
             case 1:
@@ -1325,10 +1361,12 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void ToggleStaminaIndicator(bool value) {
+        // show visual and set variable for stamina
         hasStamina = value;
         staminaIndicator.GetComponent<Image>().color = value ? Color.white : Color.black;
     }
 
+    // INDICATE NO STAMINA AND TARGET ERRORS MID BATTLE
     public void IndicateNoStamina() {
         Debug.Log("no stamina! cannot attack");
         if (noStaminaTextbox.activeSelf) {
@@ -1348,15 +1386,17 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public void DoDamageOrHeal(float value, bool isHeal) {
+        // if damage to be done ie heal, add it to health up to maximum
         if (isHeal) {
             if (propertiesDict[BlockData.Property.HEALTH] + value >= maxHealth) {
                 propertiesDict[BlockData.Property.HEALTH] = maxHealth;
             } else {
                 propertiesDict[BlockData.Property.HEALTH] += value;
             }
+            // play sound
             AudioController.Instance.PlaySoundEffect("Heal");
             Debug.Log("healed");
-        } else {
+        } else { // otherwise, take damage and subtract from health
             this.animator.SetTrigger("TakeDamage");
             AudioController.Instance.PlaySoundEffect("Take Damage");
             propertiesDict[BlockData.Property.HEALTH] -= DamageCalculator(value);
@@ -1364,16 +1404,19 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 Die();
             }
         }
+
+        // update health
         healthBar.value = propertiesDict[BlockData.Property.HEALTH];
         UpdateHealthDisplay();
     }
 
     public float DamageCalculator(float damage) {
+        // calculate damage with defense taken into account
         return damage * (1 - (propertiesDict[BlockData.Property.DEFENSE] / (propertiesDict[BlockData.Property.DEFENSE] + maxHealth)));
     }
 
     public void Die() {
-        if (isAlive) { // adding check bc it runs multiple times if battle speed too fast
+        if (isAlive) { // additional check, prevents inconsistent error if battle speed too fast
             isAlive = false;
             Debug.Log("dead!");
             // remove this object from grid
@@ -1384,10 +1427,9 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             } else {
                 LevelController.Instance.enemyWarriorsList.Remove(this);
             }
-            // set warrior dead
 
-            // this.gameObject.SetActive(false);
             // delay death in case it's active turn
+            // this also lets animation play out
             LevelController.Instance.activeDeathDelay = true;
             StartCoroutine(DeathDelay());
             LevelController.Instance.activeDeathDelay = false;
@@ -1395,6 +1437,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
     }
 
     public IEnumerator DeathDelay() {
+        // wait for animation to play out before dying
         Debug.Log("started death delay");
         this.animator.SetTrigger("Die");
         AudioController.Instance.PlaySoundEffect("Die");

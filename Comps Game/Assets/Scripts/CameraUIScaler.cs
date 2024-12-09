@@ -3,6 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraUIScaler : MonoBehaviour {
+    // NOT IN USE, NOT MY CODE
+    // Doesn't work!!
+    // was supposed to scale the UI to fit the screen size
+
+
+
+
+
+
 
     // Use this for initialization
     void Awake ()  {

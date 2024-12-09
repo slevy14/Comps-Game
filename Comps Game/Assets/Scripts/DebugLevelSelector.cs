@@ -17,6 +17,7 @@ public class DebugLevelSelector : MonoBehaviour {
     }
 
     void InitializeLevelSelectionOptions() {
+        // populate dropdown options with each level
         dropdown.ClearOptions();
         for (int i = 1; i < ProgressionController.Instance.levelDataList.Count; i++) {
             dropdown.options.Add(new TMP_Dropdown.OptionData(ProgressionController.Instance.levelDataList[i].levelNumber + ": " + ProgressionController.Instance.levelDataList[i].levelName));
@@ -27,6 +28,8 @@ public class DebugLevelSelector : MonoBehaviour {
     }
 
     void ChangeStartingLevel(Int32 newLevelIndex) {
+        // used when dropdown value changed
+        // change the level to load with the continue button
         ProgressionController.Instance.continueLevelFrom = newLevelIndex + 1;
     }
 

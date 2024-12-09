@@ -27,7 +27,6 @@ public class SceneController : MonoBehaviour {
     }
 
     public void LoadSceneByName(string name) {
-        // SceneManager.LoadScene(name);
         StartCoroutine(LoadSceneByNameCoroutine(name));
     }
 
@@ -35,6 +34,7 @@ public class SceneController : MonoBehaviour {
         return SceneManager.GetActiveScene().name;
     }
 
+    // Load scene with delay for transitions
     public IEnumerator LoadSceneByNameCoroutine(string name) {
         GameObject.Find("TransitionCanvas").GetComponent<Animator>().SetTrigger("Start");
         AudioController.Instance.PlaySoundEffect("Transition");

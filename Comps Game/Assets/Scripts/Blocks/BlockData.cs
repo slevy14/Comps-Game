@@ -10,6 +10,9 @@ using UnityEditor;
 
 
 public class BlockData : MonoBehaviour {
+
+    // PLACED ON ALL BLOCKS
+    // stores a block's ID and all values
     
     public enum BlockType {
         PROPERTY   = 0,
@@ -20,7 +23,7 @@ public class BlockData : MonoBehaviour {
 
     // ALL PROPERTIES MUST BE MANUALLY INDEXED
     // DO NOT CHANGE INDICES -- JUST ADD NEW ONES OR SKIP IF NEEDED
-    // name changed from "behavior" to get it to treat this like a new thing
+    // name changed from "behavior" to get unity to treat this as a new enum
     [System.Serializable]
     public enum BehaviorType {
         NONE              = 0,
@@ -66,13 +69,13 @@ public class BlockData : MonoBehaviour {
         MAGIC_SHIELD          = 15
     }
 
-    // tagging as hidden for use in custom editor
-     public BlockType blockType;
-     public BehaviorType behavior;
-     public Property property;
-     public List<string> values;
+    public BlockType blockType;
+    public BehaviorType behavior;
+    public Property property;
+    public List<string> values;
 
     public BlockDataStruct ConvertToStruct() {
+        // return this block's data as a serializable struct for saving
         if (blockType == BlockType.PROPERTY) {
             return new BlockDataStruct(blockType, property, values);
         } else if (blockType == BlockType.BEHAVIOR) {
@@ -102,7 +105,6 @@ public struct BlockDataStruct {
         this.behavior = BlockData.BehaviorType.NONE;
         this.property = property;
         this.values = values;
-        // Debug.Log("created property struct");
     }
 
     // constructor for behavior
@@ -111,7 +113,6 @@ public struct BlockDataStruct {
         this.behavior = behavior;
         this.property = BlockData.Property.NONE;
         this.values = values;
-        // Debug.Log("created behavior struct");
     }
 
     // constructor for function or header
@@ -122,31 +123,3 @@ public struct BlockDataStruct {
         this.values = values;
     }
 }
-
-
-
-// // EDITOR
-// #if UNITY_EDITOR
-// [CustomEditor(typeof(BlockData))]
-// public class BlockData_Editor : Editor {
-//     public override void OnInspectorGUI() {
-//         var script = (BlockData)target;
-
-//         script.blockType = (BlockData.BlockType)EditorGUILayout.EnumPopup("Block Type", script.blockType);
-
-//         if (script.blockType == BlockData.BlockType.PROPERTY) {
-//             script.property = (BlockData.Property)EditorGUILayout.EnumPopup("Property", script.property);
-//         } else if (script.blockType == BlockData.BlockType.BEHAVIOR){
-//             script.behavior = (BlockData.Behavior)EditorGUILayout.EnumPopup("Behavior", script.behavior);
-//         } else {
-//             return;
-//         }
-
-//         SerializedObject so = new SerializedObject(target);
-//         SerializedProperty stringsProperty = so.FindProperty("values");
-
-//         EditorGUILayout.PropertyField(stringsProperty, true);
-//         so.ApplyModifiedProperties();
-//     }
-// }
-// #endif

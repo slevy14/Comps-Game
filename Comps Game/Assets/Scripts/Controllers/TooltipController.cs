@@ -51,28 +51,31 @@ public class TooltipController : MonoBehaviour {
 
         if (isTooltipActive) {
             // update tooltip position to mouse position
-            // currentTooltipObject.GetComponent<RectTransform>().anchoredPosition = Input.mousePosition;
+            // default to bottom right of mouse
             Vector3 tooltipPos = new Vector3(Input.mousePosition.x, Input.mousePosition.y - currentTooltipObject.GetComponent<RectTransform>().rect.height, Input.mousePosition.z);
+            // flip to left side of mouse if out of bounds horizontally
             if (currentTooltipObject.GetComponent<RectTransform>().rect.width + Input.mousePosition.x >= 1960) {
                 tooltipPos.x -= currentTooltipObject.GetComponent<RectTransform>().rect.width;
             }
-            // Debug.Log("mouse y:" + Input.mousePosition.y);
-            // Debug.Log("to check height: " + ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height));
+            // flip to above mouse if out of bounds vertically
             if ((1080 - Input.mousePosition.y) + currentTooltipObject.GetComponent<RectTransform>().rect.height >= 1120) {
                 tooltipPos.y += currentTooltipObject.GetComponent<RectTransform>().rect.height;
             }
+
             currentTooltipObject.transform.position = tooltipPos;
         }
     }
 
     public void StartTooltipTimer(string blockName, string tooltip) {
+        // start timer for tooltip display
+        // update with data to be displayed
         isTimerGoing = true;
         this.blockNameText = blockName;
         this.tooltipText = tooltip;
     }
 
     // if something breaks with this
-    // it's probably that the children are wrong
+    // it's probably that the children are wrong in the hierarchy
     public void ShowTooltip(string blockName, string tooltip) {
         // instantiate tooltip
         currentTooltipObject = Instantiate(tooltipPrefab, Input.mousePosition, transform.rotation, tooltipParentCanvas.transform);
@@ -101,7 +104,6 @@ public class TooltipController : MonoBehaviour {
     }
 
     public void HideTooltip() {
-        // Debug.Log("hiding tooltip!");
         // set tooltip active false
         isTooltipActive = false;
         // set is ready true

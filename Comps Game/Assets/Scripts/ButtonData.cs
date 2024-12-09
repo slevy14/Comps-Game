@@ -4,32 +4,37 @@ using UnityEngine;
 
 public class ButtonData : MonoBehaviour {
 
+    // meant to be placed on buttons!
+    // some general functions that all buttons may need
+
     [SerializeField] private string sceneToLoad;
     [SerializeField] private GameObject interactableObject;
+
 
     public void JumpToScene() {
         SceneController.Instance.LoadSceneByName(sceneToLoad);
     }
 
     public void ContinueGame() {
+        // go to the current level
         ProgressionController.Instance.currentLevel = ProgressionController.Instance.continueLevelFrom;
         ProgressionController.Instance.StartNewLevel(ProgressionController.Instance.currentLevel);
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
 
     public void NextLevel() {
-        if (ProgressionController.Instance.continueLevelFrom + 1 >= ProgressionController.Instance.levelDataList.Count) { // load game end screen if all levels complete
+        // load game end screen if all levels complete
+        if (ProgressionController.Instance.continueLevelFrom + 1 >= ProgressionController.Instance.levelDataList.Count) {
             SceneController.Instance.LoadSceneByName("GameEnd");
             return;
         }
+        // updated stored level, load the next one
         ProgressionController.Instance.continueLevelFrom += 1;
         ProgressionController.Instance.currentLevel = ProgressionController.Instance.continueLevelFrom;
         ProgressionController.Instance.StartNewLevel(ProgressionController.Instance.currentLevel);
         SceneController.Instance.LoadSceneByName("LevelScene");
     }
     public void PromptNewGame() {
-        // FIXME
-
         // warn player before creating new game if save file already exists
         if (ProgressionController.Instance.continueLevelFrom == -1) {
             NewGame();
