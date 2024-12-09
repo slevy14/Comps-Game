@@ -805,7 +805,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 no dropdowns
 
                     JUMP INDEX [0]
-                end either a for or while loop*/
+                end a while loop*/
                 case BlockData.BehaviorType.END_LOOP:
                     // if conditions dict at jump index false, jump back
                     // else continue
@@ -814,6 +814,26 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     // OR
                     // just jump back to the beginning because the loop jumps past this
                     Debug.Log("end loop");
+
+                    i = int.Parse(behaviorList[i].values[0])-1;
+
+                    break;
+                
+                /*----------------*/
+                /*    END FOR    */
+                /*----------------*/ /*   Current Status: Done
+                no dropdowns
+
+                    JUMP INDEX [0]
+                end either a for loop*/
+                case BlockData.BehaviorType.END_FOR:
+                    // if conditions dict at jump index false, jump back
+                    // else continue
+                    // if (conditionsDict[int.Parse(behaviorList[i].values[0])])
+
+                    // OR
+                    // just jump back to the beginning because the loop jumps past this
+                    Debug.Log("end for");
 
                     i = int.Parse(behaviorList[i].values[0])-1;
 

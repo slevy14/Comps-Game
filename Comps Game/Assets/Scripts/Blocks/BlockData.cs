@@ -32,15 +32,16 @@ public class BlockData : MonoBehaviour {
         SET_TARGET        = 6,
         WHILE_LOOP        = 7,
         FOR_LOOP          = 8,
-        END_LOOP          = 9,
+        END_LOOP          = 9, //used for end while
         IF                = 10,
         ELSE              = 11,
         END_IF            = 12,
         MELEE_SETTINGS    = 13,
         RANGED_SETTINGS   = 14,
         FIRE_PROJECTILE   = 15,
-        FOREACH_LOOP      = 16,
-        RECHARGE_STAMINA  = 17
+        FOREACH_LOOP      = 16, // not in use!
+        RECHARGE_STAMINA  = 17,
+        END_FOR           = 18,
     }
 
     // ALL PROPERTIES MUST BE MANUALLY INDEXED

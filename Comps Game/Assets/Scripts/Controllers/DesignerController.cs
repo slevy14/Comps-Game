@@ -763,7 +763,7 @@ public class DesignerController : MonoBehaviour {
 
             // check if current block needs to adjust next block placement;
             BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
-            bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
+            bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_FOR || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
             // Debug.Log(shiftOffsetBack);
             if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
                 // Debug.Log("need to shift back");
@@ -835,6 +835,7 @@ public class DesignerController : MonoBehaviour {
                     case BlockData.BehaviorType.ELSE:
                     case BlockData.BehaviorType.END_IF:
                     case BlockData.BehaviorType.END_LOOP:
+                    case BlockData.BehaviorType.END_FOR:
                         break;
                     // one dropdown
                     case BlockData.BehaviorType.TURN:
@@ -876,7 +877,7 @@ public class DesignerController : MonoBehaviour {
 
                 // check if current block needs to adjust next block placement;
                 BlockData.BehaviorType blockBehavior = newBlock.GetComponent<BlockData>().behavior;
-                bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
+                bool shiftOffsetBack = blockBehavior == BlockData.BehaviorType.END_LOOP || blockBehavior == BlockData.BehaviorType.END_FOR || blockBehavior == BlockData.BehaviorType.END_IF || blockBehavior == BlockData.BehaviorType.ELSE;
                 // Debug.Log(shiftOffsetBack);
                 if (shiftOffsetBack && newBlock.GetComponent<Draggable>().GetPrevBlock() != null && newBlock.GetComponent<Draggable>().GetPrevBlock().GetComponent<BlockData>().blockType != BlockData.BlockType.HEADER) {
                     // Debug.Log("need to shift back");
@@ -1054,6 +1055,7 @@ public class DesignerController : MonoBehaviour {
                         }
                         break;
                     case BlockData.BehaviorType.END_LOOP:
+                    case BlockData.BehaviorType.END_FOR:
                         if (blockData.values.Count != 1) {
                             blockData.values.Clear();
                             blockData.values.Add((-1).ToString());
@@ -1186,7 +1188,7 @@ public class DesignerController : MonoBehaviour {
                         inLoop = true;
                     }
 
-                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                    if (behaviorsList[j].behavior == BlockData.BehaviorType.END_FOR) {
                         if (ignores != 0) {
                             ignores--;
                         } else {
@@ -1234,7 +1236,7 @@ public class DesignerController : MonoBehaviour {
                         inLoop = false;
                     }  else if (behaviorsList[j].behavior == BlockData.BehaviorType.WHILE_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.FOR_LOOP) {
                         inLoop = true;
-                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP) {
+                    } else if (behaviorsList[j].behavior == BlockData.BehaviorType.END_LOOP || behaviorsList[j].behavior == BlockData.BehaviorType.END_FOR) {
                         inLoop = false;
                     }
 
@@ -1279,7 +1281,7 @@ public class DesignerController : MonoBehaviour {
                 // Debug.Log("looking at " + current.gameObject.name);
                 BlockData blockData = current.GetComponent<BlockData>();
                 if (blockData.blockType == BlockData.BlockType.BEHAVIOR) {
-                    if (blockData.behavior != BlockData.BehaviorType.IF && blockData.behavior != BlockData.BehaviorType.ELSE && blockData.behavior != BlockData.BehaviorType.END_IF && blockData.behavior != BlockData.BehaviorType.WHILE_LOOP && blockData.behavior != BlockData.BehaviorType.FOR_LOOP && blockData.behavior != BlockData.BehaviorType.END_LOOP) {
+                    if (blockData.behavior != BlockData.BehaviorType.IF && blockData.behavior != BlockData.BehaviorType.ELSE && blockData.behavior != BlockData.BehaviorType.END_IF && blockData.behavior != BlockData.BehaviorType.WHILE_LOOP && blockData.behavior != BlockData.BehaviorType.FOR_LOOP && blockData.behavior != BlockData.BehaviorType.END_LOOP && blockData.behavior != BlockData.BehaviorType.END_FOR) {
                         count++;
                     }
                 }
@@ -1306,7 +1308,12 @@ public class DesignerController : MonoBehaviour {
                     break;
                 case BlockData.BehaviorType.END_LOOP:
                     if (block.values[0] == "-1") {
-                        errorsList.Add("mismatched END LOOP");
+                        errorsList.Add("mismatched END WHILE");
+                    }
+                    break;
+                case BlockData.BehaviorType.END_FOR:
+                    if (block.values[0] == "-1") {
+                        errorsList.Add("mismatched END FOR");
                     }
                     break;
                 case BlockData.BehaviorType.IF:

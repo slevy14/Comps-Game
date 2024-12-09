@@ -594,7 +594,12 @@ public class LevelController : MonoBehaviour {
                         break;
                     case BlockData.BehaviorType.END_LOOP:
                         indentLevel -= 1;
-                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END LOOP";
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END WHILE";
+                        behaviorString += "\n ";
+                        break;
+                    case BlockData.BehaviorType.END_FOR:
+                        indentLevel -= 1;
+                        behaviorString += string.Concat(Enumerable.Repeat(indent, indentLevel)) + "END FOR";
                         behaviorString += "\n ";
                         break;
                     case BlockData.BehaviorType.IF:

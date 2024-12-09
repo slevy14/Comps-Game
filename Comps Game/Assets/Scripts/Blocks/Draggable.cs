@@ -312,7 +312,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     }
 
     public void SetInteractable(bool value) {
-        image.raycastTarget = value;
+        image.raycastTarget = true;
         overlapBox.raycastTarget = value;
 
         // loop through rest of children and handle cases
@@ -393,7 +393,7 @@ public class Draggable : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 prevBlock.GetComponent<Draggable>().SetNextBlock(this.gameObject);
 
                 BlockData.BehaviorType thisBlockBehavior = gameObject.GetComponent<BlockData>().behavior;
-                if (thisBlockBehavior == BlockData.BehaviorType.END_LOOP || thisBlockBehavior == BlockData.BehaviorType.END_IF || thisBlockBehavior == BlockData.BehaviorType.ELSE) {
+                if (thisBlockBehavior == BlockData.BehaviorType.END_LOOP || thisBlockBehavior == BlockData.BehaviorType.END_FOR || thisBlockBehavior == BlockData.BehaviorType.END_IF || thisBlockBehavior == BlockData.BehaviorType.ELSE) {
                     prevBlock.GetComponent<Draggable>().SetBlockOffset(true);
                 } else {
                     prevBlock.GetComponent<Draggable>().SetBlockOffset(false);

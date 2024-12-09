@@ -383,7 +383,7 @@
                 "y": 888.9845581054688
             },
             "useWeaponHeaderPosition": {
-                "x": -186.2626953125,
+                "x": -186.262451171875,
                 "y": 619.541259765625
             },
             "useSpecialHeaderPosition": {
@@ -748,7 +748,7 @@
             },
             "useSpecialHeaderPosition": {
                 "x": -2100.0,
-                "y": -950.0
+                "y": -950.0008544921875
             },
             "properties": [
                 {
@@ -1243,7 +1243,7 @@
                     "behavior": 0,
                     "property": 3,
                     "values": [
-                        "100"
+                        "60"
                     ]
                 }
             ],
@@ -1705,7 +1705,7 @@
             "warriorStrength": 83,
             "behaviorCount": 4,
             "propertiesHeaderPosition": {
-                "x": -782.0,
+                "x": -781.9998168945313,
                 "y": 895.0
             },
             "moveHeaderPosition": {
@@ -2092,8 +2092,8 @@
                 "y": 895.0
             },
             "moveHeaderPosition": {
-                "x": -172.5001220703125,
-                "y": 896.7783813476563
+                "x": -172.49993896484376,
+                "y": 896.7784423828125
             },
             "useWeaponHeaderPosition": {
                 "x": -195.49948120117188,
@@ -2291,7 +2291,7 @@
                 },
                 {
                     "blockType": 1,
-                    "behavior": 9,
+                    "behavior": 18,
                     "property": 0,
                     "values": [
                         "3"
@@ -2351,7 +2351,7 @@
                 },
                 {
                     "blockType": 1,
-                    "behavior": 9,
+                    "behavior": 18,
                     "property": 0,
                     "values": [
                         "11"
