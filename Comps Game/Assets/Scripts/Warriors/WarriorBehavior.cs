@@ -491,53 +491,61 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                 sneak behind enemies */
                 case BlockData.BehaviorType.TELEPORT:
                     Debug.Log("teleport");
+                    if (target == null) {
+                        IndicateNoTarget();
+                        break;
+                    }
                     Vector2 teleportPos = new();
                     if (behaviorList[i].values[0] == "0") { // behind
-                        if (target == null) {
+                        // break if target stops existing at an inconvenient time
+                        try {
+                            // get target position minus heading
+                            teleportPos = new Vector2((int)LevelController.Instance.objectsOnGrid[target.gameObject].x, (int)LevelController.Instance.objectsOnGrid[target.gameObject].y) - target.heading;
+                            // try set this position to new position
+                            if (!LevelController.Instance.objectsOnGrid.ContainsValue(teleportPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0))) {
+                                this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
+                                LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
+
+                                // auto turn (no longer used):
+                                // heading = target.heading;
+                                // SetImageFacing();
+                            } else {
+                                Debug.Log("either tile full or would teleport off map");
+                            }
+                        } catch {
                             IndicateNoTarget();
                             break;
-                        }
-                        // get target position minus heading
-                        teleportPos = new Vector2((int)LevelController.Instance.objectsOnGrid[target.gameObject].x, (int)LevelController.Instance.objectsOnGrid[target.gameObject].y) - target.heading;
-                        // try set this position to new position
-                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(teleportPos) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0))) {
-                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)teleportPos.x, (int)teleportPos.y, 0));
-                            LevelController.Instance.objectsOnGrid[this.gameObject] = teleportPos;
-
-                            // auto turn (no longer used):
-                            // heading = target.heading;
-                            // SetImageFacing();
-                        } else {
-                            Debug.Log("either tile full or would teleport off map");
                         }
                     } else if (behaviorList[i].values[0] == "1") { // flank
-                        if (target == null) {
+                        // break if target stops existing at an inconvenient time
+                        try {
+                            // if left flank free:
+                            // rotate left and add to target position to check flank
+                            Vector2 leftFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateLeft(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateLeft(target.heading).y));
+                            if (!LevelController.Instance.objectsOnGrid.ContainsValue(leftFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0))) {
+                                // get target position plus rotated left heading
+                                // try set this position to new position
+                                this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
+                                LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
+                                // auto turn (no longer used):
+                                // heading = RotateRight(target.heading);
+                                // SetImageFacing();
+                                break;
+                            }
+                            // else if right flank free
+                            Vector2 rightFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateRight(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateRight(target.heading).y));
+                            if (!LevelController.Instance.objectsOnGrid.ContainsValue(rightFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0))) {
+                                // get target position plus rotated right heading
+                                // try set this position to new position
+                                this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
+                                LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
+                                // auto turn (no longer used):
+                                // heading = RotateLeft(target.heading);
+                                // SetImageFacing();
+                                break;
+                            }
+                        } catch {
                             IndicateNoTarget();
-                            break;
-                        }
-                        // if left flank free:
-                        // rotate left and add to target position to check flank
-                        Vector2 leftFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateLeft(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateLeft(target.heading).y));
-                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(leftFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0))) {
-                            // get target position plus rotated left heading
-                            // try set this position to new position
-                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)leftFlank.x, (int)leftFlank.y, 0));
-                            LevelController.Instance.objectsOnGrid[this.gameObject] = leftFlank;
-                            // auto turn (no longer used):
-                            // heading = RotateRight(target.heading);
-                            // SetImageFacing();
-                            break;
-                        }
-                        // else if right flank free
-                        Vector2 rightFlank = new Vector2((int)(LevelController.Instance.objectsOnGrid[target.gameObject].x + RotateRight(target.heading).x), (int)(LevelController.Instance.objectsOnGrid[target.gameObject].y + RotateRight(target.heading).y));
-                        if (!LevelController.Instance.objectsOnGrid.ContainsValue(rightFlank) && PlacementSystem.Instance.tilemap.HasTile(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0))) {
-                            // get target position plus rotated right heading
-                            // try set this position to new position
-                            this.gameObject.transform.position = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)rightFlank.x, (int)rightFlank.y, 0));
-                            LevelController.Instance.objectsOnGrid[this.gameObject] = rightFlank;
-                            // auto turn (no longer used):
-                            // heading = RotateLeft(target.heading);
-                            // SetImageFacing();
                             break;
                         }
                     }
@@ -945,6 +953,7 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                         IndicateNoTarget();
                         break;
                     }
+                    
                     if (System.Array.Exists(animator.parameters, p => p.name == "RangedAttack")) {
                         this.animator.SetTrigger("RangedAttack");
                     } else {
@@ -952,43 +961,49 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
                     }
                     yield return new WaitForSeconds(LevelController.Instance.battleSpeed/1.5f);
 
-                    // instantiate projectile
-                    Vector3 projectileInitialPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0));
-                    projectileInitialPlacement.z = -1; // keep on top
-                    GameObject projectile = Instantiate(projectilePrefab, projectileInitialPlacement, transform.rotation, this.transform);
-                    ProjectileBehavior projectileBehavior = projectile.GetComponent<ProjectileBehavior>();
-                    // set projectile target to current target
-                    if (isRangedHeal) {
-                        projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);
-                        projectile.GetComponent<SpriteRenderer>().sprite = projectileHealSprite;
-                    } else {
-                        Debug.Log(target.gameObject.name);
-                        projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
+                    // break if missing target at odd time
+                    try {
+                        // instantiate projectile
+                        Vector3 projectileInitialPlacement = PlacementSystem.Instance.tilemap.GetCellCenterWorld(new Vector3Int((int)LevelController.Instance.objectsOnGrid[this.gameObject].x, (int)LevelController.Instance.objectsOnGrid[this.gameObject].y, 0));
+                        projectileInitialPlacement.z = -1; // keep on top
+                        GameObject projectile = Instantiate(projectilePrefab, projectileInitialPlacement, transform.rotation, this.transform);
+                        ProjectileBehavior projectileBehavior = projectile.GetComponent<ProjectileBehavior>();
+                        // set projectile target to current target
+                        if (isRangedHeal) {
+                            projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.HEAL_POWER], isRangedHeal);
+                            projectile.GetComponent<SpriteRenderer>().sprite = projectileHealSprite;
+                        } else {
+                            Debug.Log(target.gameObject.name);
+                            projectileBehavior.InitializeProjectile(this.target.gameObject, propertiesDict[BlockData.Property.RANGED_ATTACK_POWER], isRangedHeal);
+                        }
+                        // doing damage handled on projectile object
+                        AudioController.Instance.PlaySoundEffect("Fire Projectile");
+                    } catch {
+                        IndicateNoTarget();
+                        break;
                     }
-                    // doing damage handled on projectile object
-                    AudioController.Instance.PlaySoundEffect("Fire Projectile");
                     break;
                 
-                    /*---------------*/
-                    /*    FOREACH    */
-                    /*---------------*/ /*   Current Status: NOT STARTED
-                    one dropdown
-                        choose which team to look at
-                            0: enemies
-                            1: allies
-                    loop through all warriors of the given team */
-                    case BlockData.BehaviorType.FOREACH_LOOP:
-                        break;
+                /*---------------*/
+                /*    FOREACH    */
+                /*---------------*/ /*   Current Status: NOT STARTED
+                one dropdown
+                    choose which team to look at
+                        0: enemies
+                        1: allies
+                loop through all warriors of the given team */
+                case BlockData.BehaviorType.FOREACH_LOOP:
+                    break;
 
-                    /*------------------------*/
-                    /*    RECHARGE STAMINA    */
-                    /*------------------------*/ /*   Current Status: Done
-                    no dropdowns
-                    recharge stamina to full */
-                    case BlockData.BehaviorType.RECHARGE_STAMINA:
-                        ToggleStaminaIndicator(true);
-                        // FIXME: add sound effect
-                        break;
+                /*------------------------*/
+                /*    RECHARGE STAMINA    */
+                /*------------------------*/ /*   Current Status: Done
+                no dropdowns
+                recharge stamina to full */
+                case BlockData.BehaviorType.RECHARGE_STAMINA:
+                    ToggleStaminaIndicator(true);
+                    // FIXME: add sound effect
+                    break;
             }
             if (propertiesDict[BlockData.Property.HEALTH] <= 0 && isCurrentTurn) {
                 Die();
@@ -1010,15 +1025,21 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return false;
         }
 
-        List<Vector2> meleeRange = GetMeleeRange();
-        foreach (Vector2 tile in meleeRange) {
-            Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
-            if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
-                GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
-                if (hitWarrior.GetComponent<WarriorBehavior>() == target) {
-                    return true;
+        try {
+            List<Vector2> meleeRange = GetMeleeRange();
+            foreach (Vector2 tile in meleeRange) {
+                Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
+                if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
+                    GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
+                    if (hitWarrior.GetComponent<WarriorBehavior>() == target) {
+                        return true;
+                    }
                 }
             }
+        } catch {
+            Debug.Log("target was destroyed during check for in target range!");
+            IndicateNoTarget();
+            return false;
         }
         return false;
     }
@@ -1052,16 +1073,22 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
         Debug.Log("warrior is at " + LevelController.Instance.objectsOnGrid[warriorGameObject]);
         List<Vector2> meleeRange = GetMeleeRange();
 
-        foreach (Vector2 tile in meleeRange) {
-            Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
-            Debug.Log("checking tile " + tileToCheck);
-            if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
-                GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
-                if (hitWarrior == warriorGameObject) {
-                    Debug.Log("warrior in range of target");
-                    return true;
+        try {
+            foreach (Vector2 tile in meleeRange) {
+                Vector2 tileToCheck = new Vector2((int)(LevelController.Instance.objectsOnGrid[this.gameObject].x + tile.x), (int)(LevelController.Instance.objectsOnGrid[this.gameObject].y + tile.y));
+                Debug.Log("checking tile " + tileToCheck);
+                if (LevelController.Instance.objectsOnGrid.ContainsValue(tileToCheck)) {
+                    GameObject hitWarrior = LevelController.Instance.objectsOnGrid.FirstOrDefault(x => x.Value == tileToCheck).Key;
+                    if (hitWarrior == warriorGameObject) {
+                        Debug.Log("warrior in range of target");
+                        return true;
+                    }
                 }
             }
+        } catch {
+            Debug.Log("target was destroyed during check for in target range!");
+            IndicateNoTarget();
+            return false;
         }
         Debug.Log("warrior not in range of target");
         return false;
@@ -1099,8 +1126,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return false;
         }
 
-        if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
-            return true;
+        try {
+            if (target.propertiesDict[BlockData.Property.HEALTH] / target.maxHealth < 0.34) {
+                return true;
+            }
+        } catch {
+            Debug.Log("target was destroyed during check for in target range!");
+            IndicateNoTarget();
+            return false;
         }
         return false;
     }
@@ -1111,8 +1144,14 @@ public class WarriorBehavior : MonoBehaviour, IDragHandler {
             return false;
         }
 
-        if (target.propertiesDict[property] > 1) {
-            return true;
+        try {
+            if (target.propertiesDict[property] > 1) {
+                return true;
+            }
+        } catch {
+            Debug.Log("target was destroyed during check for in target range!");
+            IndicateNoTarget();
+            return false;
         }
         return false;
     }
