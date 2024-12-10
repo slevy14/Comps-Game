@@ -9,10 +9,10 @@ Head to [Releases](https://github.com/slevy14/Comps-Game/releases) to download t
 This project was built in Unity v2022.3.50f1. If you're interested in taking a look behind the scenes, the folder entitled "Comps Game" contains all of the source code needed to build the game in Unity. Make sure to download the correct version from Unity Hub or [Unity's website](https://unity.com/releases/editor/whats-new/2022.3.50#installs). From there, all thats left is to either download or clone this repository and open the folder in Unity.
 
 ## Comps Paper
-The $\LaTeX$ files and PDF of my final paper detailing this projects design and evaluation can also be found in this repository.
+The $\LaTeX$ files and PDF of my final paper detailing this projects design and evaluation can also be found in this repository. The folder entitled "Comps Paper" containes the $\LaTeX$ source.
 
 ## Game Design Document
-A PDF of my game design document is downloadable here, though a more updated version can be found in [this google doc](https://docs.google.com/document/d/1_b5wEkVmGLtPf5fN-9Ceo-iA9WFXOGoxdkHT31a4ILE/edit?usp=sharing). The google doc also contains additional linked files to level and enemy planning documentation.
+An updated version of the Game Design Document can be found in [this google doc](https://docs.google.com/document/d/1_b5wEkVmGLtPf5fN-9Ceo-iA9WFXOGoxdkHT31a4ILE/edit?usp=sharing). This doc also contains additional linked files to level and enemy planning documentation.
 
 ## Evaluation Data
 As I conducted my playtests, I surveyed participants to gather quantitative data on their coding ability before and after playing the game, as well as qualitative data about their experience playing it. Though more concisely summarized in my paper, the surveys and raw data responses can be found [here](https://docs.google.com/spreadsheets/d/1F7b50xaFvfE2F1knakdCm4rHaRKITp1pA6s78goNYoM/edit?resourcekey=&gid=77043153#gid=77043153).
